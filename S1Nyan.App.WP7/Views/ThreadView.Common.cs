@@ -220,6 +220,7 @@ namespace S1Nyan.App.Views
                     ani.Stretch = Stretch.None;
                     ani.AnimationMode = AnimationMode.Repeat;
                     ani.Source = (ExtendedImage)(new ImageConverter().Convert(new Uri(url), typeof(Uri), null, null));
+                    ani.Margin = new Thickness(0, 0, 0, -4);
                     container.Child = ani;
                     return container;
                 }
