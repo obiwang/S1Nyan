@@ -17,6 +17,7 @@ namespace S1Parser
 
     public class S1ThreadItem
     {
+        public int No { get; set; }
 
         public string Author { get; set; }
 

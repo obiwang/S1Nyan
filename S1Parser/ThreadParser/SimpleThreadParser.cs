@@ -14,13 +14,18 @@ namespace S1Parser.ThreadParser
             theData.FullLink = a.Attributes["href"];
 
             GetPageCount(body.FindElements("center").ElementAt(1));
+            if (theData.CurrentPage == 0) theData.CurrentPage = 1;
 
             theData.Items = new List<S1ThreadItem>();
+            int i = 0;
             foreach (var item in body.Descendants("table"))
             {
                 var threadItem = ParseThreadItem(item);
                 if (threadItem != null)
+                {
+                    threadItem.No = (theData.CurrentPage - 1) * 50 + i++;
                     theData.Items.Add(threadItem);
+                }
             }
         }
 
