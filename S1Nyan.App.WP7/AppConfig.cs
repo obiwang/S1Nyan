@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using S1Nyan.Utils;
 using S1Nyan.Model;
+using S1Parser;
 
 namespace S1Nyan.App
 {
@@ -18,12 +19,13 @@ namespace S1Nyan.App
 
         public static void Setup()
         {
+            IParserFactory factory = new S1Parser.PaserFactory.SimpleParserFactory();
 #if DEBUG
-            ServiceLocator.Current.GetInstance<IDataService>().ResourceService = new ApplicationResourceService();
+            factory.ResourceService = new ApplicationResourceService();
 #else
-            ServiceLocator.Current.GetInstance<IDataService>().ResourceService = new NetResourceService();
+            factory.ResourceService = new NetResourceService();
 #endif
-
+            ServiceLocator.Current.GetInstance<IDataService>().ParserFactory = factory;
             SimpleIoc.Default.Register<IIndicator, Indicator>();
 
         }

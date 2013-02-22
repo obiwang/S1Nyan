@@ -21,10 +21,7 @@ namespace S1Nyan.ViewModel
         public ThreadViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            if (IsInDesignMode)
-            {
-                _dataService.GetThreadData(null, 0, (item, error) => { TheThread = item; Title = TheThread.Title; });
-            }
+            //if (IsInDesignMode) _dataService.GetThreadData(null, 0, (item, error) => { TheThread = item; Title = TheThread.Title; });
         }
 
         private string _title = null;
@@ -85,31 +82,25 @@ namespace S1Nyan.ViewModel
             }
         }
 
-        public void RefreshThread()
+        public async void RefreshThread()
         {
             TheThread = null;
             if (null == _tid) return;
             Util.Indicator.SetLoading();
-
-            _dataService.GetThreadData(
-                _tid,
-                CurrentPage,
-                (item, error) =>
+            try
+            {
+                TheThread = await _dataService.GetThreadDataAsync(_tid, CurrentPage);
+                TotalPage = TheThread.TotalPage;
+                if (PageChanged != null)
                 {
-                    if (error != null)
-                    {
-                        Util.Indicator.SetError(error.Message);
-                        return;
-                    }
-                    TheThread = item;
-                    TotalPage = TheThread.TotalPage;
-                    if (PageChanged != null)
-                    {
-                        PageChanged(currentPage, totalPage);
-                    }
-                    Util.Indicator.SetBusy(false);
-                });
-
+                    PageChanged(CurrentPage, TotalPage);
+                }
+                Util.Indicator.SetBusy(false);
+            }
+            catch (Exception e)
+            {
+                Util.Indicator.SetError(e.Message);
+            }
         }
 
         public bool IsShowPage { get { return TotalPage > 1; } }

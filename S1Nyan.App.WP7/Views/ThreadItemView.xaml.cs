@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Navigation;
-using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
 using S1Parser;
 
 namespace S1Nyan.App.Views
@@ -62,7 +57,7 @@ namespace S1Nyan.App.Views
                 case "a":
                     return BuildLink(item);
                 case "b":
-                    span.FontWeight = FontWeights.Bold;
+                    span.FontWeight = FontWeights.ExtraBold;
                     break;
                 case "i":
                     span.FontStyle = FontStyles.Italic;
@@ -125,7 +120,7 @@ namespace S1Nyan.App.Views
             var url = item.Attributes["href"];
             if (url != null)
             {
-                GetAbsoluteUrl(ref url);
+                S1Resource.GetAbsoluteUrl(ref url);
                 link.NavigateUri = new Uri(url);
             }
             link.TargetName = "_blank";
@@ -134,29 +129,14 @@ namespace S1Nyan.App.Views
             return link;
         }
 
-        /// <summary>
-        /// Get the absolute url if not
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns>true if original url is absolute</returns>
-        private static bool GetAbsoluteUrl(ref string url)
-        {
-            if (!url.ToLower().StartsWith("http"))
-            {
-                url = "http://bbs.saraba1st.com/2b/" + url;
-                return false;
-            }
-            return true;
-        }
-
         private static InlineUIContainer BuildImg(HtmlElement item)
         {
             InlineUIContainer container = new InlineUIContainer();
             var url = item.Attributes["src"];
             if (url == null) return container;
-            bool isface = !GetAbsoluteUrl(ref url);
-            var image = new SmartImage { UriSource = url, IsAutoDownload = isface };
-            if (isface) image.Margin = new Thickness(0, 0, 0, -4);
+            bool isOnS1 = !S1Resource.GetAbsoluteUrl(ref url);
+            var image = new SmartImage { UriSource = url, IsAutoDownload = isOnS1 };
+            if (isOnS1) image.Margin = new Thickness(0, 0, 0, -4);
             else image.Margin = new Thickness(12);
             container.Child = image;
             return container;

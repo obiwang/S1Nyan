@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;
@@ -25,7 +23,8 @@ namespace S1Nyan.ViewModel
         public ThreadListViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            if (IsInDesignMode) _dataService.GetThreadListData(null, 0, (item, error) => { ThreadListData = item; });
+            //if (IsInDesignMode) _dataService.GetThreadListData(null, 0, (item, error) => { ThreadListData = item; });
+
             //Buttons = new ObservableCollection<ButtonViewModel>();
 
             //Buttons.Add(new ButtonViewModel {
@@ -85,44 +84,28 @@ namespace S1Nyan.ViewModel
 
                 _threadListData = value;
                 RaisePropertyChanged(() => ThreadListData);
-                //GalaSoft.MvvmLight.Threading.DispatcherHelper.RunAsync(() =>
-                //    {
-                //        TurnstileFeatherTransition transition = new TurnstileFeatherTransition();
-                //        transition.Mode = TurnstileFeatherTransitionMode.ForwardIn;
-                //        PhoneApplicationPage phonePage = (PhoneApplicationPage)(((PhoneApplicationFrame)Application.Current.RootVisual)).Content;
-
-                //        ITransition trans = transition.GetTransition(phonePage);
-                //        trans.Completed += delegate { trans.Stop(); };
-                //        trans.Begin();
-                //    });
             }
         }
 
-        public void RefreshThreadList()
+        public async void RefreshThreadList()
         {
             ThreadListData = null;
             if (null == _fid) return;
             Util.Indicator.SetLoading();
-
-            _dataService.GetThreadListData(
-                _fid,
-                CurrentPage,
-                (item, error) =>
+            try
+            {
+                ThreadListData = await _dataService.GetThreadListAsync(_fid, CurrentPage);
+                TotalPage = ThreadListData.TotalPage;
+                if (PageChanged != null)
                 {
-                    if (error != null)
-                    {
-                        Util.Indicator.SetError(error.Message);
-                        return;
-                    }
-                    ThreadListData = item;
-                    TotalPage = ThreadListData.TotalPage;
-                    if (PageChanged != null)
-                    {
-                        PageChanged(CurrentPage, TotalPage);
-                    }
-                    Util.Indicator.SetBusy(false);
-
-                });
+                    PageChanged(CurrentPage, TotalPage);
+                }
+                Util.Indicator.SetBusy(false);
+            }
+            catch (Exception e)
+            {
+                Util.Indicator.SetError(e.Message);
+            }
         }
 
         private string _fid = null;

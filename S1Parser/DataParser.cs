@@ -1,9 +1,13 @@
 ﻿
+using System.IO;
 namespace S1Parser
 {
-    public abstract class DataParser<T> 
+    public abstract class DataParser<T> : IDataParser<T> 
         where T : new()
     {
+        public DataParser() { }
+        public DataParser(Stream s) { HtmlPage = new HtmlDoc(s).RootElement; }
+
         private HtmlElement htmlPage;
         public HtmlElement HtmlPage
         {

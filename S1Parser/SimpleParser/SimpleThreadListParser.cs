@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace S1Parser.ListParser
+namespace S1Parser.SimpleParser
 {
     public class SimpleThreadListParser : DataParser<S1ThreadList>
     {
+        public SimpleThreadListParser() { }
+        public SimpleThreadListParser(Stream s) : base(s) { }
+
         static Regex reply_pattern = new Regex(@"\d+");
         protected override void ParseImpl()
         {

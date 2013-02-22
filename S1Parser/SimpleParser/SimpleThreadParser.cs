@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace S1Parser.ThreadParser
+namespace S1Parser.SimpleParser
 {
     public class SimpleThreadParser : DataParser<S1ThreadPage>
     {
+        public SimpleThreadParser() { }
+        public SimpleThreadParser(Stream s) : base(s) { }
+
         protected override void ParseImpl()
         {
             var body = HtmlPage.FindFirst("body");

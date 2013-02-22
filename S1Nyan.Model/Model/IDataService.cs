@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using S1Parser;
 
 namespace S1Nyan.Model
 {
     public interface IDataService
     {
-        void GetMainListData(Action<List<S1ListItem>, Exception> callback);
-        void GetThreadListData(string fid, int page, Action<S1ThreadList, Exception> callback);
-        void GetThreadData(string tid, int page, Action<S1ThreadPage, Exception> callback);
-        IResourceService ResourceService { get; set; }
+        Task<IList<S1ListItem>> GetMainListAsync();
+        Task<S1ThreadList> GetThreadListAsync(string fid, int page);
+        Task<S1ThreadPage> GetThreadDataAsync(string tid, int page);
+        IParserFactory ParserFactory { get; set; }
     }
 }

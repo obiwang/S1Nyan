@@ -46,7 +46,7 @@ namespace S1Nyan.App.Design
             Items = new List<S1ThreadItem> { threadItem, threadItem2, threadItem2 }
         };
 
-        public void GetMainListData(Action<List<S1ListItem>, Exception> callback)
+        public void GetMainListData(Action<IList<S1ListItem>, Exception> callback)
         {
             callback(data, null);
         }
@@ -62,5 +62,21 @@ namespace S1Nyan.App.Design
         }
 
         public IResourceService ResourceService { get; set; }
+        public IParserFactory ParserFactory { get; set; }
+
+        public System.Threading.Tasks.Task<IList<S1ListItem>> GetMainListAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public System.Threading.Tasks.Task<S1ThreadList> GetThreadListAsync(string fid, int page)
+        {
+            throw new NotImplementedException();
+        }
+
+        public System.Threading.Tasks.Task<S1ThreadPage> GetThreadDataAsync(string tid, int page)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

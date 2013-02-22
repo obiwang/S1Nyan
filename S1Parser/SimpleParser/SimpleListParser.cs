@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
-namespace S1Parser.ListParser
+namespace S1Parser.SimpleParser
 {
     public class SimpleListParser : DataParser<List<S1ListItem>>
     {
+        public SimpleListParser() { }
+        public SimpleListParser(Stream s) : base(s) { }
         protected override void ParseImpl()
         {
             var root = HtmlPage.FindElements("table").Last().FindFirst("td");

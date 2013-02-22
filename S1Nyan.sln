@@ -23,6 +23,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{10EAFA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S1Nyan.App.WP8", "S1Nyan.App.WP8\S1Nyan.App.WP8.csproj", "{500DE26A-DD82-4D21-9D1A-9FA43CC5383F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit test", "Unit test", "{673D4544-2D4D-4B40-8B70-8F12EE528FC9}"
+	ProjectSection(SolutionItems) = preProject
+		S1Nyan.testsettings = S1Nyan.testsettings
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S1Nyan.Model.Test", "S1Nyan.Model.Test\S1Nyan.Model.Test.csproj", "{5663B76E-A978-4FFE-9102-9F1F0993C74E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,8 +124,22 @@ Global
 		{500DE26A-DD82-4D21-9D1A-9FA43CC5383F}.Release|x86.ActiveCfg = Release|x86
 		{500DE26A-DD82-4D21-9D1A-9FA43CC5383F}.Release|x86.Build.0 = Release|x86
 		{500DE26A-DD82-4D21-9D1A-9FA43CC5383F}.Release|x86.Deploy.0 = Release|x86
+		{5663B76E-A978-4FFE-9102-9F1F0993C74E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5663B76E-A978-4FFE-9102-9F1F0993C74E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5663B76E-A978-4FFE-9102-9F1F0993C74E}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5663B76E-A978-4FFE-9102-9F1F0993C74E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5663B76E-A978-4FFE-9102-9F1F0993C74E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5663B76E-A978-4FFE-9102-9F1F0993C74E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5663B76E-A978-4FFE-9102-9F1F0993C74E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5663B76E-A978-4FFE-9102-9F1F0993C74E}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5663B76E-A978-4FFE-9102-9F1F0993C74E}.Release|x64.ActiveCfg = Release|Any CPU
+		{5663B76E-A978-4FFE-9102-9F1F0993C74E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{31381180-B243-4EB2-8E37-A5F9DE10E5E3} = {673D4544-2D4D-4B40-8B70-8F12EE528FC9}
+		{5663B76E-A978-4FFE-9102-9F1F0993C74E} = {673D4544-2D4D-4B40-8B70-8F12EE528FC9}
 	EndGlobalSection
 EndGlobal

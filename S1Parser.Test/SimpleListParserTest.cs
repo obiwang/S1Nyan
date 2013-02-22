@@ -1,6 +1,6 @@
 ﻿using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using S1Parser.ListParser;
+using S1Parser.SimpleParser;
 using System.Linq;
 
 namespace S1Parser.Test
@@ -12,7 +12,7 @@ namespace S1Parser.Test
         public void TestGetList()
         {
             FileStream file = new FileStream("Data/simple.htm", FileMode.Open);
-            var parser = new SimpleListParser { HtmlPage = new HtmlDoc(file).RootElement };
+            var parser = new SimpleListParser(file);
             var list = parser.GetData();
             Assert.AreEqual<int>(4, list.Count);
             Assert.AreEqual<string>("内野", list.Last().Children[0].Title);
@@ -26,7 +26,7 @@ namespace S1Parser.Test
         public void TestGetThreadList()
         {
             FileStream file = new FileStream("Data/simple_thread.htm", FileMode.Open);
-            var parser = new SimpleThreadListParser { HtmlPage = new HtmlDoc(file).RootElement };
+            var parser = new SimpleThreadListParser(file);
             var data = parser.GetData();
             Assert.AreEqual<int>(2773, data.TotalPage);
             Assert.AreEqual<int>(1, data.CurrentPage);

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using S1Parser.ThreadParser;
+using S1Parser.SimpleParser;
 
 namespace S1Parser.Test
 {
@@ -12,7 +12,7 @@ namespace S1Parser.Test
         public void TestGetThread()
         {
             FileStream file = new FileStream("Data/simple_read.htm", FileMode.Open);
-            var parser = new SimpleThreadParser { HtmlPage = new HtmlDoc(file).RootElement };
+            var parser = new SimpleThreadParser(file);
             var thread = parser.GetData();
             Assert.AreEqual<string>("我是卖切糕的！高富帅们请进~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", thread.Title);
             Assert.AreEqual<string>("read-htm-tid-880700.html", thread.FullLink);

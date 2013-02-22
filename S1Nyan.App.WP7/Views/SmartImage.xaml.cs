@@ -113,7 +113,7 @@ namespace S1Nyan.App.Views
                     RealImageGif.Visibility = Visibility.Visible;
                 }
             }
-            catch (Exception e) { }
+            catch (Exception) { }
         }
 
         private void ImageDecodeFailed()

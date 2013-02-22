@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using S1Nyan.Model;
@@ -23,9 +24,7 @@ namespace S1Nyan.ViewModel
         public MainViewModel(IDataService dataService)
         {
             _dataService = dataService;
-            if (IsInDesignMode)
-                _dataService.GetMainListData(
-                (item, error) => { MainListData = item; });
+            //if (IsInDesignMode) _dataService.GetMainListData((item, error) => { MainListData = item; });
         }
 
         private IEnumerable<S1ListItem> _data = null;
@@ -58,20 +57,18 @@ namespace S1Nyan.ViewModel
             }
         }
 
-        private void ExecuteLoadedCommand()
+        private async void ExecuteLoadedCommand()
         {
             Util.Indicator.SetLoading();
-            _dataService.GetMainListData(
-                (item, error) =>
-                {
-                    if (error != null)
-                    {
-                        Util.Indicator.SetError(error.Message);
-                        return;
-                    }
-                    MainListData = item;
-                    Util.Indicator.SetBusy(false);
-                });
+            try
+            {
+                MainListData = await _dataService.GetMainListAsync();
+                Util.Indicator.SetBusy(false);
+            }
+            catch (Exception e)
+            {
+                Util.Indicator.SetError(e.Message);
+            }
         }
 
         ////public override void Cleanup()
