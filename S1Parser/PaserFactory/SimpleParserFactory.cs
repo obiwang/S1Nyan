@@ -12,7 +12,7 @@ namespace S1Parser.PaserFactory
 
         public async Task<IList<S1ListItem>> GetMainListData()
         {
-            Stream s = await ResourceService.GetResourceStream(GetMainUri());
+            Stream s = await ResourceService.GetResourceStream(GetMainUri(), "MainList");
             return new SimpleListParser(s).GetData();
         }
 

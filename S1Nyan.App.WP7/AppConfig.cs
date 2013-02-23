@@ -19,15 +19,15 @@ namespace S1Nyan.App
 
         public static void Setup()
         {
-            IParserFactory factory = new S1Parser.PaserFactory.SimpleParserFactory();
 #if DEBUG
-            factory.ResourceService = new ApplicationResourceService();
+            SimpleIoc.Default.Register<IResourceService, ApplicationResourceService>();
 #else
-            factory.ResourceService = new NetResourceService();
+            SimpleIoc.Default.Register<IResourceService, NetResourceService>();
 #endif
+            IParserFactory factory = new S1Parser.PaserFactory.SimpleParserFactory();
+            factory.ResourceService = ServiceLocator.Current.GetInstance<IResourceService>();
             ServiceLocator.Current.GetInstance<IDataService>().ParserFactory = factory;
             SimpleIoc.Default.Register<IIndicator, Indicator>();
-
         }
     }
 }

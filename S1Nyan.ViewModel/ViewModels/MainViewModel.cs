@@ -57,8 +57,11 @@ namespace S1Nyan.ViewModel
             }
         }
 
+        private bool isInited;
         private async void ExecuteLoadedCommand()
         {
+            if (isInited) return;
+            isInited = true;
             Util.Indicator.SetLoading();
             try
             {

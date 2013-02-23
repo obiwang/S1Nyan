@@ -5,7 +5,9 @@ namespace S1Parser
     {
         public const string SiteBase = "http://bbs.saraba1st.com/2b/";
 
-        public const string SimpleBase = "http://bbs.saraba1st.com/2b/simple/";
+        public const string SimpleBase = SiteBase + "simple/";
+
+        public const string EmotionBase = SiteBase + "images/post/smile/";
 
         /// <summary>
         /// Get the absolute url if not
@@ -20,6 +22,22 @@ namespace S1Parser
                 return false;
             }
             return true;
+        }
+
+        public static bool IsEmotion(string url)
+        {
+            if (url.ToLower().StartsWith(EmotionBase))
+                return true;
+            return false;
+        }
+
+        public static string GetEmotionPath(string url)
+        {
+            if (IsEmotion(url))
+            {
+                return url.Substring(EmotionBase.Length);
+            }
+            return null;
         }
     }
 }

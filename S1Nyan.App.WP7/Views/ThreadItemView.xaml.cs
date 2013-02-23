@@ -134,9 +134,13 @@ namespace S1Nyan.App.Views
             InlineUIContainer container = new InlineUIContainer();
             var url = item.Attributes["src"];
             if (url == null) return container;
-            bool isOnS1 = !S1Resource.GetAbsoluteUrl(ref url);
-            var image = new SmartImage { UriSource = url, IsAutoDownload = isOnS1 };
-            if (isOnS1) image.Margin = new Thickness(0, 0, 0, -4);
+            bool isEmotion = false;
+            if (!S1Resource.GetAbsoluteUrl(ref url))
+            {   //image is on S1
+                isEmotion = S1Resource.IsEmotion(url);
+            }
+            var image = new SmartImage { UriSource = url, IsAutoDownload = isEmotion };
+            if (isEmotion) image.Margin = new Thickness(0, 0, 0, -4);
             else image.Margin = new Thickness(12);
             container.Child = image;
             return container;

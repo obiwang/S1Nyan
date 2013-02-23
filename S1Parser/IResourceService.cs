@@ -6,6 +6,6 @@ namespace S1Parser
 {
     public interface IResourceService
     {
-        Task<Stream> GetResourceStream(Uri uri);
+        Task<Stream> GetResourceStream(Uri uri, string path = null);
     }
 }

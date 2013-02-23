@@ -40,8 +40,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\HtmlElement.cs" />
-    <Compile Include="Common\HtmlDoc.cs" />
+    <Compile Include="Html\HtmlElement.cs" />
+    <Compile Include="Html\HtmlDoc.cs" />
     <Compile Include="DataParser.cs" />
     <Compile Include="IDataParser.cs" />
     <Compile Include="IParserFactory.cs" />

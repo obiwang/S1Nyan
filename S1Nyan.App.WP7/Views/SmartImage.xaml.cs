@@ -1,10 +1,14 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ImageTools;
 using ImageTools.Controls;
+using Microsoft.Practices.ServiceLocation;
+using S1Nyan.Model;
+using S1Parser;
 
 namespace S1Nyan.App.Views
 {
@@ -19,6 +23,7 @@ namespace S1Nyan.App.Views
 
         BitmapImage image;
         ExtendedImage gifImage;
+        Stream imageStream;
 
         public int Percent
         {
@@ -77,14 +82,25 @@ namespace S1Nyan.App.Views
             (d as SmartImage).OnSourceChanged();
         }
 
-        protected void OnSourceChanged()
+        protected async void OnSourceChanged()
         {
+            imageStream = null;
             if (UriSource.ToLower().EndsWith(".gif"))
             {
                 IsGif = true;
             }
             else
                 IsGif = false;
+
+            string path = null;
+            if (null != (path = S1Resource.GetEmotionPath(UriSource)))
+            {
+                var res = Application.GetResourceStream(new Uri("Resources/" + path, UriKind.Relative));
+                if (res != null)
+                    imageStream = res.Stream;
+                else
+                    imageStream = await NetResourceService.GetResourceStreamStatic(new Uri(UriSource), path, -1);
+            }
             Percent = 0;
             ShowImage();
         }
@@ -97,18 +113,36 @@ namespace S1Nyan.App.Views
             {
                 if (!IsGif)
                 {   //try decode jpg/png
-                    image = new BitmapImage(new Uri(UriSource));
-                    image.DownloadProgress += (o, e) => ImageDownloadProgress(e.Progress);
-                    image.ImageOpened += (o, e) => ImageDownloadComplete();
+                    if (imageStream != null)
+                    {
+                        image = new BitmapImage();
+                        image.SetSource(imageStream);
+                        ImageDownloadComplete();
+                    }
+                    else
+                    {
+                        image = new BitmapImage(new Uri(UriSource));
+                        image.DownloadProgress += (o, e) => ImageDownloadProgress(e.Progress);
+                        image.ImageOpened += (o, e) => ImageDownloadComplete();
+                    }
                     image.ImageFailed += (o, e) => ImageDecodeFailed();
                     RealImage.Source = image;
                     RealImage.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    gifImage = (ExtendedImage)(new ImageConverter().Convert(new Uri(UriSource), typeof(Uri), null, null));
-                    gifImage.DownloadProgress += (o, e) => ImageDownloadProgress(e.ProgressPercentage);
-                    gifImage.DownloadCompleted += (o, e) => ImageDownloadComplete();
+                    if (imageStream != null)
+                    {
+                        gifImage = new ExtendedImage();
+                        gifImage.SetSource(imageStream);
+                        ImageDownloadComplete();
+                    }
+                    else
+                    {
+                        gifImage = (ExtendedImage)(new ImageConverter().Convert(new Uri(UriSource), typeof(Uri), null, null));
+                        gifImage.DownloadProgress += (o, e) => ImageDownloadProgress(e.ProgressPercentage);
+                        gifImage.DownloadCompleted += (o, e) => ImageDownloadComplete();
+                    }
                     RealImageGif.Source = gifImage;
                     RealImageGif.Visibility = Visibility.Visible;
                 }
@@ -118,7 +152,7 @@ namespace S1Nyan.App.Views
 
         private void ImageDecodeFailed()
         {
-            if (!IsGif && image != null && image.PixelHeight == 0)
+            if (!IsGif && image != null && S1Resource.IsEmotion(UriSource))
             {   //decode jpg/png failed, try gif
                 IsGif = true;
                 ShowImage();
