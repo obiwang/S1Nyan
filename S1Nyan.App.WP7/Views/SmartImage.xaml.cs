@@ -6,9 +6,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using ImageTools;
 using ImageTools.Controls;
+#if S1Nyan
 using Microsoft.Practices.ServiceLocation;
 using S1Nyan.Model;
 using S1Parser;
+#endif
 
 namespace S1Nyan.App.Views
 {
@@ -17,7 +19,7 @@ namespace S1Nyan.App.Views
         public SmartImage()
         {
             InitializeComponent();
-            SizeChanged += SmartImage_SizeChanged;
+            SizeChanged += (o, e) => SmartImageSizeChanged(e.NewSize);
             ImageHolder.DataContext = this;
         }
 
@@ -84,6 +86,8 @@ namespace S1Nyan.App.Views
 
         protected async void OnSourceChanged()
         {
+            if (UriSource == null) return;
+
             imageStream = null;
             if (UriSource.ToLower().EndsWith(".gif"))
             {
@@ -92,6 +96,7 @@ namespace S1Nyan.App.Views
             else
                 IsGif = false;
 
+#if S1Nyan
             string path = null;
             if (null != (path = S1Resource.GetEmotionPath(UriSource)))
             {
@@ -101,12 +106,14 @@ namespace S1Nyan.App.Views
                 else
                     imageStream = await NetResourceService.GetResourceStreamStatic(new Uri(UriSource), path, -1);
             }
+#endif
             Percent = 0;
             ShowImage();
         }
 
         protected void ShowImage()
         {
+            if (UriSource == null) return;
             if (!IsAutoDownload) return;
 
             try
@@ -125,7 +132,6 @@ namespace S1Nyan.App.Views
                         image.DownloadProgress += (o, e) => ImageDownloadProgress(e.Progress);
                         image.ImageOpened += (o, e) => ImageDownloadComplete();
                     }
-                    image.ImageFailed += (o, e) => ImageDecodeFailed();
                     RealImage.Source = image;
                     RealImage.Visibility = Visibility.Visible;
                 }
@@ -147,16 +153,23 @@ namespace S1Nyan.App.Views
                     RealImageGif.Visibility = Visibility.Visible;
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex) {
+                ImageDecodeFailed();
+            }
         }
 
         private void ImageDecodeFailed()
         {
-            if (!IsGif && image != null && S1Resource.IsEmotion(UriSource))
-            {   //decode jpg/png failed, try gif
-                IsGif = true;
-                ShowImage();
-            }
+            if (!IsGif && image != null)
+#if S1Nyan
+                if (S1Resource.IsEmotion(UriSource))  //apply to emotion pics only
+#endif
+                {   //decode jpg/png failed, try gif
+                    IsGif = true;
+                    if (imageStream != null)
+                        imageStream.Seek(0, SeekOrigin.Begin);
+                    ShowImage();
+                }
         }
 
         private void ImageDownloadComplete()
@@ -169,29 +182,43 @@ namespace S1Nyan.App.Views
             Percent = percent;
         }
 
-        void SmartImage_SizeChanged(object sender, SizeChangedEventArgs e)
+        protected override Size MeasureOverride(Size availableSize)
+        {
+            SmartImageSizeChanged(availableSize);
+            return base.MeasureOverride(availableSize);
+        }
+
+        protected override Size ArrangeOverride(Size finalSize)
+        {
+            SmartImageSizeChanged(finalSize);
+            return base.ArrangeOverride(finalSize);
+        }
+
+        void SmartImageSizeChanged(Size newSize)
         {
             if (IsGif && gifImage != null && gifImage.PixelWidth > 0)
             {
-                if (gifImage.PixelWidth < e.NewSize.Width)
+                if (gifImage.PixelWidth < newSize.Width)
                 {
                     RealImageGif.Width = gifImage.PixelWidth;
                     RealImageGif.Stretch = Stretch.None;
                 }
                 else
                 {
+                    RealImageGif.Width = newSize.Width;
                     RealImageGif.Stretch = Stretch.Uniform;
                 }
             }
             else if (image != null && image.PixelWidth > 0)
             {
-                if (image.PixelWidth < e.NewSize.Width)
+                if (image.PixelWidth < newSize.Width)
                 {
                     RealImage.Width = image.PixelWidth;
                     RealImage.Stretch = Stretch.None;
                 }
                 else
                 {
+                    RealImage.Width = newSize.Width;
                     RealImage.Stretch = Stretch.Uniform;
                 }
             }

@@ -139,7 +139,8 @@ namespace S1Nyan.App.Views
             {   //image is on S1
                 isEmotion = S1Resource.IsEmotion(url);
             }
-            var image = new SmartImage { UriSource = url, IsAutoDownload = isEmotion };
+            //order matters! set IsAutoDownload first;
+            var image = new SmartImage { IsAutoDownload = isEmotion, UriSource = url };
             if (isEmotion) image.Margin = new Thickness(0, 0, 0, -4);
             else image.Margin = new Thickness(12);
             container.Child = image;
