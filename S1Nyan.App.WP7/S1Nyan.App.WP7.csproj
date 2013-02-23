@@ -28,6 +28,7 @@
     <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <ExpressionBlendVersion>5.0.40110.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -170,6 +171,9 @@
     <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Model\ResourceServices.cs" />
+    <Compile Include="SampleData\ThreadSampleData\ThreadSampleData.xaml.cs">
+      <DependentUpon>ThreadSampleData.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utils\VisualTree.cs" />
     <Compile Include="Utils\Indicator.cs" />
     <Compile Include="Views\MainPage.Common.cs">
@@ -208,6 +212,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <DesignTimeOnly Include="SampleData\ThreadSampleData\ThreadSampleData.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </DesignTimeOnly>
     <Page Include="Views\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -476,6 +484,9 @@
       <Project>{8DD0F6E8-5387-407F-B5EF-992C408342B0}</Project>
       <Name>S1Parser</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <DesignTimeOnly Include="SampleData\ThreadSampleData\ThreadSampleData.xsd" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

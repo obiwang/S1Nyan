@@ -41,11 +41,17 @@ namespace S1Nyan.App.Views
             base.OnNavigatedTo(e);
             if (e.NavigationMode == NavigationMode.Back) return;
 
-            string idParam, titleParam = null;
+            string idParam, titleParam = null, pageParam = null;
+            int page = 1;
             if (NavigationContext.QueryString.TryGetValue("ID", out idParam))
             {
-                NavigationContext.QueryString.TryGetValue("Title", out titleParam);
-                Vm.OnChangeTID(idParam, HttpUtility.HtmlDecode(titleParam));
+                if (NavigationContext.QueryString.TryGetValue("Title", out titleParam))
+                    HttpUtility.HtmlDecode(titleParam);
+                if (NavigationContext.QueryString.TryGetValue("Page", out pageParam))
+                {
+                    int.TryParse(pageParam, out page);
+                }
+                Vm.OnChangeTID(idParam, titleParam, page);
             }
         }
 

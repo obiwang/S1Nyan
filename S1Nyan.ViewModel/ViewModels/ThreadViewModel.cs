@@ -52,14 +52,14 @@ namespace S1Nyan.ViewModel
         }
 
         private string _tid = null;
-        public void OnChangeTID(string tid, string title)
+        public void OnChangeTID(string tid, string title, int page)
         {
             Title = title;
             if(tid!=null && tid != _tid)
             {
                 _tid = tid;
                 TotalPage = 0;
-                CurrentPage = 1;
+                CurrentPage = page;
             }
         }
 
@@ -91,6 +91,8 @@ namespace S1Nyan.ViewModel
             {
                 TheThread = await _dataService.GetThreadDataAsync(_tid, CurrentPage);
                 TotalPage = TheThread.TotalPage;
+                Title = TheThread.Title;
+
                 if (PageChanged != null)
                 {
                     PageChanged(CurrentPage, TotalPage);

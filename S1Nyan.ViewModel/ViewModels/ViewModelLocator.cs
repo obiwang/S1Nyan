@@ -32,7 +32,6 @@ namespace S1Nyan.ViewModel
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<ThreadListViewModel>();
-            SimpleIoc.Default.Register<ThreadViewModel>();
         }
 
         /// <summary>
@@ -67,7 +66,7 @@ namespace S1Nyan.ViewModel
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<ThreadViewModel>();
+                return new ThreadViewModel(ServiceLocator.Current.GetInstance<IDataService>());
             }
         }
         /// <summary>

@@ -2,12 +2,43 @@
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
 using S1Parser;
 
 namespace S1Nyan.App.Views
 {
+    public class FontsizeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            int count = value.ToString().Length;
+            double size = 28;
+            switch(count)
+            {
+                case 1:
+                case 2:
+                    break;
+                case 3:
+                    size = 24;
+                    break;
+                case 4:
+                    size = 18;
+                    break;
+                default:
+                    size = 15;
+                    break;
+            }
+            return size;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public partial class ThreadItemView : UserControl
     {
         public ThreadItemView()
@@ -116,14 +147,29 @@ namespace S1Nyan.App.Views
         private static Inline BuildLink(HtmlElement item)
         {
             Hyperlink link = new Hyperlink();
-            link.Inlines.Add(item.PlainText());
             var url = item.Attributes["href"];
-            if (url != null)
+            var aText = item.PlainText();
+            if (url == null || aText.Length == 0) return link;
+
+            S1Resource.GetAbsoluteUrl(ref url);
+            var viewParam = S1Resource.GetThreadParamFromUrl(url);
+            if (viewParam != null)
             {
-                S1Resource.GetAbsoluteUrl(ref url);
-                link.NavigateUri = new Uri(url);
+                Run header = new Run();
+                header.Text = "<S1: ";
+                header.FontStyle = FontStyles.Italic;
+                link.Inlines.Add(header);
+                link.Inlines.Add(aText);
+                link.Inlines.Add(" >");
+                link.NavigateUri = new Uri("/Views/ThreadView.xaml" + viewParam, UriKind.Relative);
             }
-            link.TargetName = "_blank";
+            else
+            {
+                link.NavigateUri = new Uri(url);
+                link.TargetName = "_blank";
+                link.Inlines.Add(aText);
+            }
+
             link.Foreground = (Brush)Application.Current.Resources["PhoneAccentBrush"];
 
             return link;
@@ -134,15 +180,16 @@ namespace S1Nyan.App.Views
             InlineUIContainer container = new InlineUIContainer();
             var url = item.Attributes["src"];
             if (url == null) return container;
-            bool isEmotion = false;
-            if (!S1Resource.GetAbsoluteUrl(ref url))
-            {   //image is on S1
-                isEmotion = S1Resource.IsEmotion(url);
-            }
+
+            S1Resource.GetAbsoluteUrl(ref url);
+            bool isEmotion = S1Resource.IsEmotion(url);
+
             //order matters! set IsAutoDownload first;
             var image = new SmartImage { IsAutoDownload = isEmotion, UriSource = url };
-            if (isEmotion) image.Margin = new Thickness(0, 0, 0, -4);
-            else image.Margin = new Thickness(12);
+            if (isEmotion) 
+                image.Margin = new Thickness(0, 0, 0, -4);
+            else 
+                image.Margin = new Thickness(6);
             container.Child = image;
             return container;
         }
