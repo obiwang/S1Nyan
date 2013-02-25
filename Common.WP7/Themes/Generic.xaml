@@ -3,6 +3,7 @@
                     xmlns:conv="clr-namespace:Coding4Fun.Toolkit.Controls.Converters"
                     xmlns:my="clr-namespace:MyControls">
     <conv:BooleanToVisibilityConverter x:Key="BoolToVisConv" />
+    <my:IntConverter x:Key="IntConverter" />
 
     <Style TargetType="my:ExpanderButton">
         <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}" />
@@ -27,18 +28,12 @@
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Expanded">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         Storyboard.TargetName="ExpanderElement"
-                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)"
-                                                         To="0" />
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="ExpanderElement" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" To="0" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unexpanded">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0"
-                                                         Storyboard.TargetName="ExpanderElement"
-                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)"
-                                                         To="-90" />
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="ExpanderElement" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" To="-90" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -110,4 +105,152 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <ControlTemplate x:Key="PhoneSimpleRepeatButton" TargetType="RepeatButton">
+        <Rectangle Fill="Transparent" />
+    </ControlTemplate>
+
+    <Style TargetType="my:MySlider">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Maximum" Value="10" />
+        <Setter Property="Minimum" Value="0" />
+        <Setter Property="LargeChange" Value="1" />
+        <Setter Property="Value" Value="0" />
+        <Setter Property="Background" Value="{StaticResource PhoneContrastBackgroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PhoneAccentBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="my:MySlider">
+                    <Grid Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver" />
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="HorizontalTrack" Storyboard.TargetProperty="Opacity" To="0.1" />
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="VerticalTrack" Storyboard.TargetProperty="Opacity" To="0.1" />
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalFill" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="VerticalFill" Storyboard.TargetProperty="Fill">
+                                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="DragStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:0.5" To="DragOver">
+                                        <VisualTransition.GeneratedEasingFunction>
+                                            <CubicEase EasingMode="EaseIn" />
+                                        </VisualTransition.GeneratedEasingFunction>
+                                    </VisualTransition>
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="DragEnter">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="HoriPopText" Storyboard.TargetProperty="(UIElement.Opacity)" To=".8" />
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="VerticalPopText" Storyboard.TargetProperty="(UIElement.Opacity)" To=".8" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="DragOver">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="VerticalPopText" Storyboard.TargetProperty="(UIElement.Opacity)" To="0" />
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="HoriPopText" Storyboard.TargetProperty="(UIElement.Opacity)" To="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Grid x:Name="HorizontalTemplate" Margin="{StaticResource PhoneHorizontalMargin}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="24" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Rectangle x:Name="HorizontalFill" Height="12" Margin="0,22,-12,20" Fill="{TemplateBinding Foreground}" IsHitTestVisible="False" />
+                            <Rectangle x:Name="HorizontalTrack" Grid.Column="2" Height="12" Margin="-12,22,0,20" Fill="{TemplateBinding Background}" IsHitTestVisible="False" Opacity="0.2" />
+                            <RepeatButton x:Name="HorizontalTrackLargeChangeDecreaseRepeatButton" Template="{StaticResource PhoneSimpleRepeatButton}" />
+                            <RepeatButton x:Name="HorizontalTrackLargeChangeIncreaseRepeatButton" Template="{StaticResource PhoneSimpleRepeatButton}" />
+                            <Thumb x:Name="HorizontalThumb"
+                                   Grid.Column="1"
+                                   Width="24"
+                                   Height="24"
+                                   Margin="0,20">
+                                <Thumb.Template>
+                                    <ControlTemplate>
+                                        <Canvas Width="24" Height="24">
+                                            <Ellipse Width="24" Height="24" Fill="{StaticResource PhoneForegroundBrush}" />
+                                            <Rectangle Canvas.Left="-18" Canvas.Top="-28" Width="60" Height="84" Fill="Transparent" IsHitTestVisible="True" />
+                                        </Canvas>
+                                    </ControlTemplate>
+                                </Thumb.Template>
+                            </Thumb>
+                            <Canvas x:Name="HoriPopText"
+                                    Grid.Column="1"
+                                    Width="24"
+                                    Height="24"
+                                    Opacity="0">
+                                <Border Canvas.Left="-64"
+                                        Canvas.Top="-128"
+                                        Width="160"
+                                        Background="{StaticResource PhoneChromeBrush}"
+                                        CornerRadius="20">
+                                    <TextBlock Height="96"
+                                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                               FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}"
+                                               Text="{Binding Value, Converter={StaticResource IntConverter}, RelativeSource={RelativeSource TemplatedParent}}"
+                                               TextAlignment="Center" />
+                                </Border>
+                            </Canvas>
+                        </Grid>
+                        <Grid x:Name="VerticalTemplate" Margin="{StaticResource PhoneVerticalMargin}">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="24" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Rectangle x:Name="VerticalFill" Width="12" Margin="20,0,20,-12" Fill="{TemplateBinding Foreground}" IsHitTestVisible="False" />
+                            <Rectangle x:Name="VerticalTrack" Grid.Row="2" Width="12" Margin="20,-12,20,0" Fill="{TemplateBinding Background}" IsHitTestVisible="False" Opacity="0.2" />
+                            <RepeatButton x:Name="VerticalTrackLargeChangeIncreaseRepeatButton" Template="{StaticResource PhoneSimpleRepeatButton}" />
+                            <RepeatButton x:Name="VerticalTrackLargeChangeDecreaseRepeatButton" Template="{StaticResource PhoneSimpleRepeatButton}" />
+                            <Thumb x:Name="VerticalThumb"
+                                   Grid.Row="1"
+                                   Width="24"
+                                   Height="24"
+                                   Margin="20,0,20,0">
+                                <Thumb.Template>
+                                    <ControlTemplate>
+                                        <Canvas Width="24" Height="24">
+                                            <Ellipse Width="24" Height="24" Fill="{StaticResource PhoneForegroundBrush}" />
+                                            <Rectangle Canvas.Left="-12" Canvas.Top="-30" Width="48" Height="72" Fill="Transparent" IsHitTestVisible="True" />
+                                        </Canvas>
+                                    </ControlTemplate>
+                                </Thumb.Template>
+                            </Thumb>
+                            <Canvas x:Name="VerticalPopText"
+                                    Grid.Row="1"
+                                    Width="24"
+                                    Height="24"
+                                    Opacity="0">
+                                <Border x:Name="VerticalBorder"
+                                        Canvas.Left="36"
+                                        Canvas.Top="-36"
+                                        Width="160"
+                                        Background="{StaticResource PhoneChromeBrush}"
+                                        CornerRadius="20">
+                                    <TextBlock Height="96"
+                                               FontFamily="{StaticResource PhoneFontFamilySemiBold}"
+                                               FontSize="{StaticResource PhoneFontSizeExtraExtraLarge}"
+                                               Text="{Binding Value, Converter={StaticResource IntConverter}, RelativeSource={RelativeSource TemplatedParent}}"
+                                               TextAlignment="Center" />
+                                </Border>
+                            </Canvas>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

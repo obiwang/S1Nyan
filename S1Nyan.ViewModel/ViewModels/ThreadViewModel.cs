@@ -126,7 +126,9 @@ namespace S1Nyan.ViewModel
             get { return currentPage; }
             set
             {
-                if (value > 0 && ((totalPage > 0 && value <= totalPage) || totalPage == 0))
+                if (value > 0 && 
+                    value != currentPage &&
+                    ((totalPage > 0 && value <= totalPage) || totalPage == 0))
                 {
                     currentPage = value;
                     RefreshThread();

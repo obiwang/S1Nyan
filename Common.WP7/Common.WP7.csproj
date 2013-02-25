@@ -54,6 +54,7 @@
     <Compile Include="Converters\ValueConverter.cs" />
     <Compile Include="MyControls\ExpandableItem.cs" />
     <Compile Include="MyControls\ExpanderButton.cs" />
+    <Compile Include="MyControls\MySlider.cs" />
     <Compile Include="Net\GzipExtensions.cs" />
     <Compile Include="Net\GzipWebClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

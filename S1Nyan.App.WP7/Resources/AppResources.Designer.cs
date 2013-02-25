@@ -61,6 +61,15 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 导航.
+        /// </summary>
+        public static string AppBarButtonNavigator {
+            get {
+                return ResourceManager.GetString("AppBarButtonNavigator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 下一页.
         /// </summary>
         public static string AppBarButtonNextPage {
@@ -111,6 +120,42 @@ namespace S1Nyan.App.Resources {
         public static string AppLoading {
             get {
                 return ResourceManager.GetString("AppLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 首页.
+        /// </summary>
+        public static string NavigatorFirstPage {
+            get {
+                return ResourceManager.GetString("NavigatorFirstPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 末页.
+        /// </summary>
+        public static string NavigatorLastPage {
+            get {
+                return ResourceManager.GetString("NavigatorLastPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 页尾.
+        /// </summary>
+        public static string NavigatorPageBottom {
+            get {
+                return ResourceManager.GetString("NavigatorPageBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 页首.
+        /// </summary>
+        public static string NavigatorPageTop {
+            get {
+                return ResourceManager.GetString("NavigatorPageTop", resourceCulture);
             }
         }
         

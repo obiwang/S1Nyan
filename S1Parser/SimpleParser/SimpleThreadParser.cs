@@ -27,7 +27,7 @@ namespace S1Parser.SimpleParser
                 var threadItem = ParseThreadItem(item);
                 if (threadItem != null)
                 {
-                    threadItem.No = (theData.CurrentPage - 1) * 50 + i++;
+                    threadItem.No = (theData.CurrentPage - 1) * S1Resource.ItemsPerThreadSimple + i++;
                     theData.Items.Add(threadItem);
                 }
             }
