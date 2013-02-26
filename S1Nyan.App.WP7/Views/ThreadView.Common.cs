@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using ImageTools;
-using ImageTools.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using Microsoft.Phone.Tasks;
 using S1Nyan.App.Resources;
 using S1Nyan.ViewModel;
-using S1Parser;
 
 namespace S1Nyan.App.Views
 {
@@ -23,6 +15,8 @@ namespace S1Nyan.App.Views
         {
             InitializeComponent();
             BuildLocalizedApplicationBar();
+
+            Loaded += (o, e) => this.SupportedOrientations = SettingView.IsAutoRotateSetting ? SupportedPageOrientation.PortraitOrLandscape : SupportedPageOrientation.Portrait;
         }
 
         /// <summary>
@@ -77,9 +71,7 @@ namespace S1Nyan.App.Views
             nextBarButton.Click += (o, e) => Vm.CurrentPage++;
             ApplicationBar.Buttons.Add(nextBarButton);
 
-            // Create a new menu item with the localized string from AppResources.
-            ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
-            ApplicationBar.MenuItems.Add(appBarMenuItem);
+            ApplicationBar.MenuItems.Add(SettingView.GetSettingMenuItem());
 
             nextBarButton.IsEnabled = false;
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Net;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Navigation;
@@ -39,6 +38,8 @@ namespace S1Nyan.App.Views
         {
             InitializeComponent();
             BuildLocalizedApplicationBar();
+
+            Loaded += (o, e) => this.SupportedOrientations = SettingView.IsAutoRotateSetting ? SupportedPageOrientation.PortraitOrLandscape : SupportedPageOrientation.Portrait;
         }
 
         /// <summary>
@@ -97,9 +98,7 @@ namespace S1Nyan.App.Views
             nextBarButton.Click += (o, e) =>  Vm.CurrentPage++; 
             ApplicationBar.Buttons.Add(nextBarButton);
 
-            // Create a new menu item with the localized string from AppResources.
-            ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.AppBarMenuItemText);
-            ApplicationBar.MenuItems.Add(appBarMenuItem);
+            ApplicationBar.MenuItems.Add(SettingView.GetSettingMenuItem());
 
             preBarButton.IsEnabled = false;
             nextBarButton.IsEnabled = false;

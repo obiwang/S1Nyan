@@ -1,0 +1,45 @@
+﻿<phone:PhoneApplicationPage x:Class="S1Nyan.App.SettingView"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            d:DesignHeight="768"
+                            d:DesignWidth="480"
+                            shell:SystemTray.IsVisible="True"
+                            mc:Ignorable="d">
+
+    <!--  LayoutRoot is the root grid where all page content is placed  -->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <!--  Pivot Control  -->
+        <controls:Pivot Title="{Binding LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}">
+            <!--  Pivot item one  -->
+            <controls:PivotItem Header="{Binding LocalizedResources.SettingPage, Source={StaticResource LocalizedStrings}}">
+                <StackPanel Margin="12,0,12,0">
+                    <toolkit:ListPicker x:Name="setTheme" Header="{Binding LocalizedResources.SettingPageThemes, Source={StaticResource LocalizedStrings}}" />
+
+                    <toolkit:ListPicker x:Name="setShowPic" Header="{Binding LocalizedResources.SettingPageShowPics, Source={StaticResource LocalizedStrings}}" />
+
+                    <toolkit:ListPicker x:Name="setFontSize" Header="{Binding LocalizedResources.SettingPageFontsize, Source={StaticResource LocalizedStrings}}" />
+
+                    <toolkit:ToggleSwitch x:Name="setAutoRotate" Header="{Binding LocalizedResources.SettingPageAutoRotate, Source={StaticResource LocalizedStrings}}">
+
+                    </toolkit:ToggleSwitch>
+                </StackPanel>
+            </controls:PivotItem>
+
+            <!--  Pivot item two  -->
+            <controls:PivotItem Header="{Binding LocalizedResources.AboutPage, Source={StaticResource LocalizedStrings}}">
+                <Grid />
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
+
+</phone:PhoneApplicationPage>

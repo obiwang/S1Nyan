@@ -28,6 +28,9 @@ namespace S1Nyan.App
             factory.ResourceService = ServiceLocator.Current.GetInstance<IResourceService>();
             ServiceLocator.Current.GetInstance<IDataService>().ParserFactory = factory;
             SimpleIoc.Default.Register<IIndicator, Indicator>();
+
+            SettingView.InitTheme();
         }
+
     }
 }

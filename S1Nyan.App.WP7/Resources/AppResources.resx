@@ -158,4 +158,46 @@
   <data name="AppBarButtonNavigator" xml:space="preserve">
     <value>导航</value>
   </data>
+  <data name="AboutPage" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="SettingPage" xml:space="preserve">
+    <value>设置</value>
+  </data>
+  <data name="SettingPageAutoRotate" xml:space="preserve">
+    <value>自动旋转</value>
+  </data>
+  <data name="SettingPageFontsize" xml:space="preserve">
+    <value>帖子文字大小</value>
+  </data>
+  <data name="SettingPageShowPics" xml:space="preserve">
+    <value>自动显示图片</value>
+  </data>
+  <data name="SettingPageThemes" xml:space="preserve">
+    <value>主题</value>
+  </data>
+  <data name="FontSizeLarge" xml:space="preserve">
+    <value>大</value>
+  </data>
+  <data name="FontSizeMiddle" xml:space="preserve">
+    <value>中</value>
+  </data>
+  <data name="FontSizeSmall" xml:space="preserve">
+    <value>小</value>
+  </data>
+  <data name="ShowPicAlways" xml:space="preserve">
+    <value>总是</value>
+  </data>
+  <data name="ShowPicNone" xml:space="preserve">
+    <value>从不</value>
+  </data>
+  <data name="ShowPicOnlyWifi" xml:space="preserve">
+    <value>仅Wifi</value>
+  </data>
+  <data name="ThemeS1" xml:space="preserve">
+    <value>S1</value>
+  </data>
+  <data name="ThemeSystem" xml:space="preserve">
+    <value>系统</value>
+  </data>
 </root>

@@ -14,7 +14,6 @@
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}"
-                            SupportedOrientations="PortraitOrLandscape"
                             shell:SystemTray.IsVisible="True"
                             mc:Ignorable="d ignore">
     <toolkit:TransitionService.NavigationInTransition>
@@ -91,14 +90,14 @@
         </Grid>
         <Grid x:Name="Navigator"
               Grid.Row="1"
-              Opacity=".8"
+              Opacity=".9"
               Visibility="Collapsed">
             <Grid.Resources>
                 <Storyboard x:Name="ShowNavi">
-                    <DoubleAnimation Duration="0:0:0.3" From="0" Storyboard.TargetName="Navigator" Storyboard.TargetProperty="(UIElement.Opacity)" To="0.8" d:IsOptimized="True" />
+                    <DoubleAnimation Duration="0:0:0.3" From="0" Storyboard.TargetName="Navigator" Storyboard.TargetProperty="(UIElement.Opacity)" To="0.9" d:IsOptimized="True" />
                 </Storyboard>
                 <Storyboard x:Name="HideNavi">
-                    <DoubleAnimation Duration="0:0:0.3" From="0.8" Storyboard.TargetName="Navigator" Storyboard.TargetProperty="(UIElement.Opacity)" To="0" d:IsOptimized="True" />
+                    <DoubleAnimation Duration="0:0:0.3" From="0.9" Storyboard.TargetName="Navigator" Storyboard.TargetProperty="(UIElement.Opacity)" To="0" d:IsOptimized="True" />
                 </Storyboard>
                 <Style TargetType="c4f:RoundButton">
                     <Setter Property="HorizontalAlignment" Value="Center" />
@@ -109,7 +108,7 @@
             <Border x:Name="VertBorder"
                     Width="64"
                     Height="400"
-                    Margin="12,0,6,0"
+                    Margin="12,0,12,12"
                     HorizontalAlignment="Right"
                     Background="{StaticResource PhoneChromeBrush}"
                     CornerRadius="32">
@@ -137,7 +136,7 @@
             </Border>
             <Border Width="400"
                     Height="64"
-                    Margin="0,6"
+                    Margin="0,12"
                     VerticalAlignment="Bottom"
                     Background="{StaticResource PhoneChromeBrush}"
                     CornerRadius="32">

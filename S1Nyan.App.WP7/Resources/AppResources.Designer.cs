@@ -61,6 +61,15 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 关于.
+        /// </summary>
+        public static string AboutPage {
+            get {
+                return ResourceManager.GetString("AboutPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 导航.
         /// </summary>
         public static string AppBarButtonNavigator {
@@ -124,6 +133,33 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 大.
+        /// </summary>
+        public static string FontSizeLarge {
+            get {
+                return ResourceManager.GetString("FontSizeLarge", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 中.
+        /// </summary>
+        public static string FontSizeMiddle {
+            get {
+                return ResourceManager.GetString("FontSizeMiddle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 小.
+        /// </summary>
+        public static string FontSizeSmall {
+            get {
+                return ResourceManager.GetString("FontSizeSmall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 首页.
         /// </summary>
         public static string NavigatorFirstPage {
@@ -174,6 +210,96 @@ namespace S1Nyan.App.Resources {
         public static string ResourceLanguage {
             get {
                 return ResourceManager.GetString("ResourceLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 设置.
+        /// </summary>
+        public static string SettingPage {
+            get {
+                return ResourceManager.GetString("SettingPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 自动旋转.
+        /// </summary>
+        public static string SettingPageAutoRotate {
+            get {
+                return ResourceManager.GetString("SettingPageAutoRotate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 帖子文字大小.
+        /// </summary>
+        public static string SettingPageFontsize {
+            get {
+                return ResourceManager.GetString("SettingPageFontsize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 自动显示图片.
+        /// </summary>
+        public static string SettingPageShowPics {
+            get {
+                return ResourceManager.GetString("SettingPageShowPics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 主题.
+        /// </summary>
+        public static string SettingPageThemes {
+            get {
+                return ResourceManager.GetString("SettingPageThemes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 总是.
+        /// </summary>
+        public static string ShowPicAlways {
+            get {
+                return ResourceManager.GetString("ShowPicAlways", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 从不.
+        /// </summary>
+        public static string ShowPicNone {
+            get {
+                return ResourceManager.GetString("ShowPicNone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 仅Wifi.
+        /// </summary>
+        public static string ShowPicOnlyWifi {
+            get {
+                return ResourceManager.GetString("ShowPicOnlyWifi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to S1.
+        /// </summary>
+        public static string ThemeS1 {
+            get {
+                return ResourceManager.GetString("ThemeS1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 系统.
+        /// </summary>
+        public static string ThemeSystem {
+            get {
+                return ResourceManager.GetString("ThemeSystem", resourceCulture);
             }
         }
     }

@@ -20,7 +20,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="132" />
                     </Grid.ColumnDefinitions>
                     <Border Grid.Column="0"
                             Width="40"
@@ -34,7 +34,8 @@
                                                 ScaleY="1.1"
                                                 SkewY="-25" />
                         </Border.RenderTransform>
-                        <TextBlock Margin="0"
+                        <TextBlock x:Name="No"
+                                   Margin="0"
                                    HorizontalAlignment="Center"
                                    VerticalAlignment="Center"
                                    FontSize="{Binding No, Converter={StaticResource FontsizeConverter}}"
@@ -49,9 +50,12 @@
                                Style="{StaticResource PhoneTextLargeStyle}"
                                Text="{Binding Author}" />
                     <TextBlock Grid.Column="2"
+                               Height="50"
                                VerticalAlignment="Bottom"
                                Style="{StaticResource PhoneTextSubtleStyle}"
-                               Text="{Binding Date}" />
+                               Text="{Binding Date}"
+                               TextAlignment="Right"
+                               TextWrapping="Wrap" />
                 </Grid>
                 <RichTextBox x:Name="content" FontSize="25" />
             </StackPanel>

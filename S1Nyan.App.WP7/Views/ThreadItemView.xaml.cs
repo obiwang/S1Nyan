@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
+using S1Nyan.App.Utils;
 using S1Parser;
 
 namespace S1Nyan.App.Views
@@ -39,21 +40,41 @@ namespace S1Nyan.App.Views
         }
     }
 
-    public partial class ThreadItemView : UserControl
+    public partial class ThreadItemView : UserControl, IDataContextChangedHandler<ThreadItemView>
     {
+        private bool isLoaded;
         public ThreadItemView()
         {
             InitializeComponent();
+            DataContextChangedHelper<ThreadItemView>.Bind(this);
             Loaded += ViewLoaded;
+        }
+
+        public void OnDataContextChanged(ThreadItemView sender, DependencyPropertyChangedEventArgs e)
+        {
+            NewMethod();
+        }
+
+        private void NewMethod()
+        {
+            if (!isLoaded) return;
+            S1ThreadItem data = DataContext as S1ThreadItem;
+
+            content.Blocks.Clear();
+            if (data != null)
+            {
+                var p = new Paragraph();
+                p.Inlines.Add(No.Text);
+                //content.Blocks.Add(p);
+                //return;
+                content.Blocks.Add(BuildRichText(data.Content));
+            }
         }
 
         private void ViewLoaded(object sender, RoutedEventArgs e)
         {
-            S1ThreadItem data = DataContext as S1ThreadItem;
-            if (content.Blocks.Count == 0 && data != null)
-            {
-                content.Blocks.Add(BuildRichText(data.Content));
-            }
+            isLoaded = true;
+            NewMethod();
         }
 
         private static Paragraph BuildRichText(HtmlElement content)
@@ -193,5 +214,6 @@ namespace S1Nyan.App.Views
             container.Child = image;
             return container;
         }
+
     }
 }

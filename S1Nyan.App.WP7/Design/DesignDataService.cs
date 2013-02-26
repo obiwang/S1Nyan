@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using S1Nyan.Model;
 using S1Parser;
 
@@ -64,19 +65,19 @@ namespace S1Nyan.App.Design
         public IResourceService ResourceService { get; set; }
         public IParserFactory ParserFactory { get; set; }
 
-        public System.Threading.Tasks.Task<IList<S1ListItem>> GetMainListAsync()
+        public Task<IList<S1ListItem>> GetMainListAsync()
         {
-            throw new NotImplementedException();
+            return Task<IList<S1ListItem>>.Factory.StartNew(() => data);
         }
 
-        public System.Threading.Tasks.Task<S1ThreadList> GetThreadListAsync(string fid, int page)
+        public Task<S1ThreadList> GetThreadListAsync(string fid, int page)
         {
-            throw new NotImplementedException();
+            return Task<S1ThreadList>.Factory.StartNew(() => new S1ThreadList { Children = data });
         }
 
-        public System.Threading.Tasks.Task<S1ThreadPage> GetThreadDataAsync(string tid, int page)
+        public Task<S1ThreadPage> GetThreadDataAsync(string tid, int page)
         {
-            throw new NotImplementedException();
+            return Task<S1ThreadPage>.Factory.StartNew(() => thread);
         }
     }
 }
