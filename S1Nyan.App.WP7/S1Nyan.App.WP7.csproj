@@ -288,6 +288,15 @@
     <Content Include="FakeData\simple_thread.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\dym\147.gif" />
+    <Content Include="Resources\dym\148.gif" />
+    <Content Include="Resources\dym\149.gif" />
+    <Content Include="Resources\dym\150.gif" />
+    <Content Include="Resources\dym\151.gif" />
+    <Content Include="Resources\dym\152.gif" />
+    <Content Include="Resources\dym\153.gif" />
+    <Content Include="Resources\dym\154.gif" />
+    <Content Include="Resources\dym\155.gif" />
     <Content Include="Resources\face\0.gif" />
     <Content Include="Resources\face\00.gif" />
     <Content Include="Resources\face\01.gif" />
@@ -476,6 +485,13 @@
     <Content Include="Resources\face\97.gif" />
     <Content Include="Resources\face\98.gif" />
     <Content Include="Resources\face\99.gif" />
+    <Content Include="Resources\zdl\156.gif" />
+    <Content Include="Resources\zdl\157.gif" />
+    <Content Include="Resources\zdl\158.gif" />
+    <Content Include="Resources\zdl\159.gif" />
+    <Content Include="Resources\zdl\160.gif" />
+    <Content Include="Resources\zdl\161.gif" />
+    <Content Include="Resources\zdl\162.gif" />
     <Content Include="SplashScreenImage.jpg" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
