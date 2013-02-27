@@ -40,9 +40,9 @@ namespace S1Nyan.App
             showPicWhen = ShowPicWhen;
         }
 
-        private static List<string> themes = new List<string> { AppResources.ThemeS1, AppResources.ThemeSystem };
-        private static List<string> showPics = new List<string> { AppResources.ShowPicNone, AppResources.ShowPicOnlyWifi, AppResources.ShowPicAlways };
-        private static List<string> fontSizes = new List<string> { AppResources.FontSizeSmall, AppResources.FontSizeMiddle, AppResources.FontSizeLarge };
+        private static List<string> themeSource = new List<string> { AppResources.ThemeS1, AppResources.ThemeSystem };
+        private static List<string> showPicSource = new List<string> { AppResources.ShowPicNone, AppResources.ShowPicOnlyWifi, AppResources.ShowPicAlways };
+        private static List<string> fontSizeSource = new List<string> { AppResources.FontSizeSmall, AppResources.FontSizeMiddle, AppResources.FontSizeLarge };
         private static IsolatedStorageSettings settings;
 
         const string IsAutoRotateSettingKeyName = "IsEnableAutoRotate";
@@ -92,8 +92,8 @@ namespace S1Nyan.App
 
         private void InitSetFontSize()
         {
-            setFontSize.ItemsSource = fontSizes;
-            setFontSize.SelectedItem = fontSizes[(int)SettingFontSize];
+            setFontSize.ItemsSource = fontSizeSource;
+            setFontSize.SelectedItem = fontSizeSource[(int)SettingFontSize];
             setFontSize.SelectionChanged += (o, e) =>
             {
                 SettingFontSize = (SettingFontSizes)setFontSize.SelectedIndex;
@@ -102,8 +102,8 @@ namespace S1Nyan.App
 
         private void InitSetShowPic()
         {
-            setShowPic.ItemsSource = showPics;
-            setShowPic.SelectedItem = showPics[(int)ShowPicWhen];
+            setShowPic.ItemsSource = showPicSource;
+            setShowPic.SelectedItem = showPicSource[(int)ShowPicWhen];
             setShowPic.SelectionChanged += (o, e) =>
             {
                 ShowPicWhen = (SettingShowPicsWhen)setShowPic.SelectedIndex;
@@ -112,8 +112,8 @@ namespace S1Nyan.App
 
         private void InitSetTheme()
         {
-            setTheme.ItemsSource = themes;
-            setTheme.SelectedItem = themes[(int)AppTheme];
+            setTheme.ItemsSource = themeSource;
+            setTheme.SelectedItem = themeSource[(int)AppTheme];
             setTheme.SelectionChanged += (o, e) =>
             {
                 AppTheme = (SettingThemes)setTheme.SelectedIndex;
