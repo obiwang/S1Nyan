@@ -106,15 +106,6 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Menu Item.
-        /// </summary>
-        public static string AppBarMenuItemText {
-            get {
-                return ResourceManager.GetString("AppBarMenuItemText", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to S1 Nyan.
         /// </summary>
         public static string ApplicationTitle {
@@ -129,6 +120,33 @@ namespace S1Nyan.App.Resources {
         public static string AppLoading {
             get {
                 return ResourceManager.GetString("AppLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 意见反馈.
+        /// </summary>
+        public static string FeedBack {
+            get {
+                return ResourceManager.GetString("FeedBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s1nyanwp@gmail.com.
+        /// </summary>
+        public static string FeedBackEmail {
+            get {
+                return ResourceManager.GetString("FeedBackEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to S1Nyan 意见反馈.
+        /// </summary>
+        public static string FeedBackSubject {
+            get {
+                return ResourceManager.GetString("FeedBackSubject", resourceCulture);
             }
         }
         
@@ -192,6 +210,15 @@ namespace S1Nyan.App.Resources {
         public static string NavigatorPageTop {
             get {
                 return ResourceManager.GetString("NavigatorPageTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 评分 &amp; 评论.
+        /// </summary>
+        public static string RateAndComment {
+            get {
+                return ResourceManager.GetString("RateAndComment", resourceCulture);
             }
         }
         
@@ -277,7 +304,7 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 仅Wifi.
+        ///   Looks up a localized string similar to 仅连接WiFi时.
         /// </summary>
         public static string ShowPicOnlyWifi {
             get {
@@ -286,7 +313,7 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to S1.
+        ///   Looks up a localized string similar to S1主题.
         /// </summary>
         public static string ThemeS1 {
             get {
@@ -295,7 +322,7 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 系统.
+        ///   Looks up a localized string similar to 系统主题.
         /// </summary>
         public static string ThemeSystem {
             get {

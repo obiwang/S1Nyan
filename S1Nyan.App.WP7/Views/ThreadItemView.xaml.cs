@@ -52,10 +52,10 @@ namespace S1Nyan.App.Views
 
         public void OnDataContextChanged(ThreadItemView sender, DependencyPropertyChangedEventArgs e)
         {
-            NewMethod();
+            InitContent();
         }
 
-        private void NewMethod()
+        private void InitContent()
         {
             if (!isLoaded) return;
             S1ThreadItem data = DataContext as S1ThreadItem;
@@ -63,6 +63,7 @@ namespace S1Nyan.App.Views
             content.Blocks.Clear();
             if (data != null)
             {
+                content.FontSize = SettingView.ContentFontSize;
                 var p = new Paragraph();
                 p.Inlines.Add(No.Text);
                 //content.Blocks.Add(p);
@@ -74,7 +75,7 @@ namespace S1Nyan.App.Views
         private void ViewLoaded(object sender, RoutedEventArgs e)
         {
             isLoaded = true;
-            NewMethod();
+            InitContent();
         }
 
         private static Paragraph BuildRichText(HtmlElement content)
@@ -132,7 +133,7 @@ namespace S1Nyan.App.Views
         private static Inline BuildQuote(HtmlElement item)
         {
             InlineUIContainer container = new InlineUIContainer();
-            RichTextBox r = new RichTextBox { FontSize = 25, TextWrapping = TextWrapping.Wrap };
+            RichTextBox r = new RichTextBox { FontSize = SettingView.ContentFontSize, TextWrapping = TextWrapping.Wrap };
             r.HorizontalAlignment = HorizontalAlignment.Stretch;
             Grid grid = new Grid();
             grid.Margin = new Thickness(26, 12, 0, 12);

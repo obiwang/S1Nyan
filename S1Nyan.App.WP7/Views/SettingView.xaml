@@ -15,9 +15,55 @@
                             d:DesignWidth="480"
                             shell:SystemTray.IsVisible="True"
                             mc:Ignorable="d">
+    <phone:PhoneApplicationPage.Resources>
+        <Style x:Key="BGTextBlockStyle"
+               BasedOn="{StaticResource PhoneTextBlockBase}"
+               TargetType="TextBlock">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Opacity" Value="0.10" />
+            <Setter Property="Height" Value="480" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="85.333" />
+        </Style>
+        <Style x:Key="LinkButtonStyle" TargetType="HyperlinkButton">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="12, 12" />
+            <Setter Property="FontSize" Value="42.667" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="HyperlinkButton">
+                        <ContentPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </phone:PhoneApplicationPage.Resources>
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn" />
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn" />
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut" />
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut" />
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
 
     <!--  LayoutRoot is the root grid where all page content is placed  -->
-    <Grid x:Name="LayoutRoot" Background="Transparent">
+    <Grid Background="Transparent" toolkit:TiltEffect.IsTiltEnabled="True">
         <!--  Pivot Control  -->
         <controls:Pivot Title="{Binding LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}">
             <!--  Pivot item one  -->
@@ -37,7 +83,60 @@
 
             <!--  Pivot item two  -->
             <controls:PivotItem Header="{Binding LocalizedResources.AboutPage, Source={StaticResource LocalizedStrings}}">
-                <Grid />
+                <Grid>
+                    <Grid RenderTransformOrigin="0.5,0.5" >
+                    	<Grid.RenderTransform>
+                    		<CompositeTransform SkewX="-14" Rotation="15" TranslateX="-110"/>
+                    	</Grid.RenderTransform>
+                		<TextBlock Margin="0"
+                			IsHitTestVisible="False"
+                			Style="{StaticResource BGTextBlockStyle}"
+                			Text="S1在手"
+                			TextWrapping="Wrap" />
+                		<TextBlock Margin="0,112,108,0"
+                			IsHitTestVisible="False"
+                			Style="{StaticResource BGTextBlockStyle}"
+                			Text="天下我有"
+                			TextWrapping="Wrap" />
+                	</Grid>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="173"
+                        		Margin="12" Background="{StaticResource PhoneAccentBrush}"
+                                   >
+                        		<Image
+                        			Source="/Background.png" Height="176" Width="176" />
+                        	</Border>
+                            <Grid Margin="0,12">
+                                <Grid.RowDefinitions>
+                                	<RowDefinition Height="*" />
+                                	<RowDefinition Height="40" />
+                                	<RowDefinition Height="40" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0"
+                                           Style="{StaticResource PhoneTextTitle1Style}"
+                                           Text="{Binding LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" />
+                                <TextBlock x:Name="CopyRightText"
+                                           Grid.Row="1"
+                                           Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Bottom" />
+                                <TextBlock x:Name="VersionText"
+                                           Grid.Row="2"
+                                           Style="{StaticResource PhoneTextSubtleStyle}" VerticalAlignment="Bottom" />
+                            </Grid>
+                        </StackPanel>
+                        <HyperlinkButton NavigateUri="http://weibo.com/u/3204220170"
+                                         Style="{StaticResource LinkButtonStyle}"
+                                         TargetName="_blank">
+                            <TextBlock Text="@S1Nyanwp" />
+                        </HyperlinkButton>
+                        <HyperlinkButton Click="OnFeedBack" Style="{StaticResource LinkButtonStyle}">
+                            <TextBlock Text="{Binding LocalizedResources.FeedBack, Source={StaticResource LocalizedStrings}}" />
+                        </HyperlinkButton>
+                        <HyperlinkButton Click="OnRate" Style="{StaticResource LinkButtonStyle}">
+                            <TextBlock Text="{Binding LocalizedResources.RateAndComment, Source={StaticResource LocalizedStrings}}" />
+                        </HyperlinkButton>
+                    </StackPanel>
+                </Grid>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>

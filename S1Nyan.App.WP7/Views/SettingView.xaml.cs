@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
+using System.Reflection;
 using System.Windows;
-using System.Windows.Navigation;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Shell;
+using Microsoft.Phone.Tasks;
 using S1Nyan.App.Resources;
-using S1Nyan.App.Utils;
 
 namespace S1Nyan.App
 {
@@ -36,6 +37,7 @@ namespace S1Nyan.App
         static SettingView()
         {
             settings = IsolatedStorageSettings.ApplicationSettings;
+            showPicWhen = ShowPicWhen;
         }
 
         private static List<string> themes = new List<string> { AppResources.ThemeS1, AppResources.ThemeSystem };
@@ -61,11 +63,13 @@ namespace S1Nyan.App
         {
             InitializeComponent();
             InitSetting();
+            DataContext = this;
         }
 
         private void InitSetting()
         {
-            
+            InitAbout();
+
             InitSetTheme();
 
             InitSetShowPic();
@@ -89,17 +93,11 @@ namespace S1Nyan.App
         private void InitSetFontSize()
         {
             setFontSize.ItemsSource = fontSizes;
-            setFontSize.SelectedItem = fontSizes[(int)ContentFontSize];
+            setFontSize.SelectedItem = fontSizes[(int)SettingFontSize];
             setFontSize.SelectionChanged += (o, e) =>
             {
-                ContentFontSize = (SettingFontSizes)setFontSize.SelectedIndex;
-                ApplyFontSize();
+                SettingFontSize = (SettingFontSizes)setFontSize.SelectedIndex;
             };
-        }
-
-        private void ApplyFontSize()
-        {
-            
         }
 
         private void InitSetShowPic()
@@ -279,6 +277,24 @@ namespace S1Nyan.App
                 if (AddOrUpdateValue<int>(ShowPicWhenKeyName, (int)value))
                 {
                     Save();
+                    showPicWhen = value;
+                }
+            }
+        }
+
+        private static SettingShowPicsWhen showPicWhen;
+        public static bool IsShowPic
+        {
+            get
+            {
+                switch(showPicWhen)
+                {
+                    case SettingShowPicsWhen.Always:
+                        return true;
+                    case SettingShowPicsWhen.None:
+                        return false;
+                    default:
+                        return DeviceNetworkInformation.IsWiFiEnabled;
                 }
             }
         }
@@ -286,7 +302,7 @@ namespace S1Nyan.App
         /// <summary>
         /// Property to get and set a ListBox Setting Key.
         /// </summary>
-        public static SettingFontSizes ContentFontSize
+        public static SettingFontSizes SettingFontSize
         {
             get
             {
@@ -297,11 +313,64 @@ namespace S1Nyan.App
                 if (AddOrUpdateValue<int>(ContentFontSizeKeyName, (int)value))
                 {
                     Save();
+                    contentFontSize = 0;
                 }
             }
         }
+
+        private static double contentFontSize = 0;
+        public static double ContentFontSize {
+            get
+            {
+                if (contentFontSize == 0) 
+                    contentFontSize = GetFontSize();
+                return contentFontSize;
+            }
+        }
+
+        private static double GetFontSize()
+        {
+            switch(SettingFontSize)
+            {
+                case SettingFontSizes.FontSizeLarge:
+                    return 32;
+                case SettingFontSizes.FontSizeSmall:
+                    return 22.667;
+                default:
+                    return 25.333;
+            }
+        }
+
 #endregion
 
+        #region About section
+
+        private void InitAbout()
+        {
+            object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+            if (attributes.Length > 0)
+                CopyRightText.Text = ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
+
+            var version = new AssemblyName(Assembly.GetExecutingAssembly().FullName).Version;
+            VersionText.Text = string.Format("v {0}.{1}", version.Major, version.Minor);
+        }
+
+        private void OnFeedBack(object sender, RoutedEventArgs e)
+        {
+            EmailComposeTask emailComposeTask = new EmailComposeTask();
+
+            emailComposeTask.Subject = AppResources.FeedBackSubject;
+            emailComposeTask.To = AppResources.FeedBackEmail;
+
+            emailComposeTask.Show();
+        }
+
+        private void OnRate(object sender, RoutedEventArgs e)
+        {
+            new MarketplaceReviewTask().Show();
+        }
+
+        #endregion
 
         internal static ApplicationBarMenuItem GetSettingMenuItem()
         {

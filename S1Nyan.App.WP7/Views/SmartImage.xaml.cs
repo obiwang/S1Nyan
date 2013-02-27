@@ -114,7 +114,7 @@ namespace S1Nyan.App.Views
         protected void ShowImage()
         {
             if (UriSource == null) return;
-            if (!IsAutoDownload) return;
+            if (!IsAutoDownload && !SettingView.IsShowPic) return;
 
             try
             {

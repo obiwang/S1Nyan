@@ -201,7 +201,9 @@ namespace S1Nyan.App
                 //
                 // If a compiler error is hit then ResourceLanguage is missing from
                 // the resource file.
-                RootFrame.Language = XmlLanguage.GetLanguage(AppResources.ResourceLanguage);
+
+                //set display language to zh-CN always
+                RootFrame.Language = XmlLanguage.GetLanguage("zh-CN"/* AppResources.ResourceLanguage*/);
 
                 //AppResources.ResourceLanguage
                 // Set the FlowDirection of all elements under the root frame based

@@ -131,9 +131,6 @@
   <data name="AppBarButtonRefresh" xml:space="preserve">
     <value>刷新</value>
   </data>
-  <data name="AppBarMenuItemText" xml:space="preserve">
-    <value>Menu Item</value>
-  </data>
   <data name="AppBarButtonNextPage" xml:space="preserve">
     <value>下一页</value>
   </data>
@@ -192,12 +189,24 @@
     <value>从不</value>
   </data>
   <data name="ShowPicOnlyWifi" xml:space="preserve">
-    <value>仅Wifi</value>
+    <value>仅连接WiFi时</value>
   </data>
   <data name="ThemeS1" xml:space="preserve">
-    <value>S1</value>
+    <value>S1主题</value>
   </data>
   <data name="ThemeSystem" xml:space="preserve">
-    <value>系统</value>
+    <value>系统主题</value>
+  </data>
+  <data name="FeedBack" xml:space="preserve">
+    <value>意见反馈</value>
+  </data>
+  <data name="RateAndComment" xml:space="preserve">
+    <value>评分 &amp; 评论</value>
+  </data>
+  <data name="FeedBackEmail" xml:space="preserve">
+    <value>s1nyanwp@gmail.com</value>
+  </data>
+  <data name="FeedBackSubject" xml:space="preserve">
+    <value>S1Nyan 意见反馈</value>
   </data>
 </root>

@@ -17,7 +17,20 @@
         <local:LocalizedStrings x:Key="LocalizedStrings" />
         <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
         <converter:BooleanToVisibilityConverter x:Key="BoolToVisConv" />
+
+        <Style x:Key="HyperlinkEmptyStyle" TargetType="HyperlinkButton">
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="HyperlinkButton">
+                        <ContentPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Application.Resources>
+
     <Application.ApplicationLifetimeObjects>
         <!--  Required object that handles lifetime events for the application  -->
         <shell:PhoneApplicationService Activated="Application_Activated"
