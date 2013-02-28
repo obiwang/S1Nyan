@@ -15,7 +15,7 @@ namespace S1Parser
         public int CurrentPage { get; set; }
     }
 
-    public class S1ThreadItem
+    public class S1ThreadItem : IEnumerable<HtmlElement>
     {
         public int No { get; set; }
 
@@ -23,7 +23,17 @@ namespace S1Parser
 
         public string Date { get; set; }
 
-        public HtmlElement Content { get; set; }
+        public IEnumerable<HtmlElement> Content { get; set; }
+
+        public IEnumerator<HtmlElement> GetEnumerator()
+        {
+            return Content.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
     }
 
 }

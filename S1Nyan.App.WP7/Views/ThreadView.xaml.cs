@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections;
+using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
 using S1Nyan.App.Utils;
@@ -31,7 +32,8 @@ namespace S1Nyan.App.Views
         private void VertSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int index = (int)(VertSlider.Value + .5) % 50;
-            //theList.ScrollTo(theList.)
+            var item = (theList.ItemsSource as IList)[index];
+            theList.ScrollToGroup(item);
         }
 
         private void theList_ManipulationStarted(object sender, System.Windows.Input.ManipulationStartedEventArgs e)

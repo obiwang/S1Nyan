@@ -84,44 +84,49 @@
             <!--  Pivot item two  -->
             <controls:PivotItem Header="{Binding LocalizedResources.AboutPage, Source={StaticResource LocalizedStrings}}">
                 <Grid>
-                    <Grid RenderTransformOrigin="0.5,0.5" >
-                    	<Grid.RenderTransform>
-                    		<CompositeTransform SkewX="-14" Rotation="15" TranslateX="-110"/>
-                    	</Grid.RenderTransform>
-                		<TextBlock Margin="0"
-                			IsHitTestVisible="False"
-                			Style="{StaticResource BGTextBlockStyle}"
-                			Text="S1在手"
-                			TextWrapping="Wrap" />
-                		<TextBlock Margin="0,112,108,0"
-                			IsHitTestVisible="False"
-                			Style="{StaticResource BGTextBlockStyle}"
-                			Text="天下我有"
-                			TextWrapping="Wrap" />
-                	</Grid>
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <CompositeTransform Rotation="15"
+                                                SkewX="-14"
+                                                TranslateX="-110" />
+                        </Grid.RenderTransform>
+                        <TextBlock Margin="0"
+                                   IsHitTestVisible="False"
+                                   Style="{StaticResource BGTextBlockStyle}"
+                                   Text="S1在手"
+                                   TextWrapping="Wrap" />
+                        <TextBlock Margin="0,112,108,0"
+                                   IsHitTestVisible="False"
+                                   Style="{StaticResource BGTextBlockStyle}"
+                                   Text="天下我有"
+                                   TextWrapping="Wrap" />
+                    </Grid>
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Border Width="173"
-                        		Margin="12" Background="{StaticResource PhoneAccentBrush}"
-                                   >
-                        		<Image
-                        			Source="/Background.png" Height="176" Width="176" />
-                        	</Border>
+                                    Margin="12"
+                                    Background="{StaticResource PhoneAccentBrush}">
+                                <Image Width="176"
+                                       Height="176"
+                                       Source="/Background.png" />
+                            </Border>
                             <Grid Margin="0,12">
                                 <Grid.RowDefinitions>
-                                	<RowDefinition Height="*" />
-                                	<RowDefinition Height="40" />
-                                	<RowDefinition Height="40" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0"
                                            Style="{StaticResource PhoneTextTitle1Style}"
                                            Text="{Binding LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" />
                                 <TextBlock x:Name="CopyRightText"
                                            Grid.Row="1"
-                                           Style="{StaticResource PhoneTextNormalStyle}" VerticalAlignment="Bottom" />
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource PhoneTextNormalStyle}" />
                                 <TextBlock x:Name="VersionText"
                                            Grid.Row="2"
-                                           Style="{StaticResource PhoneTextSubtleStyle}" VerticalAlignment="Bottom" />
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource PhoneTextSubtleStyle}" />
                             </Grid>
                         </StackPanel>
                         <HyperlinkButton NavigateUri="http://weibo.com/u/3204220170"

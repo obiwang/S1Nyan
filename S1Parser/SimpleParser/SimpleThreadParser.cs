@@ -47,8 +47,54 @@ namespace S1Parser.SimpleParser
             threadItem.Date = head.Descendants().Last().PlainText();
 
             var content = trs.ElementAt(1).Element("td");
-            threadItem.Content = content;
+
+            if (content != null)
+                threadItem.Content = ReGroupContent(content.Descendants());
             return threadItem;
+        }
+
+        private IEnumerable<HtmlElement> ReGroupContent(IEnumerable<HtmlElement> elements)
+        {
+            bool hasContent = false;
+            HtmlElement lastGroup = null;
+            bool lastIsBr = false;
+            foreach (var item in elements)
+            {
+                if (!hasContent && item.Name == "h1")
+                {   //ignore title
+                    hasContent = true;
+                    continue; 
+                }
+
+                if (lastGroup == null)
+                    lastGroup = new HtmlElement("Paragraph", children: new List<HtmlElement>());
+
+                if (lastIsBr)
+                {
+                    if (item.Name != "br")
+                    {
+                        lastIsBr = false;
+                        if (lastGroup.Children.Count != 0)
+                        {
+                            yield return lastGroup;
+                            lastGroup = new HtmlElement("Paragraph", children: new List<HtmlElement>());
+                        }
+                    }
+                    lastGroup.Children.Add(item);
+                }
+                else if (item.Name == "br")
+                {
+                    lastIsBr = true;
+                    yield return lastGroup;
+                    lastGroup = null;
+                }
+                else
+                {
+                    lastIsBr = false;
+                    lastGroup.Children.Add(item);
+                }
+            }
+            yield return lastGroup;
         }
 
         static Regex _totalPagePattern = new Regex(@"Pages: \( (?<total>\d+) total \)");

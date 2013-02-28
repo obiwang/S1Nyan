@@ -12,6 +12,7 @@ namespace S1Nyan.Model
     {
         const string defaultDir = "cache";
 
+        // TODO fix cache issue with <img src="images/post/smile/goose/13.gif" />
         public static async Task<Stream> GetResourceStreamStatic(Uri uri, string path = null, int expireDays = 3)
         {
             Stream s = null;
@@ -26,21 +27,25 @@ namespace S1Nyan.Model
 
                 if (local.FileExists(path))
                 {
-                    if(expireDays >0 && (DateTime.Now - local.GetLastWriteTime(path) < TimeSpan.FromDays(expireDays)))
-                        return new IsolatedStorageFileStream(path, FileMode.Open, local);
+                    if (expireDays < 0 || (DateTime.Now - local.GetLastWriteTime(path) < TimeSpan.FromDays(expireDays)))
+                    {
+                        return new IsolatedStorageFileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, local);
+                    }
                 }
             }
             s = await new GzipWebClient().OpenReadTaskAsync(uri);
             if (path != null && s != null)
             {
-                var fileStream = new IsolatedStorageFileStream(path, FileMode.OpenOrCreate, local);
-                using (var isoFileWriter = new StreamWriter(fileStream))
+                using (var fileStream = new IsolatedStorageFileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read, local))
                 {
-                    var reader = new StreamReader(s);
-                    isoFileWriter.Write(reader.ReadToEnd());
-                    isoFileWriter.Flush();
-                    s.Seek(0, SeekOrigin.Begin);
+                    using (var isoFileWriter = new BinaryWriter(fileStream))
+                    {
+                        var reader = new BinaryReader(s);
+                        isoFileWriter.Write(reader.ReadBytes((int)s.Length));
+                        isoFileWriter.Flush();
+                    }
                 }
+                s.Seek(0, SeekOrigin.Begin);
             }
             return s;
         }

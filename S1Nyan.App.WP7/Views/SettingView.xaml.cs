@@ -352,7 +352,7 @@ namespace S1Nyan.App
                 CopyRightText.Text = ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
 
             var version = new AssemblyName(Assembly.GetExecutingAssembly().FullName).Version;
-            VersionText.Text = string.Format("v {0}.{1}", version.Major, version.Minor);
+            VersionText.Text = string.Format("v {0}.{1}.{2}", version.Major, version.Minor, version.Build);
         }
 
         private void OnFeedBack(object sender, RoutedEventArgs e)

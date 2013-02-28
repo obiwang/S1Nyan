@@ -8,6 +8,7 @@
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                             xmlns:my="clr-namespace:MyControls;assembly=Common.WP7"
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:primitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls.Toolkit"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
                             DataContext="{Binding Thread, Source={StaticResource Locator}}"
@@ -76,18 +77,106 @@
         </Grid>
 
         <!--  ContentPanel - place additional content here  -->
-        <Grid Grid.Row="1" Margin="6,0">
+        <Grid Grid.Row="1" Margin="12,0">
+            <Grid.Resources>
+                <local:FontsizeConverter x:Key="FontsizeConverter" />
+                <local:ContentConvert x:Key="ContentConverter" />
+            </Grid.Resources>
+
             <toolkit:LongListSelector x:Name="theList"
-                                      IsFlatList="True"
                                       ItemsSource="{Binding TheThread.Items}"
                                       ManipulationStarted="theList_ManipulationStarted">
+                <toolkit:LongListSelector.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <Grid Height="50" Margin="12,18,0,18">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="132" />
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Column="0"
+                                    Width="40"
+                                    Height="40"
+                                    Margin="0,12,0,0"
+                                    VerticalAlignment="Center"
+                                    Background="{StaticResource PhoneAccentBrush}"
+                                    RenderTransformOrigin="0.5,0.5">
+                                <Border.RenderTransform>
+                                    <CompositeTransform ScaleX="0.9"
+                                                        ScaleY="1.1"
+                                                        SkewY="-25" />
+                                </Border.RenderTransform>
+                                <TextBlock x:Name="No"
+                                           Margin="0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           FontSize="{Binding No, Converter={StaticResource FontsizeConverter}}"
+                                           Foreground="White"
+                                           Style="{StaticResource PhoneTextNormalStyle}"
+                                           Text="{Binding No}" />
+                            </Border>
+
+                            <TextBlock Grid.Column="1"
+                                       VerticalAlignment="Bottom"
+                                       Foreground="{StaticResource PhoneAccentBrush}"
+                                       Style="{StaticResource PhoneTextLargeStyle}"
+                                       Text="{Binding Author}" />
+                            <TextBlock Grid.Column="2"
+                                       Height="50"
+                                       VerticalAlignment="Bottom"
+                                       Style="{StaticResource PhoneTextSubtleStyle}"
+                                       Text="{Binding Date}"
+                                       TextAlignment="Right"
+                                       TextWrapping="Wrap" />
+                        </Grid>
+                    </DataTemplate>
+                </toolkit:LongListSelector.GroupHeaderTemplate>
+
                 <toolkit:LongListSelector.ItemTemplate>
                     <DataTemplate>
-                        <local:ThreadItemView />
+                        <local:ThreadItemContent Margin="12, 0"
+                                                 HorizontalAlignment="Left"
+                                                 Content="{Binding Converter={StaticResource ContentConverter}}"
+                                                 FontFamily="{StaticResource PhoneFontFamilyNormal}" />
                     </DataTemplate>
                 </toolkit:LongListSelector.ItemTemplate>
+
+                <toolkit:LongListSelector.Template>
+                    <ControlTemplate>
+                        <primitives:TemplatedListBox x:Name="TemplatedListBox" Background="{TemplateBinding Background}">
+                            <primitives:TemplatedListBox.ItemContainerStyle>
+                                <Style TargetType="ListBoxItem">
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListBoxItem">
+                                                <Border x:Name="LayoutRoot"
+                                                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                                        Background="{TemplateBinding Background}"
+                                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                                        BorderThickness="{TemplateBinding BorderThickness}">
+                                                    <ContentControl x:Name="ContentContainer"
+                                                                    Margin="{TemplateBinding Padding}"
+                                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                    Content="{TemplateBinding Content}"
+                                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                                    Foreground="{TemplateBinding Foreground}" />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </primitives:TemplatedListBox.ItemContainerStyle>
+                        </primitives:TemplatedListBox>
+                    </ControlTemplate>
+                </toolkit:LongListSelector.Template>
             </toolkit:LongListSelector>
         </Grid>
+
+
+        <!--  Page navigator controls  -->
         <Grid x:Name="Navigator"
               Grid.Row="1"
               Opacity=".9"
@@ -111,7 +200,8 @@
                     Margin="12,0,12,12"
                     HorizontalAlignment="Right"
                     Background="{StaticResource PhoneChromeBrush}"
-                    CornerRadius="32">
+                    CornerRadius="32"
+                    Visibility="Collapsed">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="64" />

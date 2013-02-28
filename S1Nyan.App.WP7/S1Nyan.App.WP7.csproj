@@ -196,9 +196,7 @@
     <Compile Include="Views\SmartImage.xaml.cs">
       <DependentUpon>SmartImage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ThreadItemView.xaml.cs">
-      <DependentUpon>ThreadItemView.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Views\ThreadItemContent.cs" />
     <Compile Include="Views\ThreadList.Common.cs">
       <DependentUpon>ThreadList.xaml</DependentUpon>
     </Compile>
@@ -244,10 +242,6 @@
     <Page Include="Views\SmartImage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ThreadItemView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ThreadList.xaml">
       <SubType>Form</SubType>

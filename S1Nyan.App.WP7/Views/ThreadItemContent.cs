@@ -1,11 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
-using S1Nyan.App.Utils;
+using Microsoft.Phone.Tasks;
 using S1Parser;
 
 namespace S1Nyan.App.Views
@@ -16,7 +18,7 @@ namespace S1Nyan.App.Views
         {
             int count = value.ToString().Length;
             double size = 28;
-            switch(count)
+            switch (count)
             {
                 case 1:
                 case 2:
@@ -40,42 +42,64 @@ namespace S1Nyan.App.Views
         }
     }
 
-    public partial class ThreadItemView : UserControl, IDataContextChangedHandler<ThreadItemView>
+    public class ContentConvert : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (value is HtmlElement)
+            {
+                return ThreadItemContent.BuildParagraph((HtmlElement)value);
+            }
+            else return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class ThreadItemContent : ContentControl
     {
         private bool isLoaded;
-        public ThreadItemView()
+        public ThreadItemContent()
         {
-            InitializeComponent();
-            DataContextChangedHelper<ThreadItemView>.Bind(this);
+            FontSize = SettingView.ContentFontSize;
             Loaded += ViewLoaded;
-        }
-
-        public void OnDataContextChanged(ThreadItemView sender, DependencyPropertyChangedEventArgs e)
-        {
-            InitContent();
-        }
-
-        private void InitContent()
-        {
-            if (!isLoaded) return;
-            S1ThreadItem data = DataContext as S1ThreadItem;
-
-            content.Blocks.Clear();
-            if (data != null)
-            {
-                content.FontSize = SettingView.ContentFontSize;
-                var p = new Paragraph();
-                p.Inlines.Add(No.Text);
-                //content.Blocks.Add(p);
-                //return;
-                content.Blocks.Add(BuildRichText(data.Content));
-            }
         }
 
         private void ViewLoaded(object sender, RoutedEventArgs e)
         {
+            FontSize = SettingView.ContentFontSize;
             isLoaded = true;
-            InitContent();
+        }
+
+        public static FrameworkElement BuildParagraph(HtmlElement paragraph)
+        {
+            if (paragraph.Descendants().Count() == 1)
+            {
+                var e = paragraph.Element();
+
+                if (e.Type == HtmlElementType.Text)
+                    return new TextBlock { Text = HttpUtility.HtmlDecode(paragraph.InnerHtml.Trim()), TextWrapping = TextWrapping.Wrap };
+                switch (e.Name)
+                {
+                    case "br":
+                        return new TextBlock();
+                    case "img":
+                        return BuildImgControl(e);
+                    case "blockquote":
+                        if (e.Element("div") != null)
+                            return BuildQuote(e);
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+            RichTextBox r = new RichTextBox { FontSize = SettingView.ContentFontSize, Margin = new Thickness(-12, 0, -12, 0) };
+            r.Blocks.Add(BuildRichText(paragraph));
+            return r;
         }
 
         private static Paragraph BuildRichText(HtmlElement content)
@@ -85,8 +109,6 @@ namespace S1Nyan.App.Views
 
             foreach (var item in content.Descendants())
             {
-                if (item.Name == "h1" && p.Inlines.Count == 0) continue; //ignore headline
-
                 p.Inlines.Add(BuildInlines(item));
             }
 
@@ -115,10 +137,6 @@ namespace S1Nyan.App.Views
                 case "i":
                     span.FontStyle = FontStyles.Italic;
                     break;
-                case "blockquote":
-                    if (item.Element("div") != null)
-                        return BuildQuote(item);
-                    break;
                 default:
                     break;
             }
@@ -130,40 +148,43 @@ namespace S1Nyan.App.Views
             return span;
         }
 
-        private static Inline BuildQuote(HtmlElement item)
+        private static FrameworkElement BuildQuote(HtmlElement item)
         {
-            InlineUIContainer container = new InlineUIContainer();
-            RichTextBox r = new RichTextBox { FontSize = SettingView.ContentFontSize, TextWrapping = TextWrapping.Wrap };
-            r.HorizontalAlignment = HorizontalAlignment.Stretch;
             Grid grid = new Grid();
             grid.Margin = new Thickness(26, 12, 0, 12);
+
             var rect = new System.Windows.Shapes.Rectangle();
             rect.StrokeDashArray = new DoubleCollection { 4, 6 };
             rect.Stroke = new SolidColorBrush(Colors.Gray);
             rect.Stretch = Stretch.Fill;
             grid.Children.Add(rect);
-            grid.Children.Add(r);
-            container.Child = grid;
 
+            StackPanel panel = new StackPanel();
+            panel.Margin = new Thickness(12);
+            grid.Children.Add(panel);
+
+            SolidColorBrush gray = new SolidColorBrush(Colors.Gray);
             foreach (var div in item.Descendants())
             {
                 if ("quote" == div.Attributes["class"])
                 {
-                    var p = new Paragraph();
-                    Italic italic = new Italic();
-                    italic.Inlines.Add(div.InnerHtml);
-                    italic.FontSize = 23;
-                    p.Inlines.Add(italic);
-                    r.Blocks.Add(p);
+                    var text = new TextBlock { Text = div.InnerHtml };
+                    text.Foreground = gray;
+                    text.FontStyle = FontStyles.Italic;
+                    panel.Children.Add(text);
                 }
                 else if ("text" == div.Attributes["class"])
                 {
-                    var p = BuildRichText(div);
-                    p.Foreground = new SolidColorBrush(Colors.Gray);
-                    r.Blocks.Add(p);
+                    //foreach (var e in div.Descendants())
+                    {
+                        FrameworkElement p = BuildParagraph(div);
+                        if (p is TextBlock) (p as TextBlock).Foreground = gray;
+                        if (p is RichTextBox) (p as RichTextBox).Foreground = gray;
+                        panel.Children.Add(p);
+                    }
                 }
             }
-            return container;
+            return grid;
         }
 
         private static Inline BuildLink(HtmlElement item)
@@ -173,6 +194,18 @@ namespace S1Nyan.App.Views
             var aText = item.PlainText();
             if (url == null || aText.Length == 0) return link;
 
+            if (url.ToLower().StartsWith("mailto:"))
+            {
+                link.Click += (o, e) =>
+                {
+                    EmailComposeTask emailComposeTask = new EmailComposeTask();
+
+                    emailComposeTask.To = url.Substring(url.IndexOf(':') + 1);
+
+                    emailComposeTask.Show();
+                };
+            }
+
             S1Resource.GetAbsoluteUrl(ref url);
             var viewParam = S1Resource.GetThreadParamFromUrl(url);
             if (viewParam != null)
@@ -180,6 +213,7 @@ namespace S1Nyan.App.Views
                 Run header = new Run();
                 header.Text = "<S1: ";
                 header.FontStyle = FontStyles.Italic;
+                header.FontSize = SettingView.ContentFontSize * .8;
                 link.Inlines.Add(header);
                 link.Inlines.Add(aText);
                 link.Inlines.Add(" >");
@@ -200,21 +234,28 @@ namespace S1Nyan.App.Views
         private static InlineUIContainer BuildImg(HtmlElement item)
         {
             InlineUIContainer container = new InlineUIContainer();
+
+            var img = BuildImgControl(item);
+            if (img != null)
+                container.Child = img;
+            return container;
+        }
+
+        private static SmartImage BuildImgControl(HtmlElement item)
+        {
             var url = item.Attributes["src"];
-            if (url == null) return container;
+            if (url == null) return null;
 
             S1Resource.GetAbsoluteUrl(ref url);
             bool isEmotion = S1Resource.IsEmotion(url);
 
             //order matters! set IsAutoDownload first;
             var image = new SmartImage { IsAutoDownload = isEmotion, UriSource = url };
-            if (isEmotion) 
+            if (isEmotion)
                 image.Margin = new Thickness(0, 0, 0, -4);
-            else 
+            else
                 image.Margin = new Thickness(6);
-            container.Child = image;
-            return container;
+            return image;
         }
-
     }
 }
