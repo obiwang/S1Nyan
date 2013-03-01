@@ -39,7 +39,7 @@ namespace S1Nyan.App
             AppConfig.Setup();
 
             // Show graphics profiling information while debugging.
-            //if (Debugger.IsAttached)
+            if (Debugger.IsAttached)
             {
                 // Display the current frame rate counters.
                 Application.Current.Host.Settings.EnableFrameRateCounter = true;

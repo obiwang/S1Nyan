@@ -61,7 +61,6 @@ namespace S1Nyan.App.Views
 
     public class ThreadItemContent : ContentControl
     {
-        private bool isLoaded;
         public ThreadItemContent()
         {
             FontSize = SettingView.ContentFontSize;
@@ -71,7 +70,6 @@ namespace S1Nyan.App.Views
         private void ViewLoaded(object sender, RoutedEventArgs e)
         {
             FontSize = SettingView.ContentFontSize;
-            isLoaded = true;
         }
 
         public static FrameworkElement BuildParagraph(HtmlElement paragraph)
@@ -120,7 +118,7 @@ namespace S1Nyan.App.Views
             Span span = new Span();
             if (item.Type == HtmlElementType.Text)
             {
-                var text = item.InnerHtml.Trim();
+                var text = item.InnerHtml;//.Trim();
                 return new Run { Text = HttpUtility.HtmlDecode(text) };
             }
             switch (item.Name)
@@ -213,7 +211,6 @@ namespace S1Nyan.App.Views
                 Run header = new Run();
                 header.Text = "<S1: ";
                 header.FontStyle = FontStyles.Italic;
-                header.FontSize = SettingView.ContentFontSize * .8;
                 link.Inlines.Add(header);
                 link.Inlines.Add(aText);
                 link.Inlines.Add(" >");
@@ -221,11 +218,15 @@ namespace S1Nyan.App.Views
             }
             else
             {
-                link.NavigateUri = new Uri(url);
-                link.TargetName = "_blank";
+                try
+                {
+                    link.NavigateUri = new Uri(url);
+                    link.TargetName = "_blank";
+                }
+                catch (Exception) { };
                 link.Inlines.Add(aText);
             }
-
+            link.FontSize = SettingView.ContentFontSize * .85;
             link.Foreground = (Brush)Application.Current.Resources["PhoneAccentBrush"];
 
             return link;

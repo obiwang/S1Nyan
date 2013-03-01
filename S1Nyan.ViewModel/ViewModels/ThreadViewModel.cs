@@ -42,15 +42,6 @@ namespace S1Nyan.ViewModel
             }
         }
 
-        public string PageNumber
-        {
-            get {
-                if (TheThread != null && TheThread.TotalPage > 1)
-                    return string.Format("{0} of {1}", TheThread.CurrentPage, TheThread.TotalPage);
-                else return "";
-            }
-        }
-
         private string _tid = null;
         public void OnChangeTID(string tid, string title, int page)
         {
@@ -78,7 +69,6 @@ namespace S1Nyan.ViewModel
                 _threadpage = value;
 
                 RaisePropertyChanged(() => TheThread);
-                RaisePropertyChanged(() => PageNumber);
             }
         }
 

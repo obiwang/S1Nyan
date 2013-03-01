@@ -7,7 +7,7 @@ using S1Parser;
 
 namespace S1Nyan.App.Views
 {
-    public partial class ThreadPage
+    public partial class ThreadView
     {
         private void LastPage_Click(object sender, RoutedEventArgs e)
         {

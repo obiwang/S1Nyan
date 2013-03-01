@@ -53,11 +53,13 @@ namespace S1Nyan.App.Views
             }
         }
 
+        string idParam = null;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (e.NavigationMode == NavigationMode.Back) return;
-            string idParam, titleParam = null;
+            ThreadView.GetInfoStack().Clear();
+            if (e.NavigationMode == NavigationMode.Back && idParam != null) return;
+            string titleParam = idParam = null;
             if (NavigationContext.QueryString.TryGetValue("ID", out idParam))
             {
                 NavigationContext.QueryString.TryGetValue("Title", out titleParam);

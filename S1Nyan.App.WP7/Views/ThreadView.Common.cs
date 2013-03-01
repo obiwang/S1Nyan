@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Windows;
 using System.Windows.Navigation;
@@ -6,12 +7,13 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using S1Nyan.App.Resources;
 using S1Nyan.ViewModel;
+using System.Runtime.Serialization;
 
 namespace S1Nyan.App.Views
 {
-    public partial class ThreadPage : PhoneApplicationPage
+    public partial class ThreadView : PhoneApplicationPage
     {
-        public ThreadPage()
+        public ThreadView()
         {
             InitializeComponent();
             BuildLocalizedApplicationBar();
@@ -30,23 +32,95 @@ namespace S1Nyan.App.Views
             }
         }
 
+        [DataContract]
+        public class PageInfoItem
+        {
+            [DataMember]
+            public string id;
+            [DataMember]
+            public string title;
+            [DataMember]
+            public int page;
+        }
+
+        [DataContract]
+        public class ThreadViewPageInfo
+        {
+            [DataMember]
+            public List<PageInfoItem> Stack;
+
+            public ThreadViewPageInfo()
+            {
+                Stack = new List<PageInfoItem>();
+            }
+        }
+
+        private const string ThreadViewPageInfoKey = "ThreadViewPageInfo";
+
+        private string idParam = null, titleParam = null;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            if (e.NavigationMode == NavigationMode.Back) return;
-
-            string idParam, titleParam = null, pageParam = null;
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                if (idParam == null)
+                {
+                    var stack = GetInfoStack();
+                    if (stack.Count > 0)
+                    {
+                        var item = stack[stack.Count - 1];
+                        Vm.OnChangeTID(item.id, item.title, item.page);
+                    }
+                }
+                return;
+            }
+            string pageParam = idParam = titleParam = null;
             int page = 1;
             if (NavigationContext.QueryString.TryGetValue("ID", out idParam))
             {
                 if (NavigationContext.QueryString.TryGetValue("Title", out titleParam))
-                    HttpUtility.HtmlDecode(titleParam);
+                    titleParam = HttpUtility.HtmlDecode(titleParam);
                 if (NavigationContext.QueryString.TryGetValue("Page", out pageParam))
                 {
                     int.TryParse(pageParam, out page);
                 }
                 Vm.OnChangeTID(idParam, titleParam, page);
             }
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                var stack = GetInfoStack();
+                if (stack.Count > 0) stack.RemoveAt(stack.Count - 1);
+            }
+            else if (e.NavigationMode == NavigationMode.New)
+            {
+                var stack = GetInfoStack();
+                var item = new PageInfoItem();
+                item.id = idParam;
+                item.page = Vm.CurrentPage;
+                item.title = titleParam;
+                stack.Add(item);
+            }
+        }
+
+        public static List<PageInfoItem> GetInfoStack()
+        {
+            ThreadViewPageInfo info = null;
+            if (PhoneApplicationService.Current.State.ContainsKey(ThreadViewPageInfoKey))
+            {
+                info = PhoneApplicationService.Current.State[ThreadViewPageInfoKey] as ThreadViewPageInfo;
+            }
+            if (info == null)
+            {
+                info = new ThreadViewPageInfo();
+                PhoneApplicationService.Current.State[ThreadViewPageInfoKey] = info;
+            }
+
+            return info.Stack;
         }
 
         ApplicationBarIconButton navBarButton;
@@ -56,20 +130,21 @@ namespace S1Nyan.App.Views
             ApplicationBar = new ApplicationBar();
 
             // Create a new button and set the text value to the localized string from AppResources.
-            ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.sync.rest.png", UriKind.Relative));
-            appBarButton.Text = AppResources.AppBarButtonRefresh;
-            appBarButton.Click += (o, e) => Vm.RefreshThread();
-            ApplicationBar.Buttons.Add(appBarButton);
+            ApplicationBarIconButton refreshBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.sync.rest.png", UriKind.Relative));
+            refreshBarButton.Text = AppResources.AppBarButtonRefresh;
+            refreshBarButton.Click += (o, e) => Vm.RefreshThread();
 
             navBarButton = new ApplicationBarIconButton(navIcon);
             navBarButton.Text = AppResources.AppBarButtonNavigator;
             navBarButton.Click += ToggleNavigator;
-            ApplicationBar.Buttons.Add(navBarButton);
 
             ApplicationBarIconButton nextBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.next.rest.png", UriKind.Relative));
             nextBarButton.Text = AppResources.AppBarButtonNextPage;
             nextBarButton.Click += (o, e) => Vm.CurrentPage++;
+
+            ApplicationBar.Buttons.Add(refreshBarButton);
             ApplicationBar.Buttons.Add(nextBarButton);
+            ApplicationBar.Buttons.Add(navBarButton);
 
             ApplicationBar.MenuItems.Add(SettingView.GetSettingMenuItem());
 
