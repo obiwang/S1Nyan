@@ -112,7 +112,7 @@ namespace S1Nyan.ViewModel
         public void OnChangeFID(string fid, string title)
         {
             Title = title;
-            if (fid != null && _fid != fid)
+            if (fid != null)
             {
                 _fid = fid;
                 TotalPage = 0;
@@ -138,24 +138,11 @@ namespace S1Nyan.ViewModel
 
         public Action<int, int> PageChanged { get; set; }
 
-        private ObservableCollection<ButtonViewModel> _buttons = null;
-
-        /// <summary>
-        /// Sets and gets the Buttons property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public ObservableCollection<ButtonViewModel> Buttons
+        public override void Cleanup()
         {
-            get { return _buttons; }
-
-            set
-            {
-                if (_buttons == value) return;
-
-                _buttons = value;
-                RaisePropertyChanged(() => Buttons);
-            }
+            base.Cleanup();
+            ThreadListData = null;
+            PageChanged = null;
         }
-
     }
 }

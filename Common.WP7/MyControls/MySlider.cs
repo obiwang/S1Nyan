@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 
-namespace MyControls
+namespace ObiWang.Controls
 {
     [TemplatePart(Name = PartHorizontalThumb, Type = typeof(Thumb))]
     [TemplatePart(Name = PartVerticalThumb, Type = typeof(Thumb))]

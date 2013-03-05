@@ -13,9 +13,9 @@ namespace S1Nyan.Model
 
         public async Task<IList<S1ListItem>> GetMainListAsync()
         {
-            if (mainListData != null)
-                return mainListData;
-            return mainListData = await ParserFactory.GetMainListData();
+            if (mainListData == null)
+                mainListData = await ParserFactory.GetMainListData();
+            return mainListData;
         }
 
         public async Task<S1ThreadList> GetThreadListAsync(string fid, int page)

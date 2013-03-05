@@ -333,7 +333,7 @@ namespace S1Nyan.App
             switch(SettingFontSize)
             {
                 case SettingFontSizes.FontSizeLarge:
-                    return 32;
+                    return 28.667;
                 case SettingFontSizes.FontSizeSmall:
                     return 22.667;
                 default:

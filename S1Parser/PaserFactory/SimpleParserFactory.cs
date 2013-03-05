@@ -28,23 +28,14 @@ namespace S1Parser.PaserFactory
             return new SimpleThreadParser(s).GetData();
         }
 
-        private Uri GetMainUri()
+        protected virtual Uri GetMainUri()
         {
-#if !DEBUG
             return new Uri(S1Resource.SimpleBase);
-#else
-            return new Uri("FakeData/simple.htm", UriKind.Relative);
-#endif
         }
 
-        private Uri GetThreadListUri(string fid, int page)
+        protected virtual Uri GetThreadListUri(string fid, int page)
         {
-#if !DEBUG
-            var uri = new Uri(S1Resource.SimpleBase + string.Format("?f{0}{1}.html", fid, GetPageParam(page)));
-#else
-            var uri = new Uri("FakeData/simple_thread.htm", UriKind.Relative);
-#endif
-            return uri;
+            return new Uri(S1Resource.SimpleBase + string.Format("?f{0}{1}.html", fid, GetPageParam(page)));
         }
 
         private static string GetPageParam(int page)
@@ -52,15 +43,9 @@ namespace S1Parser.PaserFactory
             return page > 1 ? string.Format("_{0}", page) : "";
         }
 
-
-        private Uri GetThreadUri(string tid, int page)
+        protected virtual Uri GetThreadUri(string tid, int page)
         {
-#if !DEBUG
-            var uri = new Uri(S1Resource.SimpleBase + string.Format("?t{0}{1}.html", tid, GetPageParam(page)));
-#else
-            var uri = new Uri("FakeData/simple_read.htm", UriKind.Relative);
-#endif
-            return uri;
+            return new Uri(S1Resource.SimpleBase + string.Format("?t{0}{1}.html", tid, GetPageParam(page)));
         }
     }
 }

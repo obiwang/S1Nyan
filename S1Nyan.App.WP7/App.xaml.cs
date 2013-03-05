@@ -39,7 +39,7 @@ namespace S1Nyan.App
             AppConfig.Setup();
 
             // Show graphics profiling information while debugging.
-            if (Debugger.IsAttached)
+            //if (Debugger.IsAttached)
             {
                 // Display the current frame rate counters.
                 Application.Current.Host.Settings.EnableFrameRateCounter = true;
@@ -56,6 +56,8 @@ namespace S1Nyan.App
                 // Caution:- Use this under debug mode only. Application that disables user idle detection will continue to run
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
+
+                MemoryDiagnostics.MemoryDiagnosticsHelper.Start(TimeSpan.FromSeconds(.5), false);
             }
 
         }

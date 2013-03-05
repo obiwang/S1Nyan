@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls.Primitives;
 
-namespace MyControls
+namespace ObiWang.Controls
 {
     [TemplateVisualState(Name = UnexpandedState, GroupName = ExpansionStates)]
     [TemplateVisualState(Name = ExpandedState, GroupName = ExpansionStates)]

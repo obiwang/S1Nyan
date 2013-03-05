@@ -64,7 +64,7 @@ namespace S1Nyan.App.Views
             if (e.NavigationMode == NavigationMode.Back)
             {
                 if (idParam == null)
-                {
+                {   //tombstone
                     var stack = GetInfoStack();
                     if (stack.Count > 0)
                     {
@@ -89,12 +89,13 @@ namespace S1Nyan.App.Views
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
+        {   //tombstone
             base.OnNavigatedFrom(e);
             if (e.NavigationMode == NavigationMode.Back)
             {
                 var stack = GetInfoStack();
                 if (stack.Count > 0) stack.RemoveAt(stack.Count - 1);
+                Vm.Cleanup();
             }
             else if (e.NavigationMode == NavigationMode.New)
             {
@@ -102,7 +103,7 @@ namespace S1Nyan.App.Views
                 var item = new PageInfoItem();
                 item.id = idParam;
                 item.page = Vm.CurrentPage;
-                item.title = titleParam;
+                item.title = Vm.Title;
                 stack.Add(item);
             }
         }
@@ -152,9 +153,9 @@ namespace S1Nyan.App.Views
 
             Vm.PageChanged = (current, total) =>
             {
-                if (current > 1 && total > 1) 
+                if (current > 1 && total > 1)
                     FirstPage.IsEnabled = true;
-                else 
+                else
                     FirstPage.IsEnabled = false;
                 if (current < total && total > 1)
                 {

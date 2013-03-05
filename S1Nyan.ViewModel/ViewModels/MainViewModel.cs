@@ -72,8 +72,14 @@ namespace S1Nyan.ViewModel
             {
                 Util.Indicator.SetError(e.Message);
             }
+            finally
+            {
+                if (DataLoaded != null)
+                    DataLoaded();
+            }
         }
 
+        public Action DataLoaded = null;
         ////public override void Cleanup()
         ////{
         ////    // Clean up if needed

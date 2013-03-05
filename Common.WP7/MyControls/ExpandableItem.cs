@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Specialized;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
-namespace MyControls
+namespace ObiWang.Controls
 {
     [TemplatePart(Name = Expander, Type = typeof(ExpanderButton))]
     [TemplatePart(Name = ChildItems, Type = typeof(ListBox))]
@@ -23,6 +17,16 @@ namespace MyControls
         public ExpandableItem()
         {
             DefaultStyleKey = typeof(ExpandableItem);
+            Unloaded += ExpandableItem_Unloaded;
+        }
+
+        void ExpandableItem_Unloaded(object sender, RoutedEventArgs e)
+        {
+            if (_childItems != null)
+            {
+                _childItems.ItemsSource = null;
+                _childItems = null;
+            }
         }
 
         public override void OnApplyTemplate()

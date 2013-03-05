@@ -127,5 +127,12 @@ namespace S1Nyan.ViewModel
             }
         }
         public Action<int, int> PageChanged { get; set; }
+
+        public override void Cleanup()
+        {
+            base.Cleanup();
+            TheThread = null;
+            PageChanged = null;
+        }
     }
 }

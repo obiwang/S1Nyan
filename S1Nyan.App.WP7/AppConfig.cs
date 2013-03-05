@@ -1,4 +1,7 @@
-﻿using GalaSoft.MvvmLight;
+﻿#if DEBUG
+#define UseFakeData
+#endif
+using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using S1Nyan.Utils;
@@ -19,12 +22,13 @@ namespace S1Nyan.App
 
         public static void Setup()
         {
-#if DEBUG
+#if UseFakeData
             SimpleIoc.Default.Register<IResourceService, ApplicationResourceService>();
+            IParserFactory factory = new S1Parser.PaserFactory.FakeSimpleParserFactory();
 #else
             SimpleIoc.Default.Register<IResourceService, NetResourceService>();
-#endif
             IParserFactory factory = new S1Parser.PaserFactory.SimpleParserFactory();
+#endif
             factory.ResourceService = ServiceLocator.Current.GetInstance<IResourceService>();
             ServiceLocator.Current.GetInstance<IDataService>().ParserFactory = factory;
             SimpleIoc.Default.Register<IIndicator, Indicator>();

@@ -58,12 +58,28 @@ namespace S1Nyan.App.Views
         {
             base.OnNavigatedTo(e);
             ThreadView.GetInfoStack().Clear();
-            if (e.NavigationMode == NavigationMode.Back && idParam != null) return;
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+#if DEBUG
+                GC.Collect();
+#endif
+                if (idParam != null)
+                    return;
+            }
             string titleParam = idParam = null;
             if (NavigationContext.QueryString.TryGetValue("ID", out idParam))
             {
                 NavigationContext.QueryString.TryGetValue("Title", out titleParam);
                 Vm.OnChangeFID(idParam, HttpUtility.HtmlDecode(titleParam));
+            }
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                Vm.Cleanup();
             }
         }
 

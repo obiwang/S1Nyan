@@ -37,9 +37,6 @@
     </toolkit:TransitionService.NavigationOutTransition>
 
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.Resources>
-            <local:ThreadPopularityConverter xmlns:local="clr-namespace:S1Nyan.App.Views" x:Key="PopConverter" />
-        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

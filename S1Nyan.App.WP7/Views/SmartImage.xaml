@@ -79,7 +79,11 @@
         <Button x:Name="ImageHolder"
                 Click="ImageHolder_Click"
                 Style="{StaticResource HolderButtonStyle}" />
-        <Image x:Name="RealImage" Visibility="Collapsed" />
-        <it:AnimatedImage x:Name="RealImageGif" Visibility="Collapsed" />
+        <Image x:Name="RealImage"
+               Stretch="Uniform"
+               Visibility="Collapsed" />
+        <it:AnimatedImage x:Name="RealImageGif"
+                          Stretch="Uniform"
+                          Visibility="Collapsed" />
     </Grid>
 </UserControl>

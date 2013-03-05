@@ -58,6 +58,7 @@
     <Compile Include="PaserFactory\SimpleParserFactory.cs" />
     <Compile Include="S1Resource.cs" />
     <Compile Include="S1ThreadList.cs" />
+    <Compile Include="PaserFactory\FakeSimpleParserFactory.cs" />
     <Compile Include="SimpleParser\SimpleListParser.cs" />
     <Compile Include="SimpleParser\SimpleThreadListParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

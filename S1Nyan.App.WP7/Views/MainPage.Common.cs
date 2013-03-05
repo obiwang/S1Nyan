@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using ImageTools.IO.Gif;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using MyControls;
+using ObiWang.Controls;
+using S1Nyan.ViewModel;
 using S1Parser;
 
 namespace S1Nyan.App.Views
@@ -17,7 +19,33 @@ namespace S1Nyan.App.Views
             ImageTools.IO.Decoders.AddDecoder<GifDecoder>();
 
             BuildLocalizedApplicationBar();
+            if (PhoneApplicationService.Current.StartupMode == StartupMode.Launch)
+                Vm.DataLoaded += DataLoaded;
+            else
+                DataLoaded();
+
             Loaded += (o, e) => this.SupportedOrientations = SettingView.IsAutoRotateSetting ? SupportedPageOrientation.PortraitOrLandscape : SupportedPageOrientation.Portrait; 
+        }
+
+        private void DataLoaded()
+        {
+            Dispatcher.BeginInvoke(() =>
+            {
+                SystemTray.IsVisible = true;
+                Popup.Visibility = Visibility.Collapsed;
+            });
+            ApplicationBar.IsVisible = true;
+        }
+
+        /// <summary>
+        /// Gets the view's ViewModel.
+        /// </summary>
+        public MainViewModel Vm
+        {
+            get
+            {
+                return (MainViewModel)DataContext;
+            }
         }
 
         private void ListSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -50,6 +78,19 @@ namespace S1Nyan.App.Views
             // Set the page's ApplicationBar to a new instance of ApplicationBar.
             ApplicationBar = new ApplicationBar();
             ApplicationBar.Buttons.Add(SettingView.GetSettingAppBarButton());
+            ApplicationBar.IsVisible = false;
         }
+
+#if DEBUG
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.NavigationMode == System.Windows.Navigation.NavigationMode.Back)
+            {
+                GC.Collect();
+            }
+        }
+#endif
     }
 }

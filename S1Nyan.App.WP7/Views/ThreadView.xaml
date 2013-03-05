@@ -6,7 +6,7 @@
                             xmlns:ignore="http://www.ignore.com"
                             xmlns:local="clr-namespace:S1Nyan.App.Views"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                            xmlns:my="clr-namespace:MyControls;assembly=Common.WP7"
+                            xmlns:my="clr-namespace:ObiWang.Controls;assembly=Common.WP7"
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:primitives="clr-namespace:Microsoft.Phone.Controls.Primitives;assembly=Microsoft.Phone.Controls.Toolkit"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"

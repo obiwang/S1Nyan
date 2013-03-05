@@ -26,6 +26,7 @@ namespace S1Nyan.App.Views
         BitmapImage image;
         ExtendedImage gifImage;
         Stream imageStream;
+        private bool isEmotion;
 
         public int Percent
         {
@@ -89,6 +90,8 @@ namespace S1Nyan.App.Views
             if (UriSource == null) return;
 
             imageStream = null;
+            isEmotion = false;
+
             if (UriSource.ToLower().EndsWith(".gif"))
             {
                 IsGif = true;
@@ -100,11 +103,13 @@ namespace S1Nyan.App.Views
             string path = null;
             if (null != (path = S1Resource.GetEmotionPath(UriSource)))
             {
+                isEmotion = true;
                 var res = Application.GetResourceStream(new Uri("Resources/" + path, UriKind.Relative));
                 if (res != null)
                     imageStream = res.Stream;
                 else
                     imageStream = await NetResourceService.GetResourceStreamStatic(new Uri(UriSource), path, -1);
+                ImageHolder.Visibility = Visibility.Collapsed;
             }
 #endif
             Percent = 0;
@@ -132,6 +137,7 @@ namespace S1Nyan.App.Views
                         image.DownloadProgress += (o, e) => ImageDownloadProgress(e.Progress);
                         image.ImageOpened += (o, e) => ImageDownloadComplete();
                     }
+                    image.CreateOptions = BitmapCreateOptions.BackgroundCreation;
                     RealImage.Source = image;
                     RealImage.Visibility = Visibility.Visible;
                 }
@@ -196,31 +202,21 @@ namespace S1Nyan.App.Views
 
         void SmartImageSizeChanged(Size newSize)
         {
+            double zoom = isEmotion ? (SettingView.ContentFontSize / 20.0) : 1.0;
+
             if (IsGif && gifImage != null && gifImage.PixelWidth > 0)
             {
-                if (gifImage.PixelWidth < newSize.Width)
-                {
-                    RealImageGif.Width = gifImage.PixelWidth;
-                    RealImageGif.Stretch = Stretch.None;
-                }
+                if (gifImage.PixelWidth * zoom < newSize.Width)
+                    RealImageGif.Width = gifImage.PixelWidth * zoom;
                 else
-                {
                     RealImageGif.Width = newSize.Width;
-                    RealImageGif.Stretch = Stretch.Uniform;
-                }
             }
             else if (image != null && image.PixelWidth > 0)
             {
-                if (image.PixelWidth < newSize.Width)
-                {
-                    RealImage.Width = image.PixelWidth;
-                    RealImage.Stretch = Stretch.None;
-                }
+                if (image.PixelWidth * zoom < newSize.Width)
+                    RealImage.Width = image.PixelWidth * zoom;
                 else
-                {
                     RealImage.Width = newSize.Width;
-                    RealImage.Stretch = Stretch.Uniform;
-                }
             }
         }
 
