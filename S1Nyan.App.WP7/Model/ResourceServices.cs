@@ -10,7 +10,7 @@ namespace S1Nyan.Model
 {
     public class NetResourceService : IResourceService
     {
-        const string defaultDir = "cache";
+        const string tempDir = "temp\\";
 
         // TODO fix cache issue with <img src="images/post/smile/goose/13.gif" />
         public static async Task<Stream> GetResourceStreamStatic(Uri uri, string path = null, int expireDays = 3)
@@ -21,9 +21,8 @@ namespace S1Nyan.Model
             if (path != null)
             {
                 local = IsolatedStorageFile.GetUserStoreForApplication();
-                path = path.Replace('/', '\\');
-                if (!CreateDirIfNecessary(local, path))
-                    path = defaultDir;
+                path = tempDir + path.Replace('/', '\\');
+                CreateDirIfNecessary(local, path);
 
                 if (local.FileExists(path))
                 {
@@ -50,21 +49,18 @@ namespace S1Nyan.Model
             return s;
         }
 
-        private static bool CreateDirIfNecessary(IsolatedStorageFile local, string path)
+        private static void CreateDirIfNecessary(IsolatedStorageFile local, string path)
         {
-            int pos;
-            bool hasDir = false;
+            int pos = 0;
             string dir = path;
 
-            while ((pos = dir.IndexOf("\\")) != -1)
+            while ((pos = dir.IndexOf('\\', pos)) != -1)
             {
                 var dirname = dir.Substring(0, pos);
                 if (!local.DirectoryExists(dirname))
                     local.CreateDirectory(dirname);
-                hasDir = true;
-                dir = dir.Substring(pos + 1);
+                pos ++;
             }
-            return hasDir;
         }
         
         public Task<Stream> GetResourceStream(Uri uri, string path = null)
