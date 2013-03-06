@@ -1,5 +1,5 @@
-﻿
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
+
 namespace S1Parser
 {
     public static class S1Resource

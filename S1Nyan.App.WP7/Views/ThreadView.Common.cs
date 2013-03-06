@@ -61,6 +61,7 @@ namespace S1Nyan.App.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            ImageResourceManager.Reset();
             if (e.NavigationMode == NavigationMode.Back)
             {
                 if (idParam == null)
@@ -91,6 +92,7 @@ namespace S1Nyan.App.Views
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {   //tombstone
             base.OnNavigatedFrom(e);
+            ImageResourceManager.Reset();
             if (e.NavigationMode == NavigationMode.Back)
             {
                 var stack = GetInfoStack();

@@ -29,14 +29,14 @@ namespace S1Nyan.Model
                 {
                     if (expireDays < 0 || (DateTime.Now - local.GetLastWriteTime(path) < TimeSpan.FromDays(expireDays)))
                     {
-                        return new IsolatedStorageFileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, local);
+                        return local.OpenFile(path, FileMode.Open, FileAccess.Read, FileShare.Read);
                     }
                 }
             }
             s = await new GzipWebClient().OpenReadTaskAsync(uri);
             if (path != null && s != null)
             {
-                using (var fileStream = new IsolatedStorageFileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read, local))
+                using (var fileStream = local.OpenFile(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read))
                 {
                     using (var isoFileWriter = new BinaryWriter(fileStream))
                     {

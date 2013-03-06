@@ -1,16 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using ImageTools;
 using ImageTools.Controls;
-#if S1Nyan
-using Microsoft.Practices.ServiceLocation;
-using S1Nyan.Model;
-using S1Parser;
-#endif
 
 namespace S1Nyan.App.Views
 {
@@ -20,13 +12,52 @@ namespace S1Nyan.App.Views
         {
             InitializeComponent();
             SizeChanged += (o, e) => SmartImageSizeChanged(e.NewSize);
-            ImageHolder.DataContext = this;
+            DataContext = this;
+            Unloaded += OnUnload;
         }
 
-        BitmapImage image;
-        ExtendedImage gifImage;
-        Stream imageStream;
-        private bool isEmotion;
+        private void OnUnload(object sender, RoutedEventArgs e)
+        {
+            if (RealImageGif != null)
+                RealImageGif.Stop();
+        }
+
+        private AnimatedImage RealImageGif;
+        private Image RealImage;
+
+        private ImageSourceProxy proxy = null;
+        public ImageSourceProxy Proxy
+        {
+            get { return proxy; }
+            set
+            {
+                if (value != null)
+                {
+                    value.DownloadProgressChanged += LoadingProgress;
+                    value.LoadingCompleted += LoadingComplete;
+                    IsLoadingFailed = value.IsLoadingFailed;
+                }
+                else
+                {
+                    if (proxy != null)
+                    {
+                        proxy.DownloadProgressChanged -= LoadingProgress;
+                        proxy.LoadingCompleted -= LoadingComplete;
+                    }
+                }
+                proxy = value;
+            }
+        }
+
+        public bool IsLoadingFailed
+        {
+            get { return (bool)GetValue(IsLoadingFailedProperty); }
+            set { SetValue(IsLoadingFailedProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsLoadingFailed.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsLoadingFailedProperty =
+            DependencyProperty.Register("IsLoadingFailed", typeof(bool), typeof(SmartImage), new PropertyMetadata(false));
 
         public int Percent
         {
@@ -48,144 +79,34 @@ namespace S1Nyan.App.Views
         public static readonly DependencyProperty IsGifProperty =
             DependencyProperty.Register("IsGif", typeof(bool), typeof(SmartImage), new PropertyMetadata(false));
 
-        public string UriSource
+        private void LoadingComplete(object sender, EventArgs e)
         {
-            get { return (string)GetValue(UriSourceProperty); }
-            set { SetValue(UriSourceProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for UriSource.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty UriSourceProperty =
-            DependencyProperty.Register("UriSource", typeof(string), typeof(SmartImage), new PropertyMetadata(null, OnSourceChanged));
-
-
-        public bool IsAutoDownload
-        {
-            get { return (bool)GetValue(IsAutoDownloadProperty); }
-            set { SetValue(IsAutoDownloadProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for IsAutoDownload.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IsAutoDownloadProperty =
-            DependencyProperty.Register("IsAutoDownload", typeof(bool), typeof(SmartImage), new PropertyMetadata(false, OnIsAutoDownloadChanged));
-
-        private static void OnIsAutoDownloadChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            (d as SmartImage).OnIsAutoDownloadChanged();
-        }
-
-        private void OnIsAutoDownloadChanged()
-        {
-            if (ImageHolder.Visibility == Visibility.Visible && IsAutoDownload)
-                ShowImage();
-        }
-
-        private static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            (d as SmartImage).OnSourceChanged();
-        }
-
-        protected async void OnSourceChanged()
-        {
-            if (UriSource == null) return;
-
-            imageStream = null;
-            isEmotion = false;
-
-            if (UriSource.ToLower().EndsWith(".gif"))
+            if (Proxy == null) return;
+            if (IsGif = Proxy.IsGif)
             {
-                IsGif = true;
+                if (RealImageGif == null)
+                {
+                    RealImageGif = new AnimatedImage { Stretch = Stretch.Uniform };
+                    LayoutRoot.Children.Add(RealImageGif);
+                }
+                RealImageGif.Source = Proxy.GifImage;
             }
             else
-                IsGif = false;
-
-#if S1Nyan
-            string path = null;
-            if (null != (path = S1Resource.GetEmotionPath(UriSource)))
             {
-                isEmotion = true;
-                var res = Application.GetResourceStream(new Uri("Resources/" + path, UriKind.Relative));
-                if (res != null)
-                    imageStream = res.Stream;
-                else
-                    imageStream = await NetResourceService.GetResourceStreamStatic(new Uri(UriSource), path, -1);
-                ImageHolder.Visibility = Visibility.Collapsed;
-            }
-#endif
-            Percent = 0;
-            ShowImage();
-        }
-
-        protected void ShowImage()
-        {
-            if (UriSource == null) return;
-            if (!IsAutoDownload && !SettingView.IsShowPic) return;
-
-            try
-            {
-                if (!IsGif)
-                {   //try decode jpg/png
-                    if (imageStream != null)
-                    {
-                        image = new BitmapImage();
-                        image.SetSource(imageStream);
-                        ImageDownloadComplete();
-                    }
-                    else
-                    {
-                        image = new BitmapImage(new Uri(UriSource));
-                        image.DownloadProgress += (o, e) => ImageDownloadProgress(e.Progress);
-                        image.ImageOpened += (o, e) => ImageDownloadComplete();
-                    }
-                    image.CreateOptions = BitmapCreateOptions.BackgroundCreation;
-                    RealImage.Source = image;
-                    RealImage.Visibility = Visibility.Visible;
-                }
-                else
+                if (RealImage == null)
                 {
-                    if (imageStream != null)
-                    {
-                        gifImage = new ExtendedImage();
-                        gifImage.SetSource(imageStream);
-                        ImageDownloadComplete();
-                    }
-                    else
-                    {
-                        gifImage = (ExtendedImage)(new ImageConverter().Convert(new Uri(UriSource), typeof(Uri), null, null));
-                        gifImage.DownloadProgress += (o, e) => ImageDownloadProgress(e.ProgressPercentage);
-                        gifImage.DownloadCompleted += (o, e) => ImageDownloadComplete();
-                    }
-                    RealImageGif.Source = gifImage;
-                    RealImageGif.Visibility = Visibility.Visible;
+                    RealImage = new Image { Stretch = Stretch.Uniform };
+                    LayoutRoot.Children.Add(RealImage);
                 }
+                RealImage.Source = Proxy.Image;
             }
-            catch (Exception) {
-                ImageDecodeFailed();
-            }
-        }
-
-        private void ImageDecodeFailed()
-        {
-            if (!IsGif && image != null)
-#if S1Nyan
-                if (S1Resource.IsEmotion(UriSource))  //apply to emotion pics only
-#endif
-                {   //decode jpg/png failed, try gif
-                    IsGif = true;
-                    if (imageStream != null)
-                        imageStream.Seek(0, SeekOrigin.Begin);
-                    ShowImage();
-                }
-        }
-
-        private void ImageDownloadComplete()
-        {
             ImageHolder.Visibility = Visibility.Collapsed;
+            FailedFlag.Visibility = Visibility.Collapsed;
         }
 
-        private void ImageDownloadProgress(int percent)
+        private void LoadingProgress(object sender, System.Net.DownloadProgressChangedEventArgs e)
         {
-            Percent = percent;
+            Percent = e.ProgressPercentage;
         }
 
         protected override Size MeasureOverride(Size availableSize)
@@ -202,19 +123,27 @@ namespace S1Nyan.App.Views
 
         void SmartImageSizeChanged(Size newSize)
         {
-            double zoom = isEmotion ? (SettingView.ContentFontSize / 20.0) : 1.0;
+            if (Proxy == null) return;
+#if S1Nyan
+            double zoom = Proxy.IsEmotion ? (SettingView.ContentFontSize / 20.0) : 1.0;
+#else 
+            double zoom = 1;
+#endif
+            double width = Proxy.PixelWidth * zoom;
 
-            if (IsGif && gifImage != null && gifImage.PixelWidth > 0)
+            if (width == 0) return;
+
+            if (Proxy.IsGif)
             {
-                if (gifImage.PixelWidth * zoom < newSize.Width)
-                    RealImageGif.Width = gifImage.PixelWidth * zoom;
+                if (width < newSize.Width)
+                    RealImageGif.Width = width;
                 else
                     RealImageGif.Width = newSize.Width;
             }
-            else if (image != null && image.PixelWidth > 0)
+            else 
             {
-                if (image.PixelWidth * zoom < newSize.Width)
-                    RealImage.Width = image.PixelWidth * zoom;
+                if (width < newSize.Width)
+                    RealImage.Width = width;
                 else
                     RealImage.Width = newSize.Width;
             }
@@ -222,7 +151,7 @@ namespace S1Nyan.App.Views
 
         private void ImageHolder_Click(object sender, RoutedEventArgs e)
         {
-            IsAutoDownload = true;
+            if (Proxy != null) Proxy.IsForceShow = true;
         }
 
     }

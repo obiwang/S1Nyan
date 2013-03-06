@@ -17,16 +17,6 @@ namespace ObiWang.Controls
         public ExpandableItem()
         {
             DefaultStyleKey = typeof(ExpandableItem);
-            Unloaded += ExpandableItem_Unloaded;
-        }
-
-        void ExpandableItem_Unloaded(object sender, RoutedEventArgs e)
-        {
-            if (_childItems != null)
-            {
-                _childItems.ItemsSource = null;
-                _childItems = null;
-            }
         }
 
         public override void OnApplyTemplate()

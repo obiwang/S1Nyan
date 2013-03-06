@@ -177,6 +177,10 @@
     <Compile Include="SampleData\ThreadSampleData\ThreadSampleData.xaml.cs">
       <DependentUpon>ThreadSampleData.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ImageResourceManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\ImageSourceProxy.cs" />
     <Compile Include="Views\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>

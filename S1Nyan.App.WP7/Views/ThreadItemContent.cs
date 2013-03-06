@@ -251,7 +251,8 @@ namespace S1Nyan.App.Views
             bool isEmotion = S1Resource.IsEmotion(url);
 
             //order matters! set IsAutoDownload first;
-            var image = new SmartImage { IsAutoDownload = isEmotion, UriSource = url };
+            var image = new SmartImage ();
+            ImageResourceManager.SetUriSource(image, url);
             if (isEmotion)
                 image.Margin = new Thickness(0, 0, 0, -6);
             else
