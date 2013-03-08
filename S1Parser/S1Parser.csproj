@@ -40,12 +40,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action\UserAction.cs" />
     <Compile Include="Html\HtmlElement.cs" />
     <Compile Include="Html\HtmlDoc.cs" />
     <Compile Include="DataParser.cs" />
     <Compile Include="IDataParser.cs" />
     <Compile Include="IParserFactory.cs" />
     <Compile Include="IResourceService.cs" />
+    <Compile Include="IS1Client.cs" />
     <Compile Include="Net\Entities\HtmlEncodingServices.cs" />
     <Compile Include="Net\Entities\HtmlEntity.cs" />
     <Compile Include="Net\Entities\HtmlEntityDecoder.cs" />

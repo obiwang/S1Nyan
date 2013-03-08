@@ -121,7 +121,7 @@ namespace S1Nyan.App.Views
                 if (res != null)
                     SourceStream = res.Stream;
                 else
-                    SourceStream = await NetResourceService.GetResourceStreamStatic(new Uri(SourceUrl), path, -1);
+                    SourceStream = await NetResourceService.GetResourceStreamStatic(new Uri(SourceUrl), path, -1, false);
 
                 UpdateImage();
             }

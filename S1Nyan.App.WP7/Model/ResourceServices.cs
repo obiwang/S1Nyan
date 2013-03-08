@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using Coding4Fun.Toolkit.Net;
@@ -13,7 +14,7 @@ namespace S1Nyan.Model
         const string tempDir = "temp\\";
 
         // TODO fix cache issue with <img src="images/post/smile/goose/13.gif" />
-        public static async Task<Stream> GetResourceStreamStatic(Uri uri, string path = null, int expireDays = 3)
+        public static async Task<Stream> GetResourceStreamStatic(Uri uri, string path = null, int expireDays = 3, bool isS1 = true)
         {
             Stream s = null;
             IsolatedStorageFile local = null;
@@ -32,7 +33,10 @@ namespace S1Nyan.Model
                     }
                 }
             }
-            s = await new GzipWebClient().OpenReadTaskAsync(uri);
+            if (isS1)
+                s = await new S1WebClient().OpenReadTaskAsync(uri);
+            else
+                s = await new WebClient().OpenReadTaskAsync(uri);
             if (path != null && s != null)
             {
                 using (var fileStream = local.OpenFile(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read))
