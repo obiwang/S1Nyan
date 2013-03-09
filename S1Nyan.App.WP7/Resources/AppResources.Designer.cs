@@ -106,6 +106,15 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 回复.
+        /// </summary>
+        public static string AppBarButtonReply {
+            get {
+                return ResourceManager.GetString("AppBarButtonReply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to S1 Nyan.
         /// </summary>
         public static string ApplicationTitle {

@@ -8,6 +8,8 @@ namespace S1Parser
 
         public string FullLink { get; internal set; }
 
+        public string ReplyLink { get; internal set; }
+
         public List<S1ThreadItem> Items { get; set; }
 
         public int TotalPage { get; set; }

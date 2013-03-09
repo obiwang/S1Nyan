@@ -34,6 +34,8 @@ namespace S1Nyan.App
             SimpleIoc.Default.Register<IIndicator, Indicator>();
 
             SettingView.InitTheme();
+
+            ImageTools.IO.Decoders.AddDecoder<ImageTools.IO.Gif.GifDecoder>();
         }
 
     }

@@ -209,4 +209,7 @@
   <data name="FeedBackSubject" xml:space="preserve">
     <value>S1Nyan 意见反馈</value>
   </data>
+  <data name="AppBarButtonReply" xml:space="preserve">
+    <value>回复</value>
+  </data>
 </root>

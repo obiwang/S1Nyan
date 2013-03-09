@@ -17,6 +17,8 @@ namespace S1Parser.SimpleParser
             theData.Title = a.InnerHtml;
             theData.FullLink = a.Attributes["href"];
 
+            GetReplyLink(body.Element("table"));
+
             GetPageCount(body.FindElements("center").ElementAt(1));
             if (theData.CurrentPage == 0) theData.CurrentPage = 1;
 
@@ -31,6 +33,15 @@ namespace S1Parser.SimpleParser
                     theData.Items.Add(threadItem);
                 }
             }
+        }
+
+        private void GetReplyLink(HtmlElement htmlElement)
+        {
+            theData.ReplyLink = "";
+            var replylinks = from link in htmlElement.FindElements("a")
+                             where link.Attributes["href"].ToLower().StartsWith("post.php?action=reply")
+                             select link;
+            if (replylinks.Count() != 0) theData.ReplyLink = replylinks.First().Attributes["href"];
         }
 
         protected virtual S1ThreadItem ParseThreadItem(HtmlElement item)

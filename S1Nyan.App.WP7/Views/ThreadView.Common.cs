@@ -8,6 +8,8 @@ using Microsoft.Phone.Shell;
 using S1Nyan.App.Resources;
 using S1Nyan.ViewModel;
 using System.Runtime.Serialization;
+using S1Nyan.Model;
+using S1Parser.Action;
 
 namespace S1Nyan.App.Views
 {
@@ -127,6 +129,7 @@ namespace S1Nyan.App.Views
         }
 
         ApplicationBarIconButton navBarButton;
+        ApplicationBarIconButton replyButton;
         private void BuildLocalizedApplicationBar()
         {
             // Set the page's ApplicationBar to a new instance of ApplicationBar.
@@ -141,11 +144,16 @@ namespace S1Nyan.App.Views
             navBarButton.Text = AppResources.AppBarButtonNavigator;
             navBarButton.Click += ToggleNavigator;
 
+            replyButton = new ApplicationBarIconButton(replyIcon);
+            replyButton.Text = AppResources.AppBarButtonReply;
+            replyButton.Click += OnReplyButton;
+
             ApplicationBarIconButton nextBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.next.rest.png", UriKind.Relative));
             nextBarButton.Text = AppResources.AppBarButtonNextPage;
             nextBarButton.Click += (o, e) => Vm.CurrentPage++;
 
             ApplicationBar.Buttons.Add(refreshBarButton);
+            ApplicationBar.Buttons.Add(replyButton);
             ApplicationBar.Buttons.Add(nextBarButton);
             ApplicationBar.Buttons.Add(navBarButton);
 
@@ -172,8 +180,25 @@ namespace S1Nyan.App.Views
             };
         }
 
-        Uri navIcon = new Uri("/Assets/AppBar/appbar.stairs.up.horizontal.png", UriKind.Relative);
-        Uri navIconRevert = new Uri("/Assets/AppBar/appbar.stairs.up.revert.horizontal.png", UriKind.Relative);
+        private async void OnReplyButton(object sender, EventArgs e)
+        {
+#if UseLocalhost
+            var replyLink = "post.php?action=reply&fid=2&tid=1";
+#else
+            var replyLink = Vm.TheThread.ReplyLink;
+#endif
+            var v = SettingView.VerifyString;
+            if (v == null) return;
+            var s = await new S1WebClient().Reply(v,
+                reletivePostUrl: replyLink,
+                content: "Reply test @" + DateTime.Now.ToShortTimeString(),
+                signature: SettingView.GetSignature());
+        }
+
+        static Uri replyIcon = new Uri("/Assets/AppBar/appbar.reply.email.png", UriKind.Relative);
+        static Uri replyFullIcon = new Uri("/Assets/AppBar/appbar.quill.png", UriKind.Relative);
+        static Uri navIcon = new Uri("/Assets/AppBar/appbar.stairs.up.horizontal.png", UriKind.Relative);
+        static Uri navIconRevert = new Uri("/Assets/AppBar/appbar.stairs.up.revert.horizontal.png", UriKind.Relative);
         bool IsNavigatorVisible { get { return Navigator.Visibility == Visibility.Visible; } }
         private void ToggleNavigator(object sender, EventArgs e)
         {
