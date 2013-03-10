@@ -79,15 +79,19 @@ namespace S1Nyan.ViewModel
             Util.Indicator.SetLoading();
             try
             {
-                TheThread = await _dataService.GetThreadDataAsync(_tid, CurrentPage);
-                TotalPage = TheThread.TotalPage;
-                Title = TheThread.Title;
-
-                if (PageChanged != null)
+                var temp = await _dataService.GetThreadDataAsync(_tid, CurrentPage);
+                if (temp.CurrentPage == CurrentPage)
                 {
-                    PageChanged(CurrentPage, TotalPage);
+                    TheThread = temp;
+                    TotalPage = TheThread.TotalPage;
+                    Title = TheThread.Title;
+
+                    if (PageChanged != null)
+                    {
+                        PageChanged(CurrentPage, TotalPage);
+                    }
+                    Util.Indicator.SetBusy(false);
                 }
-                Util.Indicator.SetBusy(false);
             }
             catch (Exception e)
             {
@@ -110,7 +114,8 @@ namespace S1Nyan.ViewModel
             }
         }
 
-        int currentPage;
+        //may change during async actions, disable optimization
+        volatile int currentPage;
         public int CurrentPage
         {
             get { return currentPage; }

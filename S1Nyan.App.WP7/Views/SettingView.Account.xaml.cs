@@ -1,6 +1,8 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Phone.Controls;
+using S1Nyan.App.Resources;
 using S1Nyan.ViewModel;
 
 namespace S1Nyan.Views
@@ -13,7 +15,7 @@ namespace S1Nyan.Views
         private void InitAccount()
         {
             if (UserViewModel.Current.Uid != null)
-                stackPanel.SetValue(Canvas.TopProperty, -350.0);
+                stackPanel.SetValue(Canvas.TopProperty, -400.0);
 
             if (isAccountInited) return;
             isAccountInited = true;
@@ -40,6 +42,11 @@ namespace S1Nyan.Views
             ChangeAccount.Click += OnChangeAccount;
 
             UsernameText.Text = CurrentUsername;
+            UsernameText.ActionIconTapped += (o, e) =>
+            {
+                UsernameText.Text = "";
+                UsernameText.Focus();
+            };
 
             if (IsRememberPass)
                 PasswordText.Password = CurrentPassword == "" ? "" : FakePassword;
@@ -53,19 +60,33 @@ namespace S1Nyan.Views
 
         private async void OnLogin(object sender, RoutedEventArgs e)
         {
-            LoginButton.IsEnabled = false;
+            UpdateControls(false);
             var pass = PasswordText.Password;
             if (pass == FakePassword)
                 pass = CurrentPassword;
             var msg = await UserViewModel.Current.DoLogin(UsernameText.Text, pass);
-            LoginButton.IsEnabled = true;
-
+            UpdateControls(true, msg == null);
             UpdateErrorMsg(msg);
             if (msg == null)
             {
-                LoginTransition.Begin();
                 SavedUserName = UsernameText.Text;
                 SavedPassword = pass;
+            }
+        }
+
+        private void UpdateControls(bool isFinished, bool useTransition = false)
+        {
+            LoginButton.IsEnabled = isFinished;
+
+            if (isFinished)
+            {
+                LoginButton.Content = AppResources.AccountPageLogin;
+                if (useTransition)
+                    LoginTransition.Begin();
+            }
+            else
+            {
+                LoginButton.Content = AppResources.AccountPageLoginLoading;
             }
         }
 
@@ -147,6 +168,8 @@ namespace S1Nyan.Views
         {
             PasswordWatermark.Opacity = 0;
             PasswordText.Opacity = 100;
+
+            PasswordText.SelectAll();
         }
 
         #endregion

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Messaging;
 using S1Nyan.App.Resources;
 using S1Nyan.Model;
 using S1Nyan.Views;
@@ -78,7 +79,7 @@ namespace S1Nyan.ViewModel
         }
         public async Task<string> DoLogin(string name, string pass)
         {
-            if (name.Length == 0 || pass.Length == 0) return "error";
+            if (name.Length == 0 || pass.Length == 0) return AppResources.ErrorMsgNamePassEmpty;
 
             string uid = null;
             try
@@ -87,9 +88,10 @@ namespace S1Nyan.ViewModel
                 if (uid != null)
                 {
                     Uid = uid;
+                    LoginStatus = name;
                     return null;
                 }
-                return "error";
+                return AppResources.ErrorMsgUnknown;
             }
             catch (Exception ex)
             {
@@ -103,7 +105,6 @@ namespace S1Nyan.ViewModel
             if (error == null)
             {
                 previousText = null;
-                LoginStatus = name;
             }
             else
             {

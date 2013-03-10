@@ -234,7 +234,7 @@
     <value>不显示</value>
   </data>
   <data name="AccountPageGuest" xml:space="preserve">
-    <value>游客</value>
+    <value>访客</value>
   </data>
   <data name="AccountPageLogout" xml:space="preserve">
     <value>退出登录</value>
@@ -250,5 +250,11 @@
   </data>
   <data name="ErrorMsgUnknown" xml:space="preserve">
     <value>未知错误：</value>
+  </data>
+  <data name="AccountPageLoginLoading" xml:space="preserve">
+    <value>正在登录</value>
+  </data>
+  <data name="ErrorMsgNamePassEmpty" xml:space="preserve">
+    <value>用户名/密码不能为空</value>
   </data>
 </root>

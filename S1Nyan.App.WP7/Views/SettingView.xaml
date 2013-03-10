@@ -42,7 +42,7 @@
         </Style>
 
         <Storyboard x:Name="LoginTransition">
-            <DoubleAnimation Duration="0:0:0.7" Storyboard.TargetName="stackPanel" Storyboard.TargetProperty="(Canvas.Top)" To="-350" d:IsOptimized="True">
+            <DoubleAnimation Duration="0:0:0.7" Storyboard.TargetName="stackPanel" Storyboard.TargetProperty="(Canvas.Top)" To="-400" d:IsOptimized="True">
                 <DoubleAnimation.EasingFunction>
                     <CircleEase EasingMode="EaseOut" />
                 </DoubleAnimation.EasingFunction>
@@ -124,6 +124,8 @@
                                        Text="asdf"
                                        TextTrimming="WordEllipsis" />
                             <toolkit:PhoneTextBox x:Name="UsernameText"
+                                                  ActionIcon="/Assets/input.clear.png"
+                                                  HidesActionItemWhenEmpty="True"
                                                   Hint="{Binding LocalizedResources.AccountPageUsername, Source={StaticResource LocalizedStrings}}"
                                                   InputScope="LogOnName" />
                             <Grid>
@@ -155,7 +157,9 @@
                             </HyperlinkButton>
                         </StackPanel>
 
-                        <StackPanel x:Name="InfoPanel" DataContext="{Binding User, Source={StaticResource Locator}}">
+                        <StackPanel x:Name="InfoPanel"
+                                    Margin="0,50,0,0"
+                                    DataContext="{Binding User, Source={StaticResource Locator}}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Width="100"
                                            Style="{StaticResource PhoneTextLargeStyle}"
@@ -222,7 +226,7 @@
                                 <TextBlock x:Name="VersionText"
                                            Grid.Row="2"
                                            VerticalAlignment="Bottom"
-                                           Style="{StaticResource PhoneTextSubtleStyle}" />
+                                           Style="{StaticResource PhoneTextGroupHeaderStyle}" />
                             </Grid>
                         </StackPanel>
                         <HyperlinkButton NavigateUri="http://weibo.com/u/3204220170"

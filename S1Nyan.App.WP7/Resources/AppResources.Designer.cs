@@ -88,7 +88,7 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 游客.
+        ///   Looks up a localized string similar to 访客.
         /// </summary>
         public static string AccountPageGuest {
             get {
@@ -102,6 +102,15 @@ namespace S1Nyan.App.Resources {
         public static string AccountPageLogin {
             get {
                 return ResourceManager.GetString("AccountPageLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 正在登录.
+        /// </summary>
+        public static string AccountPageLoginLoading {
+            get {
+                return ResourceManager.GetString("AccountPageLoginLoading", resourceCulture);
             }
         }
         
@@ -219,6 +228,15 @@ namespace S1Nyan.App.Resources {
         public static string AppLoading {
             get {
                 return ResourceManager.GetString("AppLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 用户名/密码不能为空.
+        /// </summary>
+        public static string ErrorMsgNamePassEmpty {
+            get {
+                return ResourceManager.GetString("ErrorMsgNamePassEmpty", resourceCulture);
             }
         }
         
