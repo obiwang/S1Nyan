@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\ValueConverter.cs" />
+    <Compile Include="MyControls\FlipButton.cs" />
     <Compile Include="MyControls\ExpandableItem.cs" />
     <Compile Include="MyControls\ExpanderButton.cs" />
     <Compile Include="MyControls\MySlider.cs" />

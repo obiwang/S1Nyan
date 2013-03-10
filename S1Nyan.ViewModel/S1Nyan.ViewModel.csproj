@@ -45,7 +45,6 @@
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ThreadListViewModel.cs" />
     <Compile Include="ViewModels\ThreadViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\S1Nyan.Model\S1Nyan.Model.csproj">

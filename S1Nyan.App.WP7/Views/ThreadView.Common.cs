@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using S1Nyan.App.Resources;
-using S1Nyan.ViewModel;
-using System.Runtime.Serialization;
 using S1Nyan.Model;
+using S1Nyan.ViewModel;
 using S1Parser.Action;
 
-namespace S1Nyan.App.Views
+namespace S1Nyan.Views
 {
     public partial class ThreadView : PhoneApplicationPage
     {
@@ -20,7 +20,8 @@ namespace S1Nyan.App.Views
             InitializeComponent();
             BuildLocalizedApplicationBar();
 
-            Loaded += (o, e) => this.SupportedOrientations = SettingView.IsAutoRotateSetting ? SupportedPageOrientation.PortraitOrLandscape : SupportedPageOrientation.Portrait;
+            SettingView.UpdateOrientation(this);
+            Loaded += (o, e) => SettingView.UpdateOrientation(this);
         }
 
         /// <summary>

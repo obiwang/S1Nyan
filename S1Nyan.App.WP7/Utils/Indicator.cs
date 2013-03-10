@@ -42,6 +42,11 @@ namespace S1Nyan.Utils
             timer.Change(5000, uint.MaxValue);
         }
 
+        public void SetError(System.Exception e)
+        {
+            SetError(ErrorMsg.GetExceptionMessage(e));
+        }
+
         public void SetLoading()
         {
             SetBusy(true);

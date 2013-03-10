@@ -4,7 +4,6 @@ using System.IO.IsolatedStorage;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
-using Coding4Fun.Toolkit.Net;
 using S1Parser;
 
 namespace S1Nyan.Model

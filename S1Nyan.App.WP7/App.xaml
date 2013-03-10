@@ -8,8 +8,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
              xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
-             xmlns:view="clr-namespace:S1Nyan.App.Views"
-             xmlns:vm="clr-namespace:S1Nyan.ViewModel;assembly=S1Nyan.ViewModel"
+             xmlns:view="clr-namespace:S1Nyan.Views"
+             xmlns:vm="clr-namespace:S1Nyan.ViewModel"
              mc:Ignorable="d">
 
     <!--  Application Resources  -->
@@ -17,9 +17,9 @@
         <SampleData:ThreadSampleData x:Key="ThreadSampleData" d:IsDataSource="True" />
         <local:LocalizedStrings x:Key="LocalizedStrings" />
         <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-        
+
         <converter:BooleanToVisibilityConverter x:Key="BoolToVisConv" />
-        <view:ThreadPopularityConverter xmlns:local="clr-namespace:S1Nyan.App.Views" x:Key="PopConverter" />
+        <view:ThreadPopularityConverter xmlns:local="clr-namespace:S1Nyan.Views" x:Key="PopConverter" />
 
         <Style x:Key="HyperlinkEmptyStyle" TargetType="HyperlinkButton">
             <Setter Property="HorizontalContentAlignment" Value="Left" />

@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using ImageTools.Controls;
 
-namespace S1Nyan.App.Views
+namespace S1Nyan.Views
 {
     public partial class SmartImage : UserControl
     {

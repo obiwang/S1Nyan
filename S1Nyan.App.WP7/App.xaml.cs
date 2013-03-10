@@ -72,6 +72,7 @@ namespace S1Nyan.App
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            UserViewModel.Current.InitLogin();
         }
 
         // Code to execute when the application is deactivated (sent to background)

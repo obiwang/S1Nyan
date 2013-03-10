@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -10,7 +9,7 @@ using System.Windows.Media;
 using Microsoft.Phone.Tasks;
 using S1Parser;
 
-namespace S1Nyan.App.Views
+namespace S1Nyan.Views
 {
     public class FontsizeConverter : IValueConverter
     {
@@ -244,13 +243,12 @@ namespace S1Nyan.App.Views
 
         private static SmartImage BuildImgControl(HtmlElement item)
         {
-            var url = item.Attributes["src"];
+            var url = Uri.UnescapeDataString(item.Attributes["src"]);
             if (url == null) return null;
 
             S1Resource.GetAbsoluteUrl(ref url);
             bool isEmotion = S1Resource.IsEmotion(url);
 
-            //order matters! set IsAutoDownload first;
             var image = new SmartImage ();
             ImageResourceManager.SetUriSource(image, url);
             if (isEmotion)

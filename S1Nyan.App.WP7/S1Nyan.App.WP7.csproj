@@ -182,13 +182,16 @@
     <Compile Include="AppConfig.cs" />
     <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="LocalizedStrings.cs" />
-    <Compile Include="MemoryDiagnosticsHelper.cs" />
+    <Compile Include="Utils\ErrorMsg.cs" />
+    <Compile Include="Utils\MemoryDiagnosticsHelper.cs" />
     <Compile Include="Model\ResourceServices.cs" />
     <Compile Include="Model\S1WebClient.cs" />
     <Compile Include="Model\UserExtension.cs" />
     <Compile Include="SampleData\ThreadSampleData\ThreadSampleData.xaml.cs">
       <DependentUpon>ThreadSampleData.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\UserViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\ImageResourceManager.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -199,7 +202,7 @@
     <Compile Include="Views\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ThemeManager.cs" />
+    <Compile Include="Utils\ThemeManager.cs" />
     <Compile Include="Utils\DataContextChangedHelper.cs" />
     <Compile Include="Utils\VisualTree.cs" />
     <Compile Include="Utils\Indicator.cs" />

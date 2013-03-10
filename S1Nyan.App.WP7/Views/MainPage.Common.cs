@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
-using ImageTools.IO.Gif;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using ObiWang.Controls;
+using S1Nyan.Model;
 using S1Nyan.ViewModel;
 using S1Parser;
 
-namespace S1Nyan.App.Views
+namespace S1Nyan.Views
 {
     public partial class MainPage : PhoneApplicationPage
     {
@@ -16,7 +16,6 @@ namespace S1Nyan.App.Views
         public MainPage()
         {
             InitializeComponent();
-            ImageTools.IO.Decoders.AddDecoder<GifDecoder>();
 
             BuildLocalizedApplicationBar();
             if (PhoneApplicationService.Current.StartupMode == StartupMode.Launch)
@@ -24,17 +23,19 @@ namespace S1Nyan.App.Views
             else
                 DataLoaded();
 
-            Loaded += (o, e) => this.SupportedOrientations = SettingView.IsAutoRotateSetting ? SupportedPageOrientation.PortraitOrLandscape : SupportedPageOrientation.Portrait; 
+            SettingView.UpdateOrientation(this);
+            Loaded += (o, e) => SettingView.UpdateOrientation(this);
         }
 
         private void DataLoaded()
         {
             Dispatcher.BeginInvoke(() =>
             {
-                SystemTray.IsVisible = true;
                 Popup.Visibility = Visibility.Collapsed;
             });
             ApplicationBar.IsVisible = true;
+
+            UserViewModel.Current.InitLogin();
         }
 
         /// <summary>

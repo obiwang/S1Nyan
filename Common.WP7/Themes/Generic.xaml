@@ -253,4 +253,67 @@
         </Setter>
     </Style>
 
+    <Style TargetType="my:FlipButton">
+        <Setter Property="Background" Value="{StaticResource PhoneBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource PhoneForegroundBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource PhoneAccentBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}" />
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid Background="Transparent">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver" />
+                                <VisualState x:Name="Pressed" />
+                                <VisualState x:Name="Disabled" />
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="FlipStates">
+                                <VisualStateGroup.Transitions>
+                                    <VisualTransition GeneratedDuration="0:0:.3" To="Flip" />
+                                    <VisualTransition GeneratedDuration="0:0:.3" To="FlipBack" />
+                                </VisualStateGroup.Transitions>
+                                <VisualState x:Name="Flip">
+                                    <Storyboard>
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="ContentGrid" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" To="90" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="FlipBack">
+                                    <Storyboard FillBehavior="Stop">
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="ContentGrid" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" To="0" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <Border x:Name="ButtonBackground"
+                                Margin="{StaticResource PhoneTouchTargetOverhang}"
+                                Background="{StaticResource PhoneChromeBrush}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="0">
+                            <Grid x:Name="ContentGrid" Background="{TemplateBinding Background}">
+                                <Grid.Projection>
+                                    <PlaneProjection />
+                                </Grid.Projection>
+
+                                <ContentControl x:Name="ContentContainer"
+                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                Foreground="{TemplateBinding Foreground}"
+                                                Padding="{TemplateBinding Padding}">
+
+                                </ContentControl>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

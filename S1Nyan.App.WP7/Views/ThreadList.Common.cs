@@ -9,7 +9,7 @@ using S1Nyan.App.Resources;
 using S1Nyan.ViewModel;
 using S1Parser;
 
-namespace S1Nyan.App.Views
+namespace S1Nyan.Views
 {
     public class ThreadPopularityConverter : IValueConverter
     {
@@ -39,7 +39,8 @@ namespace S1Nyan.App.Views
             InitializeComponent();
             BuildLocalizedApplicationBar();
 
-            Loaded += (o, e) => this.SupportedOrientations = SettingView.IsAutoRotateSetting ? SupportedPageOrientation.PortraitOrLandscape : SupportedPageOrientation.Portrait;
+            SettingView.UpdateOrientation(this);
+            Loaded += (o, e) => SettingView.UpdateOrientation(this);
         }
 
         /// <summary>

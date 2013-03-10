@@ -9,7 +9,7 @@ using ImageTools;
 using S1Nyan.Model;
 using S1Parser;
 
-namespace S1Nyan.App.Views
+namespace S1Nyan.Views
 {
     public class ImageSourceProxy : IDisposable
     {

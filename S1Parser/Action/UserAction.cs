@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace S1Parser.Action
 {
@@ -39,8 +40,12 @@ namespace S1Parser.Action
 
             if (uid == null)
             {   // handle error
-                
-                System.Diagnostics.Debug.WriteLine(result);
+                var root = new HtmlDoc(result).RootElement;
+                var msg = root.FindFirst("span");
+                if ("您已经顺利登录" == msg.InnerHtml)
+                    uid = "Unknown";
+                else
+                    throw new LoginException(msg.InnerHtml, account, pass);
             }
             return uid;
         }

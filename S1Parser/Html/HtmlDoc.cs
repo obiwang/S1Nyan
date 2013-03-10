@@ -82,13 +82,15 @@ namespace S1Parser
             var matchStack = new Stack<TempElement>();
             matchStack.Push(new TempElement { Children =  new List<HtmlElement>() });
 
+            bool ignore = false;
+
             while (true)
             {
                 var match = _tag_pattern.Match(html, offset);
 
                 if (!match.Success)
                 {   //no tags any more, add remain text and return
-                    if (html.Length - 1 > offset)
+                    if (!ignore && html.Length - 1 > offset)
                     {
                         var text = html.Substring(offset, html.Length - offset);
                         var matchSpace = _space_pattern.Match(text);
@@ -100,7 +102,7 @@ namespace S1Parser
                     break;
                 }
 
-                if (match.Index != offset)
+                if (!ignore && match.Index != offset)
                 {   //text before tags, add as previous's child
                     var text = html.Substring(offset, match.Index - offset);
                     var matchSpace = _space_pattern.Match(text);
@@ -119,10 +121,12 @@ namespace S1Parser
                             var top = matchStack.Pop();
                             var e = new HtmlElement(top.Name,
                                 attributes: top.Attributes);
-                            matchStack.Peek().Children.Add(e);
+                            if (!ignore)
+                                matchStack.Peek().Children.Add(e);
 
                             if (top.Name == match.TagName())
                             {
+                                ignore = false;
                                 e.Children = top.Children;
                                 break; // break inner while
                             }                           
@@ -138,13 +142,16 @@ namespace S1Parser
                 {   // self close tag
                     var e = new HtmlElement(
                         match.TagName(),
-                        attributes:match.Attributes(),
-                        type:HtmlElementType.SelfClosed);
+                        attributes: match.Attributes(),
+                        type: HtmlElementType.SelfClosed);
 
                     matchStack.Peek().Children.Add(e);
                 }
                 else
                 {
+                    if (ignoreTags.Contains(match.TagName()))
+                        ignore = true;
+                    
                     matchStack.Push(new TempElement { Match = match, Children = new List<HtmlElement>() });
                 }
                 offset = match.Index + match.Length;
@@ -171,6 +178,8 @@ namespace S1Parser
 
             return result;
         }
+
+        private static List<string> ignoreTags = new List<string> { "style", "script" };
 
         private static bool ContainsMatch(Stack<TempElement> matchStack, Match match)
         {

@@ -104,7 +104,7 @@ namespace S1Nyan.ViewModel
             }
             catch (Exception e)
             {
-                Util.Indicator.SetError(e.Message);
+                Util.Indicator.SetError(e);
             }
         }
 

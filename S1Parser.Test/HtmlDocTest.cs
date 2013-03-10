@@ -109,6 +109,21 @@ jkl
     <meta name='generator' content='phpwind 8.3' />
     <meta name='description' content='STAGE1' />
     <meta name='keywords' content='STAGE1' />
+<style type='text/css'>
+body {font-family: Verdana;font-size: 12px;margin: 0;color: #000000;background: #ffffff;}
+img {border:0;}
+td {font-size: 12px;}
+textarea,input,select {font-family: Verdana;font-size: 12px;background-color: #ffffff;}
+div.quote {margin:5px 5px;border:1px dashed #022C80;padding:5px;background:#FFFFFF;line-height:normal;}
+a {text-decoration: none;}
+a:hover {color:#ff0000;text-decoration:none;}
+.smalltxt {font-family: Tahoma, Verdana; font-size: 12px;}
+.tpc_content {font-size: 13px;}
+.i_table {border: #E7E3E7 1px solid;}
+.head{background-color: #E7E3E7;}
+h1{ font-size:14px;margin:0 0 10px 0;}
+h2{ font-size:12px; margin:0;padding:0;}
+</style>
 </head>";
         string test44 = @"
 <table>

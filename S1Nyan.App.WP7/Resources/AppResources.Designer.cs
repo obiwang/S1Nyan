@@ -70,6 +70,96 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 账户.
+        /// </summary>
+        public static string AccountPage {
+            get {
+                return ResourceManager.GetString("AccountPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 切换账户.
+        /// </summary>
+        public static string AccountPageChangeAccount {
+            get {
+                return ResourceManager.GetString("AccountPageChangeAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 游客.
+        /// </summary>
+        public static string AccountPageGuest {
+            get {
+                return ResourceManager.GetString("AccountPageGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 登陆.
+        /// </summary>
+        public static string AccountPageLogin {
+            get {
+                return ResourceManager.GetString("AccountPageLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 退出登录.
+        /// </summary>
+        public static string AccountPageLogout {
+            get {
+                return ResourceManager.GetString("AccountPageLogout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 密码.
+        /// </summary>
+        public static string AccountPagePassword {
+            get {
+                return ResourceManager.GetString("AccountPagePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 记住密码.
+        /// </summary>
+        public static string AccountPageRememberPass {
+            get {
+                return ResourceManager.GetString("AccountPageRememberPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 发帖显示签名.
+        /// </summary>
+        public static string AccountPageShowSignature {
+            get {
+                return ResourceManager.GetString("AccountPageShowSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 注册新账户.
+        /// </summary>
+        public static string AccountPageSignup {
+            get {
+                return ResourceManager.GetString("AccountPageSignup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 用户名.
+        /// </summary>
+        public static string AccountPageUsername {
+            get {
+                return ResourceManager.GetString("AccountPageUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 导航.
         /// </summary>
         public static string AppBarButtonNavigator {
@@ -129,6 +219,24 @@ namespace S1Nyan.App.Resources {
         public static string AppLoading {
             get {
                 return ResourceManager.GetString("AppLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 网络错误.
+        /// </summary>
+        public static string ErrorMsgNetWork {
+            get {
+                return ResourceManager.GetString("ErrorMsgNetWork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 未知错误：.
+        /// </summary>
+        public static string ErrorMsgUnknown {
+            get {
+                return ResourceManager.GetString("ErrorMsgUnknown", resourceCulture);
             }
         }
         
@@ -318,6 +426,15 @@ namespace S1Nyan.App.Resources {
         public static string ShowPicOnlyWifi {
             get {
                 return ResourceManager.GetString("ShowPicOnlyWifi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 不显示.
+        /// </summary>
+        public static string ShowSignatureNone {
+            get {
+                return ResourceManager.GetString("ShowSignatureNone", resourceCulture);
             }
         }
         

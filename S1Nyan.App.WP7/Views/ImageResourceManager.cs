@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 
-namespace S1Nyan.App.Views
+namespace S1Nyan.Views
 {
     public class ImageResourceManager
     {

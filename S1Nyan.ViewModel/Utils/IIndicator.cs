@@ -4,6 +4,7 @@
     {
         void SetBusy(bool isBusy);
         void SetError(string text);
+        void SetError(System.Exception e);
         void SetLoading();
         void SetText(string text);
     }

@@ -1,11 +1,8 @@
 ﻿using System.Collections;
 using System.Windows;
-using System.Windows.Controls;
 using Microsoft.Phone.Controls;
-using S1Nyan.App.Utils;
-using S1Parser;
 
-namespace S1Nyan.App.Views
+namespace S1Nyan.Views
 {
     public partial class ThreadView
     {

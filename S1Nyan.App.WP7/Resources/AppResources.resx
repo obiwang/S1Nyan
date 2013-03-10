@@ -212,4 +212,43 @@
   <data name="AppBarButtonReply" xml:space="preserve">
     <value>回复</value>
   </data>
+  <data name="AccountPage" xml:space="preserve">
+    <value>账户</value>
+  </data>
+  <data name="AccountPageLogin" xml:space="preserve">
+    <value>登陆</value>
+  </data>
+  <data name="AccountPagePassword" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="AccountPageRememberPass" xml:space="preserve">
+    <value>记住密码</value>
+  </data>
+  <data name="AccountPageShowSignature" xml:space="preserve">
+    <value>发帖显示签名</value>
+  </data>
+  <data name="AccountPageUsername" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="ShowSignatureNone" xml:space="preserve">
+    <value>不显示</value>
+  </data>
+  <data name="AccountPageGuest" xml:space="preserve">
+    <value>游客</value>
+  </data>
+  <data name="AccountPageLogout" xml:space="preserve">
+    <value>退出登录</value>
+  </data>
+  <data name="AccountPageSignup" xml:space="preserve">
+    <value>注册新账户</value>
+  </data>
+  <data name="AccountPageChangeAccount" xml:space="preserve">
+    <value>切换账户</value>
+  </data>
+  <data name="ErrorMsgNetWork" xml:space="preserve">
+    <value>网络错误</value>
+  </data>
+  <data name="ErrorMsgUnknown" xml:space="preserve">
+    <value>未知错误：</value>
+  </data>
 </root>

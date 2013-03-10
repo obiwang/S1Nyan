@@ -5,12 +5,13 @@ using System.Reflection;
 using System.Windows;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Info;
 using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using S1Nyan.App.Resources;
 
-namespace S1Nyan.App
+namespace S1Nyan.Views
 {
     public enum SettingThemes
     {
@@ -57,18 +58,34 @@ namespace S1Nyan.App
 
         private static Theme SystemTheme;
 
-#region Initializations
+        #region Initializations
 
         public SettingView()
         {
             InitializeComponent();
-            InitSetting();
+            SettingPivot.Loaded += SettingLoaded;
+            AboutPivot.Loaded += AboutLoaded;
+            AccountPivot.Loaded += AccountLoaded;
             DataContext = this;
         }
 
-        private void InitSetting()
+        private void AccountLoaded(object sender, RoutedEventArgs e)
         {
+            InitAccount();
+        }
+
+        bool isAboutInit = false;
+        private void AboutLoaded(object sender, RoutedEventArgs e)
+        {
+            if(isAboutInit) return;
             InitAbout();
+            isAboutInit = true;
+        }
+
+        bool isSettingInit = false;
+        private void SettingLoaded(object sender, RoutedEventArgs e)
+        {
+            if (isSettingInit) return;
 
             InitSetTheme();
 
@@ -77,6 +94,10 @@ namespace S1Nyan.App
             InitSetFontSize();
 
             InitSetAutoRotate();
+
+            InitSignature();
+
+            isSettingInit = true;
         }
 
         private void InitSetAutoRotate()
@@ -152,9 +173,9 @@ namespace S1Nyan.App
             SystemTheme = ((Visibility)Application.Current.Resources["PhoneLightThemeVisibility"] == Visibility.Visible) ? Theme.Light : Theme.Dark;
             ApplyTheme(true);
         }
-#endregion
+        #endregion
 
-#region wrappers
+        #region wrappers
 
         /// <summary>
         /// Update a setting value for our application. If the setting does not
@@ -221,9 +242,9 @@ namespace S1Nyan.App
             settings.Save();
         }
 
-#endregion
+        #endregion
 
-#region Setting Properties
+        #region Setting Properties
 
         /// <summary>
         /// Property to get and set a CheckBox Setting Key.
@@ -241,6 +262,11 @@ namespace S1Nyan.App
                     Save();
                 }
             }
+        }
+
+        public static void UpdateOrientation(PhoneApplicationPage page)
+        {
+            page.SupportedOrientations = IsAutoRotateSetting ? SupportedPageOrientation.PortraitOrLandscape : SupportedPageOrientation.Portrait;
         }
 
         /// <summary>
@@ -341,7 +367,64 @@ namespace S1Nyan.App
             }
         }
 
-#endregion
+        #endregion
+
+
+        #region Signature
+        private const string ShowSignatureKeyName = "ShowSignature";
+        private static SignatureTypes ShowSignatureDefault = SignatureTypes.ShowAppNameAndModel;
+
+        private const string signatureFormat = "\r\n    [url=http://126.am/S1Nyan]—— {0}[/url]";
+        private const string AppSignature = "from S1 Nyan";
+        private const string AppSignatureWithModelFormat = "from S1 Nyan ({0} {1})";
+        private static string AppSignatureWithModel = string.Format(AppSignatureWithModelFormat, DeviceStatus.DeviceManufacturer, DeviceStatus.DeviceName);
+
+        private enum SignatureTypes
+        {
+            None = 0,
+            ShowAppName,
+            ShowAppNameAndModel
+        }
+
+        private void InitSignature()
+        {
+            setSignature.ItemsSource = signatureSource;
+            setSignature.SelectedIndex = (int)SignatureType;
+            setSignature.SelectionChanged += (o, e) =>
+            {
+                SignatureType = (SignatureTypes)setSignature.SelectedIndex;
+            };
+        }
+
+        private static List<string> signatureSource = new List<string> { AppResources.ShowSignatureNone, AppSignature, AppSignatureWithModel };
+
+        public static string GetSignature()
+        {
+            if (signatureType == SignatureTypes.ShowAppName ||
+                signatureType == SignatureTypes.ShowAppNameAndModel)
+                return string.Format(signatureFormat, signatureSource[(int)signatureType]);
+            else
+                return "";
+        }
+
+        private static SignatureTypes signatureType;
+        private static SignatureTypes SignatureType
+        {
+            get
+            {
+                return GetValueOrDefault<SignatureTypes>(ShowSignatureKeyName, ShowSignatureDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue<int>(ShowSignatureKeyName, (int)value))
+                {
+                    Save();
+                    signatureType = value;
+                }
+            }
+        }
+
+        #endregion
 
         #region About section
 
@@ -372,10 +455,12 @@ namespace S1Nyan.App
 
         #endregion
 
+
+
         internal static ApplicationBarMenuItem GetSettingMenuItem()
         {
             ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.SettingPage);
-            appBarMenuItem.Click += GotoSetting;
+            appBarMenuItem.Click += (o, e) => GotoSetting();
             return appBarMenuItem;
         }
 
@@ -383,14 +468,41 @@ namespace S1Nyan.App
         {
             ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.feature.settings.rest.png", UriKind.Relative));
             appBarButton.Text = AppResources.SettingPage;
-            appBarButton.Click += GotoSetting;
+            appBarButton.Click += (o, e) => GotoSetting();
             return appBarButton;
         }
 
-        private static void GotoSetting(object sender, EventArgs e)
+        public static void GotoSetting(string pivotName = null)
         {
-            (App.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/Views/SettingView.xaml", UriKind.Relative));
+            string param = "";
+            if (pivotName != null)
+                param = string.Format("?Pivot={0}", pivotName);
+
+            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/Views/SettingView.xaml" + param, UriKind.Relative));
         }
 
+        internal const string PivotAccount = "Account";
+        internal const string PivotAbout = "About";
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.NavigationMode == System.Windows.Navigation.NavigationMode.Back) return;
+            string pivotName = null;
+            if (NavigationContext.QueryString.TryGetValue("Pivot", out pivotName))
+            {
+                int index = 0;
+                switch(pivotName)
+                {
+                    case PivotAccount:
+                        index = 1;
+                        break;
+                    case PivotAbout:
+                        index = 2;
+                        break;
+                }
+                Pivot.SelectedIndex = index;
+            }
+        }
     }
 }
