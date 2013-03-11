@@ -30,8 +30,8 @@ namespace S1Nyan.Views
 
         #region LogIn
 
-        public static string CurrentUsername { get; private set; }
-        public static string CurrentPassword { get; private set; }
+        public static string CurrentUsername { get; private set; } /// INIT NEEDED
+        public static string CurrentPassword { get; private set; } /// INIT NEEDED
 
         private void InitLogIn()
         {
@@ -48,8 +48,7 @@ namespace S1Nyan.Views
                 UsernameText.Focus();
             };
 
-            if (IsRememberPass)
-                PasswordText.Password = CurrentPassword == "" ? "" : FakePassword;
+            PasswordText.Password = CurrentPassword == "" ? "" : FakePassword;
             CheckPasswordWatermark();
         }
 
@@ -69,6 +68,8 @@ namespace S1Nyan.Views
             UpdateErrorMsg(msg);
             if (msg == null)
             {
+                if (isFirstLoginCache)
+                    IsFirstLogin = false;
                 SavedUserName = UsernameText.Text;
                 SavedPassword = pass;
             }
@@ -97,6 +98,24 @@ namespace S1Nyan.Views
             ShowError.Begin();
         }
 
+        private const string IsFirstLoginKeyName = "IsFirstLogin";
+        private const bool IsFirstLoginDefault = true;
+        private static bool isFirstLoginCache = true;
+        public static bool IsFirstLogin
+        {
+            get
+            {
+                return isFirstLoginCache = GetValueOrDefault<bool>(IsFirstLoginKeyName, IsFirstLoginDefault);
+            }
+            set
+            {
+                if (AddOrUpdateValue(IsFirstLoginKeyName, value))
+                {
+                    Save();
+                }
+            }
+        }
+
         private const string IsRememberPassKeyName = "IsRememberPass";
         private const bool IsRememberPassDefault = true;
         private static bool? _isRememberPass;
@@ -111,6 +130,7 @@ namespace S1Nyan.Views
                 if (AddOrUpdateValue(IsRememberPassKeyName, value))
                 {
                     Save();
+                    _isRememberPass = value;
                 }
             }
         }

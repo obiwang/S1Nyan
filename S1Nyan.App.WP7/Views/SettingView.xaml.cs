@@ -28,6 +28,7 @@ namespace S1Nyan.Views
 
     public enum SettingFontSizes
     {
+        FontSizeUnknow = -1,
         FontSizeSmall = 0,
         FontSizeMiddle = 1,
         FontSizeLarge = 2
@@ -38,7 +39,6 @@ namespace S1Nyan.Views
         static SettingView()
         {
             settings = IsolatedStorageSettings.ApplicationSettings;
-            showPicWhen = ShowPicWhen;
         }
 
         private static List<string> themeSource = new List<string> { AppResources.ThemeS1, AppResources.ThemeSystem };
@@ -246,6 +246,7 @@ namespace S1Nyan.Views
 
         #region Setting Properties
 
+        private static bool? isAutoRotate;
         /// <summary>
         /// Property to get and set a CheckBox Setting Key.
         /// </summary>
@@ -253,13 +254,14 @@ namespace S1Nyan.Views
         {
             get
             {
-                return GetValueOrDefault<bool>(IsAutoRotateSettingKeyName, IsAutoRotateSettingDefault);
+                return (bool)(isAutoRotate ?? (isAutoRotate = GetValueOrDefault<bool>(IsAutoRotateSettingKeyName, IsAutoRotateSettingDefault)));
             }
             set
             {
                 if (AddOrUpdateValue(IsAutoRotateSettingKeyName, value))
                 {
                     Save();
+                    isAutoRotate = value;
                 }
             }
         }
@@ -289,6 +291,7 @@ namespace S1Nyan.Views
             }
         }
 
+        private static SettingShowPicsWhen? showPicWhen;
         /// <summary>
         /// Property to get and set a ListBox Setting Key.
         /// </summary>
@@ -296,7 +299,7 @@ namespace S1Nyan.Views
         {
             get
             {
-                return GetValueOrDefault<SettingShowPicsWhen>(ShowPicWhenKeyName, ShowPicsDefault);
+                return (SettingShowPicsWhen)(showPicWhen ?? (showPicWhen = GetValueOrDefault<SettingShowPicsWhen>(ShowPicWhenKeyName, ShowPicsDefault)));
             }
             set
             {
@@ -308,12 +311,11 @@ namespace S1Nyan.Views
             }
         }
 
-        private static SettingShowPicsWhen showPicWhen;
         public static bool IsShowPic
         {
             get
             {
-                switch(showPicWhen)
+                switch (ShowPicWhen)
                 {
                     case SettingShowPicsWhen.Always:
                         return true;
@@ -339,7 +341,7 @@ namespace S1Nyan.Views
                 if (AddOrUpdateValue<int>(ContentFontSizeKeyName, (int)value))
                 {
                     Save();
-                    contentFontSize = 0;
+                    contentFontSize = GetFontSize(value);
                 }
             }
         }
@@ -354,9 +356,10 @@ namespace S1Nyan.Views
             }
         }
 
-        private static double GetFontSize()
+        private static double GetFontSize(SettingFontSizes size = SettingFontSizes.FontSizeUnknow)
         {
-            switch(SettingFontSize)
+            if (size == SettingFontSizes.FontSizeUnknow) size = SettingFontSize;
+            switch (size)
             {
                 case SettingFontSizes.FontSizeLarge:
                     return 28.667;
@@ -400,19 +403,19 @@ namespace S1Nyan.Views
 
         public static string GetSignature()
         {
-            if (signatureType == SignatureTypes.ShowAppName ||
-                signatureType == SignatureTypes.ShowAppNameAndModel)
-                return string.Format(signatureFormat, signatureSource[(int)signatureType]);
+            if (SignatureType == SignatureTypes.ShowAppName ||
+                SignatureType == SignatureTypes.ShowAppNameAndModel)
+                return string.Format(signatureFormat, signatureSource[(int)SignatureType]);
             else
                 return "";
         }
 
-        private static SignatureTypes signatureType;
+        private static SignatureTypes? signatureType;
         private static SignatureTypes SignatureType
         {
             get
             {
-                return GetValueOrDefault<SignatureTypes>(ShowSignatureKeyName, ShowSignatureDefault);
+                return (SignatureTypes)(signatureType ?? (signatureType = GetValueOrDefault<SignatureTypes>(ShowSignatureKeyName, ShowSignatureDefault)));
             }
             set
             {

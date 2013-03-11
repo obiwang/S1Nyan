@@ -245,8 +245,8 @@
   <data name="AccountPageChangeAccount" xml:space="preserve">
     <value>切换账户</value>
   </data>
-  <data name="ErrorMsgNetWork" xml:space="preserve">
-    <value>网络错误</value>
+  <data name="ErrorMsgNetWorkFailed" xml:space="preserve">
+    <value>网络连接失败</value>
   </data>
   <data name="ErrorMsgUnknown" xml:space="preserve">
     <value>未知错误：</value>
@@ -256,5 +256,11 @@
   </data>
   <data name="ErrorMsgNamePassEmpty" xml:space="preserve">
     <value>用户名/密码不能为空</value>
+  </data>
+  <data name="ErroMsgClickToLogin" xml:space="preserve">
+    <value>点击此处登陆</value>
+  </data>
+  <data name="ErrorMsgGetDataFailed" xml:space="preserve">
+    <value>数据获取失败</value>
   </data>
 </root>

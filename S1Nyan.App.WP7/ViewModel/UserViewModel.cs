@@ -108,11 +108,16 @@ namespace S1Nyan.ViewModel
             }
             else
             {
-                if (previousText == null)
-                    previousText = LoginStatus;
-                LoginStatus = error;
-                notifyTimer.Change(5000, Timeout.Infinite);
+                SetNotifyMsg(error);
             }
+        }
+
+        private void SetNotifyMsg(string msg)
+        {
+            if (previousText == null)
+                previousText = LoginStatus;
+            LoginStatus = msg;
+            notifyTimer.Change(5000, Timeout.Infinite);
         }
 
         string previousText = null;
@@ -158,6 +163,8 @@ namespace S1Nyan.ViewModel
                 SettingView.InitAccountData();
                 if (SettingView.IsRememberPass && SettingView.CurrentUsername.Length > 0)
                     await BackgroundLogin(SettingView.CurrentUsername, SettingView.CurrentPassword);
+                else if (SettingView.IsFirstLogin)
+                    SetNotifyMsg(AppResources.ErroMsgClickToLogin);
 
                 SettingView.VerifyString = await new S1WebClient().GetVerifyString();
             }

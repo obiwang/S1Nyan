@@ -1,18 +1,46 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace S1Parser
 {
     public static class S1Resource
     {
-        public const string SiteBase = "http://bbs.saraba1st.com/2b/";
+        private const string IP = "http://220.196.42.167/";
+        private const string PATH = "2b/";
+        private const string SiteBase = IP + PATH;
 
-        public const string SimpleBase = SiteBase + "simple/";
+        private static List<string> HostList = new List<string>
+        {
+            "http://bbs.saraba1st.com/" + PATH,
+            SiteBase,
+            "http://www.sarabalst.com/" + PATH,
+            "http://bbs.stage1st.com/" + PATH,
+        };
 
-        public const string EmotionBase = SiteBase + "images/post/smile/";
+        private const string EmotionPath = "images/post/smile/";
+        private const string SimplePath = "simple/";
 
+        internal const string SimpleBase = SiteBase + "simple/";
         public const short ItemsPerThreadSimple = 50;
-
         public const short ItemsPerThread = 30;
+
+        public static string S1BaseUrl
+        {
+            get { return SiteBase; }
+        }
+
+        public static string GetRelativePath(string url)
+        {
+            var temp = url.ToLower();
+            foreach (var host in HostList)
+            {
+                if (temp.StartsWith(host))
+                {
+                    return url.Substring(host.Length);
+                }
+            }
+            return null;
+        }
 
         /// <summary>
         /// Get the absolute url if not
@@ -31,16 +59,18 @@ namespace S1Parser
 
         public static bool IsEmotion(string url)
         {
-            if (url.ToLower().StartsWith(EmotionBase))
+            var temp = GetRelativePath(url);
+            if (temp != null && temp.StartsWith(EmotionPath))
                 return true;
             return false;
         }
 
         public static string GetEmotionPath(string url)
         {
-            if (IsEmotion(url))
+            var temp = GetRelativePath(url);
+            if (temp != null && temp.StartsWith(EmotionPath))
             {
-                return url.Substring(EmotionBase.Length);
+                return temp.Substring(EmotionPath.Length);
             }
             return null;
         }
@@ -55,9 +85,10 @@ namespace S1Parser
         //=> ?ID=785763&Page=54
         public static string GetThreadParamFromUrl(string url)
         {
-            url = url.ToLower();
+            url = GetRelativePath(url);
+            if (url == null) return null;
             string ID = null, Page = null;
-            if (url.StartsWith(SimpleBase))
+            if (url.StartsWith(SimplePath))
             {
                 var match = p3.Match(url);
                 if (match.Success)
@@ -67,7 +98,7 @@ namespace S1Parser
                     return GetThreadParams(ID, Page);
                 }
             }
-            else if (url.StartsWith(SiteBase))
+            else
             {
                 var match = p1.Match(url);
                 if (match.Success)

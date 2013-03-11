@@ -232,6 +232,24 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 点击此处登陆.
+        /// </summary>
+        public static string ErroMsgClickToLogin {
+            get {
+                return ResourceManager.GetString("ErroMsgClickToLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 数据获取失败.
+        /// </summary>
+        public static string ErrorMsgGetDataFailed {
+            get {
+                return ResourceManager.GetString("ErrorMsgGetDataFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 用户名/密码不能为空.
         /// </summary>
         public static string ErrorMsgNamePassEmpty {
@@ -241,11 +259,11 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 网络错误.
+        ///   Looks up a localized string similar to 网络连接失败.
         /// </summary>
-        public static string ErrorMsgNetWork {
+        public static string ErrorMsgNetWorkFailed {
             get {
-                return ResourceManager.GetString("ErrorMsgNetWork", resourceCulture);
+                return ResourceManager.GetString("ErrorMsgNetWorkFailed", resourceCulture);
             }
         }
         

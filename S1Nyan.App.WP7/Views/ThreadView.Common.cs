@@ -204,7 +204,12 @@ namespace S1Nyan.Views
         private void ToggleNavigator(object sender, EventArgs e)
         {
             if (navBarButton == null) return;
-            if (IsNavigatorVisible)
+            ShowHideNavi(IsNavigatorVisible);
+        }
+
+        private void ShowHideNavi(bool hide)
+        {
+            if (hide)
             {
                 navBarButton.IconUri = navIcon;
                 HideNavi.Begin();

@@ -11,11 +11,15 @@ namespace S1Nyan.Utils
         {
             if (e is WebException)
             {
-                return AppResources.ErrorMsgNetWork;
+                return AppResources.ErrorMsgNetWorkFailed;
             }
             else if (e is LoginException)
             {
                 return e.Message;
+            }
+            else if (e is NullReferenceException)
+            {
+                return AppResources.ErrorMsgGetDataFailed;
             }
             else
                 return AppResources.ErrorMsgUnknown + e.Message;

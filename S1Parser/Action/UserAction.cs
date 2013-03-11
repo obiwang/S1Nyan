@@ -20,9 +20,9 @@ namespace S1Parser.Action
         const string loginUrl = SiteBase + "login.php?";
         public const string PrivacyUrl = SiteBase + "profile.php?action=privacy";
 #else
-        const string SiteBase = S1Resource.SiteBase;
-        const string loginUrl = SiteBase + "login.php?";
-        public const string PrivacyUrl = SiteBase + "profile.php?action=privacy";
+        static string SiteBase = S1Resource.S1BaseUrl;
+        static string loginUrl = SiteBase + "login.php?";
+        public static string PrivacyUrl = SiteBase + "profile.php?action=privacy";
 #endif
 
         public static async Task<string> Login(this IS1Client client, string account, string pass, int loginType = 0)
@@ -42,7 +42,9 @@ namespace S1Parser.Action
             {   // handle error
                 var root = new HtmlDoc(result).RootElement;
                 var msg = root.FindFirst("span");
-                if ("您已经顺利登录" == msg.InnerHtml)
+                if (msg == null)
+                    throw new NullReferenceException();
+                if (msg.InnerHtml.Contains("您已经顺利登录"))
                     uid = "Unknown";
                 else
                     throw new LoginException(msg.InnerHtml, account, pass);
