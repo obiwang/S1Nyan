@@ -279,12 +279,20 @@
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Flip">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="ContentGrid" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" To="90" />
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="ContentGrid" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" To="90">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CircleEase EasingMode="EaseIn" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="FlipBack">
                                     <Storyboard FillBehavior="Stop">
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="ContentGrid" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" To="0" />
+                                        <DoubleAnimation Duration="0" Storyboard.TargetName="ContentGrid" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" To="0">
+                                            <DoubleAnimation.EasingFunction>
+                                                <CircleEase EasingMode="EaseOut" />
+                                            </DoubleAnimation.EasingFunction>
+                                        </DoubleAnimation>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
