@@ -178,6 +178,9 @@ namespace S1Nyan.Views
                     nextBarButton.IsEnabled = false;
                     LastPage.IsEnabled = false;
                 }
+                VertSlider.Minimum = S1Parser.S1Resource.ItemsPerThreadSimple * (current - 1);
+                VertSlider.Value = VertSlider.Minimum;
+                VertSlider.Maximum = VertSlider.Minimum + Vm.TheThread.Items.Count - 1;
             };
         }
 

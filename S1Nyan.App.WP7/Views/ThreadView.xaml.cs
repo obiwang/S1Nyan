@@ -26,7 +26,7 @@ namespace S1Nyan.Views
             VertSlider.Value = VertSlider.Minimum;
         }
 
-        private void VertSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void VertSliderSelectedValueChanged(object sender, System.EventArgs e)
         {
             int index = (int)(VertSlider.Value + .5) % 50;
             var item = (theList.ItemsSource as IList)[index];

@@ -118,10 +118,19 @@ namespace S1Nyan.Views
                 IsEmotion = true;
 
                 var res = Application.GetResourceStream(new Uri("Resources/" + path, UriKind.Relative));
-                if (res != null)
-                    SourceStream = res.Stream;
-                else
-                    SourceStream = await NetResourceService.GetResourceStreamStatic(new Uri(SourceUrl), path, -1, false);
+
+                try
+                {
+                    if (res != null)
+                        SourceStream = res.Stream;
+                    else
+                        SourceStream = await NetResourceService.GetResourceStreamStatic(new Uri(SourceUrl), path, -1, false);
+                }
+                catch { }
+                finally
+                {
+                    if (SourceStream == null) OnImageOpenFailed();
+                }
 
                 UpdateImage();
             }

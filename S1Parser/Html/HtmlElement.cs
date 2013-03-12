@@ -45,6 +45,9 @@ namespace S1Parser
     public class HtmlElement
     {
         public string Name { get; private set;}
+        /// <summary>
+        /// Get Element's Attributes, return "" if not exist
+        /// </summary>
         public HtmlAttributeCollection Attributes { get; internal set; }
         internal List<HtmlElement> Children { get; set; }
         public HtmlElementType Type { get; internal set; }

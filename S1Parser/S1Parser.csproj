@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Action\UserAction.cs" />
     <Compile Include="Action\LoginException.cs" />
+    <Compile Include="Emotion\EmotionParser.cs" />
     <Compile Include="Html\HtmlElement.cs" />
     <Compile Include="Html\HtmlDoc.cs" />
     <Compile Include="DataParser.cs" />

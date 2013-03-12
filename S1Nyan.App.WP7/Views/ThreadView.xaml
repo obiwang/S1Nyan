@@ -201,8 +201,7 @@
                     Margin="12,0,12,12"
                     HorizontalAlignment="Right"
                     Background="{StaticResource PhoneChromeBrush}"
-                    CornerRadius="32"
-                    Visibility="Collapsed">
+                    CornerRadius="32">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="64" />
@@ -218,7 +217,7 @@
                                  HandSide="Right"
                                  IsDirectionReversed="True"
                                  Orientation="Vertical"
-                                 ValueChanged="VertSlider_ValueChanged" />
+                                 SelectedValueChanged="VertSliderSelectedValueChanged" />
                     <c4f:RoundButton x:Name="PageBottom"
                                      Grid.Row="2"
                                      Click="PageBottom_Click"

@@ -17,6 +17,8 @@ namespace ObiWang.Controls
             DefaultStyleKey = typeof(MySlider);
         }
 
+        public event EventHandler SelectedValueChanged;
+
         public double SelectedValue
         {
             get { return (double)GetValue(SelectedValueProperty); }
@@ -31,7 +33,11 @@ namespace ObiWang.Controls
         {
             var slider = d as MySlider;
             if (slider != null)
+            {
                 slider.Value = slider.SelectedValue;
+                if (slider.SelectedValueChanged != null)
+                    slider.SelectedValueChanged(slider, null);
+            }
         }
 
         public HorizontalAlignment HandSide

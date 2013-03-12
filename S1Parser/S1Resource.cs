@@ -20,7 +20,8 @@ namespace S1Parser
         private const string EmotionPath = "images/post/smile/";
         private const string SimplePath = "simple/";
 
-        internal const string SimpleBase = SiteBase + "simple/";
+        internal const string SimpleBase = SiteBase + SimplePath;
+        internal const string EmotionBase = SiteBase + EmotionPath;
         public const short ItemsPerThreadSimple = 50;
         public const short ItemsPerThread = 30;
 

@@ -61,6 +61,7 @@
     <Compile Include="SimpleListParserTest.cs" />
     <Compile Include="SimpleThreadParserTest.cs" />
     <Compile Include="S1ResourceTest.cs" />
+    <Compile Include="EmotionParserTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\S1Parser\S1Parser.csproj">

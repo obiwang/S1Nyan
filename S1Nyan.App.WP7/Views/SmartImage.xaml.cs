@@ -12,7 +12,7 @@ namespace S1Nyan.Views
         {
             InitializeComponent();
             SizeChanged += (o, e) => SmartImageSizeChanged(e.NewSize);
-            DataContext = this;
+            ImageHolder.DataContext = this;
             Unloaded += OnUnload;
         }
 
@@ -31,19 +31,19 @@ namespace S1Nyan.Views
             get { return proxy; }
             set
             {
+                if (proxy != null)
+                {
+                    proxy.DownloadProgressChanged -= LoadingProgress;
+                    proxy.LoadingCompleted -= LoadingComplete;
+                    imageArea.Content = null;
+                }
                 if (value != null)
                 {
                     value.DownloadProgressChanged += LoadingProgress;
                     value.LoadingCompleted += LoadingComplete;
                     IsLoadingFailed = value.IsLoadingFailed;
-                }
-                else
-                {
-                    if (proxy != null)
-                    {
-                        proxy.DownloadProgressChanged -= LoadingProgress;
-                        proxy.LoadingCompleted -= LoadingComplete;
-                    }
+                    if (!value.IsEmotion)
+                        ImageHolder.Visibility = Visibility.Visible;
                 }
                 proxy = value;
             }
@@ -85,19 +85,15 @@ namespace S1Nyan.Views
             if (IsGif = Proxy.IsGif)
             {
                 if (RealImageGif == null)
-                {
                     RealImageGif = new AnimatedImage { Stretch = Stretch.Uniform };
-                    LayoutRoot.Children.Add(RealImageGif);
-                }
+                imageArea.Content = RealImageGif;
                 RealImageGif.Source = Proxy.GifImage;
             }
             else
             {
                 if (RealImage == null)
-                {
                     RealImage = new Image { Stretch = Stretch.Uniform };
-                    LayoutRoot.Children.Add(RealImage);
-                }
+                imageArea.Content = RealImage;
                 RealImage.Source = Proxy.Image;
             }
             ImageHolder.Visibility = Visibility.Collapsed;
@@ -111,13 +107,13 @@ namespace S1Nyan.Views
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            SmartImageSizeChanged(availableSize);
+            //SmartImageSizeChanged(availableSize);
             return base.MeasureOverride(availableSize);
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            SmartImageSizeChanged(finalSize);
+            //SmartImageSizeChanged(finalSize);
             return base.ArrangeOverride(finalSize);
         }
 
@@ -127,7 +123,7 @@ namespace S1Nyan.Views
 #if S1Nyan
             double zoom = Proxy.IsEmotion ? (SettingView.ContentFontSize / 20.0) : 1.0;
 #else 
-            double zoom = 1;
+            double zoom = Proxy.IsEmotion ? 1.5 : 1.0;
 #endif
             double width = Proxy.PixelWidth * zoom;
 
