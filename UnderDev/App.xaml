@@ -12,7 +12,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="CustomThemeResources.xaml" />
+                <ResourceDictionary Source="Resources/CustomThemeResources.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <conv:BooleanToVisibilityConverter x:Key="BoolToVisConv" />

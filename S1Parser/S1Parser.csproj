@@ -49,8 +49,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action\ErrorPaser.cs" />
     <Compile Include="Action\UserAction.cs" />
-    <Compile Include="Action\LoginException.cs" />
+    <Compile Include="Action\S1UserException.cs" />
     <Compile Include="Emotion\EmotionParser.cs" />
     <Compile Include="Html\HtmlElement.cs" />
     <Compile Include="Html\HtmlDoc.cs" />

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
+using UnderDev.ViewModel;
 
 namespace UnderDev
 {
@@ -15,7 +9,7 @@ namespace UnderDev
         public Page2()
         {
             InitializeComponent();
-            var vm = new Page2ViewModel();
+            var vm = new UserTestViewModel();
             vm.OnUpdateView = OnUpdateWebView;
             DataContext = vm;
         }

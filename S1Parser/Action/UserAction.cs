@@ -2,8 +2,9 @@
 using System.Net;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Xml.Linq;
 
-namespace S1Parser.Action
+namespace S1Parser.User
 {
     public static class UserAction
     {
@@ -16,7 +17,7 @@ namespace S1Parser.Action
         //const int cktime = 31536000;      //for 1 year (in sec)
 
 #if UseLocalhost
-        const string SiteBase = "http://192.168.0.113:8080/phpwind/";
+        const string SiteBase = "http://192.168.0.60/phpwind/";
         const string loginUrl = SiteBase + "login.php?";
         public const string PrivacyUrl = SiteBase + "profile.php?action=privacy";
 #else
@@ -63,7 +64,7 @@ namespace S1Parser.Action
         /// <param name="signature"></param>
         /// <param name="title">post title</param>
         /// <returns></returns>
-        public static async Task<string> Reply(this IS1Client client, string verify, string reletivePostUrl, string content, string signature = "", string title = "")
+        public static async Task<UserErrorTypes> Reply(this IS1Client client, string verify, string reletivePostUrl, string content, string signature = "", string title = "")
         {
             AddConstParam(client);
 
@@ -72,13 +73,24 @@ namespace S1Parser.Action
             client.AddPostParam("atc_title", title);
 
             var result = await client.PostDataTaskAsync(new Uri(SiteBase + reletivePostUrl));
-            if (result != null)
-            {   // handle error
-                //<?xml version="1.0" encoding="utf-8"?><ajax><![CDATA[success	read.php?tid=1&page=e#a]]></ajax>
-                //<?xml version="1.0" encoding="utf-8"?><ajax><![CDATA[非法请求，请返回重试!]]></ajax>
-                System.Diagnostics.Debug.WriteLine(result);
+            try
+            {
+                var root = XDocument.Parse(result).Root;
+                string error = root.Value.ToLower();
+                System.Diagnostics.Debug.WriteLine(error);
+
+                if (error.StartsWith("success"))
+                    return UserErrorTypes.Success;
+                else if (error.Contains("非法请求"))
+                    return UserErrorTypes.InvalidVerify;
+                else
+                    throw new S1UserException(error, UserErrorTypes.Unknown);
             }
-            return result;
+            catch (System.Xml.XmlException)
+            {
+                System.Diagnostics.Debug.WriteLine(result);
+                throw new NullReferenceException();
+            }
         }
 
         private static void AddConstParam(IS1Client client)

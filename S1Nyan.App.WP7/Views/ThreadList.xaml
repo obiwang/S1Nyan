@@ -41,7 +41,7 @@
           Background="Transparent"
           toolkit:TiltEffect.IsTiltEnabled="True">
         <Grid.RowDefinitions>
-            <RowDefinition Height="62" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel x:Name="TitlePanel"

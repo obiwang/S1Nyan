@@ -1,0 +1,150 @@
+﻿<phone:PhoneApplicationPage x:Class="UnderDev.Page3"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:Behavior="clr-namespace:Common.Behavior;assembly=Common.WP7"
+                            xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:my="clr-namespace:ObiWang.Controls;assembly=Common.WP7"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:s1="clr-namespace:S1Nyan.Views"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            Orientation="Portrait"
+                            SupportedOrientations="PortraitOrLandscape"
+                            shell:SystemTray.IsVisible="True"
+                            mc:Ignorable="d">
+
+    <!--  LayoutRoot is the root grid where all page content is placed  -->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  TitlePanel contains the name of the application and page title  -->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="MY APPLICATION" />
+            <TextBlock Margin="9,-7,0,0"
+                       Style="{StaticResource PhoneTextTitle1Style}"
+                       Text="page name" />
+        </StackPanel>
+        <my:FlipButton x:Name="status"
+                       Width="200"
+                       Height="60"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Content="{Binding Result}" />
+
+        <!--  ContentPanel - place additional content here  -->
+        <Grid x:Name="ContentPanel"
+              Grid.Row="1"
+              Margin="12,0,12,0"
+              toolkit:TiltEffect.IsTiltEnabled="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <StackPanel VerticalAlignment="Top">
+                <Button x:Name="login"
+                        Command="{Binding LoginCommand}"
+                        Content="Login" />
+                <Button x:Name="login2"
+                        Command="{Binding LoginCommand2}"
+                        Content="login2" />
+            </StackPanel>
+            <StackPanel x:Name="EmotionPanel"
+                        Grid.Row="2"
+                        Orientation="Horizontal"
+                        Visibility="Collapsed">
+                <ListBox x:Name="emotionList"
+                         Width="388"
+                         Height="400"
+                         ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <toolkit:WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Width="72"
+                                  Height="64"
+                                  Visibility="{Binding IsValid, Converter={StaticResource BoolToVisConv}}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <s1:SmartImage s1:ImageResourceManager.UriSource="{Binding ImagePath}" />
+                                <!--
+                                    <TextBlock Grid.Row="1"
+                                    Text="{Binding Id}"
+                                    TextAlignment="Center" />
+                                -->
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <StackPanel Orientation="Vertical">
+                    <Button x:Name="Pre"
+                            Width="72"
+                            Height="150"
+                            Click="Pre_Click">
+                        <TextBlock Text="上页" TextWrapping="Wrap" />
+                    </Button>
+                    <Button x:Name="Next"
+                            Width="72"
+                            Height="150"
+                            Click="Next_Click">
+                        <TextBlock Text="下页" TextWrapping="Wrap" />
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+            <Grid x:Name="ReplyPanel"
+                  Grid.Row="1"
+                  VerticalAlignment="Bottom"
+                  Visibility="Collapsed">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="48" />
+                </Grid.ColumnDefinitions>
+                <!--
+                    <my:MyPhoneTextBox MinHeight="72"
+                    MaxHeight="200"
+                    AcceptsReturn="True"
+                    ActionIcon="/Resources/appbar.message.send.png"
+                    HidesActionItemWhenEmpty="True"
+                    TextWrapping="Wrap"
+                    VerticalScrollBarVisibility="Auto" />
+                -->
+                <TextBox x:Name="replyText"
+                         MinWidth="72"
+                         MaxHeight="160"
+                         AcceptsReturn="True"
+                         InputScope="Text"
+                         Text="{Binding ReplyText, Mode=TwoWay}"
+                         TextWrapping="Wrap">
+                    <i:Interaction.Behaviors>
+                        <Behavior:TextBoxTextChangedUpdateBehavior />
+                    </i:Interaction.Behaviors>
+                </TextBox>
+
+                <c4f:RoundButton x:Name="SendButton"
+                                 Grid.Column="1"
+                                 Height="48"
+                                 Margin="-6,0,0,-3"
+                                 ButtonHeight="64"
+                                 ButtonWidth="64"
+                                 Command="{Binding SendCommand}"
+                                 ImageSource="/Resources/appbar.message.send.png" />
+            </Grid>
+        </Grid>
+    </Grid>
+
+</phone:PhoneApplicationPage>

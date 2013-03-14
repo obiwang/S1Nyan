@@ -9,7 +9,7 @@ using Microsoft.Phone.Shell;
 using S1Nyan.App.Resources;
 using S1Nyan.Model;
 using S1Nyan.ViewModel;
-using S1Parser.Action;
+using S1Parser.User;
 
 namespace S1Nyan.Views
 {

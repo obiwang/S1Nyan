@@ -12,7 +12,7 @@ namespace S1Parser.Emotion
     {
         public string Path { get; set; }
         public string Id { get; set; }
-        public bool IsValid { get { return Id.Length > 0; } }
+        public bool IsValid { get { return Id != null && Id.Length > 0; } }
 
         public string ImagePath
         {

@@ -124,13 +124,20 @@ namespace S1Parser
             }
         }
 
-        public HtmlElement FindFirst(string tagName = null)
+        public HtmlElement FindFirst(string tagName = null, Func<HtmlElement, bool> predicate = null)
         {
             foreach (var e in Children)
             {
                 if (tagName == null || e.Name == tagName.ToLower())
-                    return e;
-                var ee = e.FindFirst(tagName);
+                {
+                    if (predicate != null)
+                    {
+                        if (predicate(e))
+                            return e;
+                    }
+                    else return e;
+                }
+                var ee = e.FindFirst(tagName, predicate);
                 if (ee != null)
                     return ee;
             }

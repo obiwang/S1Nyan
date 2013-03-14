@@ -38,10 +38,10 @@ namespace S1Parser.SimpleParser
         private void GetReplyLink(HtmlElement htmlElement)
         {
             theData.ReplyLink = "";
-            var replylinks = from link in htmlElement.FindElements("a")
-                             where link.Attributes["href"].ToLower().StartsWith("post.php?action=reply")
-                             select link;
-            if (replylinks.Count() != 0) theData.ReplyLink = replylinks.First().Attributes["href"];
+            var replylink = htmlElement.FindFirst("a", 
+                (a) => a.Attributes["href"].ToLower().StartsWith("post.php?action=reply"));
+            if (replylink != null) 
+                theData.ReplyLink = replylink.Attributes["href"];
         }
 
         protected virtual S1ThreadItem ParseThreadItem(HtmlElement item)

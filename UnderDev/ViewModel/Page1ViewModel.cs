@@ -4,7 +4,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Threading;
 using Microsoft.Phone.Net.NetworkInformation;
 
-namespace UnderDev
+namespace UnderDev.ViewModel
 {
     /// <summary>
     /// This class contains properties that a View can data bind to.

@@ -6,7 +6,7 @@ using GalaSoft.MvvmLight.Command;
 using Microsoft.Phone.Controls;
 using S1Parser.Emotion;
 
-namespace UnderDev
+namespace UnderDev.ViewModel
 {
     /// <summary>
     /// This class contains properties that a View can data bind to.

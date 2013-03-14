@@ -56,7 +56,7 @@
                        Text="{Binding LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" />
             <TextBlock Margin="9,-7,0,0"
                        Style="{StaticResource PhoneTextTitle1Style}"
-                       Text="saraba 1st" />
+                       Text="stage one" />
         </StackPanel>
 
         <my:FlipButton Width="220"

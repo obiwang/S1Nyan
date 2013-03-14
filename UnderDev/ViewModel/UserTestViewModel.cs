@@ -3,13 +3,14 @@ using System.Diagnostics;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Microsoft.Phone.Info;
 using S1Nyan.Model;
-using S1Parser.Action;
+using S1Parser.User;
 
-namespace UnderDev
+namespace UnderDev.ViewModel
 {
     /// <summary>
     /// This class contains properties that a View can data bind to.
@@ -17,14 +18,32 @@ namespace UnderDev
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class Page2ViewModel : ViewModelBase
+    public class UserTestViewModel : ViewModelBase
     {
         /// <summary>
         /// Initializes a new instance of the Page1ViewModel class.
         /// </summary>
-        public Page2ViewModel()
+        public UserTestViewModel()
         {
 
+        }
+
+        private RelayCommand _loginCommand2;
+
+        /// <summary>
+        /// Gets the LoginCommand.
+        /// </summary>
+        public RelayCommand LoginCommand2
+        {
+            get
+            {
+                return _loginCommand2
+                    ?? (_loginCommand2 = new RelayCommand(
+                                          async () =>
+                                          {
+                                              await DoTestLogin2();
+                                          }));
+            }
         }
 
         private RelayCommand _loginCommand;
@@ -38,14 +57,14 @@ namespace UnderDev
             {
                 return _loginCommand
                     ?? (_loginCommand = new RelayCommand(
-                                          () =>
+                                          async () =>
                                           {
-                                              DoLogin2();
+                                              await DoTestLogin();
                                           }));
             }
         }
 
-        const string testUser = "s1nyan", testPass = "kqyrts1";
+        const string testUser = "test2", testPass = "testtest";
         const string userKey = "pwuser";
         const string passKey = "pwpwd";
         const string stepKey = "step";    //hidden input
@@ -80,11 +99,43 @@ namespace UnderDev
             if (OnUpdateView != null) OnUpdateView(Result);
         }
 
-        private async void DoLogin2()
+        private async Task DoTestLogin()
         {
-            Result = await new S1WebClient().Login(testUser, testPass);
+            try
+            {
+                Result = await UserLogin();
+                //verify = await new S1WebClient().GetVerifyString();
+            }
+            catch (Exception ex)
+            {
+                Result = ex.Message;
+            }
+            finally
+            {
+                if (OnUpdateView != null) OnUpdateView(Result);
+            }
+        }
 
-            if (OnUpdateView != null) OnUpdateView(Result);
+        private async Task<string> UserLogin()
+        {
+            return await new S1WebClient().Login(testUser, testPass);
+        }
+
+        private async Task DoTestLogin2()
+        {
+            try
+            {
+                Result = await new S1WebClient().Login("test1", testPass);
+                //verify = await new S1WebClient().GetVerifyString();
+            }
+            catch (Exception ex)
+            {
+                Result = ex.Message;
+            }
+            finally
+            {
+                if (OnUpdateView != null) OnUpdateView(Result);
+            }
         }
 
         private RelayCommand _testCommand;
@@ -100,7 +151,7 @@ namespace UnderDev
                     ?? (_testCommand = new RelayCommand(
                                           () =>
                                           {
-                                              DoTest2();
+                                              TestReply();
                                           }));
             }
         }
@@ -108,29 +159,82 @@ namespace UnderDev
 
         //to get verify, in page "profile.php?action=privacy" look for <input type="hidden" name="verify" value="9e5242f7">
 
-        private string verify = "9e5242f7";
+        private string verify = null;
 
         Regex resultPattern = new Regex(@"CDATA\[(?<data>.+)\]");
     
         static string deviceInfo = string.Format(signatureFormatString, DeviceStatus.DeviceManufacturer, DeviceStatus.DeviceName);
 
-        private async void DoTest2()
+        private bool isSending = false;
+        private bool IsSending
         {
-            var replyLink = "post.php?action=reply&fid=2&tid=1";
+            get { return isSending; }
+            set
+            {
+                isSending = value; SendCommand.RaiseCanExecuteChanged();
+            }
+        }
+        string replyLink = "post.php?action=reply&fid=2&tid=1";
+        private async Task DoPost()
+        {
+            UserErrorTypes result = UserErrorTypes.Unknown;
+            int retryTimes = 0;
+            try
+            {
+                IsSending = true;
+                while (result != UserErrorTypes.Success)
+                {
+                    if (retryTimes > 2)
+                        throw new S1UserException("MaxRetry", UserErrorTypes.MaxRetryTime);
+                    if (result == UserErrorTypes.InvalidVerify)
+                    {
+                        await UserLogin();
+                    }
 
-            Result = await new S1WebClient().Reply(verify,
-                reletivePostUrl: replyLink,
-                content: "Reply test @" + DateTime.Now.ToShortTimeString(),
-                signature: deviceInfo);
+                    await CheckVerify();
+                    result = await new S1WebClient().Reply(verify,
+                        reletivePostUrl: replyLink,
+                        content: ReplyText + "\r\n" + DateTime.Now.ToShortTimeString(),
+                        signature: deviceInfo);
 
-            string error = "";
-            var match = resultPattern.Match(Result);
-            if (match.Success)
-                error = match.Groups["data"].Value;
-            if (error.Length < 200)
-                Debug.WriteLine(error);
+                    if (result == UserErrorTypes.Success)
+                        Result = "Success";
+                    retryTimes++;
+                }
+            }
+            catch (Exception ex)
+            {
+                Result = ex.Message;
+            }
+            finally
+            {
+                IsSending = false;
+            }
+        }
 
-            if (OnUpdateView != null) OnUpdateView(Result + ConvertExtendedASCII(error));
+        private async Task CheckVerify()
+        {
+            if (verify == null || verify.Length == 0)
+            {
+                verify = await new S1WebClient().GetVerifyString();
+            }
+        }
+
+        private async void TestReply()
+        {
+            await DoPost();
+        }
+
+        private async void TestWrongVerify()
+        {
+            verify = "12345";
+            await DoPost();
+        }
+
+        private async void TestWrongID()
+        {
+            replyLink = "post.php?action=reply&fid=2&tid=2";
+            await DoPost();
         }
 
         private async void DoTest()
@@ -223,6 +327,42 @@ namespace UnderDev
 
                 _result = value;
                 RaisePropertyChanged(() => Result);
+            }
+        }
+
+        private string _replyText = "";
+
+        /// <summary>
+        /// Sets and gets the ReplyText property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public string ReplyText
+        {
+            get { return _replyText; }
+
+            set
+            {
+                if (_replyText == value) return;
+
+                _replyText = value;
+                RaisePropertyChanged(() => ReplyText);
+                SendCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        private RelayCommand _sendCommand;
+
+        /// <summary>
+        /// Gets the SendCommand.
+        /// </summary>
+        public RelayCommand SendCommand
+        {
+            get
+            {
+                return _sendCommand
+                    ?? (_sendCommand = new RelayCommand(
+                        () => TestReply(), 
+                        () => ReplyText.Length > 0 && !IsSending));
             }
         }
     }

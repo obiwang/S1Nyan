@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Net;
 using S1Nyan.App.Resources;
-using S1Parser.Action;
+using S1Parser.User;
 
 namespace S1Nyan.Utils
 {
