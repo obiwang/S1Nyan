@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace S1Nyan.App.Utils
+namespace S1Nyan.Utils
 {
     public interface IDataContextChangedHandler<T> where T : FrameworkElement
     {

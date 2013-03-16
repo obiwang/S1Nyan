@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using Microsoft.Phone.Shell;
-using S1Nyan.App.Resources;
+using S1Nyan.Resources;
 
 namespace S1Nyan.Utils
 {

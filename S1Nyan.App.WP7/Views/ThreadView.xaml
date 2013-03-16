@@ -175,7 +175,7 @@
                 </toolkit:LongListSelector.Template>
             </toolkit:LongListSelector>
 
-            <my:NotifyText Content="{Binding NotifyMessage}" />
+            <my:NotifyTextBoard Content="{Binding NotifyMessage, Mode=TwoWay}" />
         </Grid>
 
 

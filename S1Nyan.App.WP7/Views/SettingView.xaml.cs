@@ -9,7 +9,7 @@ using Microsoft.Phone.Info;
 using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
-using S1Nyan.App.Resources;
+using S1Nyan.Resources;
 
 namespace S1Nyan.Views
 {

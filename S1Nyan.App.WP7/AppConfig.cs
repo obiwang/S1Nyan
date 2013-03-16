@@ -9,7 +9,7 @@ using S1Nyan.Utils;
 using S1Nyan.Views;
 using S1Parser;
 
-namespace S1Nyan.App
+namespace S1Nyan
 {
     public class AppConfig
     {

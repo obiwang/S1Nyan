@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using S1Nyan.Model;
 using S1Parser;
 
-namespace S1Nyan.App.Design
+namespace S1Nyan.Design
 {
     public class DesignDataService : IDataService
     {
