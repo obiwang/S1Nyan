@@ -6,10 +6,10 @@ using System.Windows.Navigation;
 using GalaSoft.MvvmLight.Threading;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using S1Nyan.App.Resources;
+using S1Nyan.Resources;
 using S1Nyan.ViewModel;
 
-namespace S1Nyan.App
+namespace S1Nyan
 {
     public partial class App : Application
     {

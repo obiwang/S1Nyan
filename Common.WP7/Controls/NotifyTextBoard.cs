@@ -6,15 +6,15 @@ namespace ObiWang.Controls
 {
     [TemplatePart(Name = ContentContainer, Type = typeof(ContentControl))]
     [TemplatePart(Name = ShowNotify, Type = typeof(Storyboard))]
-    public class NotifyText : ContentControl
+    public class NotifyTextBoard : ContentControl
     {
         private const string ShowNotify = "ShowNotify";
         private const string ContentContainer = "ContentContainer";
         private Storyboard _storyboard;
 
-        public NotifyText()
+        public NotifyTextBoard()
         {
-            DefaultStyleKey = typeof(NotifyText);
+            DefaultStyleKey = typeof(NotifyTextBoard);
         }
 
         // Summary:

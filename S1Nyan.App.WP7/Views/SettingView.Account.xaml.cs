@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Phone.Controls;
-using S1Nyan.App.Resources;
+using S1Nyan.Resources;
 using S1Nyan.ViewModel;
 
 namespace S1Nyan.Views

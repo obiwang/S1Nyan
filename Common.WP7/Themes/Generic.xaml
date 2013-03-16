@@ -324,7 +324,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="my:NotifyText">
+    <Style TargetType="my:NotifyTextBoard">
         <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}" />
         <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}" />
         <Setter Property="Padding" Value="24, 12" />
@@ -332,7 +332,7 @@
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="my:NotifyText">
+                <ControlTemplate TargetType="my:NotifyTextBoard">
                     <Border x:Name="border"
                             Background="{StaticResource PhoneChromeBrush}"
                             CornerRadius="24"

@@ -5,7 +5,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
-using S1Nyan.App.Resources;
+using S1Nyan.Resources;
 using S1Nyan.Model;
 using S1Nyan.Views;
 using S1Parser.User;

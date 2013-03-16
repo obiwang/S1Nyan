@@ -2,7 +2,7 @@
 using System.Windows.Data;
 using System.Windows.Interactivity;
 
-namespace Common.Behavior
+namespace Obiwang.Behavior
 {
     public class TextBoxTextChangedUpdateBehavior : Behavior<TextBox>
     {
