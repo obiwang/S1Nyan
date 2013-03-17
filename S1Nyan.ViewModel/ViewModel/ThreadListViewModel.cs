@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;

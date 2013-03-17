@@ -21,14 +21,17 @@ namespace S1Nyan.Utils
                 string msg = AppResources.ErrorMsgUnknown;
                 switch((e as S1UserException).ErrorType)
                 {
+                    case UserErrorTypes.SiteClosed:
+                        msg = AppResources.ErrorMsgSiteClosed;
+                        break;
                     case UserErrorTypes.NoServerAvailable:
                         msg = AppResources.ErrorMsgNoServerAvailable;
                         break;
                     case UserErrorTypes.ServerUpdateSuccess:
                         msg = AppResources.ErrorMsgServerUpdateSuccess;
                         break;
-                    case UserErrorTypes.CheckServerStatus:
-                        msg = AppResources.ErrorMsgCheckServerStatus;
+                    case UserErrorTypes.TryCheckingOtherServers:
+                        msg = AppResources.ErrorMsgTryCheckingOtherServers;
                         break;
                     default:
                         if (e.Message != null)

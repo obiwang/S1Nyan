@@ -126,6 +126,10 @@
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Portable.CommonServiceLocator.1.2.2\lib\portable-net4+sl4+wp7+win8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Threading.Tasks">
       <HintPath>packages\Microsoft.Bcl.Async.1.0.14-rc\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
@@ -158,6 +162,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\S1Nyan.App.WP7\Model\IsolatedStorageHelper.cs">
+      <Link>S1Files\IsolatedStorageHelper.cs</Link>
+    </Compile>
     <Compile Include="..\S1Nyan.App.WP7\Model\UserExtension.cs">
       <Link>S1Files\UserExtension.cs</Link>
     </Compile>
@@ -501,6 +508,10 @@
     <ProjectReference Include="..\Phone Toolkit\Microsoft.Phone.Controls.Toolkit.WP7\Microsoft.Phone.Controls.Toolkit.WP7.csproj">
       <Project>{0754458A-7AFC-463A-B27D-2F6980522119}</Project>
       <Name>Microsoft.Phone.Controls.Toolkit.WP7</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\S1Nyan.Model\S1Nyan.Model.csproj">
+      <Project>{AA9F65DC-13D3-441A-99E2-FBAFE0C4CE9C}</Project>
+      <Name>S1Nyan.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\S1Nyan.ViewModel\S1Nyan.ViewModel.csproj">
       <Project>{29CC73B9-D0C1-410C-9084-6D754807BBA2}</Project>

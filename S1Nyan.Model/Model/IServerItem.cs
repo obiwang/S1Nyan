@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using S1Parser;
+using S1Parser.User;
 
 namespace S1Nyan.Model
 {
@@ -8,7 +8,7 @@ namespace S1Nyan.Model
     {
         IParserFactory ParserFactory { get; set; }
         string Addr { get; set; }
-        Exception UserException { get; }
+        S1UserException UserException { get; }
         void Cancel();
         void Check();
         Action<IServerItem> NotifyComplete { get; set; }

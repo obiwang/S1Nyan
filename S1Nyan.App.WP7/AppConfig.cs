@@ -23,6 +23,10 @@ namespace S1Nyan
 
         public static void Setup()
         {
+            SimpleIoc.Default.Register<IIndicator, Indicator>();
+            SimpleIoc.Default.Register<IErrorMsg, ErrorMsg>();
+            SimpleIoc.Default.Register<IStorageHelper, IsolatedStorageHelper>();
+
 #if UseFakeData
             SimpleIoc.Default.Register<IResourceService, ApplicationResourceService>();
             IParserFactory factory = new S1Parser.PaserFactory.FakeSimpleParserFactory();
@@ -30,10 +34,10 @@ namespace S1Nyan
             SimpleIoc.Default.Register<IResourceService, NetResourceService>();
             IParserFactory factory = new S1Parser.PaserFactory.SimpleParserFactory();
 #endif
+
             factory.ResourceService = SimpleIoc.Default.GetInstance<IResourceService>();
             SimpleIoc.Default.GetInstance<IDataService>().ParserFactory = factory;
-            SimpleIoc.Default.Register<IIndicator, Indicator>();
-            SimpleIoc.Default.Register<IErrorMsg, ErrorMsg>();
+            SimpleIoc.Default.GetInstance<IDataService>().StorageHelper = SimpleIoc.Default.GetInstance<IStorageHelper>();
 
             SimpleIoc.Default.GetInstance<IServerModel>();
             SettingView.InitTheme();

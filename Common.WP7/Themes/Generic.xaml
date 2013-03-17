@@ -340,8 +340,8 @@
                         <Border.Resources>
                             <Storyboard x:Name="ShowNotify">
                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value=".7" />
-                                    <DiscreteDoubleKeyFrame KeyTime="0:0:9" Value=".7" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value=".85" />
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:9" Value=".85" />
                                     <EasingDoubleKeyFrame KeyTime="0:0:9.5" Value="0" />
                                 </DoubleAnimationUsingKeyFrames>
                             </Storyboard>

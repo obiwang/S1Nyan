@@ -107,13 +107,13 @@ namespace S1Nyan.Views
 
         protected override Size MeasureOverride(Size availableSize)
         {
-            //SmartImageSizeChanged(availableSize);
+            SmartImageSizeChanged(availableSize);   /// TODO: new size calculator!
             return base.MeasureOverride(availableSize);
         }
 
         protected override Size ArrangeOverride(Size finalSize)
         {
-            //SmartImageSizeChanged(finalSize);
+            SmartImageSizeChanged(finalSize);       /// TODO: new size calculator!
             return base.ArrangeOverride(finalSize);
         }
 

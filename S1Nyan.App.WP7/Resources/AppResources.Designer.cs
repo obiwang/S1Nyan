@@ -106,7 +106,7 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 正在登录.
+        ///   Looks up a localized string similar to 正在登陆.
         /// </summary>
         public static string AccountPageLoginLoading {
             get {
@@ -115,7 +115,7 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 退出登录.
+        ///   Looks up a localized string similar to 退出登陆.
         /// </summary>
         public static string AccountPageLogout {
             get {
@@ -232,15 +232,6 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 检查服务器状态.
-        /// </summary>
-        public static string ErrorMsgCheckServerStatus {
-            get {
-                return ResourceManager.GetString("ErrorMsgCheckServerStatus", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 点击此处登陆.
         /// </summary>
         public static string ErrorMsgClickToLogin {
@@ -300,6 +291,24 @@ namespace S1Nyan.Resources {
         public static string ErrorMsgServerUpdateSuccess {
             get {
                 return ResourceManager.GetString("ErrorMsgServerUpdateSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 网站已关闭，请尝试登陆或等待服务器恢复.
+        /// </summary>
+        public static string ErrorMsgSiteClosed {
+            get {
+                return ResourceManager.GetString("ErrorMsgSiteClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 服务器不可用，尝试其他地址.
+        /// </summary>
+        public static string ErrorMsgTryCheckingOtherServers {
+            get {
+                return ResourceManager.GetString("ErrorMsgTryCheckingOtherServers", resourceCulture);
             }
         }
         

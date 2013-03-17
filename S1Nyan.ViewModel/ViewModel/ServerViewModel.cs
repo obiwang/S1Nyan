@@ -6,7 +6,6 @@ using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using S1Nyan.Model;
 using S1Nyan.Utils;
-using S1Parser;
 using S1Parser.User;
 
 namespace S1Nyan.ViewModel
@@ -45,7 +44,6 @@ namespace S1Nyan.ViewModel
 
                 if (serversToCheck == 0)
                 {
-                    Util.Indicator.SetError(S1UserException.NoServerAvailable);
                     NotifyError();
                     isCheckingStatus = false;
                     lastViewModel = null;
@@ -62,9 +60,20 @@ namespace S1Nyan.ViewModel
         private void NotifyError()
         {
             string msg = "";
-            if (lastException != null && lastException.Message != null)
-                msg = lastException.Message;
-            if (_serverModel.Msg != null)
+            if (closedServer != null)
+            {
+                Util.Indicator.SetError(S1UserException.SiteClosed);
+                msg = Util.ErrorMsg.GetExceptionMessage(S1UserException.SiteClosed);
+                _serverModel.UpdateServerAddr(closedServer.Addr);
+            }
+            else
+            {
+                Util.Indicator.SetError(S1UserException.NoServerAvailable);
+
+                if (lastException != null && lastException.Message != null)
+                    msg = lastException.Message;
+            }
+            if (_serverModel.Msg != null && _serverModel.Msg.Length>0)
                 msg = msg + "\r\n" + _serverModel.Msg;
             MessengerInstance.Send(new NotificationMessage<string>(msg, "NotifyServerMsg"));
         }
@@ -91,21 +100,28 @@ namespace S1Nyan.ViewModel
             item.NotifySuccess = null;
             ServersToCheck--;
             Debug.WriteLine("OnNotifyComplete: " + item.Addr);
-            if (item.UserException != null)
+            if (item.UserException != null && closedServer == null)
+            {
                 lastException = item.UserException;
+                if (item.UserException.ErrorType == UserErrorTypes.SiteClosed)
+                    closedServer = item;
+            }
         }
 
+        IServerItem closedServer = null; 
         Exception lastException = null;
         S1NyanViewModelBase lastViewModel;
         private List<IServerItem> serverList = null;
-        internal void CheckServerStatus(S1NyanViewModelBase viewModel)
+        internal async void CheckServerStatus(S1NyanViewModelBase viewModel)
         {
             if (isCheckingStatus) return;
             lastViewModel = viewModel;
             lastException = null;
+            closedServer = null;
             Util.Indicator.SetText(S1UserException.CheckServerStatus);
             isCheckingStatus = true;
 
+            await _serverModel.UpdateListFromRemote();
             serverList = _serverModel.List;
             ServersToCheck = serverList.Count;
             foreach (var server in serverList)

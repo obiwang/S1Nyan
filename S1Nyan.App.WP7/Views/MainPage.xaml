@@ -10,10 +10,10 @@
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                            DataContext="{Binding Main, Source={StaticResource Locator}}"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}"
+                            d:DataContext="{Binding Main, Source={StaticResource Locator}}"
                             shell:SystemTray.IsVisible="True"
                             mc:Ignorable="d ignore">
 
@@ -98,11 +98,6 @@
                         </Border>
                     </DataTemplate>
                 </toolkit:LongListSelector.ItemTemplate>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger>
-                        <Command:EventToCommand Command="{Binding LoadedCommand, Mode=OneWay}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
             </toolkit:LongListSelector>
 
             <my:NotifyTextBoard Content="{Binding NotifyMessage, Mode=TwoWay}" />

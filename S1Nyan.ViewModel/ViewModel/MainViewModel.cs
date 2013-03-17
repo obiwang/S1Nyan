@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Messaging;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;
@@ -25,6 +22,8 @@ namespace S1Nyan.ViewModel
         public MainViewModel(IDataService dataService) : base()
         {
             _dataService = dataService;
+            MainListData = _dataService.GetMainListCache();
+            RefreshData();
             //if (IsInDesignMode) _dataService.GetMainListData((item, error) => { MainListData = item; });
         }
 
@@ -45,48 +44,22 @@ namespace S1Nyan.ViewModel
             }
         }
 
-        private RelayCommand _loadedCommand;
-        /// <summary>
-        /// Gets the LoadedCommand.
-        /// </summary>
-        public RelayCommand LoadedCommand
-        {
-            get
-            {
-                return _loadedCommand
-                    ?? (_loadedCommand = new RelayCommand(ExecuteLoadedCommand));
-            }
-        }
-
-        private bool isInited;
-        private void ExecuteLoadedCommand()
-        {
-            if (isInited) return;
-            isInited = true;
-            RefreshData();
-        }
-
         public override async void RefreshData()
         {
             Util.Indicator.SetLoading();
             try
             {
-                MainListData = await _dataService.GetMainListAsync();
+                MainListData = await _dataService.UpdateMainListAsync();
                 Util.Indicator.SetBusy(false);
+                _dataService.GetMainListDone();
             }
             catch (Exception e)
             {
+                _dataService.GetMainListDone(false);
                 if (!HandleUserException(e))
                     Util.Indicator.SetError(e);
             }
-            finally
-            {
-                if (DataLoaded != null)
-                    DataLoaded();
-            }
         }
-
-        public Action DataLoaded = null;
         ////public override void Cleanup()
         ////{
         ////    // Clean up if needed

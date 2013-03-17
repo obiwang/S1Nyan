@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace S1Nyan.Model
 {
@@ -7,5 +8,6 @@ namespace S1Nyan.Model
         List<IServerItem> List { get; }
         string Msg { get; set; }
         void UpdateServerAddr(string url = null);
+        Task UpdateListFromRemote();
     }
 }

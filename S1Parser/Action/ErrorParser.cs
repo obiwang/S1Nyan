@@ -11,12 +11,12 @@ namespace S1Parser.User
         Success = 0,
         LoginFailed = 1,
         NotAuthorized,
-        ServerDown,
+        SiteClosed,
         ErrorWithMsg,
         InvalidVerify,
         NoServerAvailable,
         ServerUpdateSuccess,
-        CheckServerStatus,
+        TryCheckingOtherServers,
         MaxRetryTime,
     }    
 
@@ -48,7 +48,7 @@ namespace S1Parser.User
                 if (msg.Contains("您没有权限"))
                     errType = UserErrorTypes.NotAuthorized;
                 else if (msg.Contains("网站已经关闭"))
-                    errType = UserErrorTypes.ServerDown;
+                    errType = UserErrorTypes.SiteClosed;
                 if (msg != null)
                     throw new S1UserException(msg, errType);
             }

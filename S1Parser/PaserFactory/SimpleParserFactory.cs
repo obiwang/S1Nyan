@@ -17,7 +17,18 @@ namespace S1Parser.PaserFactory
 
         public async Task<IList<S1ListItem>> GetMainListData()
         {
-            Stream s = await ResourceService.GetResourceStream(GetMainUri()/*, "MainList"*/);
+            Stream s = await GetMainListStream();
+            return new SimpleListParser(s).GetData();
+        }
+
+        public async Task<Stream> GetMainListStream()
+        {
+            Stream s = await ResourceService.GetResourceStream(GetMainUri());
+            return s;
+        }
+
+        public IList<S1ListItem> ParseMainListData(Stream s)
+        {
             return new SimpleListParser(s).GetData();
         }
 

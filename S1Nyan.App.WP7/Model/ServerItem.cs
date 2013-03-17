@@ -16,7 +16,7 @@ namespace S1Nyan.Model
 
         S1WebClient client = null;
 
-        public Exception UserException { get; private set; }
+        public S1UserException UserException { get; private set; }
 
         public async void Check()
         {

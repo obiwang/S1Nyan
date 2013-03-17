@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using Microsoft.Practices.ServiceLocation;
 using ObiWang.Controls;
 using S1Nyan.Model;
 using S1Nyan.ViewModel;
@@ -13,7 +14,6 @@ namespace S1Nyan.Views
     public partial class MainPage : PhoneApplicationPage
     {
         bool isDataLoaded = false;
-        System.Threading.Timer timer;
 
         // Constructor
         public MainPage()
@@ -21,33 +21,28 @@ namespace S1Nyan.Views
             InitializeComponent();
 
             BuildLocalizedApplicationBar();
-            if (PhoneApplicationService.Current.StartupMode == StartupMode.Launch)
-                Vm.DataLoaded += DataLoaded;
-            else
-                DataLoaded();
 
             SettingView.UpdateOrientation(this);
-            Loaded += (o, e) => SettingView.UpdateOrientation(this);
-            timer = new System.Threading.Timer(OnTimeOut, this, 5000, UInt32.MaxValue);
+            Loaded += PageLoaded; 
         }
 
-        private static void OnTimeOut(object state)
+        private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            MainPage main = state as MainPage;
-            main.DataLoaded();
-            main.timer.Dispose();
+            SettingView.UpdateOrientation(this);
+            if (Vm == null)
+            {
+                DataContext = ServiceLocator.Current.GetInstance<MainViewModel>();
+                DataLoaded();
+            }
         }
 
         private void DataLoaded()
         {
             if (isDataLoaded) return;
             isDataLoaded = true;
-            Dispatcher.BeginInvoke(() =>
-            {
-                Popup.Visibility = Visibility.Collapsed;
-                ApplicationBar.IsVisible = true;
-                UserViewModel.Current.InitLogin();
-            });
+            Popup.Visibility = Visibility.Collapsed;
+            ApplicationBar.IsVisible = true;
+            UserViewModel.Current.InitLogin();
         }
 
         /// <summary>

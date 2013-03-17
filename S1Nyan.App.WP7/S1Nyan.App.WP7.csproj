@@ -183,6 +183,7 @@
     <Compile Include="AppConfig.cs" />
     <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="LocalizedStrings.cs" />
+    <Compile Include="Model\IsolatedStorageHelper.cs" />
     <Compile Include="Model\ServerItem.cs" />
     <Compile Include="Model\ServerModel.cs" />
     <Compile Include="Utils\ErrorMsg.cs" />
@@ -512,6 +513,9 @@
     <Content Include="Resources\face\98.gif" />
     <Content Include="Resources\face\99.gif" />
     <Content Include="Resources\server_list.xml" />
+    <Content Include="Resources\simple.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\zdl\156.gif" />
     <Content Include="Resources\zdl\157.gif" />
     <Content Include="Resources\zdl\158.gif" />

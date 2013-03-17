@@ -9,6 +9,9 @@ namespace S1Nyan.ViewModel
 {
     public abstract class S1NyanViewModelBase : ViewModelBase
     {
+        private static TimeSpan checkInterval = TimeSpan.FromMinutes(10);
+        private static DateTime lastCheck = DateTime.Now - checkInterval;
+
         public S1NyanViewModelBase()
         {
             MessengerInstance.Register<NotificationMessage<S1NyanViewModelBase>>(this, OnNotifyRefresh);
@@ -46,11 +49,15 @@ namespace S1Nyan.ViewModel
                 NotifyMessage = e.Message;
             }
 
-            if ((e is S1UserException && (e as S1UserException).ErrorType == UserErrorTypes.ServerDown) ||
+            if ((e is S1UserException && (e as S1UserException).ErrorType == UserErrorTypes.SiteClosed) ||
                 (e is InvalidDataException) ||
                 (e is System.Net.WebException && Util.ErrorMsg.IsNetworkAvailable()))
             {
+                if (DateTime.Now - lastCheck < checkInterval) return false;
+                lastCheck = DateTime.Now;
+
                 ServerViewModel.Current.CheckServerStatus(this);
+
                 return true;
             }
             return false;
