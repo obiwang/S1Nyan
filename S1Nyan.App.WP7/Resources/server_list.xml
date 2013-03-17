@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Root>
+  <Message>
+    This is a test message
+  </Message>
+  <ServerList>
+    <Server addr="http://220.196.42.172/2b/"/>
+    <Server addr="http://220.196.42.167/2b/"/>
+    <Server addr="http://bbs.saraba1st.com/2b/"/>
+  </ServerList>
+  <ObsoleteServerList>
+    <Server addr="http://bbs.stage1st.com/2b/"/>
+  </ObsoleteServerList>
+ </Root>

@@ -189,6 +189,7 @@
     </Compile>
     <Compile Include="UnderDevelopment\MyPhoneTextBox.cs" />
     <Compile Include="ViewModel\EmotionListViewModel.cs" />
+    <Compile Include="ViewModel\ServerListViewModel.cs" />
     <Compile Include="ViewModel\UserTestViewModel.cs" />
     <Compile Include="View\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -216,6 +217,9 @@
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ThemeManager.cs" />
+    <Compile Include="View\Page4.xaml.cs">
+      <DependentUpon>Page4.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -247,6 +251,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\Page4.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Resource Include="Resources\DarkThemeResources.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -482,6 +490,7 @@
     <Content Include="Resources\face\98.gif" />
     <Content Include="Resources\face\99.gif" />
     <Content Include="Resources\Sample.jpg" />
+    <Content Include="Resources\server_list.xml" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>

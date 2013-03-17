@@ -12,6 +12,9 @@ namespace S1Nyan.Views
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        bool isDataLoaded = false;
+        System.Threading.Timer timer;
+
         // Constructor
         public MainPage()
         {
@@ -25,17 +28,26 @@ namespace S1Nyan.Views
 
             SettingView.UpdateOrientation(this);
             Loaded += (o, e) => SettingView.UpdateOrientation(this);
+            timer = new System.Threading.Timer(OnTimeOut, this, 5000, UInt32.MaxValue);
+        }
+
+        private static void OnTimeOut(object state)
+        {
+            MainPage main = state as MainPage;
+            main.DataLoaded();
+            main.timer.Dispose();
         }
 
         private void DataLoaded()
         {
+            if (isDataLoaded) return;
+            isDataLoaded = true;
             Dispatcher.BeginInvoke(() =>
             {
                 Popup.Visibility = Visibility.Collapsed;
+                ApplicationBar.IsVisible = true;
+                UserViewModel.Current.InitLogin();
             });
-            ApplicationBar.IsVisible = true;
-
-            UserViewModel.Current.InitLogin();
         }
 
         /// <summary>

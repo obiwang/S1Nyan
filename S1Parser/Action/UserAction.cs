@@ -21,7 +21,7 @@ namespace S1Parser.User
         const string loginUrl = SiteBase + "login.php?";
         public const string PrivacyUrl = SiteBase + "profile.php?action=privacy";
 #else
-        static string SiteBase = S1Resource.S1BaseUrl;
+        static string SiteBase = S1Resource.SiteBase;
         static string loginUrl = SiteBase + "login.php?";
         public static string PrivacyUrl = SiteBase + "profile.php?action=privacy";
 #endif

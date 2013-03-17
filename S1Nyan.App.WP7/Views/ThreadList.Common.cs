@@ -104,7 +104,7 @@ namespace S1Nyan.Views
             // Create a new button and set the text value to the localized string from AppResources.
             ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.sync.rest.png", UriKind.Relative));
             appBarButton.Text = AppResources.AppBarButtonRefresh;
-            appBarButton.Click += (o, e) => Vm.RefreshThreadList(); 
+            appBarButton.Click += (o, e) => Vm.RefreshData(); 
             ApplicationBar.Buttons.Add(appBarButton);
 
             ApplicationBarIconButton preBarButton  = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.back.rest.png", UriKind.Relative));

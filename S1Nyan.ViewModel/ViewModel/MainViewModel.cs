@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;
@@ -14,14 +15,14 @@ namespace S1Nyan.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : S1NyanViewModelBase
     {
         private readonly IDataService _dataService;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(IDataService dataService)
+        public MainViewModel(IDataService dataService) : base()
         {
             _dataService = dataService;
             //if (IsInDesignMode) _dataService.GetMainListData((item, error) => { MainListData = item; });
@@ -58,10 +59,15 @@ namespace S1Nyan.ViewModel
         }
 
         private bool isInited;
-        private async void ExecuteLoadedCommand()
+        private void ExecuteLoadedCommand()
         {
             if (isInited) return;
             isInited = true;
+            RefreshData();
+        }
+
+        public override async void RefreshData()
+        {
             Util.Indicator.SetLoading();
             try
             {
@@ -70,7 +76,8 @@ namespace S1Nyan.ViewModel
             }
             catch (Exception e)
             {
-                Util.Indicator.SetError(e);
+                if (!HandleUserException(e))
+                    Util.Indicator.SetError(e);
             }
             finally
             {

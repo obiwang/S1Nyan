@@ -9,7 +9,9 @@ namespace S1Parser
     {
         IResourceService ResourceService { get; set; }
         Task<IList<S1ListItem>> GetMainListData();
+        IList<S1ListItem> ParseMainListData(string s);
         Task<S1ThreadList> GetThreadListData(string fid, int page);
         Task<S1ThreadPage> GetThreadData(string tid, int page);
+        string Path { get;}
     }
 }

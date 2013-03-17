@@ -74,6 +74,10 @@
     <None Include="Data\simple_read.htm" />
     <None Include="Data\simple_thread.htm" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\forbidden.htm" />
+    <Content Include="Data\UnderConstruction.htm" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

@@ -21,6 +21,12 @@ namespace ObiWang.Controls
         public FlipButton()
         {
             DefaultStyleKey = typeof(FlipButton);
+            this.Loaded += FlipButton_Loaded;
+        }
+
+        void FlipButton_Loaded(object sender, RoutedEventArgs e)
+        {
+            VisualStateManager.GoToState(this, FlipBack, false);
         }
 
         // Summary:
@@ -37,8 +43,6 @@ namespace ObiWang.Controls
             _flip = GetTemplateChild(Flip) as VisualState;
             if (_flip != null)
                 _flip.Storyboard.Completed += OnFlipComplete;
-            
-            VisualStateManager.GoToState(this, FlipBack, false);
         }
 
         private void OnFlipComplete(object sender, EventArgs e)

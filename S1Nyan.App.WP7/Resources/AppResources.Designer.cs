@@ -232,11 +232,29 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 检查服务器状态.
+        /// </summary>
+        public static string ErrorMsgCheckServerStatus {
+            get {
+                return ResourceManager.GetString("ErrorMsgCheckServerStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 点击此处登陆.
         /// </summary>
-        public static string ErroMsgClickToLogin {
+        public static string ErrorMsgClickToLogin {
             get {
-                return ResourceManager.GetString("ErroMsgClickToLogin", resourceCulture);
+                return ResourceManager.GetString("ErrorMsgClickToLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 连接服务器失败.
+        /// </summary>
+        public static string ErrorMsgConnectServerFailed {
+            get {
+                return ResourceManager.GetString("ErrorMsgConnectServerFailed", resourceCulture);
             }
         }
         
@@ -259,11 +277,29 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 网络连接失败.
+        ///   Looks up a localized string similar to 没有网络连接.
         /// </summary>
-        public static string ErrorMsgNetWorkFailed {
+        public static string ErrorMsgNoNetwork {
             get {
-                return ResourceManager.GetString("ErrorMsgNetWorkFailed", resourceCulture);
+                return ResourceManager.GetString("ErrorMsgNoNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 没有可用的服务器.
+        /// </summary>
+        public static string ErrorMsgNoServerAvailable {
+            get {
+                return ResourceManager.GetString("ErrorMsgNoServerAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 服务器更新成功.
+        /// </summary>
+        public static string ErrorMsgServerUpdateSuccess {
+            get {
+                return ResourceManager.GetString("ErrorMsgServerUpdateSuccess", resourceCulture);
             }
         }
         

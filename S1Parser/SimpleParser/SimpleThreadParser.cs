@@ -9,28 +9,39 @@ namespace S1Parser.SimpleParser
     {
         public SimpleThreadParser() { }
         public SimpleThreadParser(Stream s) : base(s) { }
+        public SimpleThreadParser(string s) : base(s) { }
 
         protected override void ParseImpl()
         {
-            var body = HtmlPage.FindFirst("body");
-            var a = body.FindFirst("a");
-            theData.Title = a.InnerHtml;
-            theData.FullLink = a.Attributes["href"];
+            try { 
+                var body = HtmlPage.FindFirst("body");
+                var a = body.FindFirst("a");
+                theData.Title = a.InnerHtml;
+                theData.FullLink = a.Attributes["href"];
 
-            GetReplyLink(body.Element("table"));
+                GetReplyLink(body.Element("table"));
 
-            GetPageCount(body.FindElements("center").ElementAt(1));
-            if (theData.CurrentPage == 0) theData.CurrentPage = 1;
+                GetPageCount(body.FindElements("center").ElementAt(1));
 
-            theData.Items = new List<S1ThreadItem>();
-            int i = 0;
-            foreach (var item in body.Descendants("table"))
-            {
-                var threadItem = ParseThreadItem(item);
-                if (threadItem != null)
+                theData.Items = new List<S1ThreadItem>();
+                int i = 0;
+                foreach (var item in body.Descendants("table"))
                 {
-                    threadItem.No = (theData.CurrentPage - 1) * S1Resource.ItemsPerThreadSimple + i++;
-                    theData.Items.Add(threadItem);
+                    var threadItem = ParseThreadItem(item);
+                    if (threadItem != null)
+                    {
+                        threadItem.No = (theData.CurrentPage - 1) * S1Resource.ItemsPerThreadSimple + i++;
+                        theData.Items.Add(threadItem);
+                    }
+                }
+            }
+            catch (System.Exception) { }
+            finally
+            {
+                if (theData.Items.Count == 0)
+                {
+                    S1Parser.User.ErrorParser.Parse(HtmlPage);
+                    throw new InvalidDataException();
                 }
             }
         }
@@ -111,6 +122,9 @@ namespace S1Parser.SimpleParser
         static Regex _totalPagePattern = new Regex(@"Pages: \( (?<total>\d+) total \)");
         private void GetPageCount(HtmlElement page)
         {
+            theData.CurrentPage = 1;
+            theData.TotalPage = 1;
+
             if (page.Children.Count == 0) return;
             int value = 0;
             if (int.TryParse(page.Element("b").InnerHtml, out value))

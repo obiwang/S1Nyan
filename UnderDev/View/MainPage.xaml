@@ -46,15 +46,30 @@
               Margin="12,0,12,0">
             <ScrollViewer>
                 <StackPanel>
-                    <HyperlinkButton NavigateUri="/View/Page1.xaml" Style="{StaticResource HyperlinkEmptyStyle}">
-                        <TextBlock Style="{StaticResource PhoneTextExtraLargeStyle}" Text="Network Status" />
+                    <StackPanel.Resources>
+                        <Style BasedOn="{StaticResource HyperlinkEmptyStyle}" TargetType="HyperlinkButton">
+                            <Setter Property="HorizontalAlignment" Value="Stretch" />
+                            <Setter Property="Margin" Value="0,6" />
+                        </Style>
+                        <Style BasedOn="{StaticResource PhoneTextExtraLargeStyle}" TargetType="TextBlock" />
+                    </StackPanel.Resources>
+
+                    <HyperlinkButton NavigateUri="/View/Page1.xaml">
+                        <TextBlock Text="Network Status" />
                     </HyperlinkButton>
-                    <HyperlinkButton NavigateUri="/View/Page2.xaml" Style="{StaticResource HyperlinkEmptyStyle}">
-                        <TextBlock Style="{StaticResource PhoneTextExtraLargeStyle}" Text="Account" />
+
+                    <HyperlinkButton NavigateUri="/View/Page2.xaml">
+                        <TextBlock Text="Account" />
                     </HyperlinkButton>
-                    <HyperlinkButton NavigateUri="/View/Page3.xaml" Style="{StaticResource HyperlinkEmptyStyle}">
-                        <TextBlock Style="{StaticResource PhoneTextExtraLargeStyle}" Text="Text" />
+
+                    <HyperlinkButton NavigateUri="/View/Page3.xaml">
+                        <TextBlock Text="Text" />
                     </HyperlinkButton>
+
+                    <HyperlinkButton NavigateUri="/View/Page4.xaml">
+                        <TextBlock Text="ServerList" />
+                    </HyperlinkButton>
+
                     <my:ExpandableItem x:Name="testItem"
                                        IsExpanded="True"
                                        ItemsSource="{Binding Children}"
@@ -65,8 +80,10 @@
                             </DataTemplate>
                         </my:ExpandableItem.ItemTemplate>
                     </my:ExpandableItem>
-                    <Button Command="{Binding B1}" Content="b1" />
-                    <Button Command="{Binding B2}" Content="b2" />
+                    <!--
+                        <Button Command="{Binding B1}" Content="b1" />
+                        <Button Command="{Binding B2}" Content="b2" />
+                    -->
                     <RichTextBox>
                         <Paragraph>
                             <Run>asdfljkfd</Run>

@@ -7,6 +7,7 @@ namespace S1Parser
     {
         public DataParser() { }
         public DataParser(Stream s) { HtmlPage = new HtmlDoc(s).RootElement; }
+        public DataParser(string s) { HtmlPage = new HtmlDoc(s).RootElement; }
 
         private HtmlElement htmlPage;
         public HtmlElement HtmlPage

@@ -12,13 +12,13 @@ namespace S1Nyan.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class ThreadViewModel : ViewModelBase
+    public class ThreadViewModel : S1NyanViewModelBase
     {
         IDataService _dataService;
         /// <summary>
         /// Initializes a new instance of the ThreadViewModel class.
         /// </summary>
-        public ThreadViewModel(IDataService dataService)
+        public ThreadViewModel(IDataService dataService) : base()
         {
             _dataService = dataService;
             //if (IsInDesignMode) _dataService.GetThreadData(null, 0, (item, error) => { TheThread = item; Title = TheThread.Title; });
@@ -72,7 +72,7 @@ namespace S1Nyan.ViewModel
             }
         }
 
-        public async void RefreshThread()
+        public override async void RefreshData()
         {
             TheThread = null;
             if (null == _tid) return;
@@ -95,7 +95,8 @@ namespace S1Nyan.ViewModel
             }
             catch (Exception e)
             {
-                Util.Indicator.SetError(e);
+                if (!HandleUserException(e))
+                    Util.Indicator.SetError(e);
             }
         }
 
@@ -126,7 +127,7 @@ namespace S1Nyan.ViewModel
                     ((totalPage > 0 && value <= totalPage) || totalPage == 0))
                 {
                     currentPage = value;
-                    RefreshThread();
+                    RefreshData();
                     RaisePropertyChanged(() => CurrentPage);
                 }
             }

@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="Model\DataService.cs" />
     <Compile Include="Model\IDataService.cs" />
+    <Compile Include="Model\IServerItem.cs" />
+    <Compile Include="Model\IServerModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

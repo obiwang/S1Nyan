@@ -5,30 +5,40 @@ namespace S1Parser
 {
     public static class S1Resource
     {
-        private const string IP = "http://220.196.42.167/";
-        private const string PATH = "2b/";
-        private const string SiteBase = IP + PATH;
-
-        private static List<string> HostList = new List<string>
-        {
-            "http://bbs.saraba1st.com/" + PATH,
-            SiteBase,
-            "http://www.sarabalst.com/" + PATH,
-            "http://bbs.stage1st.com/" + PATH,
-        };
-
         private const string EmotionPath = "images/post/smile/";
-        private const string SimplePath = "simple/";
+        internal const string SimplePath = "simple/";
 
-        internal const string SimpleBase = SiteBase + SimplePath;
-        internal const string EmotionBase = SiteBase + EmotionPath;
+        private static string siteBase;
+        public static string SiteBase
+        {
+            get
+            {
+                return siteBase;
+            }
+            set
+            {
+                if (value == null || value.Length == 0) return;
+                siteBase = value;
+                simpleBase = null;
+                emotionBase = null;
+            }
+        }
+
+        public static List<string> HostList { get; set; }
+
+        private static string simpleBase;
+        internal static string SimpleBase
+        {
+            get
+            {
+                return simpleBase ?? (simpleBase = SiteBase + SimplePath);
+            }
+        }
+        private static string emotionBase;
+        internal static string EmotionBase { get { return emotionBase ?? (emotionBase = SiteBase + EmotionPath); } } 
+
         public const short ItemsPerThreadSimple = 50;
         public const short ItemsPerThread = 30;
-
-        public static string S1BaseUrl
-        {
-            get { return SiteBase; }
-        }
 
         public static string GetRelativePath(string url)
         {

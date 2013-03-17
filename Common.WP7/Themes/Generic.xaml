@@ -324,4 +324,36 @@
         </Setter>
     </Style>
 
+    <Style TargetType="my:NotifyText">
+        <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}" />
+        <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}" />
+        <Setter Property="Padding" Value="24, 12" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="my:NotifyText">
+                    <Border x:Name="border"
+                            Background="{StaticResource PhoneChromeBrush}"
+                            CornerRadius="24"
+                            Opacity="0">
+                        <Border.Resources>
+                            <Storyboard x:Name="ShowNotify">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.Opacity)">
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value=".7" />
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:9" Value=".7" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:9.5" Value="0" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </Border.Resources>
+                        <TextBlock x:Name="ContentContainer"
+                                   Margin="{TemplateBinding Padding}"
+                                   Text="{TemplateBinding Content}"
+                                   TextWrapping="Wrap" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

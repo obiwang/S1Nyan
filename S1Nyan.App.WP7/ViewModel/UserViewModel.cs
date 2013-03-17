@@ -95,7 +95,7 @@ namespace S1Nyan.ViewModel
             }
             catch (Exception ex)
             {
-                return S1Nyan.Utils.ErrorMsg.GetExceptionMessage(ex);
+                return S1Nyan.Utils.Util.ErrorMsg.GetExceptionMessage(ex);
             }
         }
 
@@ -164,7 +164,7 @@ namespace S1Nyan.ViewModel
                 if (SettingView.IsRememberPass && SettingView.CurrentUsername.Length > 0)
                     await BackgroundLogin(SettingView.CurrentUsername, SettingView.CurrentPassword);
                 else if (SettingView.IsFirstLogin)
-                    SetNotifyMsg(AppResources.ErroMsgClickToLogin);
+                    SetNotifyMsg(AppResources.ErrorMsgClickToLogin);
 
                 SettingView.VerifyString = await new S1WebClient().GetVerifyString();
             }

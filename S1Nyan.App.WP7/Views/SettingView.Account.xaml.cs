@@ -148,26 +148,26 @@ namespace S1Nyan.Views
                 if (AddOrUpdateValue<string>(SavedUserNameKeyName, value))
                 {
                     Save();
-                    CurrentUsername = value;
+                    CurrentUsername = _savedUserName = value;
                 }
             }
         }
 
         private const string FakePassword = "F…A…K…E";
         private const string SavedPasswordKeyName = "SavedPassword";
-        private static string savedPassword;
+        private static string _savedPassword;
         private static string SavedPassword
         {
             get
             {
-                return savedPassword ?? (savedPassword = GetValueOrDefault<string>(SavedPasswordKeyName, ""));
+                return _savedPassword ?? (_savedPassword = GetValueOrDefault<string>(SavedPasswordKeyName, ""));
             }
             set
             {
                 if (AddOrUpdateValue<string>(SavedPasswordKeyName, value))
                 {
                     Save();
-                    CurrentPassword = value;
+                    CurrentPassword = _savedPassword = value;
                 }
             }
         }

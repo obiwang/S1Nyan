@@ -458,8 +458,27 @@ namespace S1Nyan.Views
 
         #endregion
 
+        #region Server Settings
+        private const string CurrentServerAddrKeyName = "CurrentServerAddr";
+        private static string _currentServerAddr;
+        internal static string CurrentServerAddr
+        {
+            get
+            {
+                return _currentServerAddr ?? (_currentServerAddr = GetValueOrDefault<string>(CurrentServerAddrKeyName, null));
+            }
+            set
+            {
+                if (AddOrUpdateValue<string>(CurrentServerAddrKeyName, value))
+                {
+                    Save();
+                    _currentServerAddr = value;
+                }
+            }
+        }
+        #endregion
 
-
+        #region Setting Button & Menu
         internal static ApplicationBarMenuItem GetSettingMenuItem()
         {
             ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.SettingPage);
@@ -507,5 +526,7 @@ namespace S1Nyan.Views
                 Pivot.SelectedIndex = index;
             }
         }
+        #endregion
+
     }
 }

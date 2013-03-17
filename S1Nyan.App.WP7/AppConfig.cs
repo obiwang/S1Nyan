@@ -1,10 +1,9 @@
 ﻿#if DEBUG
-#define UseFakeData
+//#define UseFakeData
 #endif
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Phone.Net.NetworkInformation;
-using Microsoft.Practices.ServiceLocation;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Nyan.Views;
@@ -31,10 +30,12 @@ namespace S1Nyan.App
             SimpleIoc.Default.Register<IResourceService, NetResourceService>();
             IParserFactory factory = new S1Parser.PaserFactory.SimpleParserFactory();
 #endif
-            factory.ResourceService = ServiceLocator.Current.GetInstance<IResourceService>();
-            ServiceLocator.Current.GetInstance<IDataService>().ParserFactory = factory;
+            factory.ResourceService = SimpleIoc.Default.GetInstance<IResourceService>();
+            SimpleIoc.Default.GetInstance<IDataService>().ParserFactory = factory;
             SimpleIoc.Default.Register<IIndicator, Indicator>();
+            SimpleIoc.Default.Register<IErrorMsg, ErrorMsg>();
 
+            SimpleIoc.Default.GetInstance<IServerModel>();
             SettingView.InitTheme();
 
             ImageTools.IO.Decoders.AddDecoder<ImageTools.IO.Gif.GifDecoder>();

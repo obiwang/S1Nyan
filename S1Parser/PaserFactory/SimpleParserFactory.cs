@@ -10,9 +10,19 @@ namespace S1Parser.PaserFactory
     {
         public IResourceService ResourceService { get; set; }
 
+        public string Path
+        {
+            get { return S1Resource.SimplePath; }
+        }
+
         public async Task<IList<S1ListItem>> GetMainListData()
         {
-            Stream s = await ResourceService.GetResourceStream(GetMainUri(), "MainList");
+            Stream s = await ResourceService.GetResourceStream(GetMainUri()/*, "MainList"*/);
+            return new SimpleListParser(s).GetData();
+        }
+
+        public IList<S1ListItem> ParseMainListData(string s)
+        {
             return new SimpleListParser(s).GetData();
         }
 

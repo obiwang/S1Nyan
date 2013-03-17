@@ -1,21 +1,41 @@
 ﻿using System;
 using System.Net;
+using Microsoft.Phone.Net.NetworkInformation;
 using S1Nyan.App.Resources;
 using S1Parser.User;
 
 namespace S1Nyan.Utils
 {
-    public static class ErrorMsg 
+    public class ErrorMsg : IErrorMsg 
     {
-        public static string GetExceptionMessage(Exception e)
+        public string GetExceptionMessage(Exception e)
         {
             if (e is WebException)
             {
-                return AppResources.ErrorMsgNetWorkFailed;
+                if (!IsNetworkAvailable())
+                    return AppResources.ErrorMsgNoNetwork;
+                return AppResources.ErrorMsgConnectServerFailed;
             }
-            else if (e is LoginException)
+            else if (e is S1UserException)
             {
-                return e.Message;
+                string msg = AppResources.ErrorMsgUnknown;
+                switch((e as S1UserException).ErrorType)
+                {
+                    case UserErrorTypes.NoServerAvailable:
+                        msg = AppResources.ErrorMsgNoServerAvailable;
+                        break;
+                    case UserErrorTypes.ServerUpdateSuccess:
+                        msg = AppResources.ErrorMsgServerUpdateSuccess;
+                        break;
+                    case UserErrorTypes.CheckServerStatus:
+                        msg = AppResources.ErrorMsgCheckServerStatus;
+                        break;
+                    default:
+                        if (e.Message != null)
+                            msg = e.Message;
+                        break;
+                }
+                return msg;
             }
             else if (e is NullReferenceException)
             {
@@ -23,6 +43,11 @@ namespace S1Nyan.Utils
             }
             else
                 return AppResources.ErrorMsgUnknown + e.Message;
+        }
+
+        public bool IsNetworkAvailable()
+        {
+            return DeviceNetworkInformation.IsNetworkAvailable;
         }
     }
 }

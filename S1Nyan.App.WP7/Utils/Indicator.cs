@@ -4,7 +4,7 @@ using S1Nyan.App.Resources;
 
 namespace S1Nyan.Utils
 {
-    public class Indicator : S1Nyan.Utils.IIndicator
+    public class Indicator : IIndicator
     {
         ProgressIndicator _progressIndicator;
         Timer timer;
@@ -40,11 +40,6 @@ namespace S1Nyan.Utils
             _progressIndicator.Text = text;
             _progressIndicator.IsIndeterminate = false;
             timer.Change(5000, uint.MaxValue);
-        }
-
-        public void SetError(System.Exception e)
-        {
-            SetError(ErrorMsg.GetExceptionMessage(e));
         }
 
         public void SetLoading()

@@ -245,8 +245,8 @@
   <data name="AccountPageChangeAccount" xml:space="preserve">
     <value>切换账户</value>
   </data>
-  <data name="ErrorMsgNetWorkFailed" xml:space="preserve">
-    <value>网络连接失败</value>
+  <data name="ErrorMsgConnectServerFailed" xml:space="preserve">
+    <value>连接服务器失败</value>
   </data>
   <data name="ErrorMsgUnknown" xml:space="preserve">
     <value>未知错误：</value>
@@ -257,10 +257,22 @@
   <data name="ErrorMsgNamePassEmpty" xml:space="preserve">
     <value>用户名/密码不能为空</value>
   </data>
-  <data name="ErroMsgClickToLogin" xml:space="preserve">
+  <data name="ErrorMsgClickToLogin" xml:space="preserve">
     <value>点击此处登陆</value>
   </data>
   <data name="ErrorMsgGetDataFailed" xml:space="preserve">
     <value>数据获取失败</value>
+  </data>
+  <data name="ErrorMsgNoNetwork" xml:space="preserve">
+    <value>没有网络连接</value>
+  </data>
+  <data name="ErrorMsgCheckServerStatus" xml:space="preserve">
+    <value>检查服务器状态</value>
+  </data>
+  <data name="ErrorMsgNoServerAvailable" xml:space="preserve">
+    <value>没有可用的服务器</value>
+  </data>
+  <data name="ErrorMsgServerUpdateSuccess" xml:space="preserve">
+    <value>服务器更新成功</value>
   </data>
 </root>

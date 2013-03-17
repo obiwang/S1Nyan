@@ -13,16 +13,19 @@ namespace S1Nyan.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class ThreadListViewModel : ViewModelBase
+    public class ThreadListViewModel : S1NyanViewModelBase
     {
         private IDataService _dataService;
         
         /// <summary>
         /// Initializes a new instance of the ThreadListViewModel class.
         /// </summary>
-        public ThreadListViewModel(IDataService dataService)
+        public ThreadListViewModel(IDataService dataService) : base()
         {
             _dataService = dataService;
+
+            isUnregisterMessageDuringCleanUp = false;
+
             //if (IsInDesignMode) _dataService.GetThreadListData(null, 0, (item, error) => { ThreadListData = item; });
 
             //Buttons = new ObservableCollection<ButtonViewModel>();
@@ -87,7 +90,7 @@ namespace S1Nyan.ViewModel
             }
         }
 
-        public async void RefreshThreadList()
+        public override async void RefreshData()
         {
             ThreadListData = null;
             if (null == _fid) return;
@@ -108,7 +111,8 @@ namespace S1Nyan.ViewModel
             }
             catch (Exception e)
             {
-                Util.Indicator.SetError(e);
+                if (!HandleUserException(e))
+                    Util.Indicator.SetError(e);
             }
         }
 
@@ -136,7 +140,7 @@ namespace S1Nyan.ViewModel
                 if (value > 0 )
                 {
                     currentPage = value;
-                    RefreshThreadList();
+                    RefreshData();
                 }
             }
         }
