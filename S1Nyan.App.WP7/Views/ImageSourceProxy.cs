@@ -178,7 +178,7 @@ namespace S1Nyan.Views
         private bool IsShowImage()
         {
 #if S1Nyan
-            return IsForceShow || SettingView.IsShowPic || IsEmotion;
+            return ((IsForceShow || SettingView.IsShowPic) && !IsGif) || IsEmotion;
 #else
             return true;
 #endif

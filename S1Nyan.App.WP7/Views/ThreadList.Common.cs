@@ -61,6 +61,7 @@ namespace S1Nyan.Views
             ThreadView.GetInfoStack().Clear();
             if (e.NavigationMode == NavigationMode.Back)
             {
+                ImageResourceManager.Reset();
 #if DEBUG
                 GC.Collect();
 #endif

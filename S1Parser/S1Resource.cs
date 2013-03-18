@@ -43,6 +43,7 @@ namespace S1Parser
         public static string GetRelativePath(string url)
         {
             var temp = url.ToLower();
+            if (HostList != null)
             foreach (var host in HostList)
             {
                 if (temp.StartsWith(host))

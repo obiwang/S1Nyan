@@ -385,6 +385,15 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 在浏览器中查看.
+        /// </summary>
+        public static string ImageShowInBrowser {
+            get {
+                return ResourceManager.GetString("ImageShowInBrowser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 首页.
         /// </summary>
         public static string NavigatorFirstPage {

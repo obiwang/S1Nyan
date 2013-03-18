@@ -42,8 +42,11 @@ namespace S1Nyan.Views
                     value.DownloadProgressChanged += LoadingProgress;
                     value.LoadingCompleted += LoadingComplete;
                     IsLoadingFailed = value.IsLoadingFailed;
+                    IsGif = value.IsGif;
                     if (!value.IsEmotion)
                         ImageHolder.Visibility = Visibility.Visible;
+                    else
+                        MenuHolder.Visibility = Visibility.Collapsed;
                 }
                 proxy = value;
             }
@@ -147,7 +150,43 @@ namespace S1Nyan.Views
 
         private void ImageHolder_Click(object sender, RoutedEventArgs e)
         {
-            if (Proxy != null) Proxy.IsForceShow = true;
+            if (Proxy != null)
+            {
+                if (!Proxy.IsEmotion && Proxy.IsGif)
+                {
+                    var contextMenu = MenuHolder.GetValue(Microsoft.Phone.Controls.ContextMenuService.ContextMenuProperty) as Microsoft.Phone.Controls.ContextMenu;
+                    if (contextMenu != null)
+                        contextMenu.IsOpen = true;
+                }
+                else
+                    Proxy.IsForceShow = true;
+            }
+        }
+
+        private void OpenInBrowser(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var task = new Microsoft.Phone.Tasks.WebBrowserTask();
+                task.Uri = new Uri(proxy.SourceUrl, UriKind.Absolute);
+                task.Show();
+            }
+            catch (Exception) { }
+        }
+
+        private void MenuHolder_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            if (Proxy != null)
+            {
+                if (!Proxy.IsEmotion && Proxy.IsGif)
+                {
+                    var contextMenu = MenuHolder.GetValue(Microsoft.Phone.Controls.ContextMenuService.ContextMenuProperty) as Microsoft.Phone.Controls.ContextMenu;
+                    if (contextMenu != null)
+                        contextMenu.IsOpen = true;
+                }
+                else
+                    Proxy.IsForceShow = true;
+            }
         }
 
     }

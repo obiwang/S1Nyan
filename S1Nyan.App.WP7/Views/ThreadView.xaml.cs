@@ -18,12 +18,16 @@ namespace S1Nyan.Views
 
         private void PageBottom_Click(object sender, RoutedEventArgs e)
         {
-            VertSlider.Value = VertSlider.Maximum;
+            //VertSlider.Value = VertSlider.Maximum;
+            var list = theList.ItemsSource as IList;
+            theList.ScrollToGroup(list[list.Count-1]);
         }
 
         private void PageTop_Click(object sender, RoutedEventArgs e)
         {
-            VertSlider.Value = VertSlider.Minimum;
+            var list = theList.ItemsSource as IList;
+            theList.ScrollToGroup(list[0]);
+           //VertSlider.Value = VertSlider.Minimum;
         }
 
         private void VertSliderSelectedValueChanged(object sender, System.EventArgs e)
