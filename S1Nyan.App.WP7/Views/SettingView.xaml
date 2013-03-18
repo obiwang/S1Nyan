@@ -149,8 +149,8 @@
                                         Grid.Column="2"
                                         Content="{Binding LocalizedResources.AccountPageLogin, Source={StaticResource LocalizedStrings}}" />
                             </Grid>
-                            <HyperlinkButton Margin="0, 24"
-                                             NavigateUri="http://bbs.saraba1st.com/2b/register.php"
+                            <HyperlinkButton x:Name="RegisterLink"
+                                             Margin="0, 24"
                                              Style="{StaticResource LinkButtonStyle}"
                                              TargetName="_blank">
                                 <TextBlock HorizontalAlignment="Center" Text="{Binding LocalizedResources.AccountPageSignup, Source={StaticResource LocalizedStrings}}" />

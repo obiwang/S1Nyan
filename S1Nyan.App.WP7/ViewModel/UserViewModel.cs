@@ -18,25 +18,23 @@ namespace S1Nyan.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class UserViewModel : ViewModelBase
+    public class UserViewModel : ViewModelBase, ISendPostService
     {
         public static UserViewModel Current
         {
             get
             {
-                return SimpleIoc.Default.GetInstance<UserViewModel>();
+                return SimpleIoc.Default.GetInstance<ISendPostService>() as UserViewModel;
             }
         }
 
-        private readonly IDataService _dataService;
         private Timer notifyTimer;
 
         /// <summary>
         /// Initializes a new instance of the UserViewModel class.
         /// </summary>
-        public UserViewModel(IDataService dataService)
+        public UserViewModel()
         {
-            _dataService = dataService;
             notifyTimer = new Timer(OnTimeUp, this, Timeout.Infinite, Timeout.Infinite);
         }
 
@@ -165,8 +163,6 @@ namespace S1Nyan.ViewModel
                     await BackgroundLogin(SettingView.CurrentUsername, SettingView.CurrentPassword);
                 else if (SettingView.IsFirstLogin)
                     SetNotifyMsg(AppResources.ErrorMsgClickToLogin);
-
-                SettingView.VerifyString = await new S1WebClient().GetVerifyString();
             }
             catch (Exception ex)
             {
@@ -178,6 +174,60 @@ namespace S1Nyan.ViewModel
         {
             Uid = null;
             InitLogin();
+        }
+
+        public async Task<string> DoSendPost(string replyLink, string replyText)
+        {
+            UserErrorTypes result = UserErrorTypes.Unknown;
+            int retryTimes = 0;
+            try
+            {
+                while (result != UserErrorTypes.Success)
+                {
+                    if (retryTimes > 2)
+                        throw new S1UserException("MaxRetry", UserErrorTypes.MaxRetryTime);
+                    if (result == UserErrorTypes.InvalidVerify)
+                    {
+                        Uid = null;
+                        var error = await DoLogin(SettingView.CurrentUsername, SettingView.CurrentPassword);
+                        if (error != null)
+                            throw new S1UserException(error, UserErrorTypes.LoginFailed);
+                    }
+
+                    await CheckVerify();
+                    result = await new S1WebClient().Reply(SettingView.VerifyString,
+                        reletivePostUrl: replyLink,
+                        content: replyText,
+                        signature: S1Nyan.Views.SettingView.GetSignature());
+
+                    retryTimes++;
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return S1Nyan.Utils.Util.ErrorMsg.GetExceptionMessage(ex);
+            }
+        }
+
+        private async Task CheckVerify()
+        {
+            if (SettingView.VerifyString == null || SettingView.VerifyString.Length == 0)
+            {
+                SettingView.VerifyString = await new S1WebClient().GetVerifyString();
+            }
+        }
+
+        internal async Task<string> GetVerifyString()
+        {
+            try
+            {
+                return await new S1WebClient().GetVerifyString();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

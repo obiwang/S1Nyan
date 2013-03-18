@@ -278,4 +278,7 @@
   <data name="ErrorMsgSiteClosed" xml:space="preserve">
     <value>网站已关闭，请尝试登陆或等待服务器恢复</value>
   </data>
+  <data name="ErrorMsgReplySuccess" xml:space="preserve">
+    <value>回复成功</value>
+  </data>
 </root>

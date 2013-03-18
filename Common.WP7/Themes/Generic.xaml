@@ -274,26 +274,37 @@
                             </VisualStateGroup>
                             <VisualStateGroup x:Name="FlipStates">
                                 <VisualStateGroup.Transitions>
-                                    <VisualTransition GeneratedDuration="0:0:.3" To="Flip" />
-                                    <VisualTransition GeneratedDuration="0:0:.3" To="FlipBack" />
+                                    <VisualTransition GeneratedDuration="0:0:0.35" To="Flip" />
+                                    <VisualTransition GeneratedDuration="0:0:1.3" To="FlipBack">
+                                        <Storyboard FillBehavior="Stop">
+                                            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ContentGrid" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)">
+                                                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="90" />
+                                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="30">
+                                                    <!--
+                                                        <EasingDoubleKeyFrame.EasingFunction>
+                                                        <CircleEase EasingMode="EaseIn" />
+                                                        </EasingDoubleKeyFrame.EasingFunction>
+                                                    -->
+                                                </EasingDoubleKeyFrame>
+                                                <EasingDoubleKeyFrame KeyTime="0:0:1.3" Value="0">
+                                                    <EasingDoubleKeyFrame.EasingFunction>
+                                                        <ElasticEase EasingMode="EaseOut" />
+                                                    </EasingDoubleKeyFrame.EasingFunction>
+                                                </EasingDoubleKeyFrame>
+                                            </DoubleAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualTransition>
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Flip">
                                     <Storyboard>
                                         <DoubleAnimation Duration="0" Storyboard.TargetName="ContentGrid" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" To="90">
                                             <DoubleAnimation.EasingFunction>
-                                                <CircleEase EasingMode="EaseIn" />
+                                                <CircleEase EasingMode="EaseOut" />
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="FlipBack">
-                                    <Storyboard FillBehavior="Stop">
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="ContentGrid" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" To="0">
-                                            <DoubleAnimation.EasingFunction>
-                                                <CircleEase EasingMode="EaseOut" />
-                                            </DoubleAnimation.EasingFunction>
-                                        </DoubleAnimation>
-                                    </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
@@ -327,28 +338,32 @@
     <Style TargetType="my:NotifyTextBoard">
         <Setter Property="FontFamily" Value="{StaticResource PhoneFontFamilySemiBold}" />
         <Setter Property="FontSize" Value="{StaticResource PhoneFontSizeMediumLarge}" />
-        <Setter Property="Padding" Value="24, 12" />
+        <Setter Property="Background" Value="{StaticResource PhoneChromeBrush}" />
+        <Setter Property="Padding" Value="24, 8" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="my:NotifyTextBoard">
                     <Border x:Name="border"
-                            Background="{StaticResource PhoneChromeBrush}"
+                            Background="{TemplateBinding Background}"
                             CornerRadius="24"
                             Opacity="0">
                         <Border.Resources>
                             <Storyboard x:Name="ShowNotify">
                                 <DoubleAnimationUsingKeyFrames Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.Opacity)">
-                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value=".85" />
-                                    <DiscreteDoubleKeyFrame KeyTime="0:0:9" Value=".85" />
-                                    <EasingDoubleKeyFrame KeyTime="0:0:9.5" Value="0" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value=".8" />
+                                    <DiscreteDoubleKeyFrame KeyTime="0:0:5" Value=".8" />
+                                    <EasingDoubleKeyFrame KeyTime="0:0:5.5" Value="0" />
                                 </DoubleAnimationUsingKeyFrames>
                             </Storyboard>
                         </Border.Resources>
                         <TextBlock x:Name="ContentContainer"
+                                   MaxHeight="{TemplateBinding MaxHeight}"
                                    Margin="{TemplateBinding Padding}"
+                                   VerticalAlignment="Top"
                                    Text="{TemplateBinding Content}"
+                                   TextTrimming="WordEllipsis"
                                    TextWrapping="Wrap" />
                     </Border>
                 </ControlTemplate>

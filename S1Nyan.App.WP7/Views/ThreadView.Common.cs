@@ -59,8 +59,9 @@ namespace S1Nyan.Views
         }
 
         private const string ThreadViewPageInfoKey = "ThreadViewPageInfo";
+        private const string ThreadViewReplyTextKey = "ThreadViewReplyText";
 
-        private string idParam = null, titleParam = null;
+        private string idParam = null, titleParam = null, savedReply = null;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
@@ -74,6 +75,12 @@ namespace S1Nyan.Views
                     {
                         var item = stack[stack.Count - 1];
                         Vm.OnChangeTID(item.id, item.title, item.page);
+                    }
+
+                    if (PhoneApplicationService.Current.State.ContainsKey(ThreadViewReplyTextKey))
+                    {
+                        savedReply = PhoneApplicationService.Current.State[ThreadViewReplyTextKey] as string;
+                        PhoneApplicationService.Current.State.Remove(ThreadViewReplyTextKey);
                     }
                 }
                 return;
@@ -110,6 +117,8 @@ namespace S1Nyan.Views
                 item.page = Vm.CurrentPage;
                 item.title = Vm.Title;
                 stack.Add(item);
+
+                PhoneApplicationService.Current.State[ThreadViewReplyTextKey] = replyText.Text;
             }
         }
 
@@ -184,29 +193,17 @@ namespace S1Nyan.Views
             };
         }
 
-        private async void OnReplyButton(object sender, EventArgs e)
-        {
-#if UseLocalhost
-            var replyLink = "post.php?action=reply&fid=2&tid=1";
-#else
-            var replyLink = Vm.TheThread.ReplyLink;
-#endif
-            var v = SettingView.VerifyString;
-            if (v == null) return;
-            var s = await new S1WebClient().Reply(v,
-                reletivePostUrl: replyLink,
-                content: "Reply test @" + DateTime.Now.ToShortTimeString(),
-                signature: SettingView.GetSignature());
-        }
-
         static Uri replyIcon = new Uri("/Assets/AppBar/appbar.reply.email.png", UriKind.Relative);
+        static Uri replyIconInvert = new Uri("/Assets/AppBar/appbar.reply.email.invert.png", UriKind.Relative);
         static Uri replyFullIcon = new Uri("/Assets/AppBar/appbar.quill.png", UriKind.Relative);
         static Uri navIcon = new Uri("/Assets/AppBar/appbar.stairs.up.horizontal.png", UriKind.Relative);
-        static Uri navIconRevert = new Uri("/Assets/AppBar/appbar.stairs.up.revert.horizontal.png", UriKind.Relative);
+        static Uri navIconInvert = new Uri("/Assets/AppBar/appbar.stairs.up.horizontal.invert.png", UriKind.Relative);
         bool IsNavigatorVisible { get { return Navigator.Visibility == Visibility.Visible; } }
         private void ToggleNavigator(object sender, EventArgs e)
         {
             if (navBarButton == null) return;
+            if (IsReplyPanelVisible)
+                ShowHideReplyPanel(true);
             ShowHideNavi(IsNavigatorVisible);
         }
 
@@ -220,7 +217,7 @@ namespace S1Nyan.Views
             }
             else
             {
-                navBarButton.IconUri = navIconRevert;
+                navBarButton.IconUri = navIconInvert;
                 Navigator.Visibility = Visibility.Visible;
                 ShowNavi.Begin();
             }

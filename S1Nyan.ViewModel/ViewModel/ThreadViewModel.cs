@@ -1,4 +1,6 @@
 ﻿using System;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Ioc;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;
@@ -139,5 +141,100 @@ namespace S1Nyan.ViewModel
             TheThread = null;
             PageChanged = null;
         }
+
+        #region Reply
+        private string _replyText = "";
+
+        /// <summary>
+        /// Sets and gets the ReplyText property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public string ReplyText
+        {
+            get { return _replyText; }
+
+            set
+            {
+                if (_replyText == value) return;
+
+                _replyText = value;
+                RaisePropertyChanged(() => ReplyText);
+                SendCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        private bool isSending = false;
+        private bool IsSending
+        {
+            get { return isSending; }
+            set
+            {
+                isSending = value; SendCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        private string _replyResult = "";
+
+        /// <summary>
+        /// Sets and gets the Result property.
+        /// Changes to that property's value raise the PropertyChanged event. 
+        /// </summary>
+        public string ReplyResult
+        {
+            get { return _replyResult; }
+
+            set
+            {
+                if (_replyResult == value) return;
+
+                _replyResult = value;
+                RaisePropertyChanged(() => ReplyResult);
+            }
+        }
+
+        private RelayCommand _sendCommand;
+
+        /// <summary>
+        /// Gets the SendCommand.
+        /// </summary>
+        public RelayCommand SendCommand
+        {
+            get
+            {
+                return _sendCommand
+                    ?? (_sendCommand = new RelayCommand(
+                        () => SendReply(),
+                        () => ReplyText.Length > 0 && !IsSending));
+            }
+        }
+
+        private async void SendReply()
+        {
+#if UseLocalhost
+            var replyLink = "post.php?action=reply&fid=2&tid=1";
+#else
+            var replyLink = TheThread.ReplyLink;
+#endif
+            System.Diagnostics.Debug.WriteLine("Send Reply: " + replyLink + "\r\n" + ReplyText);
+
+            IsSending = true;
+            var result = await SendPostService.DoSendPost(replyLink, ReplyText.Replace("\r","\r\n"));
+            IsSending = false;
+            if (result == null)
+            {
+                ReplyText = "";
+                ReplyResult = Utils.Util.ErrorMsg.GetExceptionMessage(S1Parser.User.S1UserException.ReplySuccess);
+            }
+            else
+            {
+                ReplyResult = result;
+            }
+        }
+
+        private ISendPostService SendPostService
+        {
+            get { return SimpleIoc.Default.GetInstance<ISendPostService>(); }
+        }
+        #endregion
     }
 }

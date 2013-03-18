@@ -16,11 +16,25 @@ namespace UnderDev
         {
             InitializeComponent();
             source.ItemsPerPage = 25;
-            emotionList.ItemsSource = source;
+            //emotionList.ItemsSource = source;
             emotionList.SelectionChanged += emotionPanel_SelectionChanged;
             ImageResourceManager.Reset();
             DataContext = new UserTestViewModel();
             BuildLocalizedApplicationBar();
+            //replyText.GotFocus += replyText_GotFocus;
+            //replyText.LostFocus += replyText_LostFocus;
+        }
+
+        Thickness normalMargin = new Thickness(0), focusMargin = new Thickness(0, 0, 0, -72);
+
+        void replyText_LostFocus(object sender, RoutedEventArgs e)
+        {
+            ReplyPanel.Margin = normalMargin;
+        }
+
+        void replyText_GotFocus(object sender, RoutedEventArgs e)
+        {
+            ReplyPanel.Margin = focusMargin;
         }
 
         /// <summary>
@@ -60,11 +74,13 @@ namespace UnderDev
             if (ReplyPanel.Visibility == Visibility.Visible)
             {
                 ReplyPanel.Visibility = Visibility.Collapsed;
+                EmotionPanel.Visibility = Visibility.Collapsed;
             }
             else
             {
                 replyText.Focus();
                 ReplyPanel.Visibility = Visibility.Visible;
+                EmotionPanel.Visibility = Visibility.Visible;
             }
         }
 
@@ -84,7 +100,7 @@ namespace UnderDev
             {
                 EmotionPanel.Visibility = Visibility.Visible;
             }
-            SendButton.Focus();
+            //SendButton.Focus();
         }
 
         void emotionPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)

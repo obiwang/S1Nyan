@@ -1,8 +1,10 @@
 ﻿<phone:PhoneApplicationPage x:Class="S1Nyan.Views.ThreadView"
                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:Behavior="clr-namespace:Obiwang.Behavior;assembly=Common.WP7"
                             xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                             xmlns:ignore="http://www.ignore.com"
                             xmlns:local="clr-namespace:S1Nyan.Views"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -178,7 +180,6 @@
             <my:NotifyTextBoard Content="{Binding NotifyMessage, Mode=TwoWay}" />
         </Grid>
 
-
         <!--  Page navigator controls  -->
         <Grid x:Name="Navigator"
               Grid.Row="1"
@@ -199,7 +200,7 @@
             </Grid.Resources>
             <Border x:Name="VertBorder"
                     Width="64"
-                    Height="400"
+                    Height="200"
                     Margin="12,0,12,12"
                     HorizontalAlignment="Right"
                     Background="{StaticResource PhoneChromeBrush}"
@@ -218,6 +219,7 @@
                                  Grid.Row="1"
                                  HandSide="Right"
                                  IsDirectionReversed="True"
+                                 Opacity="0"
                                  Orientation="Vertical"
                                  SelectedValueChanged="VertSliderSelectedValueChanged" />
                     <c4f:RoundButton x:Name="PageBottom"
@@ -226,7 +228,7 @@
                                      Content="{Binding LocalizedResources.NavigatorPageBottom, Source={StaticResource LocalizedStrings}}" />
                 </Grid>
             </Border>
-            <Border Width="400"
+            <Border Width="450"
                     Height="64"
                     Margin="0,12"
                     VerticalAlignment="Bottom"
@@ -253,6 +255,53 @@
                 </Grid>
             </Border>
         </Grid>
+        <Border x:Name="ReplyPanel"
+                Grid.Row="1"
+                VerticalAlignment="Bottom"
+                Background="{StaticResource PhoneBackgroundBrush}"
+                BorderBrush="{StaticResource PhoneDisabledBrush}"
+                BorderThickness="1,1,1,0"
+                Visibility="Collapsed">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="48" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="replyText"
+                         MinHeight="72"
+                         MaxHeight="172"
+                         AcceptsReturn="True"
+                         GotFocus="replyText_GotFocus"
+                         InputScope="Text"
+                         LostFocus="replyText_LostFocus"
+                         Text="{Binding ReplyText, Mode=TwoWay}"
+                         TextWrapping="Wrap">
+                    <i:Interaction.Behaviors>
+                        <Behavior:TextBoxTextChangedUpdateBehavior />
+                    </i:Interaction.Behaviors>
+                </TextBox>
+
+                <c4f:RoundButton x:Name="SendButton"
+                                 Grid.Column="1"
+                                 Height="48"
+                                 Margin="-14,0,0,12"
+                                 VerticalAlignment="Bottom"
+                                 ButtonHeight="68"
+                                 ButtonWidth="68"
+                                 Command="{Binding SendCommand}"
+                                 ImageSource="/Assets/AppBar/appbar.message.send.png" />
+                <Border Grid.ColumnSpan="2"
+                        Height="72"
+                        VerticalAlignment="Bottom">
+
+                    <my:NotifyTextBoard MaxHeight="72"
+                                        Background="{StaticResource PhoneBackgroundBrush}"
+                                        Content="{Binding ReplyResult, Mode=TwoWay}"
+                                        FontSize="{StaticResource PhoneFontSizeNormal}" />
+                </Border>
+            </Grid>
+
+        </Border>
 
         <!--  <Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />  -->
 

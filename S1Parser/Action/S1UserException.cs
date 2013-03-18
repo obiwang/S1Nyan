@@ -24,6 +24,7 @@ namespace S1Parser.User
         public static S1UserException InvalidVerify = new S1UserException(UserErrorTypes.InvalidVerify);
         public static S1UserException CheckServerStatus = new S1UserException(UserErrorTypes.TryCheckingOtherServers);
         public static S1UserException SiteClosed = new S1UserException(UserErrorTypes.SiteClosed);
+        public static S1UserException ReplySuccess = new S1UserException(UserErrorTypes.ReplySuccess);
 
         public UserErrorTypes ErrorType { get; protected set; }
 

@@ -33,6 +33,9 @@ namespace S1Nyan.Utils
                     case UserErrorTypes.TryCheckingOtherServers:
                         msg = AppResources.ErrorMsgTryCheckingOtherServers;
                         break;
+                    case UserErrorTypes.ReplySuccess:
+                        msg = AppResources.ErrorMsgReplySuccess;
+                        break;
                     default:
                         if (e.Message != null)
                             msg = e.Message;

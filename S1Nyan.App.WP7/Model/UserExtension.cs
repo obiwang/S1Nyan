@@ -20,8 +20,8 @@ namespace S1Nyan.Model
             if (input != null)
                 verify = input.Attributes["value"];
             else
-            {   
-                throw new S1UserException(UserErrorTypes.Unknown);
+            {
+                throw new S1UserException(ErrorParser.Parse(root));
             }
             return verify;
         }

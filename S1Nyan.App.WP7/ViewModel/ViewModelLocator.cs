@@ -29,11 +29,12 @@ namespace S1Nyan.ViewModel
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             SimpleIoc.Default.Register<IDataService, DataService>();
-            SimpleIoc.Default.Register<IServerModel, ServerModel>();
+            SimpleIoc.Default.Register<IStorageHelper, IsolatedStorageHelper>(true);
+            SimpleIoc.Default.Register<IServerModel, ServerModel>(true);
+            SimpleIoc.Default.Register<ISendPostService, UserViewModel>();
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<ThreadListViewModel>();
-            SimpleIoc.Default.Register<UserViewModel>();
             SimpleIoc.Default.Register<ServerViewModel>();
         }
 

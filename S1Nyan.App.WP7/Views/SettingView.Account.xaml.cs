@@ -9,8 +9,6 @@ namespace S1Nyan.Views
 {
     public partial class SettingView : PhoneApplicationPage
     {
-        internal static string VerifyString { get; set; }
-
         bool isAccountInited = false;
         private void InitAccount()
         {
@@ -25,7 +23,7 @@ namespace S1Nyan.Views
         public static void InitAccountData()
         {
             CurrentUsername = SavedUserName;
-            CurrentPassword = SavedPassword;
+            CurrentPassword = IsRememberPass ? SavedPassword : "";
         }
 
         #region LogIn
@@ -50,6 +48,8 @@ namespace S1Nyan.Views
 
             PasswordText.Password = CurrentPassword == "" ? "" : FakePassword;
             CheckPasswordWatermark();
+
+            RegisterLink.NavigateUri = new System.Uri(S1Parser.S1Resource.SiteBase + "register.php");
         }
 
         private void OnChangeAccount(object sender, RoutedEventArgs e)
@@ -64,6 +64,7 @@ namespace S1Nyan.Views
             if (pass == FakePassword)
                 pass = CurrentPassword;
             var msg = await UserViewModel.Current.DoLogin(UsernameText.Text, pass);
+            VerifyString = await UserViewModel.Current.GetVerifyString();
             UpdateControls(true, msg == null);
             UpdateErrorMsg(msg);
             if (msg == null)
@@ -169,6 +170,32 @@ namespace S1Nyan.Views
                     Save();
                     CurrentPassword = _savedPassword = value;
                 }
+            }
+        }
+
+        private const string VerifyStringKeyName = "VerifyString";
+        private static string _verifyString;
+        internal static string VerifyString
+        {
+            get
+            {
+                if (IsRememberPass)
+                    return _verifyString ?? (_verifyString = GetValueOrDefault<string>(VerifyStringKeyName, ""));
+                else
+                    return _verifyString;
+            }
+            set
+            {
+                if (IsRememberPass)
+                {
+                    if (AddOrUpdateValue<string>(VerifyStringKeyName, value))
+                    {
+                        Save();
+                        _verifyString = value;
+                    }
+                }
+                else
+                    _verifyString = value;
             }
         }
 

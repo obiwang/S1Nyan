@@ -2,9 +2,9 @@
 <Root>
   <Message>最近S1服务器不稳定，请大家见谅</Message>
   <ServerList>
-    <Server addr="http://220.196.42.172/2b/"/>
-    <Server addr="http://220.196.42.167/2b/"/>
     <Server addr="http://bbs.sarabalst.com/2b/"/>
+    <Server addr="http://220.196.42.167/2b/"/>
+    <Server addr="http://220.196.42.172/2b/"/>
     <Server addr="http://bbs.saraba1st.com/2b/"/>
   </ServerList>
   <ObsoleteServerList>

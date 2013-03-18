@@ -286,6 +286,15 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 回复成功.
+        /// </summary>
+        public static string ErrorMsgReplySuccess {
+            get {
+                return ResourceManager.GetString("ErrorMsgReplySuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 服务器更新成功.
         /// </summary>
         public static string ErrorMsgServerUpdateSuccess {
