@@ -80,7 +80,7 @@ namespace S1Nyan.Views
             get
             {
                 if (Image != null) return Image.PixelWidth;
-                else if (GifImage != null) return GifImage.PixelHeight;
+                else if (GifImage != null) return GifImage.PixelWidth;
                 else return 0;
             }
         }

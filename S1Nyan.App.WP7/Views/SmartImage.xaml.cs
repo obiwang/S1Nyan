@@ -134,14 +134,14 @@ namespace S1Nyan.Views
 
             if (Proxy.IsGif)
             {
-                if (width < newSize.Width)
+                if (width < newSize.Width || newSize.Width == 0)
                     RealImageGif.Width = width;
                 else
                     RealImageGif.Width = newSize.Width;
             }
             else 
             {
-                if (width < newSize.Width)
+                if (width < newSize.Width || newSize.Width == 0)
                     RealImage.Width = width;
                 else
                     RealImage.Width = newSize.Width;
