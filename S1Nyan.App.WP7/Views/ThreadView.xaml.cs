@@ -1,11 +1,8 @@
 ﻿using System.Collections;
 using System.Windows;
-using System.Windows.Controls;
 using Microsoft.Phone.Controls;
-using S1Nyan.App.Utils;
-using S1Parser;
 
-namespace S1Nyan.App.Views
+namespace S1Nyan.Views
 {
     public partial class ThreadView
     {
@@ -21,15 +18,19 @@ namespace S1Nyan.App.Views
 
         private void PageBottom_Click(object sender, RoutedEventArgs e)
         {
-            VertSlider.Value = VertSlider.Maximum;
+            //VertSlider.Value = VertSlider.Maximum;
+            var list = theList.ItemsSource as IList;
+            theList.ScrollToGroup(list[list.Count-1]);
         }
 
         private void PageTop_Click(object sender, RoutedEventArgs e)
         {
-            VertSlider.Value = VertSlider.Minimum;
+            var list = theList.ItemsSource as IList;
+            theList.ScrollToGroup(list[0]);
+           //VertSlider.Value = VertSlider.Minimum;
         }
 
-        private void VertSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void VertSliderSelectedValueChanged(object sender, System.EventArgs e)
         {
             int index = (int)(VertSlider.Value + .5) % 50;
             var item = (theList.ItemsSource as IList)[index];
@@ -38,8 +39,7 @@ namespace S1Nyan.App.Views
 
         private void theList_ManipulationStarted(object sender, System.Windows.Input.ManipulationStartedEventArgs e)
         {
-            if (IsNavigatorVisible)
-                ToggleNavigator(null, null);
+            ShowHideNavi(true);
         }
 
         protected override void OnOrientationChanged(Microsoft.Phone.Controls.OrientationChangedEventArgs e)

@@ -1,0 +1,66 @@
+﻿<UserControl x:Class="UnderDev.PopupSlider"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:UnderDev"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:my="clr-namespace:ObiWang.Controls;assembly=Common.WP7"
+             FontFamily="{StaticResource PhoneFontFamilyNormal}"
+             Foreground="{StaticResource PhoneForegroundBrush}"
+             d:DesignHeight="480"
+             d:DesignWidth="480"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+
+        <ControlTemplate x:Key="PhoneSimpleRepeatButton" TargetType="RepeatButton">
+            <Rectangle Fill="Transparent" />
+        </ControlTemplate>
+
+        <my:IntConverter x:Key="IntConverter" />
+
+    </UserControl.Resources>
+
+    <Grid x:Name="pannel"
+          Background="{StaticResource PhoneChromeBrush}"
+          Opacity=".8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="64" />
+            </Grid.ColumnDefinitions>
+            <Button Content="B" />
+            <my:MySlider x:Name="slider"
+                         Grid.Column="1"
+                         Maximum="100"
+                         Minimum="1" />
+            <Button Grid.Column="2" Content="E" />
+        </Grid>
+        <Grid Grid.RowSpan="2" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="64" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="64" />
+            </Grid.RowDefinitions>
+            <Button Content="B" />
+            <my:MySlider Grid.Row="1"
+                         IsDirectionReversed="True"
+                         Maximum="100"
+                         Minimum="1"
+                         Orientation="Vertical" />
+            <Button Grid.Row="2" Content="E" />
+        </Grid>
+        <TextBlock Grid.Row="1"
+                   Grid.Column="1"
+                   Style="{StaticResource PhoneTextTitle1Style}"
+                   Text="{Binding SelectedValue, ElementName=slider, Converter={StaticResource IntConverter}}" />
+    </Grid>
+</UserControl>

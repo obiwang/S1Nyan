@@ -61,6 +61,7 @@
     <Compile Include="SimpleListParserTest.cs" />
     <Compile Include="SimpleThreadParserTest.cs" />
     <Compile Include="S1ResourceTest.cs" />
+    <Compile Include="EmotionParserTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\S1Parser\S1Parser.csproj">
@@ -69,15 +70,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\simple.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\simple_read.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Data\simple_thread.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <None Include="Data\simple.htm" />
+    <None Include="Data\simple_read.htm" />
+    <None Include="Data\simple_thread.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\forbidden.htm" />
+    <Content Include="Data\UnderConstruction.htm" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

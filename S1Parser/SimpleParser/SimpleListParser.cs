@@ -8,26 +8,39 @@ namespace S1Parser.SimpleParser
     {
         public SimpleListParser() { }
         public SimpleListParser(Stream s) : base(s) { }
+        public SimpleListParser(string s) : base(s) { }
         protected override void ParseImpl()
         {
-            var root = HtmlPage.FindElements("table").Last().FindFirst("td");
-            S1ListItem lastitem = null;
-            foreach (var e in root.Descendants())
+            try
             {
-                if (e.Name == "li")
+                var root = HtmlPage.FindElements("table").Last().FindFirst("td");
+                S1ListItem lastitem = null;
+                foreach (var e in root.Descendants())
                 {
-                    var header = e.Element();
-                    if (header.Name == "h2")
+                    if (e.Name == "li")
                     {
-                        lastitem = new S1ListItem { Title = header.InnerHtml };
-                        theData.Add(lastitem);
+                        var header = e.Element();
+                        if (header.Name == "h2")
+                        {
+                            lastitem = new S1ListItem { Title = header.InnerHtml };
+                            theData.Add(lastitem);
+                        }
+                        else
+                        {   //missing ul
+                            AddChildItem(lastitem, e);
+                        }
                     }
-                    else
-                    {   //missing ul
-                        AddChildItem(lastitem, e);
-                    }
+                    else AddChildren(lastitem, e);
                 }
-                else AddChildren(lastitem, e);
+            }
+            catch (System.Exception) { }
+            finally
+            {
+                if (theData.Count == 0)
+                {
+                    S1Parser.User.ErrorParser.Parse(HtmlPage);
+                    throw new InvalidDataException();
+                }
             }
         }
 

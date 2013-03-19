@@ -120,6 +120,39 @@
   <data name="AboutPage" xml:space="preserve">
     <value>關於</value>
   </data>
+  <data name="AccountPage" xml:space="preserve">
+    <value>帳戶</value>
+  </data>
+  <data name="AccountPageChangeAccount" xml:space="preserve">
+    <value>切換帳戶</value>
+  </data>
+  <data name="AccountPageGuest" xml:space="preserve">
+    <value>訪客</value>
+  </data>
+  <data name="AccountPageLogin" xml:space="preserve">
+    <value>登陸</value>
+  </data>
+  <data name="AccountPageLoginLoading" xml:space="preserve">
+    <value>正在登陸</value>
+  </data>
+  <data name="AccountPageLogout" xml:space="preserve">
+    <value>退出登陸</value>
+  </data>
+  <data name="AccountPagePassword" xml:space="preserve">
+    <value>密碼</value>
+  </data>
+  <data name="AccountPageRememberPass" xml:space="preserve">
+    <value>記住密碼</value>
+  </data>
+  <data name="AccountPageShowSignature" xml:space="preserve">
+    <value>發帖顯示簽名</value>
+  </data>
+  <data name="AccountPageSignup" xml:space="preserve">
+    <value>註冊新帳戶</value>
+  </data>
+  <data name="AccountPageUsername" xml:space="preserve">
+    <value>用戶名</value>
+  </data>
   <data name="AppBarButtonNavigator" xml:space="preserve">
     <value>導航</value>
   </data>
@@ -132,11 +165,56 @@
   <data name="AppBarButtonRefresh" xml:space="preserve">
     <value>刷新</value>
   </data>
+  <data name="AppBarButtonReply" xml:space="preserve">
+    <value>回復</value>
+  </data>
   <data name="ApplicationTitle" xml:space="preserve">
     <value>S1 Nyan</value>
   </data>
   <data name="AppLoading" xml:space="preserve">
     <value>載入中</value>
+  </data>
+  <data name="ErrorMsgClickToLogin" xml:space="preserve">
+    <value>點擊此處登陸</value>
+  </data>
+  <data name="ErrorMsgConnectServerFailed" xml:space="preserve">
+    <value>連接伺服器失敗</value>
+  </data>
+  <data name="ErrorMsgGetDataFailed" xml:space="preserve">
+    <value>資料獲取失敗</value>
+  </data>
+  <data name="ErrorMsgNamePassEmpty" xml:space="preserve">
+    <value>用戶名/密碼不能為空</value>
+  </data>
+  <data name="ErrorMsgNoNetwork" xml:space="preserve">
+    <value>沒有網路連接</value>
+  </data>
+  <data name="ErrorMsgNoServerAvailable" xml:space="preserve">
+    <value>沒有可用的伺服器</value>
+  </data>
+  <data name="ErrorMsgReplySuccess" xml:space="preserve">
+    <value>回復成功</value>
+  </data>
+  <data name="ErrorMsgServerUpdateSuccess" xml:space="preserve">
+    <value>伺服器更新成功</value>
+  </data>
+  <data name="ErrorMsgSiteClosed" xml:space="preserve">
+    <value>網站已關閉，請嘗試登陸或等待伺服器恢復</value>
+  </data>
+  <data name="ErrorMsgTryCheckingOtherServers" xml:space="preserve">
+    <value>伺服器不可用，嘗試其他地址</value>
+  </data>
+  <data name="ErrorMsgUnknown" xml:space="preserve">
+    <value>未知錯誤 </value>
+  </data>
+  <data name="FeedBack" xml:space="preserve">
+    <value>意見回饋</value>
+  </data>
+  <data name="FeedBackEmail" xml:space="preserve">
+    <value>s1nyanwp@gmail.com</value>
+  </data>
+  <data name="FeedBackSubject" xml:space="preserve">
+    <value>S1Nyan 意見回饋</value>
   </data>
   <data name="FontSizeLarge" xml:space="preserve">
     <value>大</value>
@@ -146,6 +224,9 @@
   </data>
   <data name="FontSizeSmall" xml:space="preserve">
     <value>小</value>
+  </data>
+  <data name="ImageShowInBrowser" xml:space="preserve">
+    <value>在流覽器中查看</value>
   </data>
   <data name="NavigatorFirstPage" xml:space="preserve">
     <value>首頁</value>
@@ -158,6 +239,9 @@
   </data>
   <data name="NavigatorPageTop" xml:space="preserve">
     <value>頁首</value>
+  </data>
+  <data name="RateAndComment" xml:space="preserve">
+    <value>評分 &amp; 評論</value>
   </data>
   <data name="ResourceFlowDirection" xml:space="preserve">
     <value>LeftToRight</value>
@@ -189,19 +273,13 @@
   <data name="ShowPicOnlyWifi" xml:space="preserve">
     <value>僅連接WiFi時</value>
   </data>
+  <data name="ShowSignatureNone" xml:space="preserve">
+    <value>不顯示</value>
+  </data>
   <data name="ThemeS1" xml:space="preserve">
     <value>S1主題</value>
   </data>
   <data name="ThemeSystem" xml:space="preserve">
     <value>系統主題</value>
-  </data>
-  <data name="FeedBack" xml:space="preserve">
-    <value>意見反饋</value>
-  </data>
-  <data name="FeedBackSubject" xml:space="preserve">
-    <value>S1Nyan 意見反饋</value>
-  </data>
-  <data name="RateAndComment" xml:space="preserve">
-    <value>評分 &amp; 評論</value>
   </data>
 </root>

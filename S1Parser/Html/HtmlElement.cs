@@ -13,10 +13,42 @@ namespace S1Parser
         SelfClosed,
     }
 
+    public class HtmlAttributeCollection : IEnumerable<KeyValuePair<string, string>>
+    {
+        Dictionary<string, string> _attributes;
+        public HtmlAttributeCollection(Dictionary<string, string> attributes)
+        {
+            _attributes = (attributes as Dictionary<string, string>) ?? new Dictionary<string, string>();
+        }
+
+        public string this[string key]
+        {
+            get
+            {
+                if (_attributes != null && _attributes.ContainsKey(key))
+                    return _attributes[key];
+                return "";
+            }
+        }
+
+        public IEnumerator<KeyValuePair<string, string>> GetEnumerator()
+        {
+            return _attributes.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+
     public class HtmlElement
     {
         public string Name { get; private set;}
-        public Dictionary<string, string> Attributes { get; internal set; }
+        /// <summary>
+        /// Get Element's Attributes, return "" if not exist
+        /// </summary>
+        public HtmlAttributeCollection Attributes { get; internal set; }
         internal List<HtmlElement> Children { get; set; }
         public HtmlElementType Type { get; internal set; }
 
@@ -38,8 +70,8 @@ namespace S1Parser
             {
                 InnerHtml = innerHtml;
             }
-            
-            Attributes = attributes;
+
+            Attributes = new HtmlAttributeCollection(attributes);
             Children = children ?? new List<HtmlElement>();
             Type = type;
         }
@@ -92,13 +124,20 @@ namespace S1Parser
             }
         }
 
-        public HtmlElement FindFirst(string tagName = null)
+        public HtmlElement FindFirst(string tagName = null, Func<HtmlElement, bool> predicate = null)
         {
             foreach (var e in Children)
             {
                 if (tagName == null || e.Name == tagName.ToLower())
-                    return e;
-                var ee = e.FindFirst(tagName);
+                {
+                    if (predicate != null)
+                    {
+                        if (predicate(e))
+                            return e;
+                    }
+                    else return e;
+                }
+                var ee = e.FindFirst(tagName, predicate);
                 if (ee != null)
                     return ee;
             }
@@ -122,9 +161,8 @@ namespace S1Parser
             if (Type != HtmlElementType.Text) result.Append('<');
             if (IsEnd) result.Append('/');
             if (Type != HtmlElementType.Text) result.Append(Name);
-            if (Attributes != null)
-                foreach (var a in Attributes)
-                    result.Append(string.Format(" {0}=\"{1}\"", a.Key, a.Value));
+            foreach (var a in Attributes)
+                result.Append(string.Format(" {0}=\"{1}\"", a.Key, a.Value));
             if (Type == HtmlElementType.Text) result.Append(InnerHtml);
             if (Type == HtmlElementType.SelfClosed) result.Append(" /");
             if (Type != HtmlElementType.Text) result.Append('>');

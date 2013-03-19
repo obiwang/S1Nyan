@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using S1Nyan.Model;
 using S1Parser;
 
-namespace S1Nyan.App.Design
+namespace S1Nyan.Design
 {
     public class DesignDataService : IDataService
     {
@@ -62,8 +62,9 @@ namespace S1Nyan.App.Design
 
         public IResourceService ResourceService { get; set; }
         public IParserFactory ParserFactory { get; set; }
+        public IStorageHelper StorageHelper { get; set; }
 
-        public Task<IList<S1ListItem>> GetMainListAsync()
+        public Task<IList<S1ListItem>> UpdateMainListAsync()
         {
             return Task<IList<S1ListItem>>.Factory.StartNew(() => data);
         }
@@ -76,6 +77,16 @@ namespace S1Nyan.App.Design
         public Task<S1ThreadPage> GetThreadDataAsync(string tid, int page)
         {
             return Task<S1ThreadPage>.Factory.StartNew(() => thread);
+        }
+
+        public void GetMainListDone(bool success = true)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<S1ListItem> GetMainListCache()
+        {
+            throw new NotImplementedException();
         }
     }
 }

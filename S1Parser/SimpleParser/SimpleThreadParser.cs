@@ -9,28 +9,50 @@ namespace S1Parser.SimpleParser
     {
         public SimpleThreadParser() { }
         public SimpleThreadParser(Stream s) : base(s) { }
+        public SimpleThreadParser(string s) : base(s) { }
 
         protected override void ParseImpl()
         {
-            var body = HtmlPage.FindFirst("body");
-            var a = body.FindFirst("a");
-            theData.Title = a.InnerHtml;
-            theData.FullLink = a.Attributes["href"];
+            try { 
+                var body = HtmlPage.FindFirst("body");
+                var a = body.FindFirst("a");
+                theData.Title = a.InnerHtml;
+                theData.FullLink = a.Attributes["href"];
 
-            GetPageCount(body.FindElements("center").ElementAt(1));
-            if (theData.CurrentPage == 0) theData.CurrentPage = 1;
+                GetReplyLink(body.Element("table"));
 
-            theData.Items = new List<S1ThreadItem>();
-            int i = 0;
-            foreach (var item in body.Descendants("table"))
-            {
-                var threadItem = ParseThreadItem(item);
-                if (threadItem != null)
+                GetPageCount(body.FindElements("center").ElementAt(1));
+
+                theData.Items = new List<S1ThreadItem>();
+                int i = 0;
+                foreach (var item in body.Descendants("table"))
                 {
-                    threadItem.No = (theData.CurrentPage - 1) * S1Resource.ItemsPerThreadSimple + i++;
-                    theData.Items.Add(threadItem);
+                    var threadItem = ParseThreadItem(item);
+                    if (threadItem != null)
+                    {
+                        threadItem.No = (theData.CurrentPage - 1) * S1Resource.ItemsPerThreadSimple + i++;
+                        theData.Items.Add(threadItem);
+                    }
                 }
             }
+            catch (System.Exception) { }
+            finally
+            {
+                if (theData.Items == null || theData.Items.Count == 0)
+                {
+                    S1Parser.User.ErrorParser.Parse(HtmlPage);
+                    throw new InvalidDataException();
+                }
+            }
+        }
+
+        private void GetReplyLink(HtmlElement htmlElement)
+        {
+            theData.ReplyLink = "";
+            var replylink = htmlElement.FindFirst("a", 
+                (a) => a.Attributes["href"].ToLower().StartsWith("post.php?action=reply"));
+            if (replylink != null) 
+                theData.ReplyLink = replylink.Attributes["href"];
         }
 
         protected virtual S1ThreadItem ParseThreadItem(HtmlElement item)
@@ -53,10 +75,11 @@ namespace S1Parser.SimpleParser
             return threadItem;
         }
 
-        private IEnumerable<HtmlElement> ReGroupContent(IEnumerable<HtmlElement> elements)
+        private List<HtmlElement> ReGroupContent(IEnumerable<HtmlElement> elements)
         {
             bool hasContent = false;
             HtmlElement lastGroup = null;
+            var list = new List<HtmlElement>();
             bool lastIsBr = false;
             foreach (var item in elements)
             {
@@ -76,7 +99,7 @@ namespace S1Parser.SimpleParser
                         lastIsBr = false;
                         if (lastGroup.Children.Count != 0)
                         {
-                            yield return lastGroup;
+                            list.Add(lastGroup);
                             lastGroup = new HtmlElement("Paragraph", children: new List<HtmlElement>());
                         }
                     }
@@ -85,7 +108,7 @@ namespace S1Parser.SimpleParser
                 else if (item.Name == "br")
                 {
                     lastIsBr = true;
-                    yield return lastGroup;
+                    list.Add(lastGroup);
                     lastGroup = null;
                 }
                 else
@@ -94,12 +117,16 @@ namespace S1Parser.SimpleParser
                     lastGroup.Children.Add(item);
                 }
             }
-            yield return lastGroup;
+            list.Add(lastGroup);
+            return list;
         }
 
         static Regex _totalPagePattern = new Regex(@"Pages: \( (?<total>\d+) total \)");
         private void GetPageCount(HtmlElement page)
         {
+            theData.CurrentPage = 1;
+            theData.TotalPage = 1;
+
             if (page.Children.Count == 0) return;
             int value = 0;
             if (int.TryParse(page.Element("b").InnerHtml, out value))

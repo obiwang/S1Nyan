@@ -5,11 +5,11 @@ using System.Windows.Data;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using S1Nyan.App.Resources;
+using S1Nyan.Resources;
 using S1Nyan.ViewModel;
 using S1Parser;
 
-namespace S1Nyan.App.Views
+namespace S1Nyan.Views
 {
     public class ThreadPopularityConverter : IValueConverter
     {
@@ -39,7 +39,8 @@ namespace S1Nyan.App.Views
             InitializeComponent();
             BuildLocalizedApplicationBar();
 
-            Loaded += (o, e) => this.SupportedOrientations = SettingView.IsAutoRotateSetting ? SupportedPageOrientation.PortraitOrLandscape : SupportedPageOrientation.Portrait;
+            SettingView.UpdateOrientation(this);
+            Loaded += (o, e) => SettingView.UpdateOrientation(this);
         }
 
         /// <summary>
@@ -58,12 +59,31 @@ namespace S1Nyan.App.Views
         {
             base.OnNavigatedTo(e);
             ThreadView.GetInfoStack().Clear();
-            if (e.NavigationMode == NavigationMode.Back && idParam != null) return;
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+#if DEBUG
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+#endif
+                if (idParam != null)
+                    return;
+                else
+                    NavigationService.RemoveBackEntry();
+            }
             string titleParam = idParam = null;
             if (NavigationContext.QueryString.TryGetValue("ID", out idParam))
             {
                 NavigationContext.QueryString.TryGetValue("Title", out titleParam);
                 Vm.OnChangeFID(idParam, HttpUtility.HtmlDecode(titleParam));
+            }
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            if (e.NavigationMode == NavigationMode.Back)
+            {
+                Vm.Cleanup();
             }
         }
 
@@ -87,7 +107,7 @@ namespace S1Nyan.App.Views
             // Create a new button and set the text value to the localized string from AppResources.
             ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.sync.rest.png", UriKind.Relative));
             appBarButton.Text = AppResources.AppBarButtonRefresh;
-            appBarButton.Click += (o, e) => Vm.RefreshThreadList(); 
+            appBarButton.Click += (o, e) => Vm.RefreshData(); 
             ApplicationBar.Buttons.Add(appBarButton);
 
             ApplicationBarIconButton preBarButton  = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.back.rest.png", UriKind.Relative));

@@ -22,21 +22,21 @@ namespace S1Nyan.Model.Test
             stubPaserFactory = mocks.Stub<IParserFactory>();
         }
 
-        [TestMethod]
-        public async void TestGetMainListData()
-        {
-            using (mocks.Record())
-            {
-                await stubPaserFactory.GetMainListData();
-                LastCall.Return(new List<S1ListItem>());
-            }
+        //[TestMethod]
+        //public async void TestGetMainListData()
+        //{
+        //    using (mocks.Record())
+        //    {
+        //        await stubPaserFactory.GetMainListData();
+        //        LastCall.Return(new List<S1ListItem>());
+        //    }
 
-            DataService service = new DataService { ParserFactory = stubPaserFactory };
-            //var result = await service.GetMainListAsync();
+        //    DataService service = new DataService { ParserFactory = stubPaserFactory };
+        //    //var result = await service.GetMainListAsync();
 
-            //await Dela.AsyncAsserts.ThrowsExceptionAsync<Exception>(service.GetMainListAsync);
-            //Assert.IsTrue(result is List<S1ListItem>);
-        }
+        //    //await Dela.AsyncAsserts.ThrowsExceptionAsync<Exception>(service.GetMainListAsync);
+        //    //Assert.IsTrue(result is List<S1ListItem>);
+        //}
 
         [TestMethod]
         public void TestGetThreadListData()

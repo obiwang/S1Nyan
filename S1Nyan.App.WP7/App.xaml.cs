@@ -6,10 +6,10 @@ using System.Windows.Navigation;
 using GalaSoft.MvvmLight.Threading;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using S1Nyan.App.Resources;
+using S1Nyan.Resources;
 using S1Nyan.ViewModel;
 
-namespace S1Nyan.App
+namespace S1Nyan
 {
     public partial class App : Application
     {
@@ -39,7 +39,7 @@ namespace S1Nyan.App
             AppConfig.Setup();
 
             // Show graphics profiling information while debugging.
-            if (Debugger.IsAttached)
+            //if (Debugger.IsAttached)
             {
                 // Display the current frame rate counters.
                 Application.Current.Host.Settings.EnableFrameRateCounter = true;
@@ -56,6 +56,8 @@ namespace S1Nyan.App
                 // Caution:- Use this under debug mode only. Application that disables user idle detection will continue to run
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
+
+                MemoryDiagnostics.MemoryDiagnosticsHelper.Start(TimeSpan.FromSeconds(.5), false);
             }
 
         }
@@ -70,6 +72,7 @@ namespace S1Nyan.App
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
+            UserViewModel.Current.InitLogin();
         }
 
         // Code to execute when the application is deactivated (sent to background)

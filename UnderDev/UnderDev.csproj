@@ -1,0 +1,541 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AA74485E-BBE3-4DFD-A7D6-A2961027BDA7}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>UnderDev</RootNamespace>
+    <AssemblyName>UnderDev</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>UnderDev.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>UnderDev.App</SilverlightAppEntry>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;UseLocalhost</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeContractsEnableRuntimeChecking>False</CodeContractsEnableRuntimeChecking>
+    <CodeContractsRuntimeOnlyPublicSurface>False</CodeContractsRuntimeOnlyPublicSurface>
+    <CodeContractsRuntimeThrowOnFailure>True</CodeContractsRuntimeThrowOnFailure>
+    <CodeContractsRuntimeCallSiteRequires>False</CodeContractsRuntimeCallSiteRequires>
+    <CodeContractsRuntimeSkipQuantifiers>False</CodeContractsRuntimeSkipQuantifiers>
+    <CodeContractsRunCodeAnalysis>False</CodeContractsRunCodeAnalysis>
+    <CodeContractsNonNullObligations>False</CodeContractsNonNullObligations>
+    <CodeContractsBoundsObligations>False</CodeContractsBoundsObligations>
+    <CodeContractsArithmeticObligations>False</CodeContractsArithmeticObligations>
+    <CodeContractsEnumObligations>False</CodeContractsEnumObligations>
+    <CodeContractsRedundantAssumptions>False</CodeContractsRedundantAssumptions>
+    <CodeContractsInferRequires>False</CodeContractsInferRequires>
+    <CodeContractsInferEnsures>False</CodeContractsInferEnsures>
+    <CodeContractsInferObjectInvariants>False</CodeContractsInferObjectInvariants>
+    <CodeContractsSuggestAssumptions>False</CodeContractsSuggestAssumptions>
+    <CodeContractsSuggestRequires>True</CodeContractsSuggestRequires>
+    <CodeContractsSuggestEnsures>False</CodeContractsSuggestEnsures>
+    <CodeContractsSuggestObjectInvariants>False</CodeContractsSuggestObjectInvariants>
+    <CodeContractsRunInBackground>True</CodeContractsRunInBackground>
+    <CodeContractsShowSquigglies>True</CodeContractsShowSquigglies>
+    <CodeContractsUseBaseLine>False</CodeContractsUseBaseLine>
+    <CodeContractsEmitXMLDocs>False</CodeContractsEmitXMLDocs>
+    <CodeContractsCustomRewriterAssembly />
+    <CodeContractsCustomRewriterClass />
+    <CodeContractsLibPaths />
+    <CodeContractsExtraRewriteOptions />
+    <CodeContractsExtraAnalysisOptions />
+    <CodeContractsBaseLineFile />
+    <CodeContractsCacheAnalysisResults>True</CodeContractsCacheAnalysisResults>
+    <CodeContractsRuntimeCheckingLevel>Full</CodeContractsRuntimeCheckingLevel>
+    <CodeContractsReferenceAssembly>DoNotBuild</CodeContractsReferenceAssembly>
+    <CodeContractsAnalysisWarningLevel>0</CodeContractsAnalysisWarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Coding4Fun.Toolkit.Controls">
+      <HintPath>packages\Coding4Fun.Toolkit.Controls.2.0.2\lib\wp71\Coding4Fun.Toolkit.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight">
+      <HintPath>packages\Portable.MvvmLightLibs.4.1.27.1\lib\sl4-wp71\GalaSoft.MvvmLight.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras">
+      <HintPath>packages\Portable.MvvmLightLibs.4.1.27.1\lib\sl4-wp71\GalaSoft.MvvmLight.Extras.dll</HintPath>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform.WP75">
+      <HintPath>packages\Portable.MvvmLightLibs.4.1.27.1\lib\sl4-wp71\GalaSoft.MvvmLight.Platform.WP75.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZLib.Phone">
+      <HintPath>packages\ImageTools.0.3.1\lib\sl3-wp\ICSharpCode.SharpZLib.Phone.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools">
+      <HintPath>packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.Controls">
+      <HintPath>packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.Filtering">
+      <HintPath>packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.Filtering.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.IO.Bmp">
+      <HintPath>packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.IO.Bmp.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.IO.Gif">
+      <HintPath>packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.IO.Gif.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.IO.Png">
+      <HintPath>packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.IO.Png.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageTools.Utils">
+      <HintPath>packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.Utils.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Unofficial.Blend.Interactivity.1.0.0\lib\sl4-wp71\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Phone" />
+    <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Interop" />
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Portable.CommonServiceLocator.1.2.2\lib\portable-net4+sl4+wp7+win8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>packages\Microsoft.Bcl.Async.1.0.14-rc\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>packages\Microsoft.Bcl.Async.1.0.14-rc\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Phone">
+      <HintPath>packages\Microsoft.Bcl.Async.1.0.14-rc\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
+    </Reference>
+    <Reference Include="PhoneCodeContractsAssemblies">
+      <HintPath>packages\ImageTools.0.3.1\lib\sl3-wp\PhoneCodeContractsAssemblies.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Device" />
+    <Reference Include="System.Runtime">
+      <HintPath>packages\Microsoft.Bcl.1.0.16-rc\lib\sl4-windowsphone71\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>packages\Microsoft.Bcl.1.0.16-rc\lib\sl4-windowsphone71\System.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Interactivity, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Unofficial.Blend.Interactivity.1.0.0\lib\sl4-wp71\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="mscorlib.extensions" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\S1Nyan.App.WP7\Model\IsolatedStorageHelper.cs">
+      <Link>S1Files\IsolatedStorageHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Nyan.App.WP7\Model\UserExtension.cs">
+      <Link>S1Files\UserExtension.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Nyan.App.WP7\Utils\MemoryDiagnosticsHelper.cs">
+      <Link>S1Files\MemoryDiagnosticsHelper.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Nyan.App.WP7\Model\ResourceServices.cs">
+      <Link>S1Files\ResourceServices.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Nyan.App.WP7\Model\S1WebClient.cs">
+      <Link>S1Files\S1WebClient.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Nyan.App.WP7\Views\ImageResourceManager.cs">
+      <Link>S1Files\ImageResourceManager.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Nyan.App.WP7\Views\ImageSourceProxy.cs">
+      <Link>S1Files\ImageSourceProxy.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Nyan.App.WP7\Views\SmartImage.xaml.cs">
+      <Link>S1Files\SmartImage.xaml.cs</Link>
+      <DependentUpon>SmartImage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UnderDevelopment\WrappedEmotionSource.cs" />
+    <Compile Include="UnderDevelopment\FlipButton.xaml.cs">
+      <DependentUpon>FlipButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UnderDevelopment\MyPhoneTextBox.cs" />
+    <Compile Include="ViewModel\EmotionListViewModel.cs" />
+    <Compile Include="ViewModel\ServerListViewModel.cs" />
+    <Compile Include="ViewModel\UserTestViewModel.cs" />
+    <Compile Include="View\MainPage.xaml.cs">
+      <DependentUpon>MainPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\Page1.xaml.cs">
+      <DependentUpon>Page1.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\Page1ViewModel.cs" />
+    <Compile Include="View\Page2.xaml.cs">
+      <DependentUpon>Page2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Page3.xaml.cs">
+      <DependentUpon>Page3.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UnderDevelopment\PopupNavigator.cs" />
+    <Compile Include="UnderDevelopment\PopupSlider.xaml.cs">
+      <DependentUpon>PopupSlider.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SampleData\SampleExpanderData\SampleExpanderData.xaml.cs">
+      <DependentUpon>SampleExpanderData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UnderDevelopment\SettingView.xaml.cs">
+      <DependentUpon>SettingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ThemeManager.cs" />
+    <Compile Include="View\Page4.xaml.cs">
+      <DependentUpon>Page4.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Page Include="..\S1Nyan.App.WP7\Views\SmartImage.xaml">
+      <Link>S1Files\SmartImage.xaml</Link>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UnderDevelopment\FlipButton.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Page2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page3.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UnderDevelopment\SettingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <ApplicationDefinition Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="View\Page4.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Resource Include="Resources\DarkThemeResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Resource Include="Resources\LightThemeResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Resource>
+    <Page Include="Resources\CustomThemeResources.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Page1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UnderDevelopment\PopupSlider.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SampleData\SampleExpanderData\SampleExpanderData.xaml">
+      <Generator>MSBuild:MarkupCompilePass1</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Properties\AppManifest.xml" />
+    <None Include="Properties\WMAppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\appbar.message.send.png" />
+    <Content Include="Resources\appbar.reply.email.png" />
+    <Content Include="Resources\appbar.smiley.happy.png" />
+    <Content Include="Resources\Emotion.htm" />
+    <Content Include="Resources\face\0.gif" />
+    <Content Include="Resources\face\00.gif" />
+    <Content Include="ApplicationIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\face\01.gif" />
+    <Content Include="Resources\face\02.gif" />
+    <Content Include="Resources\face\03.gif" />
+    <Content Include="Resources\face\04.gif" />
+    <Content Include="Resources\face\05.gif" />
+    <Content Include="Resources\face\06.gif" />
+    <Content Include="Resources\face\07.gif" />
+    <Content Include="Resources\face\08.gif" />
+    <Content Include="Resources\face\09.gif" />
+    <Content Include="Resources\face\1.gif" />
+    <Content Include="Resources\face\10.gif" />
+    <Content Include="Resources\face\100.gif" />
+    <Content Include="Resources\face\101.gif" />
+    <Content Include="Resources\face\102.jpg" />
+    <Content Include="Resources\face\103.gif" />
+    <Content Include="Resources\face\104.gif" />
+    <Content Include="Resources\face\105.gif" />
+    <Content Include="Resources\face\106.gif" />
+    <Content Include="Resources\face\107.gif" />
+    <Content Include="Resources\face\108.gif" />
+    <Content Include="Resources\face\109.gif" />
+    <Content Include="Resources\face\11.gif" />
+    <Content Include="Resources\face\110.gif" />
+    <Content Include="Resources\face\111.gif" />
+    <Content Include="Resources\face\112.gif" />
+    <Content Include="Resources\face\113.gif" />
+    <Content Include="Resources\face\114.gif" />
+    <Content Include="Resources\face\115.gif" />
+    <Content Include="Resources\face\116.gif" />
+    <Content Include="Resources\face\117.gif" />
+    <Content Include="Resources\face\118.gif" />
+    <Content Include="Resources\face\119.gif" />
+    <Content Include="Resources\face\12.gif" />
+    <Content Include="Resources\face\120.gif" />
+    <Content Include="Resources\face\121.png" />
+    <Content Include="Resources\face\122.gif" />
+    <Content Include="Resources\face\123.gif" />
+    <Content Include="Resources\face\124.jpg" />
+    <Content Include="Resources\face\125.gif" />
+    <Content Include="Resources\face\126.gif" />
+    <Content Include="Resources\face\127.gif" />
+    <Content Include="Resources\face\128.gif" />
+    <Content Include="Resources\face\129.gif" />
+    <Content Include="Resources\face\13.gif" />
+    <Content Include="Resources\face\130.gif" />
+    <Content Include="Resources\face\131.gif" />
+    <Content Include="Resources\face\132.gif" />
+    <Content Include="Resources\face\133.gif" />
+    <Content Include="Resources\face\134.gif" />
+    <Content Include="Resources\face\135.gif" />
+    <Content Include="Resources\face\136.gif" />
+    <Content Include="Resources\face\137.gif" />
+    <Content Include="Resources\face\138.gif" />
+    <Content Include="Resources\face\139.gif" />
+    <Content Include="Resources\face\14.gif" />
+    <Content Include="Resources\face\140.gif" />
+    <Content Include="Resources\face\141.gif" />
+    <Content Include="Resources\face\142.gif" />
+    <Content Include="Resources\face\143.gif" />
+    <Content Include="Resources\face\144.gif" />
+    <Content Include="Resources\face\145.gif" />
+    <Content Include="Resources\face\146.gif" />
+    <Content Include="Resources\face\147.gif" />
+    <Content Include="Resources\face\148.gif" />
+    <Content Include="Resources\face\149.gif" />
+    <Content Include="Resources\face\15.gif" />
+    <Content Include="Resources\face\150.gif" />
+    <Content Include="Resources\face\151.gif" />
+    <Content Include="Resources\face\152.gif" />
+    <Content Include="Resources\face\153.gif" />
+    <Content Include="Resources\face\154.gif" />
+    <Content Include="Resources\face\155.jpg" />
+    <Content Include="Resources\face\156.jpg" />
+    <Content Include="Resources\face\157.gif" />
+    <Content Include="Resources\face\158.jpg" />
+    <Content Include="Resources\face\159.jpg" />
+    <Content Include="Resources\face\16.gif" />
+    <Content Include="Resources\face\160.gif" />
+    <Content Include="Resources\face\161.jpg" />
+    <Content Include="Resources\face\162.jpg" />
+    <Content Include="Resources\face\163.gif" />
+    <Content Include="Resources\face\164.gif" />
+    <Content Include="Resources\face\165.gif" />
+    <Content Include="Resources\face\166.gif" />
+    <Content Include="Resources\face\167.gif" />
+    <Content Include="Resources\face\168.jpg" />
+    <Content Include="Resources\face\169.jpg" />
+    <Content Include="Resources\face\17.gif" />
+    <Content Include="Resources\face\170.gif" />
+    <Content Include="Resources\face\171.gif" />
+    <Content Include="Resources\face\172.gif" />
+    <Content Include="Resources\face\173.gif" />
+    <Content Include="Resources\face\174.gif" />
+    <Content Include="Resources\face\175.gif" />
+    <Content Include="Resources\face\176.gif" />
+    <Content Include="Resources\face\177.gif" />
+    <Content Include="Resources\face\178.gif" />
+    <Content Include="Resources\face\179.gif" />
+    <Content Include="Resources\face\18.gif" />
+    <Content Include="Resources\face\180.gif" />
+    <Content Include="Resources\face\181.gif" />
+    <Content Include="Resources\face\182.jpg" />
+    <Content Include="Resources\face\183.gif" />
+    <Content Include="Resources\face\184.gif" />
+    <Content Include="Resources\face\185.gif" />
+    <Content Include="Resources\face\186.gif" />
+    <Content Include="Resources\face\187.gif" />
+    <Content Include="Resources\face\188.gif" />
+    <Content Include="Resources\face\189.gif" />
+    <Content Include="Resources\face\19.gif" />
+    <Content Include="Resources\face\190.gif" />
+    <Content Include="Resources\face\191.gif" />
+    <Content Include="Resources\face\2.gif" />
+    <Content Include="Resources\face\20.gif" />
+    <Content Include="Resources\face\200.gif" />
+    <Content Include="Resources\face\201.gif" />
+    <Content Include="Resources\face\21.gif" />
+    <Content Include="Resources\face\22.gif" />
+    <Content Include="Resources\face\23.gif" />
+    <Content Include="Resources\face\24.gif" />
+    <Content Include="Resources\face\25.gif" />
+    <Content Include="Resources\face\26.gif" />
+    <Content Include="Resources\face\27.gif" />
+    <Content Include="Resources\face\28.gif" />
+    <Content Include="Resources\face\29.gif" />
+    <Content Include="Resources\face\3.gif" />
+    <Content Include="Resources\face\30.gif" />
+    <Content Include="Resources\face\31.gif" />
+    <Content Include="Resources\face\32.gif" />
+    <Content Include="Resources\face\33.gif" />
+    <Content Include="Resources\face\34.gif" />
+    <Content Include="Resources\face\35.gif" />
+    <Content Include="Resources\face\37.gif" />
+    <Content Include="Resources\face\38.gif" />
+    <Content Include="Resources\face\39.gif" />
+    <Content Include="Resources\face\4.gif" />
+    <Content Include="Resources\face\40.gif" />
+    <Content Include="Resources\face\41.gif" />
+    <Content Include="Resources\face\42.gif" />
+    <Content Include="Resources\face\43.gif" />
+    <Content Include="Resources\face\44.gif" />
+    <Content Include="Resources\face\45.gif" />
+    <Content Include="Resources\face\46.gif" />
+    <Content Include="Resources\face\47.gif" />
+    <Content Include="Resources\face\48.gif" />
+    <Content Include="Resources\face\49.gif" />
+    <Content Include="Resources\face\5.gif" />
+    <Content Include="Resources\face\50.gif" />
+    <Content Include="Resources\face\51.gif" />
+    <Content Include="Resources\face\52.gif" />
+    <Content Include="Resources\face\53.gif" />
+    <Content Include="Resources\face\54.gif" />
+    <Content Include="Resources\face\55.gif" />
+    <Content Include="Resources\face\56.gif" />
+    <Content Include="Resources\face\57.gif" />
+    <Content Include="Resources\face\58.gif" />
+    <Content Include="Resources\face\59.gif" />
+    <Content Include="Resources\face\6.gif" />
+    <Content Include="Resources\face\60.gif" />
+    <Content Include="Resources\face\61.gif" />
+    <Content Include="Resources\face\66.gif" />
+    <Content Include="Resources\face\7.gif" />
+    <Content Include="Resources\face\74.gif" />
+    <Content Include="Resources\face\75.gif" />
+    <Content Include="Resources\face\77.gif" />
+    <Content Include="Resources\face\79.gif" />
+    <Content Include="Resources\face\8.gif" />
+    <Content Include="Resources\face\80.gif" />
+    <Content Include="Resources\face\81.gif" />
+    <Content Include="Resources\face\82.gif" />
+    <Content Include="Resources\face\84.gif" />
+    <Content Include="Resources\face\85.gif" />
+    <Content Include="Resources\face\86.gif" />
+    <Content Include="Resources\face\87.gif" />
+    <Content Include="Resources\face\88.gif" />
+    <Content Include="Resources\face\89.gif" />
+    <Content Include="Resources\face\90.gif" />
+    <Content Include="Resources\face\91.gif" />
+    <Content Include="Resources\face\92.gif" />
+    <Content Include="Resources\face\93.gif" />
+    <Content Include="Resources\face\94.jpg" />
+    <Content Include="Resources\face\95.gif" />
+    <Content Include="Resources\face\96.gif" />
+    <Content Include="Resources\face\97.gif" />
+    <Content Include="Resources\face\98.gif" />
+    <Content Include="Resources\face\99.gif" />
+    <Content Include="Resources\Sample.jpg" />
+    <Content Include="Resources\server_list.xml" />
+    <Content Include="SplashScreenImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common.WP7\Common.WP7.csproj">
+      <Project>{E9106F50-2D2A-45DC-9711-1B3EEA85F56C}</Project>
+      <Name>Common.WP7</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Phone Toolkit\Microsoft.Phone.Controls.Toolkit.WP7\Microsoft.Phone.Controls.Toolkit.WP7.csproj">
+      <Project>{0754458A-7AFC-463A-B27D-2F6980522119}</Project>
+      <Name>Microsoft.Phone.Controls.Toolkit.WP7</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\S1Nyan.Model\S1Nyan.Model.csproj">
+      <Project>{AA9F65DC-13D3-441A-99E2-FBAFE0C4CE9C}</Project>
+      <Name>S1Nyan.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\S1Nyan.ViewModel\S1Nyan.ViewModel.csproj">
+      <Project>{29CC73B9-D0C1-410C-9084-6D754807BBA2}</Project>
+      <Name>S1Nyan.ViewModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\S1Parser\S1Parser.csproj">
+      <Project>{8DD0F6E8-5387-407F-B5EF-992C408342B0}</Project>
+      <Name>S1Parser</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <DesignTimeOnly Include="SampleData\SampleExpanderData\SampleExpanderData.xsd" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions />
+  <Import Project="packages\Microsoft.Bcl.Build.1.0.0-rc\tools\Microsoft.Bcl.Build.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+</Project>

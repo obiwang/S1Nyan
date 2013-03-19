@@ -1,23 +1,59 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
-using ImageTools.IO.Gif;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using MyControls;
+using Microsoft.Practices.ServiceLocation;
+using ObiWang.Controls;
+using S1Nyan.Model;
+using S1Nyan.ViewModel;
 using S1Parser;
 
-namespace S1Nyan.App.Views
+namespace S1Nyan.Views
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        bool isDataLoaded = false;
+
         // Constructor
         public MainPage()
         {
             InitializeComponent();
-            ImageTools.IO.Decoders.AddDecoder<GifDecoder>();
 
             BuildLocalizedApplicationBar();
-            Loaded += (o, e) => this.SupportedOrientations = SettingView.IsAutoRotateSetting ? SupportedPageOrientation.PortraitOrLandscape : SupportedPageOrientation.Portrait; 
+
+            SettingView.UpdateOrientation(this);
+            Loaded += PageLoaded; 
+        }
+
+        private void PageLoaded(object sender, RoutedEventArgs e)
+        {
+            SettingView.UpdateOrientation(this);
+            if (Vm == null)
+            {
+                DataContext = ServiceLocator.Current.GetInstance<MainViewModel>();
+                DataLoaded();
+            }
+        }
+
+        private void DataLoaded()
+        {
+            if (isDataLoaded) return;
+            isDataLoaded = true;
+            Popup.Visibility = Visibility.Collapsed;
+            ApplicationBar.IsVisible = true;
+            UserViewModel.Current.InitLogin();
+        }
+
+        /// <summary>
+        /// Gets the view's ViewModel.
+        /// </summary>
+        public MainViewModel Vm
+        {
+            get
+            {
+                return (MainViewModel)DataContext;
+            }
         }
 
         private void ListSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -50,6 +86,22 @@ namespace S1Nyan.App.Views
             // Set the page's ApplicationBar to a new instance of ApplicationBar.
             ApplicationBar = new ApplicationBar();
             ApplicationBar.Buttons.Add(SettingView.GetSettingAppBarButton());
+            ApplicationBar.Buttons.Add(SettingView.GetAboutAppBarButton());
+            ApplicationBar.IsVisible = false;
+        }
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            if (e.NavigationMode == System.Windows.Navigation.NavigationMode.Back)
+            {
+#if DEBUG
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+#endif
+                NavigationService.RemoveBackEntry();
+            }
         }
     }
 }
