@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 
-namespace MyControls
+namespace ObiWang.Controls
 {
     [TemplatePart(Name = PartHorizontalThumb, Type = typeof(Thumb))]
     [TemplatePart(Name = PartVerticalThumb, Type = typeof(Thumb))]
@@ -16,6 +16,8 @@ namespace MyControls
         {
             DefaultStyleKey = typeof(MySlider);
         }
+
+        public event EventHandler SelectedValueChanged;
 
         public double SelectedValue
         {
@@ -31,7 +33,11 @@ namespace MyControls
         {
             var slider = d as MySlider;
             if (slider != null)
+            {
                 slider.Value = slider.SelectedValue;
+                if (slider.SelectedValueChanged != null)
+                    slider.SelectedValueChanged(slider, null);
+            }
         }
 
         public HorizontalAlignment HandSide

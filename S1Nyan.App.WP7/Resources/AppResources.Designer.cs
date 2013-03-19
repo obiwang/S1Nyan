@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace S1Nyan.App.Resources {
+namespace S1Nyan.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace S1Nyan.App.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("S1Nyan.App.Resources.AppResources", typeof(AppResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("S1Nyan.Resources.AppResources", typeof(AppResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -66,6 +66,105 @@ namespace S1Nyan.App.Resources {
         public static string AboutPage {
             get {
                 return ResourceManager.GetString("AboutPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 账户.
+        /// </summary>
+        public static string AccountPage {
+            get {
+                return ResourceManager.GetString("AccountPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 切换账户.
+        /// </summary>
+        public static string AccountPageChangeAccount {
+            get {
+                return ResourceManager.GetString("AccountPageChangeAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 访客.
+        /// </summary>
+        public static string AccountPageGuest {
+            get {
+                return ResourceManager.GetString("AccountPageGuest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 登陆.
+        /// </summary>
+        public static string AccountPageLogin {
+            get {
+                return ResourceManager.GetString("AccountPageLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 正在登陆.
+        /// </summary>
+        public static string AccountPageLoginLoading {
+            get {
+                return ResourceManager.GetString("AccountPageLoginLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 退出登陆.
+        /// </summary>
+        public static string AccountPageLogout {
+            get {
+                return ResourceManager.GetString("AccountPageLogout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 密码.
+        /// </summary>
+        public static string AccountPagePassword {
+            get {
+                return ResourceManager.GetString("AccountPagePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 记住密码.
+        /// </summary>
+        public static string AccountPageRememberPass {
+            get {
+                return ResourceManager.GetString("AccountPageRememberPass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 发帖显示签名.
+        /// </summary>
+        public static string AccountPageShowSignature {
+            get {
+                return ResourceManager.GetString("AccountPageShowSignature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 注册新账户.
+        /// </summary>
+        public static string AccountPageSignup {
+            get {
+                return ResourceManager.GetString("AccountPageSignup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 用户名.
+        /// </summary>
+        public static string AccountPageUsername {
+            get {
+                return ResourceManager.GetString("AccountPageUsername", resourceCulture);
             }
         }
         
@@ -106,6 +205,15 @@ namespace S1Nyan.App.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 回复.
+        /// </summary>
+        public static string AppBarButtonReply {
+            get {
+                return ResourceManager.GetString("AppBarButtonReply", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to S1 Nyan.
         /// </summary>
         public static string ApplicationTitle {
@@ -120,6 +228,105 @@ namespace S1Nyan.App.Resources {
         public static string AppLoading {
             get {
                 return ResourceManager.GetString("AppLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 点击此处登陆.
+        /// </summary>
+        public static string ErrorMsgClickToLogin {
+            get {
+                return ResourceManager.GetString("ErrorMsgClickToLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 连接服务器失败.
+        /// </summary>
+        public static string ErrorMsgConnectServerFailed {
+            get {
+                return ResourceManager.GetString("ErrorMsgConnectServerFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 数据获取失败.
+        /// </summary>
+        public static string ErrorMsgGetDataFailed {
+            get {
+                return ResourceManager.GetString("ErrorMsgGetDataFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 用户名/密码不能为空.
+        /// </summary>
+        public static string ErrorMsgNamePassEmpty {
+            get {
+                return ResourceManager.GetString("ErrorMsgNamePassEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 没有网络连接.
+        /// </summary>
+        public static string ErrorMsgNoNetwork {
+            get {
+                return ResourceManager.GetString("ErrorMsgNoNetwork", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 没有可用的服务器.
+        /// </summary>
+        public static string ErrorMsgNoServerAvailable {
+            get {
+                return ResourceManager.GetString("ErrorMsgNoServerAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 回复成功.
+        /// </summary>
+        public static string ErrorMsgReplySuccess {
+            get {
+                return ResourceManager.GetString("ErrorMsgReplySuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 服务器更新成功.
+        /// </summary>
+        public static string ErrorMsgServerUpdateSuccess {
+            get {
+                return ResourceManager.GetString("ErrorMsgServerUpdateSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 网站已关闭，请尝试登陆或等待服务器恢复.
+        /// </summary>
+        public static string ErrorMsgSiteClosed {
+            get {
+                return ResourceManager.GetString("ErrorMsgSiteClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 服务器不可用，尝试其他地址.
+        /// </summary>
+        public static string ErrorMsgTryCheckingOtherServers {
+            get {
+                return ResourceManager.GetString("ErrorMsgTryCheckingOtherServers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 未知错误 .
+        /// </summary>
+        public static string ErrorMsgUnknown {
+            get {
+                return ResourceManager.GetString("ErrorMsgUnknown", resourceCulture);
             }
         }
         
@@ -174,6 +381,15 @@ namespace S1Nyan.App.Resources {
         public static string FontSizeSmall {
             get {
                 return ResourceManager.GetString("FontSizeSmall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 在浏览器中查看.
+        /// </summary>
+        public static string ImageShowInBrowser {
+            get {
+                return ResourceManager.GetString("ImageShowInBrowser", resourceCulture);
             }
         }
         
@@ -309,6 +525,15 @@ namespace S1Nyan.App.Resources {
         public static string ShowPicOnlyWifi {
             get {
                 return ResourceManager.GetString("ShowPicOnlyWifi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 不显示.
+        /// </summary>
+        public static string ShowSignatureNone {
+            get {
+                return ResourceManager.GetString("ShowSignatureNone", resourceCulture);
             }
         }
         

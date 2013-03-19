@@ -1,70 +1,37 @@
 ﻿using System;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
-using Coding4Fun.Toolkit.Net;
 using S1Parser;
 
 namespace S1Nyan.Model
 {
     public class NetResourceService : IResourceService
     {
-        const string defaultDir = "cache";
-
-        // TODO fix cache issue with <img src="images/post/smile/goose/13.gif" />
-        public static async Task<Stream> GetResourceStreamStatic(Uri uri, string path = null, int expireDays = 3)
+        public static IStorageHelper helper = IsolatedStorageHelper.Current;
+        public static async Task<Stream> GetResourceStreamStatic(Uri uri, string path = null, int expireDays = 3, bool isS1 = true)
         {
             Stream s = null;
-            IsolatedStorageFile local = null;
 
             if (path != null)
             {
-                local = IsolatedStorageFile.GetUserStoreForApplication();
-                path = path.Replace('/', '\\');
-                if (!CreateDirIfNecessary(local, path))
-                    path = defaultDir;
-
-                if (local.FileExists(path))
-                {
-                    if (expireDays < 0 || (DateTime.Now - local.GetLastWriteTime(path) < TimeSpan.FromDays(expireDays)))
-                    {
-                        return new IsolatedStorageFileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, local);
-                    }
-                }
+                s = helper.ReadFromLocalCache(path, expireDays);
+                if (s != null) return s;
             }
-            s = await new GzipWebClient().OpenReadTaskAsync(uri);
+
+            if (isS1)
+                s = await new S1WebClient().OpenReadTaskAsync(uri);
+            else
+                s = await new WebClient().OpenReadTaskAsync(uri);
+
             if (path != null && s != null)
             {
-                using (var fileStream = new IsolatedStorageFileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read, local))
-                {
-                    using (var isoFileWriter = new BinaryWriter(fileStream))
-                    {
-                        var reader = new BinaryReader(s);
-                        isoFileWriter.Write(reader.ReadBytes((int)s.Length));
-                        isoFileWriter.Flush();
-                    }
-                }
+                helper.WriteBinaryToLocalCache(path, s);
                 s.Seek(0, SeekOrigin.Begin);
             }
             return s;
-        }
-
-        private static bool CreateDirIfNecessary(IsolatedStorageFile local, string path)
-        {
-            int pos;
-            bool hasDir = false;
-            string dir = path;
-
-            while ((pos = dir.IndexOf("\\")) != -1)
-            {
-                var dirname = dir.Substring(0, pos);
-                if (!local.DirectoryExists(dirname))
-                    local.CreateDirectory(dirname);
-                hasDir = true;
-                dir = dir.Substring(pos + 1);
-            }
-            return hasDir;
         }
         
         public Task<Stream> GetResourceStream(Uri uri, string path = null)

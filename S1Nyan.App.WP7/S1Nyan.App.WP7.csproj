@@ -9,7 +9,7 @@
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>S1Nyan.App</RootNamespace>
+    <RootNamespace>S1Nyan</RootNamespace>
     <AssemblyName>S1Nyan.App.WP7</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
@@ -21,7 +21,7 @@
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
     <XapFilename>S1Nyan.App.WP7.xap</XapFilename>
     <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
-    <SilverlightAppEntry>S1Nyan.App.App</SilverlightAppEntry>
+    <SilverlightAppEntry>S1Nyan.App</SilverlightAppEntry>
     <ValidateXaml>true</ValidateXaml>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
     <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
@@ -82,9 +82,20 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LocalDebug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\LocalDebug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;S1Nyan;UseLocalhost</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Coding4Fun.Toolkit.Controls">
-      <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.1\lib\wp71\Coding4Fun.Toolkit.Controls.dll</HintPath>
+    <Reference Include="Coding4Fun.Toolkit.Controls, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.2\lib\wp71\Coding4Fun.Toolkit.Controls.dll</HintPath>
     </Reference>
     <Reference Include="GalaSoft.MvvmLight, Version=4.1.26.28028, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -160,6 +171,7 @@
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="mscorlib.extensions" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -168,14 +180,30 @@
     <Compile Include="AppConfig.cs" />
     <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="LocalizedStrings.cs" />
+    <Compile Include="Model\IsolatedStorageHelper.cs" />
+    <Compile Include="Model\ServerItem.cs" />
+    <Compile Include="Model\ServerModel.cs" />
+    <Compile Include="Utils\ErrorMsg.cs" />
+    <Compile Include="Utils\MemoryDiagnosticsHelper.cs" />
     <Compile Include="Model\ResourceServices.cs" />
+    <Compile Include="Model\S1WebClient.cs" />
+    <Compile Include="Model\UserExtension.cs" />
     <Compile Include="SampleData\ThreadSampleData\ThreadSampleData.xaml.cs">
       <DependentUpon>ThreadSampleData.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\UserViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="Views\ImageResourceManager.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\ImageSourceProxy.cs" />
+    <Compile Include="Views\SettingView.Account.xaml.cs">
+      <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ThemeManager.cs" />
+    <Compile Include="Utils\ThemeManager.cs" />
     <Compile Include="Utils\DataContextChangedHelper.cs" />
     <Compile Include="Utils\VisualTree.cs" />
     <Compile Include="Utils\Indicator.cs" />
@@ -202,6 +230,9 @@
       <DependentUpon>ThreadList.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ThreadView.Common.cs">
+      <DependentUpon>ThreadView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ThreadView.Reply.cs">
       <DependentUpon>ThreadView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ThreadView.xaml.cs">
@@ -260,8 +291,13 @@
     <Content Include="ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\AppBar\appbar.information.png" />
+    <Content Include="Assets\AppBar\appbar.message.send.png" />
+    <Content Include="Assets\AppBar\appbar.reply.email.invert.png" />
+    <Content Include="Assets\AppBar\appbar.smiley.happy.png" />
+    <Content Include="Assets\input.clear.png" />
     <Content Include="Assets\AppBar\appbar.feature.settings.rest.png" />
-    <Content Include="Assets\AppBar\appbar.stairs.up.revert.horizontal.png" />
+    <Content Include="Assets\AppBar\appbar.stairs.up.horizontal.invert.png" />
     <Content Include="Assets\AppBar\appbar.stairs.up.horizontal.png" />
     <Content Include="Assets\AppBar\appbar.back.rest.png" />
     <Content Include="Assets\AppBar\appbar.next.rest.png" />
@@ -269,6 +305,8 @@
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Assets\AppBar\appbar.quill.png" />
+    <Content Include="Assets\AppBar\appbar.reply.email.png" />
     <Content Include="Resources\dym\147.gif" />
     <Content Include="Resources\dym\148.gif" />
     <Content Include="Resources\dym\149.gif" />
@@ -278,6 +316,7 @@
     <Content Include="Resources\dym\153.gif" />
     <Content Include="Resources\dym\154.gif" />
     <Content Include="Resources\dym\155.gif" />
+    <Content Include="Resources\Emotion.htm" />
     <Content Include="Resources\face\0.gif" />
     <Content Include="Resources\face\00.gif" />
     <Content Include="Resources\face\01.gif" />
@@ -466,6 +505,10 @@
     <Content Include="Resources\face\97.gif" />
     <Content Include="Resources\face\98.gif" />
     <Content Include="Resources\face\99.gif" />
+    <Content Include="Resources\server_list.xml" />
+    <Content Include="Resources\simple.htm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\zdl\156.gif" />
     <Content Include="Resources\zdl\157.gif" />
     <Content Include="Resources\zdl\158.gif" />

@@ -1,10 +1,11 @@
-﻿<phone:PhoneApplicationPage x:Class="S1Nyan.App.Views.ThreadList"
+﻿<phone:PhoneApplicationPage x:Class="S1Nyan.Views.ThreadList"
                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:ignore="http://www.ignore.com"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:my="clr-namespace:ObiWang.Controls;assembly=Common.WP7"
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
@@ -36,10 +37,9 @@
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
 
-    <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.Resources>
-            <local:ThreadPopularityConverter xmlns:local="clr-namespace:S1Nyan.App.Views" x:Key="PopConverter" />
-        </Grid.Resources>
+    <Grid x:Name="LayoutRoot"
+          Background="Transparent"
+          toolkit:TiltEffect.IsTiltEnabled="True">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -50,10 +50,18 @@
             <TextBlock Style="{StaticResource PhoneTextNormalStyle}" Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" />
             <TextBlock Style="{StaticResource PhoneTextExtraLargeStyle}" Text="{Binding Title}" />
         </StackPanel>
+        <my:FlipButton Width="220"
+                       Height="62"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Command="{Binding ShowAccount}"
+                       Content="{Binding LoginStatus}"
+                       DataContext="{Binding User, Source={StaticResource Locator}}"
+                       FontSize="{StaticResource PhoneFontSizeNormal}" />
+
         <Grid x:Name="ContentPanel"
               Grid.Row="1"
-              Margin="12,0,12,0"
-              toolkit:TiltEffect.IsTiltEnabled="True">
+              Margin="12,0,12,0">
             <toolkit:LongListSelector IsFlatList="True"
                                       ItemsSource="{Binding ThreadListData.Children}"
                                       SelectionChanged="ThreadListSelectionChanged">
@@ -95,6 +103,9 @@
                     </DataTemplate>
                 </toolkit:LongListSelector.ItemTemplate>
             </toolkit:LongListSelector>
+
+            <my:NotifyTextBoard Content="{Binding NotifyMessage, Mode=TwoWay}" />
+
         </Grid>
         <!--  <Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />  -->
     </Grid>

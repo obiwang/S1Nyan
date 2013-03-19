@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Media;
 
-namespace S1Nyan.App.Utils
+namespace S1Nyan.Utils
 {
     /// <summary>
     /// Helper methods to find a visual child or parent of a given type.

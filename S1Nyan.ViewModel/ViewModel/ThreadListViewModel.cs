@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using GalaSoft.MvvmLight;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;
@@ -13,16 +11,19 @@ namespace S1Nyan.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class ThreadListViewModel : ViewModelBase
+    public class ThreadListViewModel : S1NyanViewModelBase
     {
         private IDataService _dataService;
         
         /// <summary>
         /// Initializes a new instance of the ThreadListViewModel class.
         /// </summary>
-        public ThreadListViewModel(IDataService dataService)
+        public ThreadListViewModel(IDataService dataService) : base()
         {
             _dataService = dataService;
+
+            isUnregisterMessageDuringCleanUp = false;
+
             //if (IsInDesignMode) _dataService.GetThreadListData(null, 0, (item, error) => { ThreadListData = item; });
 
             //Buttons = new ObservableCollection<ButtonViewModel>();
@@ -87,24 +88,29 @@ namespace S1Nyan.ViewModel
             }
         }
 
-        public async void RefreshThreadList()
+        public override async void RefreshData()
         {
             ThreadListData = null;
             if (null == _fid) return;
             Util.Indicator.SetLoading();
             try
             {
-                ThreadListData = await _dataService.GetThreadListAsync(_fid, CurrentPage);
-                TotalPage = ThreadListData.TotalPage;
-                if (PageChanged != null)
+                var temp = await _dataService.GetThreadListAsync(_fid, CurrentPage);
+                if (temp.CurrentPage == CurrentPage)
                 {
-                    PageChanged(CurrentPage, TotalPage);
+                    ThreadListData = temp;
+                    TotalPage = ThreadListData.TotalPage;
+                    if (PageChanged != null)
+                    {
+                        PageChanged(CurrentPage, TotalPage);
+                    }
+                    Util.Indicator.SetBusy(false);
                 }
-                Util.Indicator.SetBusy(false);
             }
             catch (Exception e)
             {
-                Util.Indicator.SetError(e.Message);
+                if (!HandleUserException(e))
+                    Util.Indicator.SetError(e);
             }
         }
 
@@ -112,7 +118,7 @@ namespace S1Nyan.ViewModel
         public void OnChangeFID(string fid, string title)
         {
             Title = title;
-            if (fid != null && _fid != fid)
+            if (fid != null)
             {
                 _fid = fid;
                 TotalPage = 0;
@@ -122,7 +128,8 @@ namespace S1Nyan.ViewModel
 
         public int TotalPage { get; set; }
 
-        int currentPage;
+        //may change during async actions, disable optimization
+        volatile int currentPage;
         public int CurrentPage
         {
             get { return currentPage; }
@@ -131,31 +138,18 @@ namespace S1Nyan.ViewModel
                 if (value > 0 )
                 {
                     currentPage = value;
-                    RefreshThreadList();
+                    RefreshData();
                 }
             }
         }
 
         public Action<int, int> PageChanged { get; set; }
 
-        private ObservableCollection<ButtonViewModel> _buttons = null;
-
-        /// <summary>
-        /// Sets and gets the Buttons property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public ObservableCollection<ButtonViewModel> Buttons
+        public override void Cleanup()
         {
-            get { return _buttons; }
-
-            set
-            {
-                if (_buttons == value) return;
-
-                _buttons = value;
-                RaisePropertyChanged(() => Buttons);
-            }
+            base.Cleanup();
+            ThreadListData = null;
+            PageChanged = null;
         }
-
     }
 }

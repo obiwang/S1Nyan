@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using S1Nyan.App.Resources;
+using S1Nyan.Resources;
+using S1Nyan.Model;
 using S1Nyan.ViewModel;
-using System.Runtime.Serialization;
+using S1Parser.User;
 
-namespace S1Nyan.App.Views
+namespace S1Nyan.Views
 {
     public partial class ThreadView : PhoneApplicationPage
     {
@@ -18,9 +20,16 @@ namespace S1Nyan.App.Views
             InitializeComponent();
             BuildLocalizedApplicationBar();
 
-            Loaded += (o, e) => this.SupportedOrientations = SettingView.IsAutoRotateSetting ? SupportedPageOrientation.PortraitOrLandscape : SupportedPageOrientation.Portrait;
+            SettingView.UpdateOrientation(this);
+            Loaded += (o, e) => SettingView.UpdateOrientation(this);
         }
 
+#if DEBUG
+        ~ThreadView()
+        {
+            System.Diagnostics.Debug.WriteLine("Finalizing " + this.GetType().FullName);
+        }
+#endif
         /// <summary>
         /// Gets the view's ViewModel.
         /// </summary>
@@ -56,20 +65,30 @@ namespace S1Nyan.App.Views
         }
 
         private const string ThreadViewPageInfoKey = "ThreadViewPageInfo";
+        private const string ThreadViewReplyTextKey = "ThreadViewReplyText";
 
-        private string idParam = null, titleParam = null;
+        public ImageResourceManager ImageResourceManager = new ImageResourceManager();
+
+        private string idParam = null, titleParam = null, savedReply = null;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            //ImageResourceManager.Reset();
             if (e.NavigationMode == NavigationMode.Back)
             {
                 if (idParam == null)
-                {
+                {   //tombstone
                     var stack = GetInfoStack();
                     if (stack.Count > 0)
                     {
                         var item = stack[stack.Count - 1];
                         Vm.OnChangeTID(item.id, item.title, item.page);
+                    }
+
+                    if (PhoneApplicationService.Current.State.ContainsKey(ThreadViewReplyTextKey))
+                    {
+                        savedReply = PhoneApplicationService.Current.State[ThreadViewReplyTextKey] as string;
+                        PhoneApplicationService.Current.State.Remove(ThreadViewReplyTextKey);
                     }
                 }
                 return;
@@ -89,12 +108,14 @@ namespace S1Nyan.App.Views
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
+        {   //tombstone
             base.OnNavigatedFrom(e);
+            //ImageResourceManager.Reset();
             if (e.NavigationMode == NavigationMode.Back)
             {
                 var stack = GetInfoStack();
                 if (stack.Count > 0) stack.RemoveAt(stack.Count - 1);
+                CleanUp();
             }
             else if (e.NavigationMode == NavigationMode.New)
             {
@@ -102,8 +123,10 @@ namespace S1Nyan.App.Views
                 var item = new PageInfoItem();
                 item.id = idParam;
                 item.page = Vm.CurrentPage;
-                item.title = titleParam;
+                item.title = Vm.Title;
                 stack.Add(item);
+
+                PhoneApplicationService.Current.State[ThreadViewReplyTextKey] = replyText.Text;
             }
         }
 
@@ -123,26 +146,45 @@ namespace S1Nyan.App.Views
             return info.Stack;
         }
 
+        private void CleanUp()
+        {
+            ImageResourceManager.Reset();
+            navBarButton.Click -= ToggleNavigator;
+            replyButton.Click -= OnReplyButton;
+            refreshBarButton.Click -= OnRefresh;
+            nextBarButton.Click -= OnNextPage;
+            HideNavi.Completed -= OnHideNaviComplete;
+            Vm.Cleanup();
+        }
+
         ApplicationBarIconButton navBarButton;
+        ApplicationBarIconButton replyButton;
+        ApplicationBarIconButton refreshBarButton;
+        ApplicationBarIconButton nextBarButton;
         private void BuildLocalizedApplicationBar()
         {
             // Set the page's ApplicationBar to a new instance of ApplicationBar.
             ApplicationBar = new ApplicationBar();
 
             // Create a new button and set the text value to the localized string from AppResources.
-            ApplicationBarIconButton refreshBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.sync.rest.png", UriKind.Relative));
+            refreshBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.sync.rest.png", UriKind.Relative));
             refreshBarButton.Text = AppResources.AppBarButtonRefresh;
-            refreshBarButton.Click += (o, e) => Vm.RefreshThread();
+            refreshBarButton.Click += OnRefresh;
 
             navBarButton = new ApplicationBarIconButton(navIcon);
             navBarButton.Text = AppResources.AppBarButtonNavigator;
             navBarButton.Click += ToggleNavigator;
 
-            ApplicationBarIconButton nextBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.next.rest.png", UriKind.Relative));
+            replyButton = new ApplicationBarIconButton(replyIcon);
+            replyButton.Text = AppResources.AppBarButtonReply;
+            replyButton.Click += OnReplyButton;
+
+            nextBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.next.rest.png", UriKind.Relative));
             nextBarButton.Text = AppResources.AppBarButtonNextPage;
-            nextBarButton.Click += (o, e) => Vm.CurrentPage++;
+            nextBarButton.Click += OnNextPage;
 
             ApplicationBar.Buttons.Add(refreshBarButton);
+            ApplicationBar.Buttons.Add(replyButton);
             ApplicationBar.Buttons.Add(nextBarButton);
             ApplicationBar.Buttons.Add(navBarButton);
 
@@ -152,9 +194,11 @@ namespace S1Nyan.App.Views
 
             Vm.PageChanged = (current, total) =>
             {
-                if (current > 1 && total > 1) 
+                ImageResourceManager.Reset();
+
+                if (current > 1 && total > 1)
                     FirstPage.IsEnabled = true;
-                else 
+                else
                     FirstPage.IsEnabled = false;
                 if (current < total && total > 1)
                 {
@@ -166,27 +210,55 @@ namespace S1Nyan.App.Views
                     nextBarButton.IsEnabled = false;
                     LastPage.IsEnabled = false;
                 }
+                VertSlider.Minimum = S1Parser.S1Resource.ItemsPerThreadSimple * (current - 1);
+                VertSlider.Value = VertSlider.Minimum;
+                VertSlider.Maximum = VertSlider.Minimum + Vm.TheThread.Items.Count - 1;
             };
         }
 
-        Uri navIcon = new Uri("/Assets/AppBar/appbar.stairs.up.horizontal.png", UriKind.Relative);
-        Uri navIconRevert = new Uri("/Assets/AppBar/appbar.stairs.up.revert.horizontal.png", UriKind.Relative);
+        private void OnRefresh(object sender, EventArgs e)
+        {
+            Vm.RefreshData();
+        }
+
+        private void OnNextPage(object sender, EventArgs e)
+        {
+            Vm.CurrentPage++;
+        }
+
+        static Uri replyIcon = new Uri("/Assets/AppBar/appbar.reply.email.png", UriKind.Relative);
+        static Uri replyIconInvert = new Uri("/Assets/AppBar/appbar.reply.email.invert.png", UriKind.Relative);
+        static Uri replyFullIcon = new Uri("/Assets/AppBar/appbar.quill.png", UriKind.Relative);
+        static Uri navIcon = new Uri("/Assets/AppBar/appbar.stairs.up.horizontal.png", UriKind.Relative);
+        static Uri navIconInvert = new Uri("/Assets/AppBar/appbar.stairs.up.horizontal.invert.png", UriKind.Relative);
         bool IsNavigatorVisible { get { return Navigator.Visibility == Visibility.Visible; } }
         private void ToggleNavigator(object sender, EventArgs e)
         {
             if (navBarButton == null) return;
-            if (IsNavigatorVisible)
+            if (IsReplyPanelVisible)
+                ShowHideReplyPanel(true);
+            ShowHideNavi(IsNavigatorVisible);
+        }
+
+        private void ShowHideNavi(bool hide)
+        {
+            if (hide)
             {
                 navBarButton.IconUri = navIcon;
                 HideNavi.Begin();
-                HideNavi.Completed += (o, ee) => Navigator.Visibility = Visibility.Collapsed;
+                HideNavi.Completed += OnHideNaviComplete;
             }
             else
             {
-                navBarButton.IconUri = navIconRevert;
+                navBarButton.IconUri = navIconInvert;
                 Navigator.Visibility = Visibility.Visible;
                 ShowNavi.Begin();
             }
+        }
+
+        private void OnHideNaviComplete(object sender, EventArgs e)
+        {
+            Navigator.Visibility = Visibility.Collapsed;
         }
 
     }

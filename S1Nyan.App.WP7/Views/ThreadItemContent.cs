@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Windows;
@@ -10,7 +9,7 @@ using System.Windows.Media;
 using Microsoft.Phone.Tasks;
 using S1Parser;
 
-namespace S1Nyan.App.Views
+namespace S1Nyan.Views
 {
     public class FontsizeConverter : IValueConverter
     {
@@ -149,7 +148,7 @@ namespace S1Nyan.App.Views
         private static FrameworkElement BuildQuote(HtmlElement item)
         {
             Grid grid = new Grid();
-            grid.Margin = new Thickness(26, 12, 0, 12);
+            grid.Margin = new Thickness(24, 12, 0, 6);
 
             var rect = new System.Windows.Shapes.Rectangle();
             rect.StrokeDashArray = new DoubleCollection { 4, 6 };
@@ -209,11 +208,11 @@ namespace S1Nyan.App.Views
             if (viewParam != null)
             {
                 Run header = new Run();
-                header.Text = "<S1: ";
+                header.Text = "<s1: ";
                 header.FontStyle = FontStyles.Italic;
                 link.Inlines.Add(header);
                 link.Inlines.Add(aText);
-                link.Inlines.Add(" >");
+                link.Inlines.Add("> ");
                 link.NavigateUri = new Uri("/Views/ThreadView.xaml" + viewParam, UriKind.Relative);
             }
             else
@@ -244,18 +243,24 @@ namespace S1Nyan.App.Views
 
         private static SmartImage BuildImgControl(HtmlElement item)
         {
-            var url = item.Attributes["src"];
+            var url = Uri.UnescapeDataString(item.Attributes["src"]);
             if (url == null) return null;
 
             S1Resource.GetAbsoluteUrl(ref url);
             bool isEmotion = S1Resource.IsEmotion(url);
 
-            //order matters! set IsAutoDownload first;
-            var image = new SmartImage { IsAutoDownload = isEmotion, UriSource = url };
+            var image = new SmartImage ();
+
             if (isEmotion)
-                image.Margin = new Thickness(0, 0, 0, -4);
+            {
+                ImageResourceManager.Emotion.SetUriSource(image, url);
+                image.Margin = new Thickness(0, 0, 0, -6);
+            }
             else
+            {
+                ImageResourceManager.Current.SetUriSource(image, url);
                 image.Margin = new Thickness(6);
+            }
             return image;
         }
     }

@@ -209,4 +209,79 @@
   <data name="FeedBackSubject" xml:space="preserve">
     <value>S1Nyan 意见反馈</value>
   </data>
+  <data name="AppBarButtonReply" xml:space="preserve">
+    <value>回复</value>
+  </data>
+  <data name="AccountPage" xml:space="preserve">
+    <value>账户</value>
+  </data>
+  <data name="AccountPageLogin" xml:space="preserve">
+    <value>登陆</value>
+  </data>
+  <data name="AccountPagePassword" xml:space="preserve">
+    <value>密码</value>
+  </data>
+  <data name="AccountPageRememberPass" xml:space="preserve">
+    <value>记住密码</value>
+  </data>
+  <data name="AccountPageShowSignature" xml:space="preserve">
+    <value>发帖显示签名</value>
+  </data>
+  <data name="AccountPageUsername" xml:space="preserve">
+    <value>用户名</value>
+  </data>
+  <data name="ShowSignatureNone" xml:space="preserve">
+    <value>不显示</value>
+  </data>
+  <data name="AccountPageGuest" xml:space="preserve">
+    <value>访客</value>
+  </data>
+  <data name="AccountPageLogout" xml:space="preserve">
+    <value>退出登陆</value>
+  </data>
+  <data name="AccountPageSignup" xml:space="preserve">
+    <value>注册新账户</value>
+  </data>
+  <data name="AccountPageChangeAccount" xml:space="preserve">
+    <value>切换账户</value>
+  </data>
+  <data name="ErrorMsgConnectServerFailed" xml:space="preserve">
+    <value>连接服务器失败</value>
+  </data>
+  <data name="ErrorMsgUnknown" xml:space="preserve">
+    <value>未知错误 </value>
+  </data>
+  <data name="AccountPageLoginLoading" xml:space="preserve">
+    <value>正在登陆</value>
+  </data>
+  <data name="ErrorMsgNamePassEmpty" xml:space="preserve">
+    <value>用户名/密码不能为空</value>
+  </data>
+  <data name="ErrorMsgClickToLogin" xml:space="preserve">
+    <value>点击此处登陆</value>
+  </data>
+  <data name="ErrorMsgGetDataFailed" xml:space="preserve">
+    <value>数据获取失败</value>
+  </data>
+  <data name="ErrorMsgNoNetwork" xml:space="preserve">
+    <value>没有网络连接</value>
+  </data>
+  <data name="ErrorMsgTryCheckingOtherServers" xml:space="preserve">
+    <value>服务器不可用，尝试其他地址</value>
+  </data>
+  <data name="ErrorMsgNoServerAvailable" xml:space="preserve">
+    <value>没有可用的服务器</value>
+  </data>
+  <data name="ErrorMsgServerUpdateSuccess" xml:space="preserve">
+    <value>服务器更新成功</value>
+  </data>
+  <data name="ErrorMsgSiteClosed" xml:space="preserve">
+    <value>网站已关闭，请尝试登陆或等待服务器恢复</value>
+  </data>
+  <data name="ErrorMsgReplySuccess" xml:space="preserve">
+    <value>回复成功</value>
+  </data>
+  <data name="ImageShowInBrowser" xml:space="preserve">
+    <value>在浏览器中查看</value>
+  </data>
 </root>

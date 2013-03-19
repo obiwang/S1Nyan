@@ -5,12 +5,13 @@ using System.Reflection;
 using System.Windows;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Phone.Controls;
+using Microsoft.Phone.Info;
 using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
-using S1Nyan.App.Resources;
+using S1Nyan.Resources;
 
-namespace S1Nyan.App
+namespace S1Nyan.Views
 {
     public enum SettingThemes
     {
@@ -27,6 +28,7 @@ namespace S1Nyan.App
 
     public enum SettingFontSizes
     {
+        FontSizeUnknow = -1,
         FontSizeSmall = 0,
         FontSizeMiddle = 1,
         FontSizeLarge = 2
@@ -37,7 +39,6 @@ namespace S1Nyan.App
         static SettingView()
         {
             settings = IsolatedStorageSettings.ApplicationSettings;
-            showPicWhen = ShowPicWhen;
         }
 
         private static List<string> themeSource = new List<string> { AppResources.ThemeS1, AppResources.ThemeSystem };
@@ -57,18 +58,34 @@ namespace S1Nyan.App
 
         private static Theme SystemTheme;
 
-#region Initializations
+        #region Initializations
 
         public SettingView()
         {
             InitializeComponent();
-            InitSetting();
+            SettingPivot.Loaded += SettingLoaded;
+            AboutPivot.Loaded += AboutLoaded;
+            AccountPivot.Loaded += AccountLoaded;
             DataContext = this;
         }
 
-        private void InitSetting()
+        private void AccountLoaded(object sender, RoutedEventArgs e)
         {
+            InitAccount();
+        }
+
+        bool isAboutInit = false;
+        private void AboutLoaded(object sender, RoutedEventArgs e)
+        {
+            if(isAboutInit) return;
             InitAbout();
+            isAboutInit = true;
+        }
+
+        bool isSettingInit = false;
+        private void SettingLoaded(object sender, RoutedEventArgs e)
+        {
+            if (isSettingInit) return;
 
             InitSetTheme();
 
@@ -77,6 +94,10 @@ namespace S1Nyan.App
             InitSetFontSize();
 
             InitSetAutoRotate();
+
+            InitSignature();
+
+            isSettingInit = true;
         }
 
         private void InitSetAutoRotate()
@@ -152,9 +173,9 @@ namespace S1Nyan.App
             SystemTheme = ((Visibility)Application.Current.Resources["PhoneLightThemeVisibility"] == Visibility.Visible) ? Theme.Light : Theme.Dark;
             ApplyTheme(true);
         }
-#endregion
+        #endregion
 
-#region wrappers
+        #region wrappers
 
         /// <summary>
         /// Update a setting value for our application. If the setting does not
@@ -221,10 +242,11 @@ namespace S1Nyan.App
             settings.Save();
         }
 
-#endregion
+        #endregion
 
-#region Setting Properties
+        #region Setting Properties
 
+        private static bool? isAutoRotate;
         /// <summary>
         /// Property to get and set a CheckBox Setting Key.
         /// </summary>
@@ -232,15 +254,21 @@ namespace S1Nyan.App
         {
             get
             {
-                return GetValueOrDefault<bool>(IsAutoRotateSettingKeyName, IsAutoRotateSettingDefault);
+                return (bool)(isAutoRotate ?? (isAutoRotate = GetValueOrDefault<bool>(IsAutoRotateSettingKeyName, IsAutoRotateSettingDefault)));
             }
             set
             {
                 if (AddOrUpdateValue(IsAutoRotateSettingKeyName, value))
                 {
                     Save();
+                    isAutoRotate = value;
                 }
             }
+        }
+
+        public static void UpdateOrientation(PhoneApplicationPage page)
+        {
+            page.SupportedOrientations = IsAutoRotateSetting ? SupportedPageOrientation.PortraitOrLandscape : SupportedPageOrientation.Portrait;
         }
 
         /// <summary>
@@ -263,6 +291,7 @@ namespace S1Nyan.App
             }
         }
 
+        private static SettingShowPicsWhen? showPicWhen;
         /// <summary>
         /// Property to get and set a ListBox Setting Key.
         /// </summary>
@@ -270,7 +299,7 @@ namespace S1Nyan.App
         {
             get
             {
-                return GetValueOrDefault<SettingShowPicsWhen>(ShowPicWhenKeyName, ShowPicsDefault);
+                return (SettingShowPicsWhen)(showPicWhen ?? (showPicWhen = GetValueOrDefault<SettingShowPicsWhen>(ShowPicWhenKeyName, ShowPicsDefault)));
             }
             set
             {
@@ -282,12 +311,11 @@ namespace S1Nyan.App
             }
         }
 
-        private static SettingShowPicsWhen showPicWhen;
         public static bool IsShowPic
         {
             get
             {
-                switch(showPicWhen)
+                switch (ShowPicWhen)
                 {
                     case SettingShowPicsWhen.Always:
                         return true;
@@ -313,7 +341,7 @@ namespace S1Nyan.App
                 if (AddOrUpdateValue<int>(ContentFontSizeKeyName, (int)value))
                 {
                     Save();
-                    contentFontSize = 0;
+                    contentFontSize = GetFontSize(value);
                 }
             }
         }
@@ -328,12 +356,13 @@ namespace S1Nyan.App
             }
         }
 
-        private static double GetFontSize()
+        private static double GetFontSize(SettingFontSizes size = SettingFontSizes.FontSizeUnknow)
         {
-            switch(SettingFontSize)
+            if (size == SettingFontSizes.FontSizeUnknow) size = SettingFontSize;
+            switch (size)
             {
                 case SettingFontSizes.FontSizeLarge:
-                    return 32;
+                    return 28.667;
                 case SettingFontSizes.FontSizeSmall:
                     return 22.667;
                 default:
@@ -341,7 +370,64 @@ namespace S1Nyan.App
             }
         }
 
-#endregion
+        #endregion
+
+
+        #region Signature
+        private const string ShowSignatureKeyName = "ShowSignature";
+        private static SignatureTypes ShowSignatureDefault = SignatureTypes.ShowAppNameAndModel;
+
+        private const string signatureFormat = "\r\n    [url=http://126.am/S1Nyan]—— {0}[/url]";
+        private const string AppSignature = "from S1 Nyan";
+        private const string AppSignatureWithModelFormat = "from S1 Nyan ({0} {1})";
+        private static string AppSignatureWithModel = string.Format(AppSignatureWithModelFormat, DeviceStatus.DeviceManufacturer, DeviceStatus.DeviceName);
+
+        private enum SignatureTypes
+        {
+            None = 0,
+            ShowAppName,
+            ShowAppNameAndModel
+        }
+
+        private void InitSignature()
+        {
+            setSignature.ItemsSource = signatureSource;
+            setSignature.SelectedIndex = (int)SignatureType;
+            setSignature.SelectionChanged += (o, e) =>
+            {
+                SignatureType = (SignatureTypes)setSignature.SelectedIndex;
+            };
+        }
+
+        private static List<string> signatureSource = new List<string> { AppResources.ShowSignatureNone, AppSignature, AppSignatureWithModel };
+
+        public static string GetSignature()
+        {
+            if (SignatureType == SignatureTypes.ShowAppName ||
+                SignatureType == SignatureTypes.ShowAppNameAndModel)
+                return string.Format(signatureFormat, signatureSource[(int)SignatureType]);
+            else
+                return "";
+        }
+
+        private static SignatureTypes? signatureType;
+        private static SignatureTypes SignatureType
+        {
+            get
+            {
+                return (SignatureTypes)(signatureType ?? (signatureType = GetValueOrDefault<SignatureTypes>(ShowSignatureKeyName, ShowSignatureDefault)));
+            }
+            set
+            {
+                if (AddOrUpdateValue<int>(ShowSignatureKeyName, (int)value))
+                {
+                    Save();
+                    signatureType = value;
+                }
+            }
+        }
+
+        #endregion
 
         #region About section
 
@@ -372,10 +458,31 @@ namespace S1Nyan.App
 
         #endregion
 
+        #region Server Settings
+        private const string CurrentServerAddrKeyName = "CurrentServerAddr";
+        private static string _currentServerAddr;
+        internal static string CurrentServerAddr
+        {
+            get
+            {
+                return _currentServerAddr ?? (_currentServerAddr = GetValueOrDefault<string>(CurrentServerAddrKeyName, null));
+            }
+            set
+            {
+                if (AddOrUpdateValue<string>(CurrentServerAddrKeyName, value))
+                {
+                    Save();
+                    _currentServerAddr = value;
+                }
+            }
+        }
+        #endregion
+
+        #region Setting Button & Menu
         internal static ApplicationBarMenuItem GetSettingMenuItem()
         {
             ApplicationBarMenuItem appBarMenuItem = new ApplicationBarMenuItem(AppResources.SettingPage);
-            appBarMenuItem.Click += GotoSetting;
+            appBarMenuItem.Click += (o, e) => GotoSetting();
             return appBarMenuItem;
         }
 
@@ -383,14 +490,51 @@ namespace S1Nyan.App
         {
             ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.feature.settings.rest.png", UriKind.Relative));
             appBarButton.Text = AppResources.SettingPage;
-            appBarButton.Click += GotoSetting;
+            appBarButton.Click += (o, e) => GotoSetting();
             return appBarButton;
         }
 
-        private static void GotoSetting(object sender, EventArgs e)
+        internal static ApplicationBarIconButton GetAboutAppBarButton()
         {
-            (App.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/Views/SettingView.xaml", UriKind.Relative));
+            ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.information.png", UriKind.Relative));
+            appBarButton.Text = AppResources.AboutPage;
+            appBarButton.Click += (o, e) => GotoSetting(PivotAbout);
+            return appBarButton;
         }
+
+        public static void GotoSetting(string pivotName = null)
+        {
+            string param = "";
+            if (pivotName != null)
+                param = string.Format("?Pivot={0}", pivotName);
+
+            (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri("/Views/SettingView.xaml" + param, UriKind.Relative));
+        }
+
+        internal const string PivotAccount = "Account";
+        internal const string PivotAbout = "About";
+
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.NavigationMode == System.Windows.Navigation.NavigationMode.Back) return;
+            string pivotName = null;
+            if (NavigationContext.QueryString.TryGetValue("Pivot", out pivotName))
+            {
+                int index = 0;
+                switch(pivotName)
+                {
+                    case PivotAccount:
+                        index = 1;
+                        break;
+                    case PivotAbout:
+                        index = 2;
+                        break;
+                }
+                Pivot.SelectedIndex = index;
+            }
+        }
+        #endregion
 
     }
 }

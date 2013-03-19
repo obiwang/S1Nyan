@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;
@@ -14,16 +12,18 @@ namespace S1Nyan.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : S1NyanViewModelBase
     {
         private readonly IDataService _dataService;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(IDataService dataService)
+        public MainViewModel(IDataService dataService) : base()
         {
             _dataService = dataService;
+            MainListData = _dataService.GetMainListCache();
+            RefreshData();
             //if (IsInDesignMode) _dataService.GetMainListData((item, error) => { MainListData = item; });
         }
 
@@ -44,36 +44,22 @@ namespace S1Nyan.ViewModel
             }
         }
 
-        private RelayCommand _loadedCommand;
-        /// <summary>
-        /// Gets the LoadedCommand.
-        /// </summary>
-        public RelayCommand LoadedCommand
+        public override async void RefreshData()
         {
-            get
-            {
-                return _loadedCommand
-                    ?? (_loadedCommand = new RelayCommand(ExecuteLoadedCommand));
-            }
-        }
-
-        private bool isInited;
-        private async void ExecuteLoadedCommand()
-        {
-            if (isInited) return;
-            isInited = true;
             Util.Indicator.SetLoading();
             try
             {
-                MainListData = await _dataService.GetMainListAsync();
+                MainListData = await _dataService.UpdateMainListAsync();
                 Util.Indicator.SetBusy(false);
+                _dataService.GetMainListDone();
             }
             catch (Exception e)
             {
-                Util.Indicator.SetError(e.Message);
+                _dataService.GetMainListDone(false);
+                if (!HandleUserException(e))
+                    Util.Indicator.SetError(e);
             }
         }
-
         ////public override void Cleanup()
         ////{
         ////    // Clean up if needed

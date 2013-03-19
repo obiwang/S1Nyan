@@ -1,6 +1,6 @@
-﻿using S1Nyan.App.Resources;
+﻿using S1Nyan.Resources;
 
-namespace S1Nyan.App
+namespace S1Nyan
 {
     /// <summary>
     /// Provides access to string resources.

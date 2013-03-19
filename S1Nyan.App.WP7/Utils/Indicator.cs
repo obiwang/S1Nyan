@@ -1,10 +1,10 @@
 ﻿using System.Threading;
 using Microsoft.Phone.Shell;
-using S1Nyan.App.Resources;
+using S1Nyan.Resources;
 
 namespace S1Nyan.Utils
 {
-    public class Indicator : S1Nyan.Utils.IIndicator
+    public class Indicator : IIndicator
     {
         ProgressIndicator _progressIndicator;
         Timer timer;

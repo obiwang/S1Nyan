@@ -29,9 +29,13 @@ namespace S1Nyan.ViewModel
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
             SimpleIoc.Default.Register<IDataService, DataService>();
+            SimpleIoc.Default.Register<IStorageHelper, IsolatedStorageHelper>(true);
+            SimpleIoc.Default.Register<IServerModel, ServerModel>(true);
+            SimpleIoc.Default.Register<ISendPostService, UserViewModel>();
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<ThreadListViewModel>();
+            SimpleIoc.Default.Register<ServerViewModel>();
         }
 
         /// <summary>
@@ -59,6 +63,11 @@ namespace S1Nyan.ViewModel
             }
         }
 
+        public UserViewModel User
+        {
+            get { return UserViewModel.Current; }
+        }
+
         /// <summary>
         /// Gets the view's ViewModel.
         /// </summary>
@@ -69,7 +78,20 @@ namespace S1Nyan.ViewModel
                 return new ThreadViewModel(ServiceLocator.Current.GetInstance<IDataService>());
             }
         }
+
+
         /// <summary>
+        /// Gets the view's ViewModel.
+        /// </summary>
+        public ServerViewModel Server
+        {
+            get { return ServerViewModel.Current; }
+            //get
+            //{
+            //    return new ThreadViewModel(ServiceLocator.Current.GetInstance<IDataService>());
+            //}
+        }
+      /// <summary>
         /// Cleans up all the resources.
         /// </summary>
         public static void Cleanup()
