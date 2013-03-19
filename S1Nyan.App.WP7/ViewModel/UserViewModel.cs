@@ -36,6 +36,19 @@ namespace S1Nyan.ViewModel
         public UserViewModel()
         {
             notifyTimer = new Timer(OnTimeUp, this, Timeout.Infinite, Timeout.Infinite);
+            MessengerInstance.Register<NotificationMessage<S1NyanViewModelBase>>(this, OnReLoginMsg);
+        }
+
+        private async void OnReLoginMsg(NotificationMessage<S1NyanViewModelBase> msg)
+        {
+            if (msg.Notification != "ReLoginMsg") return;
+
+            Uid = null;
+            if (SettingView.IsRememberPass && SettingView.CurrentUsername.Length > 0)
+                await BackgroundLogin(SettingView.CurrentUsername, SettingView.CurrentPassword);
+
+            if (Uid != null)
+                MessengerInstance.Send(new NotificationMessage<S1NyanViewModelBase>(msg.Content, "RefreshMessage"));
         }
 
         private string _loginStatus = AppResources.AccountPageGuest;

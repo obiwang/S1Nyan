@@ -18,6 +18,13 @@ namespace S1Nyan.ViewModel
             MessengerInstance.Register<NotificationMessage<string>>(this, OnNotifyServerMsg);
         }
 
+#if DEBUG
+        ~S1NyanViewModelBase()
+        {
+            System.Diagnostics.Debug.WriteLine("Finalizing " + this.GetType().FullName);
+        }
+#endif
+
         private void OnNotifyServerMsg(NotificationMessage<string> msg)
         {
             NotifyMessage = msg.Content;
@@ -25,6 +32,7 @@ namespace S1Nyan.ViewModel
 
         private void OnNotifyRefresh(NotificationMessage<S1NyanViewModelBase> msg)
         {
+            if (msg.Notification != "RefreshMessage") return;
             if (msg.Content!= null && msg.Content.GetType().IsInstanceOfType(this))
             {
                 RefreshData();

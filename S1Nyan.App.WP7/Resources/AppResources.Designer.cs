@@ -322,7 +322,7 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 未知错误：.
+        ///   Looks up a localized string similar to 未知错误 .
         /// </summary>
         public static string ErrorMsgUnknown {
             get {

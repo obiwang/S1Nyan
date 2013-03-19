@@ -249,7 +249,7 @@
     <value>连接服务器失败</value>
   </data>
   <data name="ErrorMsgUnknown" xml:space="preserve">
-    <value>未知错误：</value>
+    <value>未知错误 </value>
   </data>
   <data name="AccountPageLoginLoading" xml:space="preserve">
     <value>正在登陆</value>

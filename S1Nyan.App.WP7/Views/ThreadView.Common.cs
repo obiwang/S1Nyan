@@ -24,6 +24,12 @@ namespace S1Nyan.Views
             Loaded += (o, e) => SettingView.UpdateOrientation(this);
         }
 
+#if DEBUG
+        ~ThreadView()
+        {
+            System.Diagnostics.Debug.WriteLine("Finalizing " + this.GetType().FullName);
+        }
+#endif
         /// <summary>
         /// Gets the view's ViewModel.
         /// </summary>
@@ -60,6 +66,8 @@ namespace S1Nyan.Views
 
         private const string ThreadViewPageInfoKey = "ThreadViewPageInfo";
         private const string ThreadViewReplyTextKey = "ThreadViewReplyText";
+
+        public ImageResourceManager ImageResourceManager = new ImageResourceManager();
 
         private string idParam = null, titleParam = null, savedReply = null;
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -107,7 +115,7 @@ namespace S1Nyan.Views
             {
                 var stack = GetInfoStack();
                 if (stack.Count > 0) stack.RemoveAt(stack.Count - 1);
-                Vm.Cleanup();
+                CleanUp();
             }
             else if (e.NavigationMode == NavigationMode.New)
             {
@@ -138,17 +146,30 @@ namespace S1Nyan.Views
             return info.Stack;
         }
 
+        private void CleanUp()
+        {
+            ImageResourceManager.Reset();
+            navBarButton.Click -= ToggleNavigator;
+            replyButton.Click -= OnReplyButton;
+            refreshBarButton.Click -= OnRefresh;
+            nextBarButton.Click -= OnNextPage;
+            HideNavi.Completed -= OnHideNaviComplete;
+            Vm.Cleanup();
+        }
+
         ApplicationBarIconButton navBarButton;
         ApplicationBarIconButton replyButton;
+        ApplicationBarIconButton refreshBarButton;
+        ApplicationBarIconButton nextBarButton;
         private void BuildLocalizedApplicationBar()
         {
             // Set the page's ApplicationBar to a new instance of ApplicationBar.
             ApplicationBar = new ApplicationBar();
 
             // Create a new button and set the text value to the localized string from AppResources.
-            ApplicationBarIconButton refreshBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.sync.rest.png", UriKind.Relative));
+            refreshBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.sync.rest.png", UriKind.Relative));
             refreshBarButton.Text = AppResources.AppBarButtonRefresh;
-            refreshBarButton.Click += (o, e) => Vm.RefreshData();
+            refreshBarButton.Click += OnRefresh;
 
             navBarButton = new ApplicationBarIconButton(navIcon);
             navBarButton.Text = AppResources.AppBarButtonNavigator;
@@ -158,9 +179,9 @@ namespace S1Nyan.Views
             replyButton.Text = AppResources.AppBarButtonReply;
             replyButton.Click += OnReplyButton;
 
-            ApplicationBarIconButton nextBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.next.rest.png", UriKind.Relative));
+            nextBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.next.rest.png", UriKind.Relative));
             nextBarButton.Text = AppResources.AppBarButtonNextPage;
-            nextBarButton.Click += (o, e) => Vm.CurrentPage++;
+            nextBarButton.Click += OnNextPage;
 
             ApplicationBar.Buttons.Add(refreshBarButton);
             ApplicationBar.Buttons.Add(replyButton);
@@ -173,6 +194,8 @@ namespace S1Nyan.Views
 
             Vm.PageChanged = (current, total) =>
             {
+                ImageResourceManager.Reset();
+
                 if (current > 1 && total > 1)
                     FirstPage.IsEnabled = true;
                 else
@@ -191,6 +214,16 @@ namespace S1Nyan.Views
                 VertSlider.Value = VertSlider.Minimum;
                 VertSlider.Maximum = VertSlider.Minimum + Vm.TheThread.Items.Count - 1;
             };
+        }
+
+        private void OnRefresh(object sender, EventArgs e)
+        {
+            Vm.RefreshData();
+        }
+
+        private void OnNextPage(object sender, EventArgs e)
+        {
+            Vm.CurrentPage++;
         }
 
         static Uri replyIcon = new Uri("/Assets/AppBar/appbar.reply.email.png", UriKind.Relative);
@@ -213,7 +246,7 @@ namespace S1Nyan.Views
             {
                 navBarButton.IconUri = navIcon;
                 HideNavi.Begin();
-                HideNavi.Completed += (o, ee) => Navigator.Visibility = Visibility.Collapsed;
+                HideNavi.Completed += OnHideNaviComplete;
             }
             else
             {
@@ -221,6 +254,11 @@ namespace S1Nyan.Views
                 Navigator.Visibility = Visibility.Visible;
                 ShowNavi.Begin();
             }
+        }
+
+        private void OnHideNaviComplete(object sender, EventArgs e)
+        {
+            Navigator.Visibility = Visibility.Collapsed;
         }
 
     }

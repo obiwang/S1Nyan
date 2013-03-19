@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace S1Parser.Test
@@ -9,6 +10,7 @@ namespace S1Parser.Test
         [TestMethod]
         public void TestGetViewParamFromUrl()
         {
+            S1Resource.HostList = new List<string> { "http://220.196.42.167/2b/", "http://bbs.saraba1st.com/2b/"};
             string s0 = "http://220.196.42.167/2b/read-htm-tid-785763-page-54.html";
             string s1 = "http://bbs.saraba1st.com/2b/read-htm-tid-785763-page-54.html";
             string s2 = "http://bbs.saraba1st.com/2b/read.php?tid=785763&page=54#20636585";

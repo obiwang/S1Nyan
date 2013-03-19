@@ -38,7 +38,7 @@ namespace S1Parser.SimpleParser
             catch (System.Exception) { }
             finally
             {
-                if (theData.Items.Count == 0)
+                if (theData.Items == null || theData.Items.Count == 0)
                 {
                     S1Parser.User.ErrorParser.Parse(HtmlPage);
                     throw new InvalidDataException();
@@ -75,10 +75,11 @@ namespace S1Parser.SimpleParser
             return threadItem;
         }
 
-        private IEnumerable<HtmlElement> ReGroupContent(IEnumerable<HtmlElement> elements)
+        private List<HtmlElement> ReGroupContent(IEnumerable<HtmlElement> elements)
         {
             bool hasContent = false;
             HtmlElement lastGroup = null;
+            var list = new List<HtmlElement>();
             bool lastIsBr = false;
             foreach (var item in elements)
             {
@@ -98,7 +99,7 @@ namespace S1Parser.SimpleParser
                         lastIsBr = false;
                         if (lastGroup.Children.Count != 0)
                         {
-                            yield return lastGroup;
+                            list.Add(lastGroup);
                             lastGroup = new HtmlElement("Paragraph", children: new List<HtmlElement>());
                         }
                     }
@@ -107,7 +108,7 @@ namespace S1Parser.SimpleParser
                 else if (item.Name == "br")
                 {
                     lastIsBr = true;
-                    yield return lastGroup;
+                    list.Add(lastGroup);
                     lastGroup = null;
                 }
                 else
@@ -116,7 +117,8 @@ namespace S1Parser.SimpleParser
                     lastGroup.Children.Add(item);
                 }
             }
-            yield return lastGroup;
+            list.Add(lastGroup);
+            return list;
         }
 
         static Regex _totalPagePattern = new Regex(@"Pages: \( (?<total>\d+) total \)");

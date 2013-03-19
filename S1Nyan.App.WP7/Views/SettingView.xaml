@@ -229,10 +229,15 @@
                                            Style="{StaticResource PhoneTextGroupHeaderStyle}" />
                             </Grid>
                         </StackPanel>
-                        <HyperlinkButton NavigateUri="http://weibo.com/u/3204220170"
+                        <HyperlinkButton NavigateUri="http://weibo.com/obiwang"
                                          Style="{StaticResource LinkButtonStyle}"
                                          TargetName="_blank">
-                            <TextBlock Text="@S1Nyanwp" />
+                            <TextBlock Text="@obiwang" />
+                        </HyperlinkButton>
+                        <HyperlinkButton NavigateUri="http://e.weibo.com/u/1696934507"
+                                         Style="{StaticResource LinkButtonStyle}"
+                                         TargetName="_blank">
+                            <TextBlock Text="@stage-1st" />
                         </HyperlinkButton>
                         <HyperlinkButton Click="OnFeedBack" Style="{StaticResource LinkButtonStyle}">
                             <TextBlock Text="{Binding LocalizedResources.FeedBack, Source={StaticResource LocalizedStrings}}" />

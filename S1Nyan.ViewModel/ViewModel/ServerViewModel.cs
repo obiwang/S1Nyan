@@ -65,6 +65,7 @@ namespace S1Nyan.ViewModel
                 Util.Indicator.SetError(S1UserException.SiteClosed);
                 msg = Util.ErrorMsg.GetExceptionMessage(S1UserException.SiteClosed);
                 _serverModel.UpdateServerAddr(closedServer.Addr);
+                MessengerInstance.Send(new NotificationMessage<S1NyanViewModelBase>(lastViewModel, "ReLoginMsg"));
             }
             else
             {

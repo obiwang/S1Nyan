@@ -20,6 +20,7 @@ namespace S1Nyan.Views
         {
             if (RealImageGif != null)
                 RealImageGif.Stop();
+            Proxy = null;
         }
 
         private AnimatedImage RealImageGif;
@@ -35,6 +36,11 @@ namespace S1Nyan.Views
                 {
                     proxy.DownloadProgressChanged -= LoadingProgress;
                     proxy.LoadingCompleted -= LoadingComplete;
+                    proxy.RemoveSmartImage(this);
+                    if (RealImage != null) RealImage.Source = null;
+                    if (RealImageGif != null) RealImageGif.Source = null;
+                    RealImage = null;
+                    RealImageGif = null;
                     imageArea.Content = null;
                 }
                 if (value != null)

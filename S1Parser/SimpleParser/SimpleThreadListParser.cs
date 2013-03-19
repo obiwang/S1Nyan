@@ -35,7 +35,7 @@ namespace S1Parser.SimpleParser
             catch (System.Exception) { }
             finally
             {
-                if (theData.Children.Count == 0)
+                if (theData.Children == null || theData.Children.Count == 0)
                 {
                     S1Parser.User.ErrorParser.Parse(HtmlPage);
                     throw new InvalidDataException();

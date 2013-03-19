@@ -39,8 +39,7 @@ namespace S1Nyan.Views
 
         private void theList_ManipulationStarted(object sender, System.Windows.Input.ManipulationStartedEventArgs e)
         {
-            if (IsNavigatorVisible)
-                ToggleNavigator(null, null);
+            ShowHideNavi(true);
         }
 
         protected override void OnOrientationChanged(Microsoft.Phone.Controls.OrientationChangedEventArgs e)

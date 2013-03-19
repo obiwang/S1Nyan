@@ -138,7 +138,6 @@
                     <DataTemplate>
                         <local:ThreadItemContent Margin="12, 0"
                                                  HorizontalAlignment="Left"
-                                                 CacheMode="BitmapCache"
                                                  Content="{Binding Converter={StaticResource ContentConverter}}"
                                                  FontFamily="{StaticResource PhoneFontFamilyNormal}" />
                     </DataTemplate>

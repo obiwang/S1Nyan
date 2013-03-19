@@ -494,6 +494,14 @@ namespace S1Nyan.Views
             return appBarButton;
         }
 
+        internal static ApplicationBarIconButton GetAboutAppBarButton()
+        {
+            ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.information.png", UriKind.Relative));
+            appBarButton.Text = AppResources.AboutPage;
+            appBarButton.Click += (o, e) => GotoSetting(PivotAbout);
+            return appBarButton;
+        }
+
         public static void GotoSetting(string pivotName = null)
         {
             string param = "";

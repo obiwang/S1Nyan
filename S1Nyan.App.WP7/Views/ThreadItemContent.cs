@@ -250,11 +250,17 @@ namespace S1Nyan.Views
             bool isEmotion = S1Resource.IsEmotion(url);
 
             var image = new SmartImage ();
-            ImageResourceManager.SetUriSource(image, url);
+
             if (isEmotion)
+            {
+                ImageResourceManager.Emotion.SetUriSource(image, url);
                 image.Margin = new Thickness(0, 0, 0, -6);
+            }
             else
+            {
+                ImageResourceManager.Current.SetUriSource(image, url);
                 image.Margin = new Thickness(6);
+            }
             return image;
         }
     }

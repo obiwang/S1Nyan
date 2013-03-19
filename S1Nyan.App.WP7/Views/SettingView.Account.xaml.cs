@@ -64,11 +64,11 @@ namespace S1Nyan.Views
             if (pass == FakePassword)
                 pass = CurrentPassword;
             var msg = await UserViewModel.Current.DoLogin(UsernameText.Text, pass);
-            VerifyString = await UserViewModel.Current.GetVerifyString();
             UpdateControls(true, msg == null);
             UpdateErrorMsg(msg);
             if (msg == null)
             {
+                VerifyString = await UserViewModel.Current.GetVerifyString();
                 if (isFirstLoginCache)
                     IsFirstLogin = false;
                 SavedUserName = UsernameText.Text;
@@ -186,6 +186,7 @@ namespace S1Nyan.Views
             }
             set
             {
+                if (value == null) value = "";
                 if (IsRememberPass)
                 {
                     if (AddOrUpdateValue<string>(VerifyStringKeyName, value))

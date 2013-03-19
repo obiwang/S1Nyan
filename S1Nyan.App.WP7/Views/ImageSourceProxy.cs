@@ -19,7 +19,7 @@ namespace S1Nyan.Views
         }
         #region filed
         private WebClient client = null;
-        private List<SmartImage> smartImageList = new List<SmartImage>();
+        internal List<SmartImage> smartImageList = new List<SmartImage>();
         #endregion
 
         #region Properties
@@ -158,6 +158,8 @@ namespace S1Nyan.Views
                 {
                     Image = new BitmapImage();
                     Image.SetSource(SourceStream);
+                    SourceStream.Dispose();
+                    SourceStream = null;
                 }
                 OnImageOpened();
             }
@@ -229,6 +231,22 @@ namespace S1Nyan.Views
             }
         }
 
+        internal void RemoveSmartImage(SmartImage image)
+        {
+            if (image != null && smartImageList.Contains(image))
+                smartImageList.Remove(image);
+        }
+
+        public void Reset()
+        {
+            //foreach (var image in smartImageList)
+            //{
+            //    if (image != null)
+            //        image.Proxy = null;
+            //}
+            smartImageList.Clear();
+        }
+
         public void Dispose()
         {
             try
@@ -238,15 +256,13 @@ namespace S1Nyan.Views
 
                 if (SourceStream != null)
                     SourceStream.Dispose();
-
+                if (Image != null)
+                    Image.UriSource = null;
+                if (GifImage != null)
+                    GifImage.UriSource = null;
                 Image = null;
                 GifImage = null;
-
-                foreach (var image in smartImageList)
-                {
-                    image.Proxy = null;
-                }
-                smartImageList.Clear();
+                Reset();
             }
             catch { }
         }

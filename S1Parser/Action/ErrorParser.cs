@@ -28,7 +28,7 @@ namespace S1Parser.User
             var content = root.FindFirst("div", (e) => e.Attributes["class"] == "tip-content");
             
             if (content == null)
-                throw new NullReferenceException();
+                throw new InvalidDataException();
             else
             {
                 var divs = content.Descendants("div");

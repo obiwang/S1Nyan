@@ -86,19 +86,22 @@ namespace S1Nyan.Views
             // Set the page's ApplicationBar to a new instance of ApplicationBar.
             ApplicationBar = new ApplicationBar();
             ApplicationBar.Buttons.Add(SettingView.GetSettingAppBarButton());
+            ApplicationBar.Buttons.Add(SettingView.GetAboutAppBarButton());
             ApplicationBar.IsVisible = false;
         }
 
-#if DEBUG
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             if (e.NavigationMode == System.Windows.Navigation.NavigationMode.Back)
             {
+#if DEBUG
                 GC.Collect();
+                GC.WaitForPendingFinalizers();
+#endif
+                NavigationService.RemoveBackEntry();
             }
         }
-#endif
     }
 }
