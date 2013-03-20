@@ -130,13 +130,13 @@
     <value>訪客</value>
   </data>
   <data name="AccountPageLogin" xml:space="preserve">
-    <value>登陸</value>
+    <value>登入</value>
   </data>
   <data name="AccountPageLoginLoading" xml:space="preserve">
-    <value>正在登陸</value>
+    <value>正在登入</value>
   </data>
   <data name="AccountPageLogout" xml:space="preserve">
-    <value>退出登陸</value>
+    <value>退出登入</value>
   </data>
   <data name="AccountPagePassword" xml:space="preserve">
     <value>密碼</value>
@@ -175,7 +175,7 @@
     <value>載入中</value>
   </data>
   <data name="ErrorMsgClickToLogin" xml:space="preserve">
-    <value>點擊此處登陸</value>
+    <value>點擊此處登入</value>
   </data>
   <data name="ErrorMsgConnectServerFailed" xml:space="preserve">
     <value>連接伺服器失敗</value>
