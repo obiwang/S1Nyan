@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using ImageTools.Controls;
+using Microsoft.Phone.Controls;
+#if S1Nyan
+using S1Nyan.Resources;
+#endif
 
 namespace S1Nyan.Views
 {
@@ -13,6 +18,14 @@ namespace S1Nyan.Views
             InitializeComponent();
             SizeChanged += (o, e) => SmartImageSizeChanged(e.NewSize);
             ImageHolder.DataContext = this;
+#if S1Nyan
+            var menu = new ContextMenu();
+            var menuItem = new MenuItem();
+            menuItem.Header = AppResources.ImageShowInBrowser;
+            menuItem.Click += OpenInBrowser;
+            menu.ItemsSource = new List<MenuItem> { menuItem };
+            MenuHolder.SetValue(ContextMenuService.ContextMenuProperty, menu);
+#endif
             Unloaded += OnUnload;
         }
 

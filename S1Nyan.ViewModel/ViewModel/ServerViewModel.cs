@@ -65,7 +65,7 @@ namespace S1Nyan.ViewModel
                 Util.Indicator.SetError(S1UserException.SiteClosed);
                 msg = Util.ErrorMsg.GetExceptionMessage(S1UserException.SiteClosed);
                 _serverModel.UpdateServerAddr(closedServer.Addr);
-                MessengerInstance.Send(new NotificationMessage<S1NyanViewModelBase>(lastViewModel, "ReLoginMsg"));
+                MessengerInstance.Send(new NotificationMessage<S1NyanViewModelBase>(lastViewModel, Messages.ReLoginMessageString));
             }
             else
             {
@@ -76,7 +76,7 @@ namespace S1Nyan.ViewModel
             }
             if (_serverModel.Msg != null && _serverModel.Msg.Length>0)
                 msg = msg + "\r\n" + _serverModel.Msg;
-            MessengerInstance.Send(new NotificationMessage<string>(msg, "NotifyServerMsg"));
+            MessengerInstance.Send(new NotificationMessage<string>(msg, Messages.NotifyServerMessageString));
         }
 
         private void OnNotifySuccess(IServerItem item)
@@ -90,7 +90,7 @@ namespace S1Nyan.ViewModel
                 server.Cancel();
             }
             _serverModel.UpdateServerAddr(item.Addr);
-            MessengerInstance.Send(new NotificationMessage<S1NyanViewModelBase>(lastViewModel, "RefreshMessage"));
+            MessengerInstance.Send(new NotificationMessage<S1NyanViewModelBase>(lastViewModel, Messages.RefreshMessageString));
             serverList = null;
             ServersToCheck = -1;
         }

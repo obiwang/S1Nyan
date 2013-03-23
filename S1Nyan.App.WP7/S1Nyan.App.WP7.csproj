@@ -183,6 +183,7 @@
     <Compile Include="Model\IsolatedStorageHelper.cs" />
     <Compile Include="Model\ServerItem.cs" />
     <Compile Include="Model\ServerModel.cs" />
+    <Compile Include="Utils\PhoneDeviceModel.cs" />
     <Compile Include="Utils\ErrorMsg.cs" />
     <Compile Include="Utils\MemoryDiagnosticsHelper.cs" />
     <Compile Include="Model\ResourceServices.cs" />
@@ -307,6 +308,7 @@
     </Content>
     <Content Include="Assets\AppBar\appbar.quill.png" />
     <Content Include="Assets\AppBar\appbar.reply.email.png" />
+    <Content Include="Resources\model_name.xml" />
     <Content Include="Resources\dym\147.gif" />
     <Content Include="Resources\dym\148.gif" />
     <Content Include="Resources\dym\149.gif" />

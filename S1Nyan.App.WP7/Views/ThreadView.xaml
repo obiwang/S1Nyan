@@ -296,6 +296,7 @@
                     <my:NotifyTextBoard MaxHeight="72"
                                         Background="{StaticResource PhoneBackgroundBrush}"
                                         Content="{Binding ReplyResult, Mode=TwoWay}"
+                                        Duration="2.5"
                                         FontSize="{StaticResource PhoneFontSizeNormal}" />
                 </Border>
             </Grid>

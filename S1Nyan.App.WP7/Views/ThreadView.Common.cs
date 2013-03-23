@@ -10,6 +10,7 @@ using S1Nyan.Resources;
 using S1Nyan.Model;
 using S1Nyan.ViewModel;
 using S1Parser.User;
+using GalaSoft.MvvmLight.Messaging;
 
 namespace S1Nyan.Views
 {
@@ -21,7 +22,24 @@ namespace S1Nyan.Views
             BuildLocalizedApplicationBar();
 
             SettingView.UpdateOrientation(this);
-            Loaded += (o, e) => SettingView.UpdateOrientation(this);
+            Loaded += OnPageLoaded;
+            Unloaded += OnPageUnloaed;
+        }
+
+        private void OnPageUnloaed(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Unregister(this);
+        }
+
+        private void OnPageLoaded(object sender, RoutedEventArgs e)
+        {
+            SettingView.UpdateOrientation(this);
+            Messenger.Default.Register<NotificationMessage>(this, OnReplySucceed);
+        }
+
+        private void OnReplySucceed(NotificationMessage obj)
+        {
+            ShowHideReplyPanel(true);
         }
 
 #if DEBUG

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 
 namespace S1Parser.Emotion
 {
@@ -63,6 +64,23 @@ namespace S1Parser.Emotion
         {
             if (IsInited) return;
             ParseEmotion(new HtmlDoc(data).RootElement);
+        }
+
+        public static void InitFromXml(Stream xml)
+        {
+            if (IsInited) return;
+            ParseEmotionXml(xml);
+        }
+
+        private static void ParseEmotionXml(Stream xml)
+        {
+            var root = XDocument.Load(xml).Root;
+            foreach (var item in root.Descendants("img"))
+            {
+                var id = item.Attribute("Id").Value;
+                var path = item.Attribute("Path").Value;
+                EmotionList[id] = new EmotionItemViewModel { Id = id, Path = path }; 
+            }
         }
 
 /*

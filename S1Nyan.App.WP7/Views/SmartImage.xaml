@@ -105,11 +105,13 @@
         <Grid x:Name="MenuHolder"
               Background="Transparent"
               Tap="MenuHolder_Tap">
-            <toolkit:ContextMenuService.ContextMenu>
+            <!--
+                <toolkit:ContextMenuService.ContextMenu>
                 <toolkit:ContextMenu>
-                    <toolkit:MenuItem Click="OpenInBrowser" Header="{Binding LocalizedResources.ImageShowInBrowser, Source={StaticResource LocalizedStrings}}" />
+                <toolkit:MenuItem Click="OpenInBrowser" Header="{Binding LocalizedResources.ImageShowInBrowser, Source={StaticResource LocalizedStrings}}" />
                 </toolkit:ContextMenu>
-            </toolkit:ContextMenuService.ContextMenu>
+                </toolkit:ContextMenuService.ContextMenu>
+            -->
         </Grid>
         <!--
             <Image x:Name="RealImage"

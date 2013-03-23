@@ -1,6 +1,7 @@
 ﻿using System;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight.Messaging;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;
@@ -187,12 +188,18 @@ namespace S1Nyan.ViewModel
             {
                 if (_replyResult == value) return;
 
+                if (isSuccess && value == null)
+                {
+                    isSuccess = false;
+                    MessengerInstance.Send<NotificationMessage>(Messages.PostSuccessMessage);
+                }
                 _replyResult = value;
                 RaisePropertyChanged(() => ReplyResult);
             }
         }
 
         private RelayCommand _sendCommand;
+        private bool isSuccess;
 
         /// <summary>
         /// Gets the SendCommand.
@@ -223,6 +230,7 @@ namespace S1Nyan.ViewModel
             if (result == null)
             {
                 ReplyText = "";
+                isSuccess = true;
                 ReplyResult = Utils.Util.ErrorMsg.GetExceptionMessage(S1Parser.User.S1UserException.ReplySuccess);
             }
             else

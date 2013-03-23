@@ -70,7 +70,7 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 账户.
+        ///   Looks up a localized string similar to 帐户.
         /// </summary>
         public static string AccountPage {
             get {
@@ -79,7 +79,7 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 切换账户.
+        ///   Looks up a localized string similar to 切换帐户.
         /// </summary>
         public static string AccountPageChangeAccount {
             get {
@@ -97,7 +97,7 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 登陆.
+        ///   Looks up a localized string similar to 登录.
         /// </summary>
         public static string AccountPageLogin {
             get {
@@ -106,7 +106,7 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 正在登陆.
+        ///   Looks up a localized string similar to 正在登录.
         /// </summary>
         public static string AccountPageLoginLoading {
             get {
@@ -115,7 +115,7 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 退出登陆.
+        ///   Looks up a localized string similar to 退出登录.
         /// </summary>
         public static string AccountPageLogout {
             get {
@@ -142,7 +142,7 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 发帖显示签名.
+        ///   Looks up a localized string similar to 发帖显示尾巴.
         /// </summary>
         public static string AccountPageShowSignature {
             get {
@@ -151,7 +151,7 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 注册新账户.
+        ///   Looks up a localized string similar to 注册新帐户.
         /// </summary>
         public static string AccountPageSignup {
             get {
@@ -232,7 +232,7 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 点击此处登陆.
+        ///   Looks up a localized string similar to 点击此处登录.
         /// </summary>
         public static string ErrorMsgClickToLogin {
             get {

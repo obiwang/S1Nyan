@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Root>
+  <NOKIA>
+    <Model DeviceName="RM-820" FriendlyName="Lumia 920" />
+    <Model DeviceName="RM-821" FriendlyName="Lumia 920" />
+    <Model DeviceName="RM-822" FriendlyName="Lumia 920" />
+    <Model DeviceName="RM-867" FriendlyName="Lumia 920T" />
+    <Model DeviceName="RM-824" FriendlyName="Lumia 820" />
+    <Model DeviceName="RM-825" FriendlyName="Lumia 820" />
+    <Model DeviceName="RM-826" FriendlyName="Lumia 820" />
+    <Model DeviceName="RM-845" FriendlyName="Lumia 822" />
+    <Model DeviceName="RM-878" FriendlyName="Lumia 810" />
+    <Model DeviceName="RM-885" FriendlyName="Lumia 720" />
+    <Model DeviceName="RM-887" FriendlyName="Lumia 720" />
+    <Model DeviceName="RM-846" FriendlyName="Lumia 620" />
+    <Model DeviceName="RM-914" FriendlyName="Lumia 520" />
+    <Model DeviceName="RM-915" FriendlyName="Lumia 520" />
+    <Model DeviceName="RM-917" FriendlyName="Lumia 520" />
+    <Model DeviceName="610C" FriendlyName="Lumia 610C" />
+  </NOKIA>
+  <HTC>
+    <Model DeviceName="8X" FriendlyName="8X" />
+    <Model DeviceName="8S" FriendlyName="8S" />
+  </HTC>
+</Root>

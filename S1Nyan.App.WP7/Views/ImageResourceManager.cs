@@ -8,15 +8,22 @@ namespace S1Nyan.Views
 {
     public class ImageResourceManager
     {
+#if !S1Nyan
+        private static ImageResourceManager current;
+#endif
         public static ImageResourceManager Current
         {
             get
             {
+#if S1Nyan
                 var view = (Application.Current.RootVisual as PhoneApplicationFrame).Content as ThreadView;
                 if (view != null)
                     return view.ImageResourceManager;
                 else
                     return null;
+#else
+                return current ?? (current = new ImageResourceManager());
+#endif
             }
         }
 
@@ -37,7 +44,7 @@ namespace S1Nyan.Views
         /// <param name="obj">Image needing its Source property set.</param>
         /// <returns>Uri to use for providing the contents of the Source property.</returns>
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "UriSource is applicable only to Image elements.")]
-        public string GetUriSource(SmartImage obj)
+        public static string GetUriSource(SmartImage obj)
         {
             if (null == obj)
             {
@@ -52,7 +59,7 @@ namespace S1Nyan.Views
         /// <param name="obj">Image needing its Source property set.</param>
         /// <param name="value">Uri to use for providing the contents of the Source property.</param>
         [SuppressMessage("Microsoft.Design", "CA1011:ConsiderPassingBaseTypesAsParameters", Justification = "UriSource is applicable only to Image elements.")]
-        public void SetUriSource(SmartImage obj, string value)
+        public static void SetUriSource(SmartImage obj, string value)
         {
             if (null == obj)
             {

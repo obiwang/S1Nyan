@@ -53,6 +53,7 @@
     <Compile Include="Utils\IIndicator.cs" />
     <Compile Include="Utils\Util.cs" />
     <Compile Include="ViewModel\ISendPostService.cs" />
+    <Compile Include="ViewModel\Messages.cs" />
     <Compile Include="ViewModel\S1NyanViewModelBase.cs" />
     <Compile Include="ViewModel\ServerViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

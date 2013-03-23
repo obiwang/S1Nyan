@@ -213,10 +213,10 @@
     <value>回复</value>
   </data>
   <data name="AccountPage" xml:space="preserve">
-    <value>账户</value>
+    <value>帐户</value>
   </data>
   <data name="AccountPageLogin" xml:space="preserve">
-    <value>登陆</value>
+    <value>登录</value>
   </data>
   <data name="AccountPagePassword" xml:space="preserve">
     <value>密码</value>
@@ -225,7 +225,7 @@
     <value>记住密码</value>
   </data>
   <data name="AccountPageShowSignature" xml:space="preserve">
-    <value>发帖显示签名</value>
+    <value>发帖显示尾巴</value>
   </data>
   <data name="AccountPageUsername" xml:space="preserve">
     <value>用户名</value>
@@ -237,13 +237,13 @@
     <value>访客</value>
   </data>
   <data name="AccountPageLogout" xml:space="preserve">
-    <value>退出登陆</value>
+    <value>退出登录</value>
   </data>
   <data name="AccountPageSignup" xml:space="preserve">
-    <value>注册新账户</value>
+    <value>注册新帐户</value>
   </data>
   <data name="AccountPageChangeAccount" xml:space="preserve">
-    <value>切换账户</value>
+    <value>切换帐户</value>
   </data>
   <data name="ErrorMsgConnectServerFailed" xml:space="preserve">
     <value>连接服务器失败</value>
@@ -252,13 +252,13 @@
     <value>未知错误 </value>
   </data>
   <data name="AccountPageLoginLoading" xml:space="preserve">
-    <value>正在登陆</value>
+    <value>正在登录</value>
   </data>
   <data name="ErrorMsgNamePassEmpty" xml:space="preserve">
     <value>用户名/密码不能为空</value>
   </data>
   <data name="ErrorMsgClickToLogin" xml:space="preserve">
-    <value>点击此处登陆</value>
+    <value>点击此处登录</value>
   </data>
   <data name="ErrorMsgGetDataFailed" xml:space="preserve">
     <value>数据获取失败</value>

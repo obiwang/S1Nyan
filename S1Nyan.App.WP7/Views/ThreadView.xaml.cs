@@ -20,13 +20,15 @@ namespace S1Nyan.Views
         {
             //VertSlider.Value = VertSlider.Maximum;
             var list = theList.ItemsSource as IList;
-            theList.ScrollToGroup(list[list.Count-1]);
+            if (list.Count > 0)
+                theList.ScrollToGroup(list[list.Count - 1]);
         }
 
         private void PageTop_Click(object sender, RoutedEventArgs e)
         {
             var list = theList.ItemsSource as IList;
-            theList.ScrollToGroup(list[0]);
+            if (list.Count > 0)
+                theList.ScrollToGroup(list[0]);
            //VertSlider.Value = VertSlider.Minimum;
         }
 

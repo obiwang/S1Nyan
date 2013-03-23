@@ -18,13 +18,11 @@ namespace S1Parser.User
 
 #if UseLocalhost
         const string SiteBase = "http://192.168.0.60/phpwind/";
-        const string loginUrl = SiteBase + "login.php?";
-        public const string PrivacyUrl = SiteBase + "profile.php?action=privacy";
 #else
-        static string SiteBase = S1Resource.SiteBase;
-        static string loginUrl = SiteBase + "login.php?";
-        public static string PrivacyUrl = SiteBase + "profile.php?action=privacy";
+        static string SiteBase { get { return S1Resource.SiteBase; } }
 #endif
+        static string loginUrl { get { return SiteBase + "login.php?"; } }
+        public static string PrivacyUrl { get { return SiteBase + "profile.php?action=privacy"; } }
 
         public static async Task<string> Login(this IS1Client client, string account, string pass, int loginType = 0)
         {

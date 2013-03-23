@@ -27,12 +27,13 @@ namespace S1Nyan.ViewModel
 
         private void OnNotifyServerMsg(NotificationMessage<string> msg)
         {
+            if (msg.Notification != Messages.NotifyServerMessageString) return;
             NotifyMessage = msg.Content;
         }
 
         private void OnNotifyRefresh(NotificationMessage<S1NyanViewModelBase> msg)
         {
-            if (msg.Notification != "RefreshMessage") return;
+            if (msg.Notification != Messages.RefreshMessageString) return;
             if (msg.Content!= null && msg.Content.GetType().IsInstanceOfType(this))
             {
                 RefreshData();
