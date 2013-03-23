@@ -384,7 +384,7 @@ namespace S1Nyan.Views
         private static SignatureTypes ShowSignatureDefault = SignatureTypes.ShowAppNameAndModel;
 
         private const string AppDisplaySignature = "from S1 Nyan";
-        private const string AppPostSignature = "\r\n    —— from [url=http://126.am/S1Nyan]S1 Nyan [/url]";
+        private const string AppPostSignature = "\r\n    —— from [url=http://126.am/S1Nyan]S1 Nyan[/url]";
         private static string ModelName = string.Format(" ({0})", S1Nyan.Utils.PhoneDeviceModel.GetFriendlyName());
 
         private enum SignatureTypes
