@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Phone.Controls;
@@ -14,6 +15,7 @@ namespace S1Nyan.Views
         {
             if (UserViewModel.Current.Uid != null)
                 stackPanel.SetValue(Canvas.TopProperty, -400.0);
+            UpdateControls(!UserViewModel.Current.IsBusy, false, false);
 
             if (isAccountInited) return;
             isAccountInited = true;
@@ -24,6 +26,12 @@ namespace S1Nyan.Views
         {
             CurrentUsername = SavedUserName;
             CurrentPassword = IsRememberPass ? SavedPassword : "";
+        }
+
+        private void OnLoginStatusChanged(NotificationMessage<bool> msg)
+        {
+            if (msg.Notification != Messages.LoginStatusChangedMessageString) return;
+            UpdateControls(!UserViewModel.Current.IsBusy, msg.Content, true);
         }
 
         #region LogIn
@@ -59,31 +67,37 @@ namespace S1Nyan.Views
 
         private async void OnLogin(object sender, RoutedEventArgs e)
         {
-            UpdateControls(false);
+            UpdateControls(false, false, false);
             var pass = PasswordText.Password;
             if (pass == FakePassword)
                 pass = CurrentPassword;
+            var lastUserId = UserViewModel.Current.Uid;
             var msg = await UserViewModel.Current.DoLogin(UsernameText.Text, pass);
-            UpdateControls(true, msg == null);
             UpdateErrorMsg(msg);
             if (msg == null)
             {
-                VerifyString = await UserViewModel.Current.GetVerifyString();
+                if (lastUserId != UserViewModel.Current.Uid)
+                {   // run in background, not bothering UI thread
+                    var task = Task.Factory.StartNew(async () => VerifyString = await UserViewModel.Current.GetVerifyString());
+                }
                 if (isFirstLoginCache)
                     IsFirstLogin = false;
                 SavedUserName = UsernameText.Text;
                 SavedPassword = pass;
             }
+            UpdateControls(true, msg == null, true);
         }
 
-        private void UpdateControls(bool isFinished, bool useTransition = false)
+        private void UpdateControls(bool isFinished, bool isSuccess, bool useTransition)
         {
             LoginButton.IsEnabled = isFinished;
+            PasswordText.IsEnabled = isFinished;
+            UsernameText.IsEnabled = isFinished;
 
             if (isFinished)
             {
                 LoginButton.Content = AppResources.AccountPageLogin;
-                if (useTransition)
+                if (useTransition && isSuccess)
                     LoginTransition.Begin();
             }
             else

@@ -63,10 +63,22 @@ namespace S1Nyan.Views
         public SettingView()
         {
             InitializeComponent();
+            Loaded += SettingView_Loaded;
+            Unloaded += SettingView_Unloaded;
             SettingPivot.Loaded += SettingLoaded;
             AboutPivot.Loaded += AboutLoaded;
             AccountPivot.Loaded += AccountLoaded;
             DataContext = this;
+        }
+
+        void SettingView_Unloaded(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Unregister(this);
+        }
+
+        void SettingView_Loaded(object sender, RoutedEventArgs e)
+        {
+            Messenger.Default.Register<NotificationMessage<bool>>(this, OnLoginStatusChanged);
         }
 
         private void AccountLoaded(object sender, RoutedEventArgs e)
@@ -103,12 +115,6 @@ namespace S1Nyan.Views
         private void InitSetAutoRotate()
         {
             setAutoRotate.IsChecked = IsAutoRotateSetting;
-            setAutoRotate.Click += (o, e) =>
-            {
-                IsAutoRotateSetting = setAutoRotate.IsChecked ?? false;
-                var msg = new NotificationMessage("IsAutoRotateChanged");
-
-            };
         }
 
         private void InitSetFontSize()
@@ -377,10 +383,9 @@ namespace S1Nyan.Views
         private const string ShowSignatureKeyName = "ShowSignature";
         private static SignatureTypes ShowSignatureDefault = SignatureTypes.ShowAppNameAndModel;
 
-        private const string signatureFormat = "\r\n    [url=http://126.am/S1Nyan]—— {0}[/url]";
-        private const string AppSignature = "from S1 Nyan";
-        private const string AppSignatureWithModelFormat = "from S1 Nyan ({0} {1})";
-        private static string AppSignatureWithModel = string.Format(AppSignatureWithModelFormat, DeviceStatus.DeviceManufacturer, DeviceStatus.DeviceName);
+        private const string AppDisplaySignature = "from S1 Nyan";
+        private const string AppPostSignature = "\r\n    —— from [url=http://126.am/S1Nyan]S1 Nyan [/url]";
+        private static string ModelName = string.Format(" ({0})", S1Nyan.Utils.PhoneDeviceModel.GetFriendlyName());
 
         private enum SignatureTypes
         {
@@ -399,15 +404,12 @@ namespace S1Nyan.Views
             };
         }
 
-        private static List<string> signatureSource = new List<string> { AppResources.ShowSignatureNone, AppSignature, AppSignatureWithModel };
+        private static List<string> signatureSource = new List<string> { AppResources.ShowSignatureNone, AppDisplaySignature, AppDisplaySignature + ModelName };
+        private static List<string> postSignatureSource = new List<string> { "", AppPostSignature, AppPostSignature + ModelName };
 
         public static string GetSignature()
         {
-            if (SignatureType == SignatureTypes.ShowAppName ||
-                SignatureType == SignatureTypes.ShowAppNameAndModel)
-                return string.Format(signatureFormat, signatureSource[(int)SignatureType]);
-            else
-                return "";
+            return postSignatureSource[(int)SignatureType];
         }
 
         private static SignatureTypes? signatureType;

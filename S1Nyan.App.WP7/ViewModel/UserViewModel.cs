@@ -41,14 +41,14 @@ namespace S1Nyan.ViewModel
 
         private async void OnReLoginMsg(NotificationMessage<S1NyanViewModelBase> msg)
         {
-            if (msg.Notification != "ReLoginMsg") return;
+            if (msg.Notification != Messages.ReLoginMessageString) return;
 
             Uid = null;
             if (SettingView.IsRememberPass && SettingView.CurrentUsername.Length > 0)
                 await BackgroundLogin(SettingView.CurrentUsername, SettingView.CurrentPassword);
 
             if (Uid != null)
-                MessengerInstance.Send(new NotificationMessage<S1NyanViewModelBase>(msg.Content, "RefreshMessage"));
+                MessengerInstance.Send(new NotificationMessage<S1NyanViewModelBase>(msg.Content, Messages.RefreshMessageString));
         }
 
         private string _loginStatus = AppResources.AccountPageGuest;
@@ -88,18 +88,24 @@ namespace S1Nyan.ViewModel
                 RaisePropertyChanged(() => Uid);
             }
         }
+
+        public bool IsBusy;
+
         public async Task<string> DoLogin(string name, string pass)
         {
             if (name.Length == 0 || pass.Length == 0) return AppResources.ErrorMsgNamePassEmpty;
 
             string uid = null;
+            bool isSuccess = false;
             try
             {
+                IsBusy = true;
                 uid = await new S1WebClient().Login(name, pass);
                 if (uid != null)
                 {
                     Uid = uid;
                     LoginStatus = name;
+                    isSuccess = true;
                     return null;
                 }
                 return AppResources.ErrorMsgUnknown;
@@ -107,6 +113,11 @@ namespace S1Nyan.ViewModel
             catch (Exception ex)
             {
                 return S1Nyan.Utils.Util.ErrorMsg.GetExceptionMessage(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+                MessengerInstance.Send<NotificationMessage<bool>>(new NotificationMessage<bool>(isSuccess, Messages.LoginStatusChangedMessageString));
             }
         }
 
