@@ -40,6 +40,9 @@ namespace UnderDev
 
             RootFrame.Language = XmlLanguage.GetLanguage("zh-CN");
 
+            S1Parser.S1Resource.SiteBase = "http://220.196.42.167/2b/";
+            S1Parser.S1Resource.HostList = new List<string> { "http://220.196.42.167/2b/", "http://bbs.saraba1st.com/2b/" };
+
             // Show graphics profiling information while debugging.
             if (System.Diagnostics.Debugger.IsAttached)
             {

@@ -21,7 +21,7 @@ namespace UnderDev.ViewModel
         /// </summary>
         public MainViewModel()
         {
-            Task.Factory.StartNew(() => EmotionParser.Init(Application.GetResourceStream(new Uri("Resources/Emotion.htm", UriKind.Relative)).Stream));
+            Task.Factory.StartNew(() => EmotionParser.InitFromXml(Application.GetResourceStream(new Uri("Resources/emotion_list.xml", UriKind.Relative)).Stream));
         }
 
         private bool tester = false;

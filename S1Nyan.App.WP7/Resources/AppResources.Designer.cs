@@ -142,7 +142,7 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 发帖显示签名.
+        ///   Looks up a localized string similar to 发帖显示尾巴.
         /// </summary>
         public static string AccountPageShowSignature {
             get {
@@ -151,7 +151,7 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 注册新账户.
+        ///   Looks up a localized string similar to 注册新帐户.
         /// </summary>
         public static string AccountPageSignup {
             get {

@@ -16,9 +16,9 @@ namespace UnderDev
         {
             InitializeComponent();
             source.ItemsPerPage = 25;
-            //emotionList.ItemsSource = source;
+            emotionList.ItemsSource = source;
             emotionList.SelectionChanged += emotionPanel_SelectionChanged;
-            ImageResourceManager.Reset();
+            ImageResourceManager.Emotion.Reset();
             DataContext = new UserTestViewModel();
             BuildLocalizedApplicationBar();
             //replyText.GotFocus += replyText_GotFocus;

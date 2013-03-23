@@ -67,8 +67,6 @@ namespace S1Nyan.Views
 #endif
                 if (idParam != null)
                     return;
-                else
-                    NavigationService.RemoveBackEntry();
             }
             string titleParam = idParam = null;
             if (NavigationContext.QueryString.TryGetValue("ID", out idParam))

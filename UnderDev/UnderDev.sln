@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S1Nyan.ViewModel", "..\S1Ny
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S1Nyan.Model", "..\S1Nyan.Model\S1Nyan.Model.csproj", "{AA9F65DC-13D3-441A-99E2-FBAFE0C4CE9C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FaceRankGenerator", "..\FaceRankGenerator\FaceRankGenerator.csproj", "{806CA44E-3B15-4E3A-8B39-A8F86FBD903A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,12 @@ Global
 		{AA9F65DC-13D3-441A-99E2-FBAFE0C4CE9C}.LocalDebug|Any CPU.Build.0 = Debug|Any CPU
 		{AA9F65DC-13D3-441A-99E2-FBAFE0C4CE9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA9F65DC-13D3-441A-99E2-FBAFE0C4CE9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{806CA44E-3B15-4E3A-8B39-A8F86FBD903A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{806CA44E-3B15-4E3A-8B39-A8F86FBD903A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{806CA44E-3B15-4E3A-8B39-A8F86FBD903A}.LocalDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{806CA44E-3B15-4E3A-8B39-A8F86FBD903A}.LocalDebug|Any CPU.Build.0 = Debug|Any CPU
+		{806CA44E-3B15-4E3A-8B39-A8F86FBD903A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{806CA44E-3B15-4E3A-8B39-A8F86FBD903A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -301,7 +301,7 @@
     <Content Include="Resources\appbar.message.send.png" />
     <Content Include="Resources\appbar.reply.email.png" />
     <Content Include="Resources\appbar.smiley.happy.png" />
-    <Content Include="Resources\Emotion.htm" />
+    <Content Include="Resources\emotion_list.xml" />
     <Content Include="Resources\face\0.gif" />
     <Content Include="Resources\face\00.gif" />
     <Content Include="ApplicationIcon.png">

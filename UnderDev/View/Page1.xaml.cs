@@ -21,7 +21,7 @@ namespace UnderDev
             base.OnNavigatedFrom(e);
             if (e.NavigationMode == NavigationMode.Back)
             {
-                ImageResourceManager.Reset();
+                ImageResourceManager.Current.Reset();
             }
         }
         void Page1_Loaded(object sender, RoutedEventArgs e)

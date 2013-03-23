@@ -100,7 +100,6 @@ namespace S1Nyan.Views
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
 #endif
-                NavigationService.RemoveBackEntry();
             }
         }
     }

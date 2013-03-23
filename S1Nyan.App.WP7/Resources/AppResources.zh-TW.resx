@@ -145,7 +145,7 @@
     <value>記住密碼</value>
   </data>
   <data name="AccountPageShowSignature" xml:space="preserve">
-    <value>發帖顯示簽名</value>
+    <value>發帖顯示尾巴</value>
   </data>
   <data name="AccountPageSignup" xml:space="preserve">
     <value>註冊新帳戶</value>
