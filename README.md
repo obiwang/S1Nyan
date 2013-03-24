@@ -56,5 +56,5 @@ Most of these libraries are import from nuget, which will be downloaded during b
 * [ImageTools](http://imagetools.codeplex.com/) - for decode & display gif images
 * [MemoryDiagnosticsHelper](http://nuget.org/packages/MemoryDiagnosticsHelper/) - for debug
 * [Mvvm light portable](http://mvvmlight.codeplex.com/SourceControl/network/forks/onovotny/MvvmLightPortable) - MVVM framework
-* [Rhino Mocks](http://hibernatingrhinos.com/oss/rhino-mocks) - unit test mocks
+* [Moq](https://code.google.com/p/moq/) - unit test mocks
 * [Phone toolkit](http://phone.codeplex.com/) - many controls

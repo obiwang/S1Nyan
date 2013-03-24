@@ -1,42 +1,67 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Rhino.Mocks;
-using S1Parser;
-using S1Nyan.Model;
-using S1Parser.SimpleParser;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Moq;
+using S1Parser;
 
 namespace S1Nyan.Model.Test
 {
     [TestClass]
     public class DataServiceTest
     {
-        IParserFactory stubPaserFactory;
-        MockRepository mocks;
-        
         [TestInitialize()]
         public void Setup()
         {
-            mocks = new MockRepository();
-            stubPaserFactory = mocks.Stub<IParserFactory>();
+
         }
 
-        //[TestMethod]
-        //public async void TestGetMainListData()
-        //{
-        //    using (mocks.Record())
-        //    {
-        //        await stubPaserFactory.GetMainListData();
-        //        LastCall.Return(new List<S1ListItem>());
-        //    }
+        [TestMethod]
+        public async Task TestUpdateMainListAsync_FromCache()
+        {
+            Mock<IParserFactory> stubPaserFactory = new Mock<IParserFactory>();
+            Mock<IStorageHelper> stubStorageHelper = new Mock<IStorageHelper>();
 
-        //    DataService service = new DataService { ParserFactory = stubPaserFactory };
-        //    //var result = await service.GetMainListAsync();
+            stubStorageHelper.Setup(x => x.ReadFromLocalCache(It.IsAny<string>(), It.IsAny<double>()))
+                .Returns(new MemoryStream());
+            stubPaserFactory.Setup(x => x.ParseMainListData(It.IsAny<Stream>()))
+                .Returns(new List<S1ListItem>());
 
-        //    //await Dela.AsyncAsserts.ThrowsExceptionAsync<Exception>(service.GetMainListAsync);
-        //    //Assert.IsTrue(result is List<S1ListItem>);
-        //}
+            DataService service = new DataService { 
+                ParserFactory = stubPaserFactory.Object,
+                StorageHelper = stubStorageHelper.Object
+            };
+            var result = await service.UpdateMainListAsync();
+
+            Assert.IsTrue(result is List<S1ListItem>);
+        }
+
+        [TestMethod]
+        public async Task TestUpdateMainListAsync_FromRemote()
+        {
+            TaskCompletionSource<Stream> tcs = new TaskCompletionSource<Stream>();
+            tcs.SetResult(new MemoryStream());
+
+            Mock<IParserFactory> stubPaserFactory = new Mock<IParserFactory>();
+            Mock<IStorageHelper> stubStorageHelper = new Mock<IStorageHelper>();
+
+            stubStorageHelper.Setup(x => x.ReadFromLocalCache(It.IsAny<string>(), It.IsAny<double>()))
+                .Returns<Stream>(null);
+            stubPaserFactory.Setup(x => x.GetMainListStream())
+                .Returns(tcs.Task);
+            stubPaserFactory.Setup(x => x.ParseMainListData(It.IsAny<string>()))
+                .Returns(new List<S1ListItem>());
+
+            DataService service = new DataService
+            {
+                ParserFactory = stubPaserFactory.Object,
+                StorageHelper = stubStorageHelper.Object
+            };
+            var result = await service.UpdateMainListAsync();
+
+            Assert.IsTrue(result is List<S1ListItem>);
+        }
+
 
         [TestMethod]
         public void TestGetThreadListData()
