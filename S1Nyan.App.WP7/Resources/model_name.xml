@@ -1,10 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Root>
   <NOKIA>
+    <Model DeviceName="RM-877" FriendlyName="Lumia 1020" />
     <Model DeviceName="RM-820" FriendlyName="Lumia 920" />
     <Model DeviceName="RM-821" FriendlyName="Lumia 920" />
     <Model DeviceName="RM-822" FriendlyName="Lumia 920" />
     <Model DeviceName="RM-867" FriendlyName="Lumia 920T" />
+    <Model DeviceName="RM-892" FriendlyName="Lumia 925" />
+    <Model DeviceName="RM-893" FriendlyName="Lumia 925" />
+    <Model DeviceName="RM-910" FriendlyName="Lumia 925" />
+    <Model DeviceName="RM-860" FriendlyName="Lumia 928" />
     <Model DeviceName="RM-824" FriendlyName="Lumia 820" />
     <Model DeviceName="RM-825" FriendlyName="Lumia 820" />
     <Model DeviceName="RM-826" FriendlyName="Lumia 820" />
@@ -13,13 +18,20 @@
     <Model DeviceName="RM-885" FriendlyName="Lumia 720" />
     <Model DeviceName="RM-887" FriendlyName="Lumia 720" />
     <Model DeviceName="RM-846" FriendlyName="Lumia 620" />
+    <Model DeviceName="RM-913" FriendlyName="Lumia 520T" />
     <Model DeviceName="RM-914" FriendlyName="Lumia 520" />
     <Model DeviceName="RM-915" FriendlyName="Lumia 520" />
-    <Model DeviceName="RM-917" FriendlyName="Lumia 520" />
+    <Model DeviceName="RM-917" FriendlyName="Lumia 521" />
+    <Model DeviceName="710" FriendlyName="Lumia 710" />
+    <Model DeviceName="610" FriendlyName="Lumia 610" />
     <Model DeviceName="610C" FriendlyName="Lumia 610C" />
   </NOKIA>
   <HTC>
     <Model DeviceName="8X" FriendlyName="8X" />
     <Model DeviceName="8S" FriendlyName="8S" />
   </HTC>
+  <HUAWEI >
+    <Model DeviceName="W1" FriendlyName="Ascend W1" />
+    <Model DeviceName="W2" FriendlyName="Ascend W2" />
+  </HUAWEI>
 </Root>

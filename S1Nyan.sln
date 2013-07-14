@@ -30,6 +30,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Phone.Controls.To
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S1Nyan.Model.Test", "S1Nyan.Model.Test\S1Nyan.Model.Test.csproj", "{A0C34295-DA97-400C-B3CF-E3FC87391EBD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{E3D69811-0165-496A-813B-638D8C63BE23}"
+	ProjectSection(SolutionItems) = preProject
+		doc\MainPage Logic.docx = doc\MainPage Logic.docx
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -1,24 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Xml.Linq;
 
 namespace S1Nyan.Model
 {
-    public class ServerModel : IServerModel
+    public class ServerModel : RemoteConfigModelBase, IServerModel
     {
         private const string ServerListCacheName = "server_list.xml";
         private const double ServerListCacheDays = 3.0/24.0;
 
 #if UseLocalhost
-        private const string RemoteServerPath = "http://192.168.0.60/" + ServerListCacheName;
+        private const string RemoteFilePath = "http://192.168.0.60/" + ConfigFileName;
 #else
-        private const string RemoteServerPath = "https://raw.github.com/obiwang/S1Nyan/master/S1Nyan.App.WP7/Resources/" + ServerListCacheName;
+        private const string RemoteServerPath = RemoteResourcePath + ServerListCacheName;
 #endif
+
+        private readonly List<IServerItem> _serverList = new List<IServerItem>();
+        private readonly List<string> _obsoleteServerList = new List<string>();
+
+        public List<IServerItem> List
+        {
+            get
+            {
+                return _serverList;
+            }
+        }
+
         public ServerModel()
         {
             Init();
@@ -30,30 +37,39 @@ namespace S1Nyan.Model
 
             UpdateServerAddr();
 
-            UpdateHostList();
-        }
-
-        public IStorageHelper StorageHelper
-        {
-            get { return IsolatedStorageHelper.Current; }
+            RefreshList();
         }
 
         public void UpdateServerAddr(string url = null)
         {
             if (url == null)
             {
-                url = S1Nyan.Views.SettingView.CurrentServerAddr;
-                if (url == null)
-                    url = _serverList[0].Addr;
+                url = Views.SettingView.CurrentServerAddr ?? _serverList[0].Addr;
             }
             else
             {
-                S1Nyan.Views.SettingView.CurrentServerAddr = url;
+                Views.SettingView.CurrentServerAddr = url;
             }
             S1Parser.S1Resource.SiteBase = url;
         }
 
-        private void UpdateHostList()
+        #region RemoteConfigModelBase member
+        protected override string ConfigFileName
+        {
+            get { return ServerListCacheName; }
+        }
+
+        protected override double CacheDays
+        {
+            get { return ServerListCacheDays; }
+        }
+
+        protected override string RemoteFilePath
+        {
+            get { return RemoteServerPath; }
+        }
+
+        protected override void RefreshList()
         {
             List<string> list = new List<string>();
             foreach (var server in _serverList)
@@ -67,63 +83,11 @@ namespace S1Nyan.Model
             S1Parser.S1Resource.HostList = list;
         }
 
-        private List<IServerItem> _serverList = new List<IServerItem>();
-        private List<string> _obsoleteServerList = new List<string>();
-
-        public List<IServerItem> List
-        {
-            get {
-                return _serverList;
-            }
-        }
-
-        public async Task UpdateListFromRemote()
-        {
-            Stream s = StorageHelper.ReadFromLocalCache(ServerListCacheName, ServerListCacheDays);
-            if (s != null)
-            {
-                s.Dispose();
-                return;
-            }
-
-            WebClient client = new WebClient();
-            try
-            {
-                s = await client.OpenReadTaskAsync(RemoteServerPath);
-                Debug.WriteLine("Update server list from remote");
-                UpdateList(s);
-
-                UpdateHostList();
-
-                using (s)
-                {
-                    using (var reader = new StreamReader(s))
-                    {
-                        s.Seek(0, SeekOrigin.Begin);
-                        StorageHelper.WriteToLocalCache(ServerListCacheName, reader.ReadToEnd());
-                    }
-                }
-            }
-            catch (Exception) { }
-        }
-
-        private void GetLocalList()
-        {
-            Stream s = StorageHelper.ReadFromLocalCache(ServerListCacheName, -1);
-            if (s == null)
-            {
-                Debug.WriteLine("Using resource server list");
-                s = StorageHelper.ReadFromAppResource(ServerListCacheName);
-            }
-
-            UpdateList(s);
-        }
-
-        private void UpdateList(Stream s)
+        protected override void UpdateList(Stream s)
         {
             var root = XDocument.Load(s).Root;
             var temp = root.Element("ServerList");
-            
+
             _serverList.Clear();
             foreach (var server in temp.Descendants())
             {
@@ -138,7 +102,8 @@ namespace S1Nyan.Model
             }
 
             Msg = root.Element("Message").Value;
-        }
+        } 
+        #endregion
 
         public string Msg { get; set; }
     }

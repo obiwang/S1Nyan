@@ -10,7 +10,7 @@ namespace S1Nyan.Model.Test
     [TestClass]
     public class DataServiceTest
     {
-        [TestInitialize()]
+        [TestInitialize]
         public void Setup()
         {
 

@@ -96,6 +96,12 @@
     <Reference Include="BindableApplicationBar">
       <HintPath>..\packages\BindableApplicationBar.1.0.0\lib\sl4-windowsphone71\BindableApplicationBar.dll</HintPath>
     </Reference>
+    <Reference Include="Caliburn.Micro">
+      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\wp71\Caliburn.Micro.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Extensions">
+      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\wp71\Caliburn.Micro.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="Coding4Fun.Toolkit.Controls, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.2\lib\wp71\Coding4Fun.Toolkit.Controls.dll</HintPath>
@@ -170,7 +176,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Windows.Interactivity, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unofficial.Blend.Interactivity.1.0.0\lib\sl4-wp71\System.Windows.Interactivity.dll</HintPath>
+      <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\wp71\System.Windows.Interactivity.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="mscorlib.extensions" />
@@ -184,6 +190,7 @@
     <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Model\IsolatedStorageHelper.cs" />
+    <Compile Include="Model\RemoteConfigModelBase.cs" />
     <Compile Include="Model\ServerItem.cs" />
     <Compile Include="Model\ServerModel.cs" />
     <Compile Include="Utils\PhoneDeviceModel.cs" />

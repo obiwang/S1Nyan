@@ -74,7 +74,7 @@ namespace S1Nyan.ViewModel
                 if (lastException != null && lastException.Message != null)
                     msg = lastException.Message;
             }
-            if (_serverModel.Msg != null && _serverModel.Msg.Length>0)
+            if (!string.IsNullOrEmpty(_serverModel.Msg))
                 msg = msg + "\r\n" + _serverModel.Msg;
             MessengerInstance.Send(new NotificationMessage<string>(msg, Messages.NotifyServerMessageString));
         }

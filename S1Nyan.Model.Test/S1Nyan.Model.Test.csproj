@@ -139,6 +139,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Moq\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Moq.Silverlight">
       <HintPath>..\packages\Moq\Moq.Silverlight.dll</HintPath>
     </Reference>
