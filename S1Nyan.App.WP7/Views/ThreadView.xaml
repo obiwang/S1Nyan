@@ -124,7 +124,7 @@
                                        Style="{StaticResource PhoneTextLargeStyle}"
                                        Text="{Binding Author}" />
                             <TextBlock Grid.Column="2"
-                                       Height="50"
+                                       MaxHeight="50"
                                        VerticalAlignment="Bottom"
                                        Style="{StaticResource PhoneTextSubtleStyle}"
                                        Text="{Binding Date}"

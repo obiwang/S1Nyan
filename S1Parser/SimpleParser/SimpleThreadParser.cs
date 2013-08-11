@@ -71,50 +71,67 @@ namespace S1Parser.SimpleParser
             var content = trs.ElementAt(1).Element("td");
 
             if (content != null)
-                threadItem.Content = ReGroupContent(content.Descendants());
+                threadItem.Content = ReGroupContent(content);
             return threadItem;
         }
 
-        private List<HtmlElement> ReGroupContent(IEnumerable<HtmlElement> elements)
+        static internal List<HtmlElement> ReGroupContent(HtmlElement element)
         {
             bool hasContent = false;
             HtmlElement lastGroup = null;
+
             var list = new List<HtmlElement>();
-            bool lastIsBr = false;
-            foreach (var item in elements)
+            int BRsBefore = 0;
+            foreach (var item in element.Descendants())
             {
                 if (!hasContent && item.Name == "h1")
-                {   //ignore title
+                {
+                    //ignore title
                     hasContent = true;
-                    continue; 
+                    continue;
+                }
+
+                if (BRsBefore > 0 && item.Name != "br")
+                {
+                    if (BRsBefore > 1)
+                    {
+                        list.Add(lastGroup);
+                        lastGroup = null;
+                    }
+                    BRsBefore = 0;
                 }
 
                 if (lastGroup == null)
                     lastGroup = new HtmlElement("Paragraph", children: new List<HtmlElement>());
 
-                if (lastIsBr)
+                if (item.Name == "br")
                 {
-                    if (item.Name != "br")
+                    if (BRsBefore == 0)
                     {
-                        lastIsBr = false;
-                        if (lastGroup.Children.Count != 0)
-                        {
-                            list.Add(lastGroup);
-                            lastGroup = new HtmlElement("Paragraph", children: new List<HtmlElement>());
-                        }
+                        list.Add(lastGroup);
+                        lastGroup = null;
                     }
-                    lastGroup.Children.Add(item);
-                }
-                else if (item.Name == "br")
-                {
-                    lastIsBr = true;
-                    list.Add(lastGroup);
-                    lastGroup = null;
+                    BRsBefore++;
                 }
                 else
                 {
-                    lastIsBr = false;
-                    lastGroup.Children.Add(item);
+                    if (item.Name == "div")
+                    {
+                        var quote = item.Element();
+                        if (quote.Name == "blockquote")
+                        {
+                            if (lastGroup.Children.Count != 0)
+                            {
+                                list.Add(lastGroup);
+                            }
+                            lastGroup = new HtmlElement("Paragraph", children: new List<HtmlElement>());
+                            lastGroup.Children.Add(new HtmlElement("blockquote", children: ReGroupContent(quote)));
+                            list.Add(lastGroup);
+                            lastGroup = null;
+                        }
+                    }
+                    else
+                        lastGroup.Children.Add(item);
                 }
             }
             list.Add(lastGroup);

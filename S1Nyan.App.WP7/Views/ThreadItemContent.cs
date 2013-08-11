@@ -86,9 +86,7 @@ namespace S1Nyan.Views
                     case "img":
                         return BuildImgControl(e);
                     case "blockquote":
-                        if (e.Element("div") != null)
-                            return BuildQuote(e);
-                        break;
+                        return BuildQuote(e);
                     default:
                         break;
                 }
@@ -103,7 +101,10 @@ namespace S1Nyan.Views
         {
             var p = new Paragraph();
             if (content == null) return p;
-
+            if (!content.Descendants().Any())
+            {
+                p.Inlines.Add(BuildInlines(content));
+            }
             foreach (var item in content.Descendants())
             {
                 p.Inlines.Add(BuildInlines(item));
@@ -163,14 +164,14 @@ namespace S1Nyan.Views
             SolidColorBrush gray = new SolidColorBrush(Colors.Gray);
             foreach (var div in item.Descendants())
             {
-                if ("quote" == div.Attributes["class"])
-                {
-                    var text = new TextBlock { Text = div.InnerHtml };
-                    text.Foreground = gray;
-                    text.FontStyle = FontStyles.Italic;
-                    panel.Children.Add(text);
-                }
-                else if ("text" == div.Attributes["class"])
+                //if ("quote" == div.Attributes["class"])
+                //{
+                //    var text = new TextBlock { Text = div.InnerHtml };
+                //    text.Foreground = gray;
+                //    text.FontStyle = FontStyles.Italic;
+                //    panel.Children.Add(text);
+                //}
+                //else if ("text" == div.Attributes["class"])
                 {
                     //foreach (var e in div.Descendants())
                     {

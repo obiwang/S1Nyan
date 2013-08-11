@@ -52,6 +52,10 @@
     <Compile Include="Action\ErrorParser.cs" />
     <Compile Include="Action\UserAction.cs" />
     <Compile Include="Action\S1UserException.cs" />
+    <Compile Include="Common\DZForum.cs" />
+    <Compile Include="Common\DZThread.cs" />
+    <Compile Include="DZParser\DZThreadParser.cs" />
+    <Compile Include="DZParser\DZThreadListParser.cs" />
     <Compile Include="Emotion\EmotionParser.cs" />
     <Compile Include="Html\HtmlElement.cs" />
     <Compile Include="Html\HtmlDoc.cs" />
@@ -68,6 +72,7 @@
     <Compile Include="Net\Entities\Token.cs" />
     <Compile Include="Net\Entities\TokenType.cs" />
     <Compile Include="Net\WebUtility.cs" />
+    <Compile Include="PaserFactory\DZParserFactory.cs" />
     <Compile Include="PaserFactory\InvalidDataException.cs" />
     <Compile Include="Common\S1ListItem.cs" />
     <Compile Include="PaserFactory\SimpleParserFactory.cs" />
@@ -87,6 +92,9 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.14-rc\lib\portable-net40+sl4+win8+wp71\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime">
       <HintPath>..\packages\Microsoft.Bcl.1.0.16-rc\lib\portable-net40+sl4+win8+wp71\System.Runtime.dll</HintPath>
     </Reference>
@@ -94,6 +102,7 @@
       <HintPath>..\packages\Microsoft.Bcl.1.0.16-rc\lib\portable-net40+sl4+win8+wp71\System.Threading.Tasks.dll</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.0-rc\tools\Microsoft.Bcl.Build.targets" />

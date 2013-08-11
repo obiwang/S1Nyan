@@ -449,6 +449,7 @@ namespace S1Nyan.Views
 
             emailComposeTask.Subject = AppResources.FeedBackSubject;
             emailComposeTask.To = AppResources.FeedBackEmail;
+            emailComposeTask.Body = "\r\n\r\n" + signatureSource[2];
 
             emailComposeTask.Show();
         }

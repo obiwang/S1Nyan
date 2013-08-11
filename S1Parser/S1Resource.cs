@@ -5,8 +5,9 @@ namespace S1Parser
 {
     public static class S1Resource
     {
-        private const string EmotionPath = "images/post/smile/";
+        private const string EmotionPath = "static/image/smiley/";
         internal const string SimplePath = "simple/";
+        internal const string DZMobilePath = "api/mobile/";
 
         private static string siteBase;
         public static string SiteBase
@@ -17,7 +18,7 @@ namespace S1Parser
             }
             set
             {
-                if (value == null || value.Length == 0) return;
+                if (string.IsNullOrEmpty(value)) return;
                 siteBase = value;
                 simpleBase = null;
                 emotionBase = null;
@@ -34,6 +35,16 @@ namespace S1Parser
                 return simpleBase ?? (simpleBase = SiteBase + SimplePath);
             }
         }
+
+        private static string dzMobileBase;
+        internal static string DZMobileBase
+        {
+            get
+            {
+                return dzMobileBase ?? (dzMobileBase = SiteBase + DZMobilePath);
+            }
+        }
+
         private static string emotionBase;
         internal static string EmotionBase { get { return emotionBase ?? (emotionBase = SiteBase + EmotionPath); } } 
 

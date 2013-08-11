@@ -23,7 +23,7 @@ namespace S1Nyan.ViewModel
         {
             _dataService = dataService;
             MainListData = _dataService.GetMainListCache();
-            RefreshData();
+            //RefreshData();
             //if (IsInDesignMode) _dataService.GetMainListData((item, error) => { MainListData = item; });
         }
 

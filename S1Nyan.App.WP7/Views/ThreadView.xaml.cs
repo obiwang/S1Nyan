@@ -20,7 +20,7 @@ namespace S1Nyan.Views
         {
             //VertSlider.Value = VertSlider.Maximum;
             var list = theList.ItemsSource as IList;
-            if (list.Count > 0)
+            if (list != null && list.Count > 0)
                 theList.ScrollToGroup(list[list.Count - 1]);
         }
 

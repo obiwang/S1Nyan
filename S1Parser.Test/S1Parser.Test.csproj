@@ -58,6 +58,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DZThreadParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HtmlDocTest.cs" />
     <Compile Include="SimpleListParserTest.cs" />
@@ -72,9 +73,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\forum.json" />
     <None Include="Data\simple.htm" />
     <None Include="Data\simple_read.htm" />
     <None Include="Data\simple_thread.htm" />
+    <None Include="Data\thread.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\forbidden.htm" />
