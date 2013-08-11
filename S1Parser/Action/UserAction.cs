@@ -21,11 +21,8 @@ namespace S1Parser.User
         //const string cktimeKey = "cktime";//remember pass ...
         //const int cktime = 31536000;      //for 1 year (in sec)
 
-#if UseLocalhost
-        const string SiteBase = "http://192.168.0.60/phpwind/";
-#else
         static string SiteBase { get { return S1Resource.DZMobileBase; } }
-#endif
+
         static string loginUrl { get { return SiteBase + "?module=login"; } }
         static string logoutUrl { get { return SiteBase + "?module=login&action=logout"; } }
         public static string PrivacyUrl { get { return SiteBase + "profile.php?action=privacy"; } }
@@ -36,7 +33,6 @@ namespace S1Parser.User
             //client.AddPostParam(loginTypeKey, loginType);
             client.AddPostParam(userKey, account);
             client.AddPostParam(passKey, pass);
-            //client.AddPostParam(cktimeKey, cktime);
             var result = await client.PostDataTaskAsync(new Uri(loginUrl));
 
             var user = DZUser.FromJson(result);
@@ -67,7 +63,7 @@ namespace S1Parser.User
         /// <param name="signature"></param>
         /// <param name="title">post title</param>
         /// <returns></returns>
-        public static async Task<UserErrorTypes> Reply(this IS1Client client, string verify, string reletivePostUrl, string content, string signature = "", string title = "")
+        public static async Task<UserErrorTypes> ReplyOld(this IS1Client client, string verify, string reletivePostUrl, string content, string signature = "", string title = "")
         {
             AddConstParam(client);
 
@@ -88,6 +84,39 @@ namespace S1Parser.User
                     return UserErrorTypes.InvalidVerify;
                 else
                     throw new S1UserException(error, UserErrorTypes.Unknown);
+            }
+            catch (System.Xml.XmlException)
+            {
+                System.Diagnostics.Debug.WriteLine(result);
+                throw new NullReferenceException();
+            }
+        }
+
+        /// <summary>
+        /// send a post
+        /// </summary>
+        /// <param name="client">A <see cref="IS1Client"/> WebClient</param>
+        /// <param name="verify">formhash from server</param>
+        /// <param name="reletivePostUrl">something like post.php?action=reply&amp;fid=75&amp;tid=900385</param>
+        /// <param name="content">post content</param>
+        /// <param name="signature"></param>
+        /// <param name="title">post title</param>
+        /// <returns></returns>
+        public static async Task<UserErrorTypes> Reply(this IS1Client client, string verify, string reletivePostUrl, string content, string signature = "", string title = "")
+        {
+            //AddConstParam(client);
+            //client.AddPostParam("replysubmit", "true");
+            client.AddPostParam("mobiletype", "3");
+            client.AddPostParam("formhash", verify);
+            client.AddPostParam("message", content + signature);
+
+            var result = await client.PostDataTaskAsync(new Uri(SiteBase + reletivePostUrl));
+            try
+            {
+                var data = DZUser.FromJson(result);
+                if (data.Message.Messageval != "post_reply_succeed")
+                    throw new S1UserException(data.Message.Messagestr, UserErrorTypes.Unknown);
+                return UserErrorTypes.Success;
             }
             catch (System.Xml.XmlException)
             {

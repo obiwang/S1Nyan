@@ -217,15 +217,12 @@ namespace S1Nyan.ViewModel
 
         private async void SendReply()
         {
-#if UseLocalhost
-            var replyLink = "post.php?action=reply&fid=2&tid=1";
-#else
             var replyLink = TheThread.ReplyLink;
-#endif
+
             System.Diagnostics.Debug.WriteLine("Send Reply: " + replyLink + "\r\n" + ReplyText);
 
             IsSending = true;
-            var result = await SendPostService.DoSendPost(replyLink, ReplyText.Replace("\r","\r\n"));
+            var result = await SendPostService.DoSendPost(replyLink, ReplyText.Replace("\r","\r\n"), TheThread.Hash);
             IsSending = false;
             if (result == null)
             {

@@ -10,7 +10,7 @@ namespace S1Nyan.Model
         private const double ServerListCacheDays = 3.0/24.0;
 
 #if UseLocalhost
-        private const string RemoteFilePath = "http://192.168.0.60/" + ConfigFileName;
+        private const string RemoteServerPath = "http://192.168.0.60/" + ServerListCacheName;
 #else
         private const string RemoteServerPath = RemoteResourcePath + ServerListCacheName;
 #endif

@@ -14,7 +14,11 @@ namespace S1Parser
         {
             get
             {
+#if UseLocalhost
+                return "http://192.168.0.104/DZ/";
+#else
                 return siteBase;
+#endif
             }
             set
             {

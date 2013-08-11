@@ -205,7 +205,7 @@ namespace S1Nyan.ViewModel
             InitLogin();
         }
 
-        public async Task<string> DoSendPost(string replyLink, string replyText)
+        public async Task<string> DoSendPost(string replyLink, string replyText, string verify)
         {
             UserErrorTypes result = UserErrorTypes.Unknown;
             int retryTimes = 0;
@@ -223,7 +223,7 @@ namespace S1Nyan.ViewModel
                             throw new S1UserException(error, UserErrorTypes.LoginFailed);
                     }
 
-                    result = await new S1WebClient().Reply(SettingView.VerifyString,
+                    result = await new S1WebClient().Reply(verify,
                         reletivePostUrl: replyLink,
                         content: replyText,
                         signature: S1Nyan.Views.SettingView.GetSignature());

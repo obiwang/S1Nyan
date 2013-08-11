@@ -60,12 +60,20 @@ namespace S1Parser.PaserFactory
 
         protected virtual Uri GetThreadListUri(string fid, int page)
         {
+#if UseLocalhost
+            return new Uri(S1Resource.DZMobileBase + string.Format("?module=forumdisplay&fid=2"));
+#else
             return new Uri(S1Resource.DZMobileBase + string.Format("?module=forumdisplay&fid={0}&page={1}&tpp={2}", fid, page, ThreadsPerPage));
+#endif
         }
 
         protected virtual Uri GetThreadUri(string tid, int page)
         {
+#if UseLocalhost
+            return new Uri(S1Resource.DZMobileBase + string.Format("?module=viewthread&tid=1&ppp=50"));
+#else
             return new Uri(S1Resource.DZMobileBase + string.Format("?module=viewthread&tid={0}&page={1}&ppp={2}", tid, page, PostsPerPage));
+#endif
         }
     }
 }

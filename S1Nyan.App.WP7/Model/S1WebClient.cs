@@ -36,7 +36,7 @@ namespace S1Nyan.Model
         public Task<string> PostDataTaskAsync(Uri address)
         {
             Headers[HttpRequestHeader.ContentType] = "application/x-www-form-urlencoded";
-
+            Headers[HttpRequestHeader.Referer] = address.Host; //Attention Discuz server will verify this
             string postData = BuildPostData();
             return this.UploadStringTaskAsync(address, postData);
         }
