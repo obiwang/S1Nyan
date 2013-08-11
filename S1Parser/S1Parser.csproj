@@ -54,6 +54,7 @@
     <Compile Include="Action\S1UserException.cs" />
     <Compile Include="Common\DZForum.cs" />
     <Compile Include="Common\DZThread.cs" />
+    <Compile Include="Common\DZUser.cs" />
     <Compile Include="DZParser\DZThreadParser.cs" />
     <Compile Include="DZParser\DZThreadListParser.cs" />
     <Compile Include="Emotion\EmotionParser.cs" />

@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Phone.Controls;
@@ -71,15 +70,10 @@ namespace S1Nyan.Views
             var pass = PasswordText.Password;
             if (pass == FakePassword)
                 pass = CurrentPassword;
-            var lastUserId = UserViewModel.Current.Uid;
             var msg = await UserViewModel.Current.DoLogin(UsernameText.Text, pass);
             UpdateErrorMsg(msg);
             if (msg == null)
             {
-                if (lastUserId != UserViewModel.Current.Uid)
-                {   // run in background, not bothering UI thread
-                    var task = Task.Factory.StartNew(async () => VerifyString = await UserViewModel.Current.GetVerifyString());
-                }
                 if (isFirstLoginCache)
                     IsFirstLogin = false;
                 SavedUserName = UsernameText.Text;

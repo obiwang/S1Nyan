@@ -11,16 +11,26 @@ namespace S1Nyan.Model
 {
     public class S1WebClient : GzipWebClient, IS1Client
     {
-        private const string UserAgent = "Mozilla/5.0 (compatible; S1Nyan 1.x; Windows Phone OS 7.5; )";
+        private static string UserAgent = string.Format("Mozilla/5.0 (compatible; S1Nyan 1.x; Windows Phone {0}; )", Environment.OSVersion.Version);
 
         public CookieCollection Cookies { get; private set; }
-        private static CookieContainer CookieContainer = new CookieContainer();
+        private static CookieContainer _cookieContainer;
 
-        Dictionary<string, object> dataCollection = null;
+        Dictionary<string, object> _dataCollection = null;
+
+        static S1WebClient ()
+        {
+            ResetCookie();
+        }
+
+        public static void ResetCookie()
+        {
+            _cookieContainer = new CookieContainer();
+        }
 
         public S1WebClient()
         {
-            dataCollection = new Dictionary<string, object>();
+            _dataCollection = new Dictionary<string, object>();
         }
 
         public Task<string> PostDataTaskAsync(Uri address)
@@ -38,7 +48,7 @@ namespace S1Nyan.Model
 
             var webRequest =(HttpWebRequest)base.GetWebRequest(address);
 
-            webRequest.CookieContainer = CookieContainer;
+            webRequest.CookieContainer = _cookieContainer;
             webRequest.Headers[HttpRequestHeader.UserAgent] = UserAgent;
             return webRequest;
         }
@@ -53,15 +63,15 @@ namespace S1Nyan.Model
 
         public void AddPostParam(string key, object value)
         {
-            if (dataCollection == null)
-                dataCollection = new Dictionary<string, object>();
-            dataCollection[key] = value;
+            if (_dataCollection == null)
+                _dataCollection = new Dictionary<string, object>();
+            _dataCollection[key] = value;
         }
 
         private string BuildPostData()
         {
             StringBuilder result = new StringBuilder();
-            foreach (var pair in dataCollection)
+            foreach (var pair in _dataCollection)
             {
                 result.Append(string.Format("{0}={1}&", Uri.EscapeDataString(pair.Key), Uri.EscapeDataString(pair.Value.ToString())));
             }
@@ -84,7 +94,7 @@ namespace S1Nyan.Model
         private string BuildMultipartData()
         {
             StringBuilder result = new StringBuilder();
-            foreach (var pair in dataCollection)
+            foreach (var pair in _dataCollection)
             {
                 result.Append(realBoundary);
                 result.Append(string.Format("\r\nContent-Disposition: form-data; name=\"{0}\"\r\n\r\n", pair.Key));

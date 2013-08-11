@@ -8,47 +8,52 @@ namespace S1Parser.User
 {
     public static class UserAction
     {
-        const string userKey = "pwuser";
-        const string passKey = "pwpwd";
-        const string stepKey = "step";    //hidden input
-        const string stepValue = "2";
+        const string userKey = "username";
+        const string passKey = "password";
+        const string stepKey = "loginsubmit";    //hidden input
+        const string stepValue = "yes";
         const string loginTypeKey = "lgt";//0 - name ; 1 - uid; 2 - email
+
+        private const string loginSucceed = "login_succeed";
+        private const string loginSucceedMobile = "location_login_succeed_mobile";
+        private const string logoutSucceed = "logout_succeed";
+        private const string logoutSucceedMobile = "location_logout_succeed_mobile";
         //const string cktimeKey = "cktime";//remember pass ...
         //const int cktime = 31536000;      //for 1 year (in sec)
 
 #if UseLocalhost
         const string SiteBase = "http://192.168.0.60/phpwind/";
 #else
-        static string SiteBase { get { return S1Resource.SiteBase; } }
+        static string SiteBase { get { return S1Resource.DZMobileBase; } }
 #endif
-        static string loginUrl { get { return SiteBase + "login.php?"; } }
+        static string loginUrl { get { return SiteBase + "?module=login"; } }
+        static string logoutUrl { get { return SiteBase + "?module=login&action=logout"; } }
         public static string PrivacyUrl { get { return SiteBase + "profile.php?action=privacy"; } }
 
-        public static async Task<string> Login(this IS1Client client, string account, string pass, int loginType = 0)
+        public static async Task<UserVariables> Login(this IS1Client client, string account, string pass, int loginType = 0)
         {
-            string uid = null;
             client.AddPostParam(stepKey, stepValue);
-            client.AddPostParam(loginTypeKey, loginType);
+            //client.AddPostParam(loginTypeKey, loginType);
             client.AddPostParam(userKey, account);
             client.AddPostParam(passKey, pass);
             //client.AddPostParam(cktimeKey, cktime);
             var result = await client.PostDataTaskAsync(new Uri(loginUrl));
 
-            foreach (Cookie c in client.Cookies)
-                if (c.Name.Contains("uid")) uid = c.Value;
+            var user = DZUser.FromJson(result);
 
-            if (uid == null)
-            {   // handle error
-                var root = new HtmlDoc(result).RootElement;
-                var msg = root.FindFirst("span");
-                if (msg == null)
-                    throw new NullReferenceException();
-                if (msg.InnerHtml.Contains("您已经顺利登录"))
-                    uid = "Unknown";
-                else
-                    throw new LoginException(msg.InnerHtml, account, pass);
+            if (user.Message.Messageval != loginSucceed &&
+                user.Message.Messageval != loginSucceedMobile)
+            {
+                throw new LoginException(user.Message.Messagestr, account, pass);
             }
-            return uid;
+            return user.Variables;
+        }
+
+        public static async Task<bool> Logout(this IS1Client client, string formhash)
+        {
+            var result = await client.PostDataTaskAsync(new Uri(string.Format("{0}&formhash={1}", logoutUrl, formhash)));
+            var user = DZUser.FromJson(result);
+            return (user.Message.Messageval == loginSucceed || user.Message.Messageval == loginSucceedMobile);
         }
 
 

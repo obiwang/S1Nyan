@@ -100,7 +100,12 @@ namespace S1Nyan.ViewModel
             try
             {
                 IsBusy = true;
-                uid = await new S1WebClient().Login(name, pass);
+                if (!String.IsNullOrEmpty(Uid))
+                    await new S1WebClient().Logout(SettingView.VerifyString);
+                S1WebClient.ResetCookie();
+                var user = await new S1WebClient().Login(name, pass);
+                uid = user.Member_uid;
+                SettingView.VerifyString = user.Formhash;
                 if (uid != null)
                 {
                     Uid = uid;
@@ -218,7 +223,6 @@ namespace S1Nyan.ViewModel
                             throw new S1UserException(error, UserErrorTypes.LoginFailed);
                     }
 
-                    await CheckVerify();
                     result = await new S1WebClient().Reply(SettingView.VerifyString,
                         reletivePostUrl: replyLink,
                         content: replyText,
@@ -231,26 +235,6 @@ namespace S1Nyan.ViewModel
             catch (Exception ex)
             {
                 return S1Nyan.Utils.Util.ErrorMsg.GetExceptionMessage(ex);
-            }
-        }
-
-        private async Task CheckVerify()
-        {
-            if (SettingView.VerifyString == null || SettingView.VerifyString.Length == 0)
-            {
-                SettingView.VerifyString = await new S1WebClient().GetVerifyString();
-            }
-        }
-
-        internal async Task<string> GetVerifyString()
-        {
-            try
-            {
-                return await new S1WebClient().GetVerifyString();
-            }
-            catch (Exception)
-            {
-                return null;
             }
         }
     }
