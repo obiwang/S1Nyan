@@ -78,6 +78,7 @@
     <None Include="Data\simple_read.htm" />
     <None Include="Data\simple_thread.htm" />
     <None Include="Data\thread.json" />
+    <None Include="Data\thread1.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\forbidden.htm" />

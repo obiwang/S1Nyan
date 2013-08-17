@@ -9,10 +9,13 @@ namespace S1Parser.PaserFactory
     public class SimpleParserFactory : IParserFactory
     {
         public IResourceService ResourceService { get; set; }
+        internal const short ItemsPerThreadSimple = 50;
+        internal const short ItemsPerThread = 30;
+        internal const string SimplePath = "simple/";
 
         public string Path
         {
-            get { return S1Resource.SimplePath; }
+            get { return SimplePath; }
         }
 
         public async Task<IList<S1ListItem>> GetMainListData()
@@ -51,22 +54,22 @@ namespace S1Parser.PaserFactory
 
         protected virtual Uri GetMainUri()
         {
-            return new Uri(S1Resource.SimpleBase);
+            return new Uri(S1Resource.ForumBase);
         }
 
         protected virtual Uri GetThreadListUri(string fid, int page)
         {
-            return new Uri(S1Resource.SimpleBase + string.Format("?f{0}{1}.html", fid, GetPageParam(page)));
+            return new Uri(S1Resource.ForumBase + String.Format("?f{0}{1}.html", fid, GetPageParam(page)));
         }
 
         private static string GetPageParam(int page)
         {
-            return page > 1 ? string.Format("_{0}", page) : "";
+            return page > 1 ? String.Format("_{0}", page) : "";
         }
 
         protected virtual Uri GetThreadUri(string tid, int page)
         {
-            return new Uri(S1Resource.SimpleBase + string.Format("?t{0}{1}.html", tid, GetPageParam(page)));
+            return new Uri(S1Resource.ForumBase + String.Format("?t{0}{1}.html", tid, GetPageParam(page)));
         }
     }
 }

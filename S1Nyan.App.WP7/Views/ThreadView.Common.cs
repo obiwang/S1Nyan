@@ -9,6 +9,7 @@ using Microsoft.Phone.Shell;
 using S1Nyan.Resources;
 using S1Nyan.Model;
 using S1Nyan.ViewModel;
+using S1Parser.PaserFactory;
 using S1Parser.User;
 using GalaSoft.MvvmLight.Messaging;
 
@@ -228,7 +229,7 @@ namespace S1Nyan.Views
                     nextBarButton.IsEnabled = false;
                     LastPage.IsEnabled = false;
                 }
-                VertSlider.Minimum = S1Parser.S1Resource.ItemsPerThreadSimple * (current - 1);
+                VertSlider.Minimum = 0;
                 VertSlider.Value = VertSlider.Minimum;
                 VertSlider.Maximum = VertSlider.Minimum + Vm.TheThread.Items.Count - 1;
             };

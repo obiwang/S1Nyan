@@ -115,6 +115,10 @@ namespace S1Nyan.Views
         private void InitSetAutoRotate()
         {
             setAutoRotate.IsChecked = IsAutoRotateSetting;
+            setAutoRotate.Click += (sender, args) =>
+            {
+                IsAutoRotateSetting = (bool)setAutoRotate.IsChecked;
+            };
         }
 
         private void InitSetFontSize()

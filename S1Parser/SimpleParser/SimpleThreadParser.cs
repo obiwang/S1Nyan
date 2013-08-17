@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using S1Parser.PaserFactory;
 
 namespace S1Parser.SimpleParser
 {
@@ -30,7 +31,7 @@ namespace S1Parser.SimpleParser
                     var threadItem = ParseThreadItem(item);
                     if (threadItem != null)
                     {
-                        threadItem.No = (theData.CurrentPage - 1) * S1Resource.ItemsPerThreadSimple + i++;
+                        threadItem.No = (theData.CurrentPage - 1) * SimpleParserFactory.ItemsPerThreadSimple + i++;
                         theData.Items.Add(threadItem);
                     }
                 }
@@ -128,6 +129,12 @@ namespace S1Parser.SimpleParser
                             lastGroup.Children.Add(new HtmlElement("blockquote", children: ReGroupContent(quote)));
                             list.Add(lastGroup);
                             lastGroup = null;
+                        }
+                        else
+                        {
+                            list.Add(lastGroup);
+                            lastGroup = null;
+                            list.AddRange(ReGroupContent(item));
                         }
                     }
                     else

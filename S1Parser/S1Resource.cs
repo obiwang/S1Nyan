@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using S1Parser.PaserFactory;
 
 namespace S1Parser
 {
     public static class S1Resource
     {
         private const string EmotionPath = "static/image/smiley/";
-        internal const string SimplePath = "simple/";
-        internal const string DZMobilePath = "api/mobile/";
+
+        public static IParserFactory ParserFactory;
 
         private static string siteBase;
         public static string SiteBase
@@ -24,36 +25,24 @@ namespace S1Parser
             {
                 if (string.IsNullOrEmpty(value)) return;
                 siteBase = value;
-                simpleBase = null;
+                _forumBase = null;
                 emotionBase = null;
             }
         }
 
         public static List<string> HostList { get; set; }
 
-        private static string simpleBase;
-        internal static string SimpleBase
+        private static string _forumBase;
+        internal static string ForumBase
         {
             get
             {
-                return simpleBase ?? (simpleBase = SiteBase + SimplePath);
-            }
-        }
-
-        private static string dzMobileBase;
-        internal static string DZMobileBase
-        {
-            get
-            {
-                return dzMobileBase ?? (dzMobileBase = SiteBase + DZMobilePath);
+                return _forumBase ?? (_forumBase = SiteBase + ParserFactory.Path);
             }
         }
 
         private static string emotionBase;
         internal static string EmotionBase { get { return emotionBase ?? (emotionBase = SiteBase + EmotionPath); } } 
-
-        public const short ItemsPerThreadSimple = 50;
-        public const short ItemsPerThread = 30;
 
         public static string GetRelativePath(string url)
         {
@@ -108,14 +97,20 @@ namespace S1Parser
         static Regex p2 = new Regex(@"page[-=](?<Page>\d+)");
         //3 http://bbs.saraba1st.com/2b/simple/?t785763_54.html
         static Regex p3 = new Regex(@"\?t(?<ID>\d+)(_(?<Page>\d+))?");
-
+        //4 http://bbs.saraba1st.com/2b/thread-785763-54-1.html
+        static Regex p4 = new Regex(@"thread-(?<ID>\d+)-(?<Page>\d+)-\d+.html");
         //=> ?ID=785763&Page=54
+        /// <summary>
+        /// Retreive params in url for View Navigation
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public static string GetThreadParamFromUrl(string url)
         {
             url = GetRelativePath(url);
             if (url == null) return null;
             string ID = null, Page = null;
-            if (url.StartsWith(SimplePath))
+            if (url.StartsWith(SimpleParserFactory.SimplePath))
             {
                 var match = p3.Match(url);
                 if (match.Success)
@@ -127,12 +122,21 @@ namespace S1Parser
             }
             else
             {
-                var match = p1.Match(url);
+                var match = p4.Match(url);
                 if (match.Success)
+                {
                     ID = match.Groups["ID"].Value;
+                    Page = match.Groups["Page"].Value;
+                }
+                else
+                {
+                    match = p1.Match(url);
+                    if (match.Success)
+                        ID = match.Groups["ID"].Value;
 
-                match = p2.Match(url);
-                Page = match.Groups["Page"].Value;
+                    match = p2.Match(url);
+                    Page = match.Groups["Page"].Value;
+                }
 
                 return GetThreadParams(ID, Page);
             }
@@ -142,15 +146,14 @@ namespace S1Parser
         private static string GetThreadParams(string ID, string Page)
         {
             if (ID == null) return null;
-            if (Page == "" || Page == null)
+            if (string.IsNullOrEmpty(Page))
                 return string.Format("?ID={0}", ID);
             else
             {
                 int p = 1;
                 int.TryParse(Page, out p);
-                p = p * ItemsPerThread / ItemsPerThreadSimple;
                 if (p < 1) p = 1;
-                return string.Format("?ID={0}&Page={1}", ID, p.ToString());
+                return string.Format("?ID={0}&Page={1}", ID, p);
             }
         }
     }

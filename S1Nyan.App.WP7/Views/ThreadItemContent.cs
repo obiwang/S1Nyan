@@ -71,6 +71,22 @@ namespace S1Nyan.Views
             FontSize = SettingView.ContentFontSize;
         }
 
+        public static bool IsSignature(HtmlElement paragraph)
+        {
+            var elements = paragraph.Descendants();
+            if (elements.Count() < 2) return false;
+            var e = elements.GetEnumerator();
+            e.MoveNext();
+            var item = e.Current;
+            if (item.Type != HtmlElementType.Text) return false;
+            if (!item.InnerHtml.Contains("—— from")) return false;
+            e.MoveNext();
+            item = e.Current;
+            if (item.Name != "a") return false;
+            if (item.Attributes["href"] != "http://126.am/S1Nyan") return false;
+            return true;
+        }
+
         public static FrameworkElement BuildParagraph(HtmlElement paragraph)
         {
             if (paragraph.Descendants().Count() == 1)
@@ -90,9 +106,8 @@ namespace S1Nyan.Views
                     default:
                         break;
                 }
-
             }
-            RichTextBox r = new RichTextBox { FontSize = SettingView.ContentFontSize, Margin = new Thickness(-12, 0, -12, 0) };
+            RichTextBox r = new RichTextBox { FontSize = IsSignature(paragraph) ? 20 : SettingView.ContentFontSize, Margin = new Thickness(-12, 0, -12, 0) };
             r.Blocks.Add(BuildRichText(paragraph));
             return r;
         }
@@ -107,7 +122,8 @@ namespace S1Nyan.Views
             }
             foreach (var item in content.Descendants())
             {
-                p.Inlines.Add(BuildInlines(item));
+                if (item != null) 
+                    p.Inlines.Add(BuildInlines(item));
             }
 
             return p;

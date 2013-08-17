@@ -6,6 +6,7 @@ using Microsoft.Phone.Shell;
 using Microsoft.Practices.ServiceLocation;
 using ObiWang.Controls;
 using S1Nyan.Model;
+using S1Nyan.Resources;
 using S1Nyan.ViewModel;
 using S1Parser;
 
@@ -85,10 +86,29 @@ namespace S1Nyan.Views
         {
             // Set the page's ApplicationBar to a new instance of ApplicationBar.
             ApplicationBar = new ApplicationBar();
+            ApplicationBar.Buttons.Add(S1NyanThreadAppBarButton);
             ApplicationBar.Buttons.Add(SettingView.GetSettingAppBarButton());
             ApplicationBar.Buttons.Add(SettingView.GetAboutAppBarButton());
             ApplicationBar.IsVisible = false;
         }
+
+        private ApplicationBarIconButton _s1NyanThreadAppBarButton;
+
+        ApplicationBarIconButton S1NyanThreadAppBarButton
+        {
+            get
+            {
+                if (_s1NyanThreadAppBarButton == null)
+                {
+                    _s1NyanThreadAppBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.column.one.png", UriKind.Relative));
+                    _s1NyanThreadAppBarButton.Text = AppResources.S1NyanThread;
+                    _s1NyanThreadAppBarButton.Click += (o, e) => NavigationService.Navigate(new Uri("/Views/ThreadView.xaml?ID=899264", UriKind.Relative));
+                }
+
+                return _s1NyanThreadAppBarButton;
+            }
+        }
+
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {

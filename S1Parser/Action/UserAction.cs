@@ -21,7 +21,7 @@ namespace S1Parser.User
         //const string cktimeKey = "cktime";//remember pass ...
         //const int cktime = 31536000;      //for 1 year (in sec)
 
-        static string SiteBase { get { return S1Resource.DZMobileBase; } }
+        static string SiteBase { get { return S1Resource.ForumBase; } }
 
         static string loginUrl { get { return SiteBase + "?module=login"; } }
         static string logoutUrl { get { return SiteBase + "?module=login&action=logout"; } }

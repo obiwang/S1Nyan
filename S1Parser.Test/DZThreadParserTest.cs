@@ -26,5 +26,15 @@ namespace S1Parser.Test
             Assert.AreEqual("blockquote", blockquote.Name);
             Assert.AreEqual(2, blockquote.Children.Count);
         }
+
+        [TestMethod]
+        public void TestParseThread()
+        {
+            FileStream file = new FileStream("Data/thread1.json", FileMode.Open);
+            var parser = new DZThreadParser(file);
+            var data = parser.GetData();
+            var content = data.Items[0].Content;
+
+        }
     }
 }

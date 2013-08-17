@@ -284,4 +284,7 @@
   <data name="ImageShowInBrowser" xml:space="preserve">
     <value>在浏览器中查看</value>
   </data>
+  <data name="S1NyanThread" xml:space="preserve">
+    <value>讨论专帖</value>
+  </data>
 </root>
