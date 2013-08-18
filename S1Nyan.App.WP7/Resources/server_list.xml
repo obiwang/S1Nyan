@@ -1,6 +1,6 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Root>
-  <Message></Message>
+  <Message>新版本已提交，不日即可更新</Message>
   <ServerList>
     <Server addr="http://bbs.saraba1st.com/2b/"/>
     <Server addr="http://bbs.sarabalst.com/2b/"/>
