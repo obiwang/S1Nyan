@@ -65,9 +65,9 @@ namespace S1Nyan.ViewModel
                 if (DateTime.Now - lastCheck < checkInterval) return false;
                 lastCheck = DateTime.Now;
 
-                ServerViewModel.Current.CheckServerStatus(this);
-
-                return true;
+                //TODO:
+                //ServerViewModel.Current.CheckServerStatus(this);
+                //return true;
             }
             return false;
         }

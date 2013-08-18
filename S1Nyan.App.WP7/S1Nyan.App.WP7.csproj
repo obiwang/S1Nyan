@@ -299,6 +299,12 @@
     <None Include="Properties\WMAppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\Config\model_name.xml">
+      <Link>Resources\model_name.xml</Link>
+    </Content>
+    <Content Include="..\Config\server_list.xml">
+      <Link>Resources\server_list.xml</Link>
+    </Content>
     <Content Include="ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -330,7 +336,6 @@
     </Content>
     <Content Include="Assets\AppBar\appbar.quill.png" />
     <Content Include="Assets\AppBar\appbar.reply.email.png" />
-    <Content Include="Resources\model_name.xml" />
     <Content Include="Resources\dym\147.gif" />
     <Content Include="Resources\dym\148.gif" />
     <Content Include="Resources\dym\149.gif" />
@@ -529,7 +534,6 @@
     <Content Include="Resources\face\97.gif" />
     <Content Include="Resources\face\98.gif" />
     <Content Include="Resources\face\99.gif" />
-    <Content Include="Resources\server_list.xml" />
     <Content Include="Resources\simple.htm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

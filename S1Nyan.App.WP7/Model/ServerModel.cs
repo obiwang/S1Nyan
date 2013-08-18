@@ -43,8 +43,8 @@ namespace S1Nyan.Model
         public void UpdateServerAddr(string url = null)
         {
             if (url == null)
-            {
-                url = Views.SettingView.CurrentServerAddr ?? _serverList[0].Addr;
+            {   //TODO:
+                url = /*Views.SettingView.CurrentServerAddr ??*/ _serverList[0].Addr;
             }
             else
             {

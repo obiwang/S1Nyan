@@ -8,7 +8,7 @@ namespace S1Nyan.Model
 {
     public abstract class RemoteConfigModelBase
     {
-        public const string RemoteResourcePath = "https://raw.github.com/obiwang/S1Nyan/master/S1Nyan.App.WP7/Resources/";
+        public const string RemoteResourcePath = "https://raw.github.com/obiwang/S1Nyan/master/Config/";
         protected abstract string ConfigFileName { get; }
         protected abstract double CacheDays { get; }
         protected abstract string RemoteFilePath { get; }
