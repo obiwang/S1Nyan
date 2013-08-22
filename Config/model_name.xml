@@ -11,6 +11,7 @@
     <Model DeviceName="RM-892" FriendlyName="Lumia 925" />
     <Model DeviceName="RM-893" FriendlyName="Lumia 925" />
     <Model DeviceName="RM-910" FriendlyName="Lumia 925" />
+    <Model DeviceName="RM-955" FriendlyName="Lumia 925T" />
     <Model DeviceName="RM-860" FriendlyName="Lumia 928" />
     <Model DeviceName="RM-824" FriendlyName="Lumia 820" />
     <Model DeviceName="RM-825" FriendlyName="Lumia 820" />
@@ -32,14 +33,13 @@
     <Model DeviceName=" 710" FriendlyName="Lumia 710" />
     <Model DeviceName=" 610" FriendlyName="Lumia 610" />
     <Model DeviceName="610C" FriendlyName="Lumia 610C" />
-    <Model DeviceName="RM-955" FriendlyName="Lumia XXX" />
     <Model DeviceName="RM-937" FriendlyName="Lumia XXX" />
     <Model DeviceName="RM-927" FriendlyName="Lumia XXX" />
     <Model DeviceName="RM-940" FriendlyName="Lumia XXX" />
   </NOKIA>
   <HTC>
-    <Model DeviceName="8X" FriendlyName="8X" />
-    <Model DeviceName="8S" FriendlyName="8S" />
+    <Model DeviceName="C620" FriendlyName="8X" />
+    <Model DeviceName="A620" FriendlyName="8S" />
   </HTC>
   <HUAWEI>
     <Model DeviceName="W1" FriendlyName="Ascend W1" />
@@ -47,5 +47,6 @@
   </HUAWEI>
   <SAMSUNG>
     <Model DeviceName="917" FriendlyName="Focus" />
+    <Model DeviceName="8750" FriendlyName="ATIV S" />
   </SAMSUNG>
 </Root>
