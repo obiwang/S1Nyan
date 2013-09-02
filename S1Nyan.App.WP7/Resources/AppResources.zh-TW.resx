@@ -282,4 +282,7 @@
   <data name="ThemeSystem" xml:space="preserve">
     <value>系統主題</value>
   </data>
+  <data name="ApplicationMenuOpenThreadInBrowser" xml:space="preserve">
+    <value>在流覽器中查看帖子</value>
+  </data>
 </root>

@@ -287,4 +287,7 @@
   <data name="S1NyanThread" xml:space="preserve">
     <value>讨论专帖</value>
   </data>
+  <data name="ApplicationMenuOpenThreadInBrowser" xml:space="preserve">
+    <value>在浏览器中查看帖子</value>
+  </data>
 </root>

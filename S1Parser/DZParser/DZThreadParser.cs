@@ -31,6 +31,7 @@ namespace S1Parser.DZParser
             thread.TotalPage = (data.Thread.Replies + DZParserFactory.PostsPerPage)/DZParserFactory.PostsPerPage;
             thread.Items = new List<S1ThreadItem>();
             thread.Hash = data.Formhash;
+            thread.FullLink = S1Resource.SiteBase + string.Format("thread-{1}-{0}-1.html", data.Thread.Fid, data.Thread.Tid);
             thread.ReplyLink = string.Format("?module=sendreply&replysubmit=yes&fid={0}&tid={1}", data.Thread.Fid, data.Thread.Tid);
             foreach (var post in data.Postlist)
             {

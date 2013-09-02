@@ -214,6 +214,15 @@ namespace S1Nyan.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 在浏览器中查看帖子.
+        /// </summary>
+        public static string ApplicationMenuOpenThreadInBrowser {
+            get {
+                return ResourceManager.GetString("ApplicationMenuOpenThreadInBrowser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to S1 Nyan.
         /// </summary>
         public static string ApplicationTitle {

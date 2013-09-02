@@ -207,6 +207,7 @@ namespace S1Nyan.Views
             ApplicationBar.Buttons.Add(nextBarButton);
             ApplicationBar.Buttons.Add(navBarButton);
 
+            ApplicationBar.MenuItems.Add(OpenThreadInBrowserMenuItem());
             ApplicationBar.MenuItems.Add(SettingView.GetSettingMenuItem());
 
             nextBarButton.IsEnabled = false;
@@ -233,6 +234,20 @@ namespace S1Nyan.Views
                 VertSlider.Value = VertSlider.Minimum;
                 VertSlider.Maximum = VertSlider.Minimum + Vm.TheThread.Items.Count - 1;
             };
+        }
+
+        private ApplicationBarMenuItem OpenThreadInBrowserMenuItem()
+        {
+            var appBarMenuItem = new ApplicationBarMenuItem(AppResources.ApplicationMenuOpenThreadInBrowser);
+            appBarMenuItem.Click += (o, e) =>
+                {
+                    var task = new Microsoft.Phone.Tasks.WebBrowserTask
+                        {
+                            Uri = new Uri(Vm.TheThread.FullLink, UriKind.Absolute)
+                        };
+                    task.Show();
+                };
+            return appBarMenuItem;
         }
 
         private void OnRefresh(object sender, EventArgs e)
