@@ -28,7 +28,7 @@ namespace S1Parser.DZParser
             var data = DZThread.FromJson(raw).Variables;
             var thread = new S1ThreadPage();
             thread.Title = WebUtility.HtmlDecode(data.Thread.Subject);
-            thread.TotalPage = (data.Thread.Maxposition + DZParserFactory.PostsPerPage)/DZParserFactory.PostsPerPage;
+            thread.TotalPage = (data.Thread.Replies + DZParserFactory.PostsPerPage)/DZParserFactory.PostsPerPage;
             thread.Items = new List<S1ThreadItem>();
             thread.Hash = data.Formhash;
             thread.ReplyLink = string.Format("?module=sendreply&replysubmit=yes&fid={0}&tid={1}", data.Thread.Fid, data.Thread.Tid);

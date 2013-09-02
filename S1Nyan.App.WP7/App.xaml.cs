@@ -39,6 +39,7 @@ namespace S1Nyan
             AppConfig.Setup();
 
             // Show graphics profiling information while debugging.
+#if DEBUG
             //if (Debugger.IsAttached)
             {
                 // Display the current frame rate counters.
@@ -59,7 +60,7 @@ namespace S1Nyan
 
                 MemoryDiagnostics.MemoryDiagnosticsHelper.Start(TimeSpan.FromSeconds(.5), false);
             }
-
+#endif
         }
 
         // Code to execute when the application is launching (eg, from Start)

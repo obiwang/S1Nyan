@@ -173,7 +173,7 @@ namespace S1Nyan.Views
             {
                 if (!Proxy.IsEmotion && Proxy.IsGif)
                 {
-                    var contextMenu = MenuHolder.GetValue(Microsoft.Phone.Controls.ContextMenuService.ContextMenuProperty) as Microsoft.Phone.Controls.ContextMenu;
+                    var contextMenu = MenuHolder.GetValue(ContextMenuService.ContextMenuProperty) as ContextMenu;
                     if (contextMenu != null)
                         contextMenu.IsOpen = true;
                 }

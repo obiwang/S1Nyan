@@ -45,7 +45,7 @@ namespace S1Parser
         public string Lastpost;
         public string Lastposter;
         public string Views;
-        public string Replies;
+        public int Replies;
         public string Displayorder;
         public string Highlight;
         public string Digest;

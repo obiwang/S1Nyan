@@ -56,7 +56,7 @@ namespace S1Nyan.Views
             PasswordText.Password = CurrentPassword == "" ? "" : FakePassword;
             CheckPasswordWatermark();
 
-            RegisterLink.NavigateUri = new System.Uri(S1Parser.S1Resource.SiteBase + "register.php");
+            RegisterLink.NavigateUri = new System.Uri(S1Parser.S1Resource.SiteBase + "member.php?mod=register");
         }
 
         private void OnChangeAccount(object sender, RoutedEventArgs e)
