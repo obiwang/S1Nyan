@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace S1Parser
@@ -14,6 +15,14 @@ namespace S1Parser
         public List<S1ListItem> Children { get; set; }
 
         public string Id { get; internal set; }
+
+        public string Author { get; set; }
+
+        public DateTime AuthorDate { get; set; }
+
+        public string LastPoster { get; set; }
+
+        public DateTime LastPostDate { get; set; }
 
         public S1ListItem()
         {

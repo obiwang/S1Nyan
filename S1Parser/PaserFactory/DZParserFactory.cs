@@ -76,5 +76,11 @@ namespace S1Parser.PaserFactory
             return new Uri(S1Resource.ForumBase + string.Format("?module=viewthread&tid={0}&page={1}&ppp={2}", tid, page, PostsPerPage));
 #endif
         }
+
+        public static DateTime DateTimeSince1970Interval(int interval)
+        {
+            var the1970 = new DateTime(1970,1,1);
+            return the1970.AddSeconds(interval).ToLocalTime();
+        }
     }
 }

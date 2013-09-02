@@ -71,8 +71,8 @@ namespace S1Parser
         public string Replies;
         public string Digest;
         public string Attachment;
-        public string Dbdateline;
-        public string Dblastpost;
+        public int Dbdateline;
+        public int Dblastpost;
 
         //Empty Constructor
         public Forum_threadlist() { }

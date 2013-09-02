@@ -68,36 +68,55 @@
                 <toolkit:LongListSelector.ItemTemplate>
                     <DataTemplate>
                         <Border>
-                            <Grid Height="64" Margin="6,12">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="40" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="1"
-                                           Height="64"
-                                           Margin="4,0,12,0"
-                                           VerticalAlignment="Center"
-                                           FontSize="24"
-                                           Style="{StaticResource PhoneTextTitle2Style}"
-                                           Text="{Binding Title}"
-                                           TextTrimming="WordEllipsis"
-                                           TextWrapping="Wrap" />
-                                <Border Grid.Column="0"
-                                        Margin="6"
-                                        Background="{StaticResource PhoneAccentBrush}"
-                                        Opacity="{Binding Subtle, Converter={StaticResource PopConverter}}">
-                                    <TextBlock Margin="-12,0"
-                                               HorizontalAlignment="Center"
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid Margin="6,12">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="40" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="1"
+                                               MinHeight="32"
+                                               MaxHeight="64"
+                                               Margin="4,0,12,0"
                                                VerticalAlignment="Center"
-                                               Foreground="White"
-                                               RenderTransformOrigin="0.5,0.5"
-                                               Style="{StaticResource PhoneTextNormalStyle}"
-                                               Text="{Binding Subtle}">
-                                        <TextBlock.RenderTransform>
-                                            <CompositeTransform Rotation="90" />
-                                        </TextBlock.RenderTransform>
-                                    </TextBlock>
-                                </Border>
+                                               FontSize="24"
+                                               Style="{StaticResource PhoneTextTitle2Style}"
+                                               Text="{Binding Title}"
+                                               TextTrimming="WordEllipsis"
+                                               TextWrapping="Wrap" />
+                                    <Border Grid.Column="0"
+                                            Margin="6,6,6,-30"
+                                            Background="{StaticResource PhoneAccentBrush}"
+                                            Opacity="{Binding Subtle, Converter={StaticResource PopConverter}}">
+                                        <TextBlock Margin="-12,0"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Foreground="White"
+                                                   RenderTransformOrigin="0.5,0.5"
+                                                   Style="{StaticResource PhoneTextNormalStyle}"
+                                                   Text="{Binding Subtle}">
+                                            <TextBlock.RenderTransform>
+                                                <CompositeTransform Rotation="90" />
+                                            </TextBlock.RenderTransform>
+                                        </TextBlock>
+                                    </Border>
+                                </Grid>
+
+                                <Grid Grid.Row="1" Margin="40,-6,12,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" Text="{Binding Author}" />
+                                    <TextBlock Grid.Column="1"
+                                               HorizontalAlignment="Right"
+                                               Style="{StaticResource PhoneTextSubtleStyle}"
+                                               Text="{Binding LastPoster}" />
+                                </Grid>
                             </Grid>
                         </Border>
                     </DataTemplate>

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using S1Parser.PaserFactory;
 
@@ -30,10 +31,17 @@ namespace S1Parser.DZParser
             list.TotalPage = data.Forum.Threads/DZParserFactory.ThreadsPerPage;
             foreach (var thread in data.Forum_threadlist)
             {
-                var item = new S1ListItem();
-                item.Id = thread.Tid;
-                item.Title = WebUtility.HtmlDecode(thread.Subject);
-                item.Subtle = thread.Replies;
+                var item = new S1ListItem
+                    {
+                        Id = thread.Tid,
+                        Title = WebUtility.HtmlDecode(thread.Subject),
+                        Subtle = thread.Replies,
+                        Author = thread.Author,
+                        AuthorDate = DZParserFactory.DateTimeSince1970Interval(thread.Dbdateline),
+                        LastPoster = thread.Lastposter,
+                        LastPostDate = DZParserFactory.DateTimeSince1970Interval(thread.Dblastpost)
+                    };
+
                 list.Children.Add(item);
             }
             return list;
