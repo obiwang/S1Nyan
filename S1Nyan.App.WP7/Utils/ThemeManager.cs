@@ -1,5 +1,5 @@
 ﻿//
-// Copyright (c) 2012 Jeff Wilcox
+// Copyright © Jeff Wilcox
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,6 +24,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Resources;
 
 //
@@ -119,6 +120,8 @@ namespace Microsoft.Phone.Controls
     /// </summary>
     public static class ThemeManager
     {
+        private const double DefaultBackgroundBrushOpacity = 0.8d;
+
         static ThemeManager()
         {
             // The default system tray overriding value. This will have a 
@@ -137,8 +140,9 @@ namespace Microsoft.Phone.Controls
         public static ThemeManagerOverrideOptions OverrideOptions { get; set; }
 
         private static Color _chrome;
-        private static Color _background;
         private static Color _foreground;
+        private static Color _background;
+        private static Brush _backgroundBrush;
 
         private static bool _applied;
         private static Theme _themeAtStartup;
@@ -237,6 +241,38 @@ namespace Microsoft.Phone.Controls
         }
 
         /// <summary>
+        /// Sets a brush as the default background brush for all pages.
+        /// </summary>
+        /// <param name="brush"></param>
+        public static void SetBackground(Brush brush)
+        {
+            _backgroundBrush = brush;
+        }
+
+        /// <summary>
+        /// Sets an image as the default background brush for all pages.
+        /// </summary>
+        /// <param name="background">Uri to the background.</param>
+        /// <param name="opacity">Opacity for the background image.</param>
+        public static void SetBackground(Uri background, double opacity)
+        {
+            SetBackground(new ImageBrush
+            {
+                ImageSource = new BitmapImage(background),
+                Opacity = opacity
+            });
+        }
+
+        /// <summary>
+        /// Sets an image as the default background brush for all pages.
+        /// </summary>
+        /// <param name="background">Uri to the background.</param>
+        public static void SetBackground(Uri background)
+        {
+            SetBackground(background, DefaultBackgroundBrushOpacity);
+        }
+
+        /// <summary>
         /// Overrides the accent color and brush used at runtime to a new one.
         /// </summary>
         /// <param name="color">A uint representing the color to set the brush
@@ -252,7 +288,17 @@ namespace Microsoft.Phone.Controls
         /// <param name="color">A Color to set the accent brush/color to.</param>
         public static void SetAccentColor(Color color)
         {
-            RuntimeThemeResources.DualColorValue.SetColorAndBrush("PhoneAccent", color);
+            RuntimeThemeResources.DualColorValue.SetOrCreateColorAndBrush("PhoneAccent", color);
+
+            // In Windows Phone 8 the accent color is used in controls
+            // for pressed and focused states.  Due to how resources are
+            // evaluated any resource based on accent color needs to be specifically
+            // set.
+            if (System.Environment.OSVersion.Version.Major >= 8)
+            {
+                RuntimeThemeResources.DualColorValue.SetOrCreateBrush("PhoneTextBoxEditBorder", color);
+                RuntimeThemeResources.DualColorValue.SetOrCreateBrush("PhoneRadioCheckBoxPressed", color);
+            }
         }
 
         /// <summary>
@@ -457,7 +503,7 @@ namespace Microsoft.Phone.Controls
                     _light = light;
                 }
 
-                internal static void SetColorAndBrush(string prefix, Color color)
+                internal static void SetOrCreateColorAndBrush(string prefix, Color color)
                 {
                     var currentColor = new Color();
                     // Check if the Colour is actually in the dictionary
@@ -477,18 +523,24 @@ namespace Microsoft.Phone.Controls
                     }
 
                     // Check if the Brush is actually in the dictionary
+                    SetOrCreateBrush(prefix, color);
+                }
+
+                internal static void SetOrCreateBrush(string prefix, Color color)
+                {
+                    // Check if the Brush is actually in the dictionary
                     if (Application.Current.Resources.Contains(prefix + "Brush"))
                     {
-                        var brush = (SolidColorBrush) Application.Current.Resources[prefix + "Brush"];
-                        brush.Color = currentColor;
+                        var brush = (SolidColorBrush)Application.Current.Resources[prefix + "Brush"];
+                        brush.Color = color;
                     }
                     else
                     {
                         // If it's not in the dictionary, add it.
                         var brush = new SolidColorBrush
-                                        {
-                                            Color = currentColor
-                                        };
+                        {
+                            Color = color
+                        };
                         Application.Current.Resources.Add(prefix + "Brush", brush);
                     }
                 }
@@ -507,7 +559,7 @@ namespace Microsoft.Phone.Controls
                 {
                     string name = "Phone" + prefix;
                     var value = (Color)(Value(theme));
-                    SetColorAndBrush(name, value);
+                    SetOrCreateColorAndBrush(name, value);
                 }
             }
 
@@ -627,7 +679,7 @@ namespace Microsoft.Phone.Controls
                         var asControl = frame as Control;
                         if (asControl != null)
                         {
-                            asControl.Background = new SolidColorBrush(background);
+                            asControl.Background = _backgroundBrush != null ? _backgroundBrush : new SolidColorBrush(background);
                         }
 
                         // Hook up to the navigation events for the tray.

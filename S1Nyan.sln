@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "S1Nyan.Model", "S1Nyan.Mode
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{10EAFA28-5627-4CA1-99EE-7E8867FE0070}"
 	ProjectSection(SolutionItems) = preProject
-		packages\Microsoft.Bcl.Build.1.0.0-rc\tools\Microsoft.Bcl.Build.targets = packages\Microsoft.Bcl.Build.1.0.0-rc\tools\Microsoft.Bcl.Build.targets
+		packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets = packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
