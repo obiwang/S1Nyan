@@ -190,6 +190,7 @@ namespace S1Nyan.Views
                 //else if ("text" == div.Attributes["class"])
                 {
                     //foreach (var e in div.Descendants())
+                    if (div != null)
                     {
                         FrameworkElement p = BuildParagraph(div);
                         if (p is TextBlock) (p as TextBlock).Foreground = gray;

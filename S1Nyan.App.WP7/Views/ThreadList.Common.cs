@@ -15,7 +15,9 @@ namespace S1Nyan.Views
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            var t = System.Convert.ToDouble(value);
+            double t = 0;
+            // value may not be number
+            Double.TryParse(value.ToString(), out t);
 
             return t > 150 ? 1 : (0.25 + t / 200.0);
         }
@@ -89,7 +91,7 @@ namespace S1Nyan.Views
         {
             var selector = sender as LongListSelector;
             var item = selector.SelectedItem as S1ListItem;
-            if (item != null)
+            if (item != null && item.Subtle != "-")
             {
                 var uri = "/Views/ThreadView.xaml?ID=" + item.Id + "&Title=" + item.Title;
                 NavigationService.Navigate(new Uri(uri, UriKind.Relative));
