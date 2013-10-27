@@ -261,6 +261,7 @@ namespace S1Nyan.Views
 
         private static SmartImage BuildImgControl(HtmlElement item)
         {
+            //TODO: crash @ http://imgsrc.baidu.com/forum/w%3D580%3Bcp%3Dtieba%2C10%2C666%3Bap%3Dsnh48%B0%C9%2C90%2C674/sign=d10ca71e0b24ab18e016e13f05c185bd/42a0283fb80e7becd78d41d92d2eb9389a506bd0.jpg 
             var url = Uri.UnescapeDataString(item.Attributes["src"]);
             if (url == null) return null;
 
