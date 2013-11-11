@@ -17,7 +17,7 @@
         <SampleData:ThreadSampleData x:Key="ThreadSampleData" d:IsDataSource="True" />
         <local:LocalizedStrings x:Key="LocalizedStrings" />
         <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
-
+        <local:Bootstrapper x:Key="bootstrapper" />
         <converter:BooleanToVisibilityConverter x:Key="BoolToVisConv" />
         <view:ThreadPopularityConverter xmlns:local="clr-namespace:S1Nyan.Views" x:Key="PopConverter" />
 
@@ -34,11 +34,4 @@
         </Style>
     </Application.Resources>
 
-    <Application.ApplicationLifetimeObjects>
-        <!--  Required object that handles lifetime events for the application  -->
-        <shell:PhoneApplicationService Activated="Application_Activated"
-                                       Closing="Application_Closing"
-                                       Deactivated="Application_Deactivated"
-                                       Launching="Application_Launching" />
-    </Application.ApplicationLifetimeObjects>
 </Application>

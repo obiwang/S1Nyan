@@ -195,6 +195,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="AppConfig.cs" />
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Caliburn.Micro\ContainerExtensions.cs" />
+    <Compile Include="Caliburn.Micro\ExtensionMethods.cs" />
+    <Compile Include="Caliburn.Micro\SimpleContainer.cs" />
     <Compile Include="Design\DesignDataService.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Model\IsolatedStorageHelper.cs" />
@@ -582,7 +586,7 @@
       <Name>S1Nyan.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\S1Nyan.ViewModel\S1Nyan.ViewModel.csproj">
-      <Project>{29CC73B9-D0C1-410C-9084-6D754807BBA2}</Project>
+      <Project>{5B98D3C8-D5CC-4844-A2EE-E9953F24D680}</Project>
       <Name>S1Nyan.ViewModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\S1Parser\S1Parser.csproj">
