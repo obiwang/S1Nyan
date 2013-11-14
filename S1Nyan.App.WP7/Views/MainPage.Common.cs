@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using Caliburn.Micro;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Microsoft.Practices.ServiceLocation;
 using ObiWang.Controls;
 using S1Nyan.Model;
 using S1Nyan.Resources;
-using S1Nyan.ViewModel;
+using S1Nyan.ViewModels;
 using S1Parser;
 
 namespace S1Nyan.Views
@@ -30,11 +32,15 @@ namespace S1Nyan.Views
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
             SettingView.UpdateOrientation(this);
-            if (Vm == null)
-            {
-                DataContext = ServiceLocator.Current.GetInstance<MainViewModel>();
-                DataLoaded();
-            }
+            Debug.Assert(IoC.Get<MainPageViewModel>() != null);
+
+            //if (Vm == null)
+            //{
+            //    DataContext = ServiceLocator.Current.GetInstance<MainViewModel>();
+            //    DataLoaded();
+            //}
+
+            DataLoaded();
         }
 
         private void DataLoaded()
@@ -49,11 +55,11 @@ namespace S1Nyan.Views
         /// <summary>
         /// Gets the view's ViewModel.
         /// </summary>
-        public MainViewModel Vm
+        public MainPageViewModel Vm
         {
             get
             {
-                return (MainViewModel)DataContext;
+                return (MainPageViewModel)DataContext;
             }
         }
 

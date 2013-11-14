@@ -7,11 +7,6 @@ namespace S1Nyan.Model
 {
     public class IsolatedStorageHelper : IStorageHelper
     {
-        public static IStorageHelper Current
-        {
-            get { return SimpleIoc.Default.GetInstance<IStorageHelper>(); }
-        }
-
         const string tempDir = "temp\\";
         private IsolatedStorageFile local = IsolatedStorageFile.GetUserStoreForApplication();
 

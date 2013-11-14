@@ -9,17 +9,15 @@
              xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
              xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
              xmlns:view="clr-namespace:S1Nyan.Views"
-             xmlns:vm="clr-namespace:S1Nyan.ViewModel"
              mc:Ignorable="d">
 
     <!--  Application Resources  -->
     <Application.Resources>
         <SampleData:ThreadSampleData x:Key="ThreadSampleData" d:IsDataSource="True" />
         <local:LocalizedStrings x:Key="LocalizedStrings" />
-        <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
         <local:Bootstrapper x:Key="bootstrapper" />
         <converter:BooleanToVisibilityConverter x:Key="BoolToVisConv" />
-        <view:ThreadPopularityConverter xmlns:local="clr-namespace:S1Nyan.Views" x:Key="PopConverter" />
+        <view:ThreadPopularityConverter x:Key="PopConverter" />
 
         <Style x:Key="HyperlinkEmptyStyle" TargetType="HyperlinkButton">
             <Setter Property="HorizontalContentAlignment" Value="Left" />

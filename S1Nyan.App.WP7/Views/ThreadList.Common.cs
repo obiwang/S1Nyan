@@ -6,7 +6,7 @@ using System.Windows.Navigation;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using S1Nyan.Resources;
-using S1Nyan.ViewModel;
+using S1Nyan.ViewModels;
 using S1Parser;
 
 namespace S1Nyan.Views
@@ -83,7 +83,7 @@ namespace S1Nyan.Views
             base.OnNavigatedFrom(e);
             if (e.NavigationMode == NavigationMode.Back)
             {
-                Vm.Cleanup();
+                //Vm.Cleanup();
             }
         }
 

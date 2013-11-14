@@ -1,21 +1,22 @@
 ﻿using System;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Messaging;
+using Caliburn.Micro;
 using S1Nyan.Utils;
+using S1Nyan.ViewModels.Message;
 using S1Parser;
 using S1Parser.User;
 
-namespace S1Nyan.ViewModel
+namespace S1Nyan.ViewModels
 {
-    public abstract class S1NyanViewModelBase : ViewModelBase
+    public abstract class S1NyanViewModelBase : Screen, IHandle<UserMessage>
     {
         private static TimeSpan checkInterval = TimeSpan.FromMinutes(10);
         private static DateTime lastCheck = DateTime.Now - checkInterval;
+        protected readonly IEventAggregator _eventAggregator;
 
-        public S1NyanViewModelBase()
+        public S1NyanViewModelBase(IEventAggregator eventAggregator)
         {
-            MessengerInstance.Register<NotificationMessage<S1NyanViewModelBase>>(this, OnNotifyRefresh);
-            MessengerInstance.Register<NotificationMessage<string>>(this, OnNotifyServerMsg);
+            _eventAggregator = eventAggregator;
+            _eventAggregator.Subscribe(this);
         }
 
 #if DEBUG
@@ -25,31 +26,23 @@ namespace S1Nyan.ViewModel
         }
 #endif
 
-        private void OnNotifyServerMsg(NotificationMessage<string> msg)
+        public void Handle(UserMessage msg)
         {
-            if (msg.Notification != Messages.NotifyServerMessageString) return;
-            NotifyMessage = msg.Content;
-        }
-
-        private void OnNotifyRefresh(NotificationMessage<S1NyanViewModelBase> msg)
-        {
-            if (msg.Notification != Messages.RefreshMessageString) return;
-            if (msg.Content!= null && msg.Content.GetType().IsInstanceOfType(this))
+            switch (msg.Type)
             {
-                RefreshData();
+                case Messages.NotifyServer:
+                    NotifyMessage = msg.Content.ToString();
+                    break;
+                case Messages.Refresh:
+                    if (msg.Content != null && msg.Content.GetType().IsInstanceOfType(this))
+                    {
+                        RefreshData();
+                    }
+                    break;
             }
         }
 
         abstract public void RefreshData();
-
-        protected bool isUnregisterMessageDuringCleanUp = true;
-        public override void Cleanup()
-        {
-            base.Cleanup();
-            NotifyMessage = null;
-            if (isUnregisterMessageDuringCleanUp)
-                MessengerInstance.Unregister<NotificationMessage>(this);
-        }
 
         protected bool HandleUserException(Exception e)
         {
@@ -85,7 +78,7 @@ namespace S1Nyan.ViewModel
             set
             {
                 _notifyMessge = value;
-                RaisePropertyChanged(() => NotifyMessage);
+                NotifyOfPropertyChange(() => NotifyMessage);
             }
         }
     }

@@ -1,12 +1,14 @@
 ﻿using System;
+using Caliburn.Micro;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using S1Nyan.Model;
 using S1Nyan.Utils;
+using S1Nyan.ViewModels.Message;
 using S1Parser;
 
-namespace S1Nyan.ViewModel
+namespace S1Nyan.ViewModels
 {
     /// <summary>
     /// This class contains properties that a View can data bind to.
@@ -14,13 +16,14 @@ namespace S1Nyan.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class ThreadViewModel : S1NyanViewModelBase
+    public class PostViewModel : S1NyanViewModelBase
     {
         IDataService _dataService;
         /// <summary>
         /// Initializes a new instance of the ThreadViewModel class.
         /// </summary>
-        public ThreadViewModel(IDataService dataService) : base()
+        public PostViewModel(IDataService dataService, IEventAggregator eventAggregator)
+            : base(eventAggregator)
         {
             _dataService = dataService;
             //if (IsInDesignMode) _dataService.GetThreadData(null, 0, (item, error) => { TheThread = item; Title = TheThread.Title; });
@@ -40,7 +43,7 @@ namespace S1Nyan.ViewModel
                 if (_title == value) return;
 
                 _title = value;
-                RaisePropertyChanged(() => Title);
+                NotifyOfPropertyChange(() => Title);
             }
         }
 
@@ -70,7 +73,7 @@ namespace S1Nyan.ViewModel
 
                 _threadpage = value;
 
-                RaisePropertyChanged(() => TheThread);
+                NotifyOfPropertyChange(() => TheThread);
             }
         }
 
@@ -112,8 +115,8 @@ namespace S1Nyan.ViewModel
             {
                 if (totalPage == value) return;
                 totalPage = value;
-                RaisePropertyChanged(() => TotalPage);
-                RaisePropertyChanged(() => IsShowPage);
+                NotifyOfPropertyChange(() => TotalPage);
+                NotifyOfPropertyChange(() => IsShowPage);
             }
         }
 
@@ -130,18 +133,18 @@ namespace S1Nyan.ViewModel
                 {
                     currentPage = value;
                     RefreshData();
-                    RaisePropertyChanged(() => CurrentPage);
+                    NotifyOfPropertyChange(() => CurrentPage);
                 }
             }
         }
         public Action<int, int> PageChanged { get; set; }
 
-        public override void Cleanup()
-        {
-            base.Cleanup();
-            TheThread = null;
-            PageChanged = null;
-        }
+        //public override void Cleanup()
+        //{
+        //    base.Cleanup();
+        //    TheThread = null;
+        //    PageChanged = null;
+        //}
 
         #region Reply
         private string _replyText = "";
@@ -159,7 +162,7 @@ namespace S1Nyan.ViewModel
                 if (_replyText == value) return;
 
                 _replyText = value;
-                RaisePropertyChanged(() => ReplyText);
+                NotifyOfPropertyChange(() => ReplyText);
                 SendCommand.RaiseCanExecuteChanged();
             }
         }
@@ -191,10 +194,10 @@ namespace S1Nyan.ViewModel
                 if (isSuccess && value == null)
                 {
                     isSuccess = false;
-                    MessengerInstance.Send<NotificationMessage>(Messages.PostSuccessMessage);
+                    _eventAggregator.Publish(UserMessage.PostSuccessMessage);
                 }
                 _replyResult = value;
-                RaisePropertyChanged(() => ReplyResult);
+                NotifyOfPropertyChange(() => ReplyResult);
             }
         }
 

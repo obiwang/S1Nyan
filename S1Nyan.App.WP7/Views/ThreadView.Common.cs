@@ -8,7 +8,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using S1Nyan.Resources;
 using S1Nyan.Model;
-using S1Nyan.ViewModel;
+using S1Nyan.ViewModels;
 using S1Parser.PaserFactory;
 using S1Parser.User;
 using GalaSoft.MvvmLight.Messaging;
@@ -52,11 +52,11 @@ namespace S1Nyan.Views
         /// <summary>
         /// Gets the view's ViewModel.
         /// </summary>
-        public ThreadViewModel Vm
+        public PostViewModel Vm
         {
             get
             {
-                return (ThreadViewModel)DataContext;
+                return (PostViewModel)DataContext;
             }
         }
 
@@ -173,7 +173,7 @@ namespace S1Nyan.Views
             refreshBarButton.Click -= OnRefresh;
             nextBarButton.Click -= OnNextPage;
             HideNavi.Completed -= OnHideNaviComplete;
-            Vm.Cleanup();
+            //Vm.Cleanup();
         }
 
         ApplicationBarIconButton navBarButton;

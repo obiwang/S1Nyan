@@ -6,9 +6,12 @@ using System.Windows;
 using System.Windows.Markup;
 using Caliburn.Micro;
 using Microsoft.Phone.Controls;
+using S1Nyan.Model;
 using S1Nyan.Resources;
-using S1Nyan.ViewModel;
+using S1Nyan.ViewModels;
 using S1Nyan.Utils;
+using S1Parser;
+using S1Parser.PaserFactory;
 
 namespace S1Nyan
 {
@@ -38,8 +41,15 @@ namespace S1Nyan
             InitializeLanguage();
             if (!Execute.InDesignMode)
                 container.RegisterPhoneServices(RootFrame);
-            container.Singleton<MainViewModel>();
+            container.Singleton<MainPageViewModel>();
+            container.Singleton<ServerViewModel>();
+            container.PerRequest<ThreadListViewModel>();
+            container.PerRequest<PostViewModel>();
+            container.Singleton<ISendPostService, UserViewModel>();
 
+            container.Singleton<IDataService, DataService>();
+            container.Singleton<IStorageHelper, IsolatedStorageHelper>();
+            container.Singleton<IParserFactory, DZParserFactory>();
             GalaSoft.MvvmLight.Threading.DispatcherHelper.Initialize();
 
             AddCustomConventions();
@@ -49,20 +59,6 @@ namespace S1Nyan
         {
             //ellided 
         }
-
-        //protected override void OnStartup(object sender, StartupEventArgs e)
-        //{
-        //    var config = new TypeMappingConfiguration
-        //    {
-        //        DefaultSubNamespaceForViewModels = "OF.MPL.ViewModels",
-        //        DefaultSubNamespaceForViews = "OF.MPL.Views"
-        //    };
-
-        //    ViewLocator.ConfigureTypeMappings(config);
-        //    ViewModelLocator.ConfigureTypeMappings(config);
-
-        //    base.OnStartup(sender, e);
-        //}
 
         protected override object GetInstance(Type service, string key)
         {

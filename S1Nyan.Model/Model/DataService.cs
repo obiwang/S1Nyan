@@ -15,6 +15,12 @@ namespace S1Nyan.Model
         public IParserFactory ParserFactory { get; set; }
         public IStorageHelper StorageHelper { get; set; }
 
+        public DataService(IStorageHelper storageHelper, IParserFactory parserFactory)
+        {
+            ParserFactory = parserFactory;
+            StorageHelper = storageHelper;
+        }
+
         string mainListHtml;
         public async Task<IList<S1ListItem>> UpdateMainListAsync()
         {

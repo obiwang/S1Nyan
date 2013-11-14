@@ -9,7 +9,7 @@
     <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>S1Nyan.ViewModel</RootNamespace>
+    <RootNamespace>S1Nyan</RootNamespace>
     <AssemblyName>S1Nyan.ViewModel</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
@@ -97,18 +97,18 @@
     <Reference Include="mscorlib.extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Message\UserMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\IErrorMsg.cs" />
     <Compile Include="Utils\IIndicator.cs" />
     <Compile Include="Utils\Util.cs" />
     <Compile Include="ViewModel.cs" />
-    <Compile Include="ViewModel\ISendPostService.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\Messages.cs" />
-    <Compile Include="ViewModel\S1NyanViewModelBase.cs" />
-    <Compile Include="ViewModel\ServerViewModel.cs" />
-    <Compile Include="ViewModel\ThreadListViewModel.cs" />
-    <Compile Include="ViewModel\ThreadViewModel.cs" />
+    <Compile Include="ViewModels\ISendPostService.cs" />
+    <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\S1NyanViewModelBase.cs" />
+    <Compile Include="ViewModels\ServerViewModel.cs" />
+    <Compile Include="ViewModels\ThreadListViewModel.cs" />
+    <Compile Include="ViewModels\PostViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

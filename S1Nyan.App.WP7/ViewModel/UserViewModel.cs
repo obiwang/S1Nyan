@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Caliburn.Micro;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using GalaSoft.MvvmLight.Ioc;
 using GalaSoft.MvvmLight.Messaging;
 using S1Nyan.Resources;
 using S1Nyan.Model;
+using S1Nyan.ViewModels.Message;
 using S1Nyan.Views;
 using S1Parser.User;
 
-namespace S1Nyan.ViewModel
+namespace S1Nyan.ViewModels
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.
@@ -18,37 +20,40 @@ namespace S1Nyan.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class UserViewModel : ViewModelBase, ISendPostService
+    public class UserViewModel : Screen, ISendPostService, IHandle<UserMessage>
     {
         public static UserViewModel Current
         {
             get
             {
-                return SimpleIoc.Default.GetInstance<ISendPostService>() as UserViewModel;
+                return IoC.Get<ISendPostService>() as UserViewModel;
             }
         }
+
+        private readonly IEventAggregator _eventAggregator;
 
         private Timer notifyTimer;
 
         /// <summary>
         /// Initializes a new instance of the UserViewModel class.
         /// </summary>
-        public UserViewModel()
+        public UserViewModel(IEventAggregator eventAggregator)
         {
             notifyTimer = new Timer(OnTimeUp, this, Timeout.Infinite, Timeout.Infinite);
-            MessengerInstance.Register<NotificationMessage<S1NyanViewModelBase>>(this, OnReLoginMsg);
+            _eventAggregator = eventAggregator;
+            _eventAggregator.Subscribe(this);
         }
 
-        private async void OnReLoginMsg(NotificationMessage<S1NyanViewModelBase> msg)
+        public async void Handle(UserMessage msg)
         {
-            if (msg.Notification != Messages.ReLoginMessageString) return;
+            if (msg.Type != Messages.ReLogin) return;
 
             Uid = null;
             if (SettingView.IsRememberPass && SettingView.CurrentUsername.Length > 0)
                 await BackgroundLogin(SettingView.CurrentUsername, SettingView.CurrentPassword);
 
             if (Uid != null)
-                MessengerInstance.Send(new NotificationMessage<S1NyanViewModelBase>(msg.Content, Messages.RefreshMessageString));
+                _eventAggregator.Publish(new UserMessage(Messages.Refresh, msg.Content));
         }
 
         private string _loginStatus = AppResources.AccountPageGuest;
@@ -66,7 +71,7 @@ namespace S1Nyan.ViewModel
                 if (_loginStatus == value) return;
 
                 _loginStatus = value;
-                RaisePropertyChanged(() => LoginStatus);
+                NotifyOfPropertyChange(() => LoginStatus);
             }
         }
 
@@ -85,7 +90,7 @@ namespace S1Nyan.ViewModel
                 if (_uid == value) return;
 
                 _uid = value;
-                RaisePropertyChanged(() => Uid);
+                NotifyOfPropertyChange(() => Uid);
             }
         }
 
@@ -122,7 +127,7 @@ namespace S1Nyan.ViewModel
             finally
             {
                 IsBusy = false;
-                MessengerInstance.Send<NotificationMessage<bool>>(new NotificationMessage<bool>(isSuccess, Messages.LoginStatusChangedMessageString));
+                _eventAggregator.Publish(new UserMessage(Messages.LoginStatusChanged, isSuccess));
             }
         }
 

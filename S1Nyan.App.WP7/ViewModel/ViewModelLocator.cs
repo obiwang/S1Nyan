@@ -1,7 +1,7 @@
 ﻿/*
   In App.xaml:
   <Application.Resources>
-      <vm:ViewModelLocatorTemplate xmlns:vm="clr-namespace:S1Nyan.ViewModel"
+      <vm:ViewModelLocatorTemplate xmlns:vm="clr-namespace:S1Nyan.ViewModels"
                                    x:Key="Locator" />
   </Application.Resources>
   
@@ -13,7 +13,7 @@ using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using S1Nyan.Model;
 
-namespace S1Nyan.ViewModel
+namespace S1Nyan.ViewModels
 {
     /// <summary>
     /// This class contains static references to all the view models in the
@@ -26,16 +26,16 @@ namespace S1Nyan.ViewModel
     {
         static ViewModelLocator()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
+            //ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-            SimpleIoc.Default.Register<IDataService, DataService>();
-            SimpleIoc.Default.Register<IStorageHelper, IsolatedStorageHelper>(true);
-            SimpleIoc.Default.Register<IServerModel, ServerModel>(true);
-            SimpleIoc.Default.Register<ISendPostService, UserViewModel>();
+            //SimpleIoc.Default.Register<IDataService, DataService>();
+            //SimpleIoc.Default.Register<IStorageHelper, IsolatedStorageHelper>(true);
+            //SimpleIoc.Default.Register<IServerModel, ServerModel>(true);
+            //SimpleIoc.Default.Register<ISendPostService, UserViewModel>();
 
-            SimpleIoc.Default.Register<MainViewModel>();
-            SimpleIoc.Default.Register<ThreadListViewModel>();
-            SimpleIoc.Default.Register<ServerViewModel>();
+            //SimpleIoc.Default.Register<MainViewModel>();
+            //SimpleIoc.Default.Register<ThreadListViewModel>();
+            //SimpleIoc.Default.Register<ServerViewModel>();
         }
 
         /// <summary>
@@ -44,11 +44,11 @@ namespace S1Nyan.ViewModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance",
             "CA1822:MarkMembersAsStatic",
             Justification = "This non-static member is needed for data binding purposes.")]
-        public MainViewModel Main
+        public MainPageViewModel Main
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
+                return ServiceLocator.Current.GetInstance<MainPageViewModel>();
             }
         }
 
@@ -71,11 +71,11 @@ namespace S1Nyan.ViewModel
         /// <summary>
         /// Gets the view's ViewModel.
         /// </summary>
-        public ThreadViewModel Thread
+        public PostViewModel Thread
         {
             get
             {
-                return new ThreadViewModel(ServiceLocator.Current.GetInstance<IDataService>());
+                return null; //return new ThreadViewModel(ServiceLocator.Current.GetInstance<IDataService>());
             }
         }
 

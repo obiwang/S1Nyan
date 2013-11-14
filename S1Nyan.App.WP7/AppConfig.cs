@@ -50,7 +50,7 @@ namespace S1Nyan
         {
             if (e.NotificationType == NetworkNotificationType.InterfaceConnected)
             {
-                S1Nyan.ViewModel.UserViewModel.Current.ReLogin();
+                S1Nyan.ViewModels.UserViewModel.Current.ReLogin();
             }
         }
 

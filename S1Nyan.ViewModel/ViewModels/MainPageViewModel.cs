@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using Caliburn.Micro;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;
 
-namespace S1Nyan.ViewModel
+namespace S1Nyan.ViewModels
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.
@@ -12,14 +13,15 @@ namespace S1Nyan.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class MainViewModel : S1NyanViewModelBase
+    public class MainPageViewModel : S1NyanViewModelBase
     {
         private readonly IDataService _dataService;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainViewModel(IDataService dataService) : base()
+        public MainPageViewModel(IDataService dataService, IEventAggregator eventAggregator)
+            : base(eventAggregator)
         {
             _dataService = dataService;
             MainListData = _dataService.GetMainListCache();
@@ -40,7 +42,7 @@ namespace S1Nyan.ViewModel
                 if (_data == value) return;
 
                 _data = value;
-                RaisePropertyChanged(() => MainListData);
+                NotifyOfPropertyChange(() => MainListData);
             }
         }
 

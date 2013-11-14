@@ -1,7 +1,6 @@
 ﻿<phone:PhoneApplicationPage x:Class="S1Nyan.Views.MainPage"
                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                            xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP75"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                             xmlns:ignore="http://www.ignore.com"
@@ -10,10 +9,11 @@
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            xmlns:vm="clr-namespace:S1Nyan.ViewModels;assembly=S1Nyan.ViewModels"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}"
-                            d:DataContext="{Binding Main, Source={StaticResource Locator}}"
+                            d:DataContext="{d:DesignInstance Type=vm:MainPageViewModel, IsDesignTimeCreatable=True}"
                             shell:SystemTray.IsVisible="True"
                             mc:Ignorable="d ignore">
 
@@ -65,7 +65,7 @@
                        VerticalAlignment="Top"
                        Command="{Binding ShowAccount}"
                        Content="{Binding LoginStatus}"
-                       DataContext="{Binding User, Source={StaticResource Locator}}"
+                       DataContext="{Binding User}"
                        FontSize="{StaticResource PhoneFontSizeNormal}" />
 
         <!--  ContentPanel - place additional content here  -->

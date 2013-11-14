@@ -1,5 +1,5 @@
 ﻿using System;
-namespace S1Nyan.ViewModel
+namespace S1Nyan.ViewModels
 {
     public interface ISendPostService
     {

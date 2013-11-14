@@ -1,9 +1,10 @@
 ﻿using System;
+using Caliburn.Micro;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;
 
-namespace S1Nyan.ViewModel
+namespace S1Nyan.ViewModels
 {
     /// <summary>
     /// This class contains properties that a View can data bind to.
@@ -18,11 +19,12 @@ namespace S1Nyan.ViewModel
         /// <summary>
         /// Initializes a new instance of the ThreadListViewModel class.
         /// </summary>
-        public ThreadListViewModel(IDataService dataService) : base()
+        public ThreadListViewModel(IDataService dataService, IEventAggregator eventAggregator)
+            : base(eventAggregator)
         {
             _dataService = dataService;
 
-            isUnregisterMessageDuringCleanUp = false;
+            //isUnregisterMessageDuringCleanUp = false;
 
             //if (IsInDesignMode) _dataService.GetThreadListData(null, 0, (item, error) => { ThreadListData = item; });
 
@@ -66,7 +68,7 @@ namespace S1Nyan.ViewModel
                 if (_title == value) return;
 
                 _title = value;
-                RaisePropertyChanged(() => Title);
+                NotifyOfPropertyChange(() => Title);
             }
         }
 
@@ -84,7 +86,7 @@ namespace S1Nyan.ViewModel
                 if (_threadListData == value) return;
 
                 _threadListData = value;
-                RaisePropertyChanged(() => ThreadListData);
+                NotifyOfPropertyChange(() => ThreadListData);
             }
         }
 
@@ -145,11 +147,11 @@ namespace S1Nyan.ViewModel
 
         public Action<int, int> PageChanged { get; set; }
 
-        public override void Cleanup()
-        {
-            base.Cleanup();
-            ThreadListData = null;
-            PageChanged = null;
-        }
+        //public override void Cleanup()
+        //{
+        //    base.Cleanup();
+        //    ThreadListData = null;
+        //    PageChanged = null;
+        //}
     }
 }

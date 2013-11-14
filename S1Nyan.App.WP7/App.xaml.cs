@@ -1,6 +1,6 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using S1Nyan.ViewModel;
+using S1Nyan.ViewModels;
 using System;
 using System.Diagnostics;
 using System.Windows;

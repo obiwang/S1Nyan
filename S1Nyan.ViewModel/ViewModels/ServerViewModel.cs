@@ -1,33 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Ioc;
-using GalaSoft.MvvmLight.Messaging;
+using Caliburn.Micro;
 using S1Nyan.Model;
 using S1Nyan.Utils;
+using S1Nyan.ViewModels.Message;
 using S1Parser.User;
 
-namespace S1Nyan.ViewModel
+namespace S1Nyan.ViewModels
 {
-    public class ServerViewModel : ViewModelBase
+    public class ServerViewModel : PropertyChangedBase
     {
         private readonly IDataService _dataService;
         private readonly IServerModel _serverModel;
+        private readonly IEventAggregator _eventAggregator;
 
         public static ServerViewModel Current
         {
-            get { return SimpleIoc.Default.GetInstance<ServerViewModel>(); }
+            get { return IoC.Get<ServerViewModel>(); }
         }
 
         private bool isCheckingStatus = false;
         /// <summary>
         /// Initializes a new instance of the ServerViewModel class.
         /// </summary>
-        public ServerViewModel(IDataService dataService, IServerModel serverModel)
+        public ServerViewModel(IEventAggregator eventAggregator, IDataService dataService, IServerModel serverModel)
         {
             _dataService = dataService;
             _serverModel = serverModel;
+            _eventAggregator = eventAggregator;
         }
 
         private int serversToCheck = 0;
@@ -65,7 +66,7 @@ namespace S1Nyan.ViewModel
                 Util.Indicator.SetError(S1UserException.SiteClosed);
                 msg = Util.ErrorMsg.GetExceptionMessage(S1UserException.SiteClosed);
                 _serverModel.UpdateServerAddr(closedServer.Addr);
-                MessengerInstance.Send(new NotificationMessage<S1NyanViewModelBase>(lastViewModel, Messages.ReLoginMessageString));
+                _eventAggregator.Publish(new UserMessage(Messages.ReLogin, lastViewModel));
             }
             else
             {
@@ -76,7 +77,7 @@ namespace S1Nyan.ViewModel
             }
             if (!string.IsNullOrEmpty(_serverModel.Msg))
                 msg = msg + "\r\n" + _serverModel.Msg;
-            MessengerInstance.Send(new NotificationMessage<string>(msg, Messages.NotifyServerMessageString));
+            _eventAggregator.Publish(new UserMessage(Messages.ReLogin, msg));
         }
 
         private void OnNotifySuccess(IServerItem item)
@@ -90,7 +91,7 @@ namespace S1Nyan.ViewModel
                 server.Cancel();
             }
             _serverModel.UpdateServerAddr(item.Addr);
-            MessengerInstance.Send(new NotificationMessage<S1NyanViewModelBase>(lastViewModel, Messages.RefreshMessageString));
+            _eventAggregator.Publish(new UserMessage(Messages.ReLogin, lastViewModel));
             serverList = null;
             ServersToCheck = -1;
         }

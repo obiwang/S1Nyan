@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Phone.Controls;
 using S1Nyan.Resources;
-using S1Nyan.ViewModel;
+using S1Nyan.ViewModels;
 
 namespace S1Nyan.Views
 {
@@ -29,8 +29,9 @@ namespace S1Nyan.Views
 
         private void OnLoginStatusChanged(NotificationMessage<bool> msg)
         {
-            if (msg.Notification != Messages.LoginStatusChangedMessageString) return;
-            UpdateControls(!UserViewModel.Current.IsBusy, msg.Content, true);
+            //TODO:
+            //if (msg.Notification != Messages.LoginStatusChangedMessageString) return;
+            //UpdateControls(!UserViewModel.Current.IsBusy, msg.Content, true);
         }
 
         #region LogIn
