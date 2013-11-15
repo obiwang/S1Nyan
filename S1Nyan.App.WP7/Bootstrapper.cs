@@ -1,17 +1,19 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using Microsoft.Phone.Controls;
+using Microsoft.Phone.Net.NetworkInformation;
+using S1Nyan.Model;
+using S1Nyan.Resources;
+using S1Nyan.Utils;
+using S1Nyan.ViewModels;
+using S1Nyan.Views;
+using S1Parser;
+using S1Parser.PaserFactory;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Markup;
-using Caliburn.Micro;
-using Microsoft.Phone.Controls;
-using S1Nyan.Model;
-using S1Nyan.Resources;
-using S1Nyan.ViewModels;
-using S1Nyan.Utils;
-using S1Parser;
-using S1Parser.PaserFactory;
 
 namespace S1Nyan
 {
@@ -41,19 +43,38 @@ namespace S1Nyan
             InitializeLanguage();
             if (!Execute.InDesignMode)
                 container.RegisterPhoneServices(RootFrame);
+
             container.Singleton<MainPageViewModel>();
             container.Singleton<ServerViewModel>();
             container.PerRequest<ThreadListViewModel>();
             container.PerRequest<PostViewModel>();
             container.Singleton<ISendPostService, UserViewModel>();
 
+            container.Singleton<IServerModel, ServerModel>();
+            container.Singleton<IIndicator, Indicator>();
+            container.Singleton<IErrorMsg, ErrorMsg>();
+            container.Singleton<IResourceService, NetResourceService>();
             container.Singleton<IDataService, DataService>();
             container.Singleton<IStorageHelper, IsolatedStorageHelper>();
             container.Singleton<IParserFactory, DZParserFactory>();
+            
             GalaSoft.MvvmLight.Threading.DispatcherHelper.Initialize();
+            ImageTools.IO.Decoders.AddDecoder<ImageTools.IO.Gif.GifDecoder>();
 
             AddCustomConventions();
+
+            DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
+
         }
+
+        static void DeviceNetworkInformation_NetworkAvailabilityChanged(object sender, NetworkNotificationEventArgs e)
+        {
+            if (e.NotificationType == NetworkNotificationType.InterfaceConnected)
+            {
+                UserViewModel.Current.ReLogin();
+            }
+        }
+
 
         static void AddCustomConventions()
         {

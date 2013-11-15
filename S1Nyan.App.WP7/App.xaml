@@ -9,6 +9,7 @@
              xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
              xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
              xmlns:view="clr-namespace:S1Nyan.Views"
+             xmlns:viewModels="clr-namespace:S1Nyan.ViewModels;assembly=S1Nyan.ViewModel"
              mc:Ignorable="d">
 
     <!--  Application Resources  -->
@@ -16,6 +17,7 @@
         <SampleData:ThreadSampleData x:Key="ThreadSampleData" d:IsDataSource="True" />
         <local:LocalizedStrings x:Key="LocalizedStrings" />
         <local:Bootstrapper x:Key="bootstrapper" />
+        <viewModels:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
         <converter:BooleanToVisibilityConverter x:Key="BoolToVisConv" />
         <view:ThreadPopularityConverter x:Key="PopConverter" />
 

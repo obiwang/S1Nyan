@@ -109,6 +109,7 @@
     <Compile Include="ViewModels\ServerViewModel.cs" />
     <Compile Include="ViewModels\ThreadListViewModel.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

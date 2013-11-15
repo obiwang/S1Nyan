@@ -231,7 +231,7 @@ namespace S1Nyan.Views
                 link.Inlines.Add(header);
                 link.Inlines.Add(aText);
                 link.Inlines.Add("> ");
-                link.NavigateUri = new Uri("/Views/ThreadView.xaml" + viewParam, UriKind.Relative);
+                link.NavigateUri = new Uri("/Views/PostView.xaml" + viewParam, UriKind.Relative);
             }
             else
             {

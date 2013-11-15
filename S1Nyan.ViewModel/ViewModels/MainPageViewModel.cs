@@ -16,14 +16,19 @@ namespace S1Nyan.ViewModels
     public class MainPageViewModel : S1NyanViewModelBase
     {
         private readonly IDataService _dataService;
+        private readonly INavigationService _navigationService;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainPageViewModel(IDataService dataService, IEventAggregator eventAggregator)
+        public MainPageViewModel(IDataService dataService, 
+            IEventAggregator eventAggregator, 
+            INavigationService navigationService, 
+            IServerModel serverModel) //TODO: move serverModel init somewhere else
             : base(eventAggregator)
         {
             _dataService = dataService;
+            _navigationService = navigationService;
             MainListData = _dataService.GetMainListCache();
             //RefreshData();
             //if (IsInDesignMode) _dataService.GetMainListData((item, error) => { MainListData = item; });
@@ -61,6 +66,17 @@ namespace S1Nyan.ViewModels
                 if (!HandleUserException(e))
                     Util.Indicator.SetError(e);
             }
+        }
+
+        public void DoNavigation(object o)
+        {
+            S1ListItem item = o as S1ListItem;
+            if (item != null)
+                _navigationService
+                    .UriFor<ThreadListViewModel>()
+                    .WithParam(vm => vm.Fid, item.Id)
+                    .WithParam(vm => vm.Title, item.Title)
+                    .Navigate();
         }
         ////public override void Cleanup()
         ////{

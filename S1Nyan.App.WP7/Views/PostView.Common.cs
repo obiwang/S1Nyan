@@ -15,9 +15,9 @@ using GalaSoft.MvvmLight.Messaging;
 
 namespace S1Nyan.Views
 {
-    public partial class ThreadView : PhoneApplicationPage
+    public partial class PostView : PhoneApplicationPage
     {
-        public ThreadView()
+        public PostView()
         {
             InitializeComponent();
             BuildLocalizedApplicationBar();
@@ -44,7 +44,7 @@ namespace S1Nyan.Views
         }
 
 #if DEBUG
-        ~ThreadView()
+        ~PostView()
         {
             System.Diagnostics.Debug.WriteLine("Finalizing " + this.GetType().FullName);
         }
@@ -72,19 +72,19 @@ namespace S1Nyan.Views
         }
 
         [DataContract]
-        public class ThreadViewPageInfo
+        public class PostViewPageInfo
         {
             [DataMember]
             public List<PageInfoItem> Stack;
 
-            public ThreadViewPageInfo()
+            public PostViewPageInfo()
             {
                 Stack = new List<PageInfoItem>();
             }
         }
 
-        private const string ThreadViewPageInfoKey = "ThreadViewPageInfo";
-        private const string ThreadViewReplyTextKey = "ThreadViewReplyText";
+        private const string PostViewPageInfoKey = "PostViewPageInfo";
+        private const string PostViewReplyTextKey = "PostViewReplyText";
 
         public ImageResourceManager ImageResourceManager = new ImageResourceManager();
 
@@ -104,10 +104,10 @@ namespace S1Nyan.Views
                         Vm.OnChangeTID(item.id, item.title, item.page);
                     }
 
-                    if (PhoneApplicationService.Current.State.ContainsKey(ThreadViewReplyTextKey))
+                    if (PhoneApplicationService.Current.State.ContainsKey(PostViewReplyTextKey))
                     {
-                        savedReply = PhoneApplicationService.Current.State[ThreadViewReplyTextKey] as string;
-                        PhoneApplicationService.Current.State.Remove(ThreadViewReplyTextKey);
+                        savedReply = PhoneApplicationService.Current.State[PostViewReplyTextKey] as string;
+                        PhoneApplicationService.Current.State.Remove(PostViewReplyTextKey);
                     }
                 }
                 return;
@@ -145,21 +145,21 @@ namespace S1Nyan.Views
                 item.title = Vm.Title;
                 stack.Add(item);
 
-                PhoneApplicationService.Current.State[ThreadViewReplyTextKey] = replyText.Text;
+                PhoneApplicationService.Current.State[PostViewReplyTextKey] = replyText.Text;
             }
         }
 
         public static List<PageInfoItem> GetInfoStack()
         {
-            ThreadViewPageInfo info = null;
-            if (PhoneApplicationService.Current.State.ContainsKey(ThreadViewPageInfoKey))
+            PostViewPageInfo info = null;
+            if (PhoneApplicationService.Current.State.ContainsKey(PostViewPageInfoKey))
             {
-                info = PhoneApplicationService.Current.State[ThreadViewPageInfoKey] as ThreadViewPageInfo;
+                info = PhoneApplicationService.Current.State[PostViewPageInfoKey] as PostViewPageInfo;
             }
             if (info == null)
             {
-                info = new ThreadViewPageInfo();
-                PhoneApplicationService.Current.State[ThreadViewPageInfoKey] = info;
+                info = new PostViewPageInfo();
+                PhoneApplicationService.Current.State[PostViewPageInfoKey] = info;
             }
 
             return info.Stack;
@@ -212,28 +212,28 @@ namespace S1Nyan.Views
 
             nextBarButton.IsEnabled = false;
 
-            Vm.PageChanged = (current, total) =>
-            {
-                ImageResourceManager.Reset();
+            //Vm.PageChanged = (current, total) =>
+            //{
+            //    ImageResourceManager.Reset();
 
-                if (current > 1 && total > 1)
-                    FirstPage.IsEnabled = true;
-                else
-                    FirstPage.IsEnabled = false;
-                if (current < total && total > 1)
-                {
-                    nextBarButton.IsEnabled = true;
-                    LastPage.IsEnabled = true;
-                }
-                else
-                {
-                    nextBarButton.IsEnabled = false;
-                    LastPage.IsEnabled = false;
-                }
-                VertSlider.Minimum = 0;
-                VertSlider.Value = VertSlider.Minimum;
-                VertSlider.Maximum = VertSlider.Minimum + Vm.TheThread.Items.Count - 1;
-            };
+            //    if (current > 1 && total > 1)
+            //        FirstPage.IsEnabled = true;
+            //    else
+            //        FirstPage.IsEnabled = false;
+            //    if (current < total && total > 1)
+            //    {
+            //        nextBarButton.IsEnabled = true;
+            //        LastPage.IsEnabled = true;
+            //    }
+            //    else
+            //    {
+            //        nextBarButton.IsEnabled = false;
+            //        LastPage.IsEnabled = false;
+            //    }
+            //    VertSlider.Minimum = 0;
+            //    VertSlider.Value = VertSlider.Minimum;
+            //    VertSlider.Maximum = VertSlider.Minimum + Vm.TheThread.Items.Count - 1;
+            //};
         }
 
         private ApplicationBarMenuItem OpenThreadInBrowserMenuItem()

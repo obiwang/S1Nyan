@@ -21,6 +21,8 @@ namespace S1Nyan.Views
         // Constructor
         public MainPage()
         {
+            SettingView.InitTheme();
+
             InitializeComponent();
 
             BuildLocalizedApplicationBar();
@@ -82,9 +84,12 @@ namespace S1Nyan.Views
 
         private void DoNavigation(object o)
         {
+            Vm.DoNavigation(o);
+            return;
+
             S1ListItem item = o as S1ListItem; 
             if (item != null)
-                NavigationService.Navigate(new Uri("/Views/ThreadList.xaml?ID=" + item.Id + "&Title=" + item.Title, UriKind.Relative));
+                NavigationService.Navigate(new Uri("/Views/ThreadListView.xaml?ID=" + item.Id + "&Title=" + item.Title, UriKind.Relative));
         }
 
         // Sample code for building a localized ApplicationBar
@@ -108,7 +113,7 @@ namespace S1Nyan.Views
                 {
                     _s1NyanThreadAppBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.column.one.png", UriKind.Relative));
                     _s1NyanThreadAppBarButton.Text = AppResources.S1NyanThread;
-                    _s1NyanThreadAppBarButton.Click += (o, e) => NavigationService.Navigate(new Uri("/Views/ThreadView.xaml?ID=899264", UriKind.Relative));
+                    _s1NyanThreadAppBarButton.Click += (o, e) => NavigationService.Navigate(new Uri("/Views/PostView.xaml?ID=899264", UriKind.Relative));
                 }
 
                 return _s1NyanThreadAppBarButton;

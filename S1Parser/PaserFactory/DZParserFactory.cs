@@ -15,6 +15,12 @@ namespace S1Parser.PaserFactory
         public IResourceService ResourceService { get; set; }
         internal const string DZMobilePath = "api/mobile/";
 
+        public DZParserFactory(IResourceService resourceService)
+        {
+            ResourceService = resourceService;
+            S1Resource.ParserFactory = this;
+        }
+
         public string Path
         {
             get { return DZMobilePath; }

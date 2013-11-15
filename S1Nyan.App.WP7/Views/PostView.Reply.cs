@@ -5,7 +5,7 @@ using S1Parser.User;
 
 namespace S1Nyan.Views
 {
-    partial class ThreadView
+    partial class PostView
     {
         private void OnReplyButton(object sender, EventArgs e)
         {

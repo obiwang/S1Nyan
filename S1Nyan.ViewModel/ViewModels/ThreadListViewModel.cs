@@ -14,26 +14,28 @@ namespace S1Nyan.ViewModels
     /// </summary>
     public class ThreadListViewModel : S1NyanViewModelBase
     {
-        private IDataService _dataService;
-        
+        private readonly IDataService _dataService;
+        private readonly INavigationService _navigationService;
+
         /// <summary>
-        /// Initializes a new instance of the ThreadListViewModel class.
+        /// Initializes a new instance of the ThreadListViewViewModel class.
         /// </summary>
-        public ThreadListViewModel(IDataService dataService, IEventAggregator eventAggregator)
+        public ThreadListViewModel(IDataService dataService, IEventAggregator eventAggregator,INavigationService navigationService)
             : base(eventAggregator)
         {
             _dataService = dataService;
+            _navigationService = navigationService;
 
             //isUnregisterMessageDuringCleanUp = false;
 
-            //if (IsInDesignMode) _dataService.GetThreadListData(null, 0, (item, error) => { ThreadListData = item; });
+            //if (IsInDesignMode) _dataService.GetThreadListViewData(null, 0, (item, error) => { ThreadListViewData = item; });
 
             //Buttons = new ObservableCollection<ButtonViewModel>();
 
             //Buttons.Add(new ButtonViewModel {
             //    IconUri = new Uri("/Assets/AppBar/appbar.sync.rest.png", UriKind.Relative),
             //    Text = "refresh",
-            //    Command = new RelayCommand(() => RefreshThreadList())
+            //    Command = new RelayCommand(() => RefreshThreadListView())
             //});
             //Buttons.Add(new ButtonViewModel
             //{
@@ -75,7 +77,7 @@ namespace S1Nyan.ViewModels
         private S1ThreadList _threadListData = null;
 
         /// <summary>
-        /// Sets and gets the ThreadListData property.
+        /// Sets and gets the ThreadListViewData property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
         public S1ThreadList ThreadListData
@@ -128,6 +130,18 @@ namespace S1Nyan.ViewModels
             }
         }
 
+        public string Fid
+        {
+            get { return _fid; }
+            set
+            {
+                if (value == null) return;
+                _fid = value;
+                TotalPage = 0;
+                CurrentPage = 1;
+            }
+        }
+
         public int TotalPage { get; set; }
 
         //may change during async actions, disable optimization
@@ -150,8 +164,16 @@ namespace S1Nyan.ViewModels
         //public override void Cleanup()
         //{
         //    base.Cleanup();
-        //    ThreadListData = null;
+        //    ThreadListViewData = null;
         //    PageChanged = null;
         //}
+
+        public void DoNavigation(S1ListItem item)
+        {
+            _navigationService.UriFor<PostViewModel>()
+                .WithParam(vm => vm.Title, item.Title)
+                .WithParam(vm => vm.Tid, item.Id)
+                .Navigate();
+        }
     }
 }

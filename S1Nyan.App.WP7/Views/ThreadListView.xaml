@@ -1,4 +1,4 @@
-﻿<phone:PhoneApplicationPage x:Class="S1Nyan.Views.ThreadList"
+﻿<phone:PhoneApplicationPage x:Class="S1Nyan.Views.ThreadListView"
                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                             xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
@@ -9,7 +9,6 @@
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                            DataContext="{Binding ThreadList, Source={StaticResource Locator}}"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}"

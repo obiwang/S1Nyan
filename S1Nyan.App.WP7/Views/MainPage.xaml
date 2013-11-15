@@ -9,7 +9,7 @@
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                            xmlns:vm="clr-namespace:S1Nyan.ViewModels;assembly=S1Nyan.ViewModels"
+                            xmlns:vm="clr-namespace:S1Nyan.ViewModels;assembly=S1Nyan.ViewModel"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}"
@@ -65,7 +65,7 @@
                        VerticalAlignment="Top"
                        Command="{Binding ShowAccount}"
                        Content="{Binding LoginStatus}"
-                       DataContext="{Binding User}"
+                       DataContext="{Binding User, Source={StaticResource Locator}}"
                        FontSize="{StaticResource PhoneFontSizeNormal}" />
 
         <!--  ContentPanel - place additional content here  -->

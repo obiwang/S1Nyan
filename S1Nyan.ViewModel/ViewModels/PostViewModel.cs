@@ -20,7 +20,7 @@ namespace S1Nyan.ViewModels
     {
         IDataService _dataService;
         /// <summary>
-        /// Initializes a new instance of the ThreadViewModel class.
+        /// Initializes a new instance of the PostViewModel class.
         /// </summary>
         public PostViewModel(IDataService dataService, IEventAggregator eventAggregator)
             : base(eventAggregator)
@@ -56,6 +56,18 @@ namespace S1Nyan.ViewModels
                 _tid = tid;
                 TotalPage = 0;
                 CurrentPage = page;
+            }
+        }
+
+        public string Tid
+        {
+            get { return _tid; }
+            set
+            {
+                if(value ==null || value ==_tid) return;
+                _tid = value;
+                TotalPage = 0;
+                CurrentPage = 1;
             }
         }
 

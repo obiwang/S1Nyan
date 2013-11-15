@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Ioc;
+﻿using Caliburn.Micro;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace S1Nyan.Utils
 {
@@ -9,7 +10,7 @@ namespace S1Nyan.Utils
         {
             get
             {
-                return _indicator ?? (_indicator = SimpleIoc.Default.GetInstance<IIndicator>());
+                return _indicator ?? (_indicator = IoC.Get<IIndicator>());
             }
         }
 

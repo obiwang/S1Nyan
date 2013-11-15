@@ -4,7 +4,7 @@ using Microsoft.Phone.Controls;
 
 namespace S1Nyan.Views
 {
-    public partial class ThreadView
+    public partial class PostView
     {
         private void LastPage_Click(object sender, RoutedEventArgs e)
         {

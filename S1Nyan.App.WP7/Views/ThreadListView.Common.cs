@@ -31,12 +31,12 @@ namespace S1Nyan.Views
     /// <summary>
     /// Description for ThreadList.
     /// </summary>
-    public partial class ThreadList : PhoneApplicationPage
+    public partial class ThreadListView : PhoneApplicationPage
     {
         /// <summary>
         /// Initializes a new instance of the ThreadList class.
         /// </summary>
-        public ThreadList()
+        public ThreadListView()
         {
             InitializeComponent();
             BuildLocalizedApplicationBar();
@@ -60,7 +60,7 @@ namespace S1Nyan.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            ThreadView.GetInfoStack().Clear();
+            PostView.GetInfoStack().Clear();
             if (e.NavigationMode == NavigationMode.Back)
             {
 #if DEBUG
@@ -74,7 +74,7 @@ namespace S1Nyan.Views
             if (NavigationContext.QueryString.TryGetValue("ID", out idParam))
             {
                 NavigationContext.QueryString.TryGetValue("Title", out titleParam);
-                Vm.OnChangeFID(idParam, HttpUtility.HtmlDecode(titleParam));
+                //Vm.OnChangeFID(idParam, HttpUtility.HtmlDecode(titleParam));
             }
         }
 
@@ -93,8 +93,7 @@ namespace S1Nyan.Views
             var item = selector.SelectedItem as S1ListItem;
             if (item != null && item.Subtle != "-")
             {
-                var uri = "/Views/ThreadView.xaml?ID=" + item.Id + "&Title=" + item.Title;
-                NavigationService.Navigate(new Uri(uri, UriKind.Relative));
+                Vm.DoNavigation(item);
             }
             selector.SelectedItem = null;
         }
@@ -105,33 +104,33 @@ namespace S1Nyan.Views
             ApplicationBar = new ApplicationBar();
 
             // Create a new button and set the text value to the localized string from AppResources.
-            ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.sync.rest.png", UriKind.Relative));
-            appBarButton.Text = AppResources.AppBarButtonRefresh;
-            appBarButton.Click += (o, e) => Vm.RefreshData(); 
-            ApplicationBar.Buttons.Add(appBarButton);
+            //ApplicationBarIconButton appBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.sync.rest.png", UriKind.Relative));
+            //appBarButton.Text = AppResources.AppBarButtonRefresh;
+            //appBarButton.Click += (o, e) => Vm.RefreshData(); 
+            //ApplicationBar.Buttons.Add(appBarButton);
 
-            ApplicationBarIconButton preBarButton  = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.back.rest.png", UriKind.Relative));
-            preBarButton.Text = AppResources.AppBarButtonPrePage;
-            preBarButton.Click += (o, e) =>  Vm.CurrentPage--; 
-            ApplicationBar.Buttons.Add(preBarButton);
+            //ApplicationBarIconButton preBarButton  = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.back.rest.png", UriKind.Relative));
+            //preBarButton.Text = AppResources.AppBarButtonPrePage;
+            //preBarButton.Click += (o, e) =>  Vm.CurrentPage--; 
+            //ApplicationBar.Buttons.Add(preBarButton);
 
-            ApplicationBarIconButton nextBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.next.rest.png", UriKind.Relative));
-            nextBarButton.Text = AppResources.AppBarButtonNextPage;
-            nextBarButton.Click += (o, e) =>  Vm.CurrentPage++; 
-            ApplicationBar.Buttons.Add(nextBarButton);
+            //ApplicationBarIconButton nextBarButton = new ApplicationBarIconButton(new Uri("/Assets/AppBar/appbar.next.rest.png", UriKind.Relative));
+            //nextBarButton.Text = AppResources.AppBarButtonNextPage;
+            //nextBarButton.Click += (o, e) =>  Vm.CurrentPage++; 
+            //ApplicationBar.Buttons.Add(nextBarButton);
 
-            ApplicationBar.MenuItems.Add(SettingView.GetSettingMenuItem());
+            //ApplicationBar.MenuItems.Add(SettingView.GetSettingMenuItem());
 
-            preBarButton.IsEnabled = false;
-            nextBarButton.IsEnabled = false;
+            //preBarButton.IsEnabled = false;
+            //nextBarButton.IsEnabled = false;
 
-            Vm.PageChanged = (current, total) =>
-            {
-                if (current > 1 && total > 1) preBarButton.IsEnabled = true;
-                else preBarButton.IsEnabled = false;
-                if (current < total && total > 1) nextBarButton.IsEnabled = true;
-                else nextBarButton.IsEnabled = false;
-            };
+            //Vm.PageChanged = (current, total) =>
+            //{
+            //    if (current > 1 && total > 1) preBarButton.IsEnabled = true;
+            //    else preBarButton.IsEnabled = false;
+            //    if (current < total && total > 1) nextBarButton.IsEnabled = true;
+            //    else nextBarButton.IsEnabled = false;
+            //};
         }
 
     }

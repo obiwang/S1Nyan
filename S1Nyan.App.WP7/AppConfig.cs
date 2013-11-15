@@ -31,7 +31,7 @@ namespace S1Nyan
             IParserFactory factory = new S1Parser.PaserFactory.FakeSimpleParserFactory();
 #else
             SimpleIoc.Default.Register<IResourceService, NetResourceService>();
-            IParserFactory factory = new S1Parser.PaserFactory.DZParserFactory();
+            IParserFactory factory = new S1Parser.PaserFactory.DZParserFactory(null);
 #endif
             S1Resource.ParserFactory = factory;
 

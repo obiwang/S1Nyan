@@ -11,7 +11,7 @@ namespace S1Parser.Test
         [TestMethod]
         public void TestGetViewParamFromUrl()
         {
-            S1Resource.ParserFactory = new DZParserFactory();
+            S1Resource.ParserFactory = new DZParserFactory(null);
             S1Resource.HostList = new List<string> { "http://220.196.42.167/2b/", "http://bbs.saraba1st.com/2b/"};
             string s0 = "http://220.196.42.167/2b/read-htm-tid-785763-page-54.html";
             string s1 = "http://bbs.saraba1st.com/2b/read-htm-tid-785763-page-54.html";

@@ -151,9 +151,9 @@ namespace S1Nyan.Views
             };
         }
 
-        private static Uri lightTheme = new Uri("/S1Nyan.App.WP7;component/Resources/Themes/LightThemeResources.xaml", System.UriKind.Relative);
-        private static Uri darkTheme = new Uri("/S1Nyan.App.WP7;component/Resources/Themes/DarkThemeResources.xaml", System.UriKind.Relative);
-        private static Uri s1Theme = new Uri("/S1Nyan.App.WP7;component/Resources/Themes/CustomThemeResources.xaml", System.UriKind.Relative);
+        private static Uri lightTheme = new Uri("/S1Nyan;component/Resources/Themes/LightThemeResources.xaml", UriKind.Relative);
+        private static Uri darkTheme = new Uri("/S1Nyan;component/Resources/Themes/DarkThemeResources.xaml", UriKind.Relative);
+        private static Uri s1Theme = new Uri("/S1Nyan;component/Resources/Themes/CustomThemeResources.xaml", UriKind.Relative);
 
         private static void ApplyTheme(bool isInit = false)
         {
