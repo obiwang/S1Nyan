@@ -29,9 +29,6 @@ namespace S1Nyan.ViewModels
         {
             _dataService = dataService;
             _navigationService = navigationService;
-            MainListData = _dataService.GetMainListCache();
-            //RefreshData();
-            //if (IsInDesignMode) _dataService.GetMainListData((item, error) => { MainListData = item; });
         }
 
         private IEnumerable<S1ListItem> _data = null;
@@ -41,7 +38,7 @@ namespace S1Nyan.ViewModels
         /// </summary>
         public IEnumerable<S1ListItem> MainListData
         {
-            get { return _data; }
+            get { return _data ?? (_data = _dataService.GetMainListCache()); }
             set
             {
                 if (_data == value) return;
@@ -68,9 +65,8 @@ namespace S1Nyan.ViewModels
             }
         }
 
-        public void DoNavigation(object o)
+        public void DoNavigation(S1ListItem item)
         {
-            S1ListItem item = o as S1ListItem;
             if (item != null)
                 _navigationService
                     .UriFor<ThreadListViewModel>()
@@ -78,6 +74,13 @@ namespace S1Nyan.ViewModels
                     .WithParam(vm => vm.Title, item.Title)
                     .Navigate();
         }
+
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+            //UserViewModel.Current.InitLogin();
+        }
+
         ////public override void Cleanup()
         ////{
         ////    // Clean up if needed

@@ -28,12 +28,18 @@
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Expanded">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="ExpanderElement" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" To="0" />
+                                        <DoubleAnimation Duration="0"
+                                                         Storyboard.TargetName="ExpanderElement"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)"
+                                                         To="0" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Unexpanded">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="ExpanderElement" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" To="-90" />
+                                        <DoubleAnimation Duration="0"
+                                                         Storyboard.TargetName="ExpanderElement"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)"
+                                                         To="-90" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -96,7 +102,8 @@
                                  ItemsSource="{Binding ItemsSource, RelativeSource={RelativeSource TemplatedParent}}"
                                  ScrollViewer.VerticalScrollBarVisibility="Disabled" />
 
-                        <TextBlock Grid.Column="1"
+                        <TextBlock x:Name="HeaderText"
+                                   Grid.Column="1"
                                    Margin="0"
                                    Style="{StaticResource PhoneTextExtraLargeStyle}"
                                    Text="{Binding TitleText, RelativeSource={RelativeSource TemplatedParent}}" />
@@ -129,8 +136,14 @@
                                 <VisualState x:Name="MouseOver" />
                                 <VisualState x:Name="Disabled">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="HorizontalTrack" Storyboard.TargetProperty="Opacity" To="0.1" />
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="VerticalTrack" Storyboard.TargetProperty="Opacity" To="0.1" />
+                                        <DoubleAnimation Duration="0"
+                                                         Storyboard.TargetName="HorizontalTrack"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.1" />
+                                        <DoubleAnimation Duration="0"
+                                                         Storyboard.TargetName="VerticalTrack"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.1" />
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HorizontalFill" Storyboard.TargetProperty="Fill">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PhoneDisabledBrush}" />
                                         </ObjectAnimationUsingKeyFrames>
@@ -150,14 +163,26 @@
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="DragEnter">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="HoriPopText" Storyboard.TargetProperty="(UIElement.Opacity)" To=".8" />
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="VerticalPopText" Storyboard.TargetProperty="(UIElement.Opacity)" To=".8" />
+                                        <DoubleAnimation Duration="0"
+                                                         Storyboard.TargetName="HoriPopText"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         To=".8" />
+                                        <DoubleAnimation Duration="0"
+                                                         Storyboard.TargetName="VerticalPopText"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         To=".8" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="DragOver">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="VerticalPopText" Storyboard.TargetProperty="(UIElement.Opacity)" To="0" />
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="HoriPopText" Storyboard.TargetProperty="(UIElement.Opacity)" To="0" />
+                                        <DoubleAnimation Duration="0"
+                                                         Storyboard.TargetName="VerticalPopText"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         To="0" />
+                                        <DoubleAnimation Duration="0"
+                                                         Storyboard.TargetName="HoriPopText"
+                                                         Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                         To="0" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
@@ -168,8 +193,18 @@
                                 <ColumnDefinition Width="24" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Rectangle x:Name="HorizontalFill" Height="12" Margin="0,22,-12,20" Fill="{TemplateBinding Foreground}" IsHitTestVisible="False" />
-                            <Rectangle x:Name="HorizontalTrack" Grid.Column="2" Height="12" Margin="-12,22,0,20" Fill="{TemplateBinding Background}" IsHitTestVisible="False" Opacity="0.2" />
+                            <Rectangle x:Name="HorizontalFill"
+                                       Height="12"
+                                       Margin="0,22,-12,20"
+                                       Fill="{TemplateBinding Foreground}"
+                                       IsHitTestVisible="False" />
+                            <Rectangle x:Name="HorizontalTrack"
+                                       Grid.Column="2"
+                                       Height="12"
+                                       Margin="-12,22,0,20"
+                                       Fill="{TemplateBinding Background}"
+                                       IsHitTestVisible="False"
+                                       Opacity="0.2" />
                             <RepeatButton x:Name="HorizontalTrackLargeChangeDecreaseRepeatButton" Template="{StaticResource PhoneSimpleRepeatButton}" />
                             <RepeatButton x:Name="HorizontalTrackLargeChangeIncreaseRepeatButton" Template="{StaticResource PhoneSimpleRepeatButton}" />
                             <Thumb x:Name="HorizontalThumb"
@@ -180,8 +215,15 @@
                                 <Thumb.Template>
                                     <ControlTemplate>
                                         <Canvas Width="24" Height="24">
-                                            <Ellipse Width="24" Height="24" Fill="{StaticResource PhoneForegroundBrush}" />
-                                            <Rectangle Canvas.Left="-18" Canvas.Top="-28" Width="60" Height="84" Fill="Transparent" IsHitTestVisible="True" />
+                                            <Ellipse Width="24"
+                                                     Height="24"
+                                                     Fill="{StaticResource PhoneForegroundBrush}" />
+                                            <Rectangle Canvas.Left="-18"
+                                                       Canvas.Top="-28"
+                                                       Width="60"
+                                                       Height="84"
+                                                       Fill="Transparent"
+                                                       IsHitTestVisible="True" />
                                         </Canvas>
                                     </ControlTemplate>
                                 </Thumb.Template>
@@ -210,8 +252,18 @@
                                 <RowDefinition Height="24" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <Rectangle x:Name="VerticalFill" Width="12" Margin="20,0,20,-12" Fill="{TemplateBinding Foreground}" IsHitTestVisible="False" />
-                            <Rectangle x:Name="VerticalTrack" Grid.Row="2" Width="12" Margin="20,-12,20,0" Fill="{TemplateBinding Background}" IsHitTestVisible="False" Opacity="0.2" />
+                            <Rectangle x:Name="VerticalFill"
+                                       Width="12"
+                                       Margin="20,0,20,-12"
+                                       Fill="{TemplateBinding Foreground}"
+                                       IsHitTestVisible="False" />
+                            <Rectangle x:Name="VerticalTrack"
+                                       Grid.Row="2"
+                                       Width="12"
+                                       Margin="20,-12,20,0"
+                                       Fill="{TemplateBinding Background}"
+                                       IsHitTestVisible="False"
+                                       Opacity="0.2" />
                             <RepeatButton x:Name="VerticalTrackLargeChangeIncreaseRepeatButton" Template="{StaticResource PhoneSimpleRepeatButton}" />
                             <RepeatButton x:Name="VerticalTrackLargeChangeDecreaseRepeatButton" Template="{StaticResource PhoneSimpleRepeatButton}" />
                             <Thumb x:Name="VerticalThumb"
@@ -222,8 +274,15 @@
                                 <Thumb.Template>
                                     <ControlTemplate>
                                         <Canvas Width="24" Height="24">
-                                            <Ellipse Width="24" Height="24" Fill="{StaticResource PhoneForegroundBrush}" />
-                                            <Rectangle Canvas.Left="-12" Canvas.Top="-30" Width="48" Height="72" Fill="Transparent" IsHitTestVisible="True" />
+                                            <Ellipse Width="24"
+                                                     Height="24"
+                                                     Fill="{StaticResource PhoneForegroundBrush}" />
+                                            <Rectangle Canvas.Left="-12"
+                                                       Canvas.Top="-30"
+                                                       Width="48"
+                                                       Height="72"
+                                                       Fill="Transparent"
+                                                       IsHitTestVisible="True" />
                                         </Canvas>
                                     </ControlTemplate>
                                 </Thumb.Template>
@@ -297,15 +356,17 @@
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Flip">
                                     <Storyboard>
-                                        <DoubleAnimation Duration="0" Storyboard.TargetName="ContentGrid" Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)" To="90">
+                                        <DoubleAnimation Duration="0"
+                                                         Storyboard.TargetName="ContentGrid"
+                                                         Storyboard.TargetProperty="(UIElement.Projection).(PlaneProjection.RotationY)"
+                                                         To="90">
                                             <DoubleAnimation.EasingFunction>
                                                 <CircleEase EasingMode="EaseOut" />
                                             </DoubleAnimation.EasingFunction>
                                         </DoubleAnimation>
                                     </Storyboard>
                                 </VisualState>
-                                <VisualState x:Name="FlipBack">
-                                </VisualState>
+                                <VisualState x:Name="FlipBack" />
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
                         <Border x:Name="ButtonBackground"
@@ -324,9 +385,7 @@
                                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                                                 ContentTemplate="{TemplateBinding ContentTemplate}"
                                                 Foreground="{TemplateBinding Foreground}"
-                                                Padding="{TemplateBinding Padding}">
-
-                                </ContentControl>
+                                                Padding="{TemplateBinding Padding}" />
                             </Grid>
                         </Border>
                     </Grid>

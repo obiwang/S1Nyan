@@ -1,15 +1,9 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
-using Caliburn.Micro;
-using Microsoft.Phone.Controls;
+﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using ObiWang.Controls;
-using S1Nyan.Model;
 using S1Nyan.Resources;
 using S1Nyan.ViewModels;
-using S1Parser;
+using System;
+using System.Windows;
 
 namespace S1Nyan.Views
 {
@@ -33,14 +27,6 @@ namespace S1Nyan.Views
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
             SettingView.UpdateOrientation(this);
-            Debug.Assert(IoC.Get<MainPageViewModel>() != null);
-
-            //if (Vm == null)
-            //{
-            //    DataContext = ServiceLocator.Current.GetInstance<MainViewModel>();
-            //    DataLoaded();
-            //}
-
             DataLoaded();
         }
 
@@ -51,44 +37,6 @@ namespace S1Nyan.Views
             Popup.Visibility = Visibility.Collapsed;
             ApplicationBar.IsVisible = true;
             UserViewModel.Current.InitLogin();
-        }
-
-        /// <summary>
-        /// Gets the view's ViewModel.
-        /// </summary>
-        public MainPageViewModel Vm
-        {
-            get
-            {
-                return (MainPageViewModel)DataContext;
-            }
-        }
-
-        private void ListSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var longListSelector = sender as LongListSelector;
-            if (longListSelector != null)
-            {
-                DoNavigation(longListSelector.SelectedItem);
-                longListSelector.SelectedItem = null;
-            }
-            else
-            {
-                var selector = sender as ExpandableItem;
-                if (selector == null) return;
-                DoNavigation(selector.SelectedItem);
-                selector.SelectedItem = null;
-            }
-        }
-
-        private void DoNavigation(object o)
-        {
-            Vm.DoNavigation(o);
-            return;
-
-            S1ListItem item = o as S1ListItem; 
-            if (item != null)
-                NavigationService.Navigate(new Uri("/Views/ThreadListView.xaml?ID=" + item.Id + "&Title=" + item.Title, UriKind.Relative));
         }
 
         // Sample code for building a localized ApplicationBar

@@ -5,14 +5,20 @@ using System.Windows.Controls;
 namespace ObiWang.Controls
 {
     [TemplatePart(Name = Expander, Type = typeof(ExpanderButton))]
+    [TemplatePart(Name = HeaderText, Type = typeof(TextBlock))]
     [TemplatePart(Name = ChildItems, Type = typeof(ListBox))]
     public class ExpandableItem : ItemsControl
     {
         private const string Expander = "Expander";
         private ExpanderButton _expander;
 
+        private const string HeaderText = "HeaderText";
+        private TextBlock _headerText;
+
         private const string ChildItems = "ChildItems";
         private ListBox _childItems;
+
+        public event RoutedEventHandler HeaderTapped;
 
         public ExpandableItem()
         {
@@ -24,6 +30,12 @@ namespace ObiWang.Controls
             base.OnApplyTemplate();
 
             _expander = GetTemplateChild(Expander) as ExpanderButton;
+            _headerText = GetTemplateChild(HeaderText) as TextBlock;
+            if (_headerText != null)
+            {
+                _headerText.Tap -= OnHeaderTapped;
+                _headerText.Tap += OnHeaderTapped;
+            }
 
             _childItems = GetTemplateChild(ChildItems) as ListBox;
             if (_childItems != null)
@@ -37,6 +49,11 @@ namespace ObiWang.Controls
                 };
             }
             OnExpandChanged();
+        }
+
+        private void OnHeaderTapped(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            if (HeaderTapped != null) HeaderTapped(sender, e);
         }
 
         // Summary:
