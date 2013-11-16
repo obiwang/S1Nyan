@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Phone.Controls;
 using S1Nyan.Resources;
 using S1Nyan.ViewModels;
@@ -27,7 +26,7 @@ namespace S1Nyan.Views
             CurrentPassword = IsRememberPass ? SavedPassword : "";
         }
 
-        private void OnLoginStatusChanged(NotificationMessage<bool> msg)
+        private void OnLoginStatusChanged(object msg)
         {
             //TODO:
             //if (msg.Notification != Messages.LoginStatusChangedMessageString) return;

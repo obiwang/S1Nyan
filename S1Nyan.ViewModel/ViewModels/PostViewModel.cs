@@ -1,8 +1,5 @@
 ﻿using System;
 using Caliburn.Micro;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Ioc;
-using GalaSoft.MvvmLight.Messaging;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Nyan.ViewModels.Message;
@@ -175,7 +172,7 @@ namespace S1Nyan.ViewModels
 
                 _replyText = value;
                 NotifyOfPropertyChange(() => ReplyText);
-                SendCommand.RaiseCanExecuteChanged();
+                //SendCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -185,7 +182,8 @@ namespace S1Nyan.ViewModels
             get { return isSending; }
             set
             {
-                isSending = value; SendCommand.RaiseCanExecuteChanged();
+                isSending = value; 
+                //SendCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -213,22 +211,22 @@ namespace S1Nyan.ViewModels
             }
         }
 
-        private RelayCommand _sendCommand;
+        //private RelayCommand _sendCommand;
         private bool isSuccess;
 
-        /// <summary>
-        /// Gets the SendCommand.
-        /// </summary>
-        public RelayCommand SendCommand
-        {
-            get
-            {
-                return _sendCommand
-                    ?? (_sendCommand = new RelayCommand(
-                        () => SendReply(),
-                        () => ReplyText.Length > 0 && !IsSending));
-            }
-        }
+        ///// <summary>
+        ///// Gets the SendCommand.
+        ///// </summary>
+        //public RelayCommand SendCommand
+        //{
+        //    get
+        //    {
+        //        return _sendCommand
+        //            ?? (_sendCommand = new RelayCommand(
+        //                () => SendReply(),
+        //                () => ReplyText.Length > 0 && !IsSending));
+        //    }
+        //}
 
         private async void SendReply()
         {
@@ -253,7 +251,7 @@ namespace S1Nyan.ViewModels
 
         private ISendPostService SendPostService
         {
-            get { return SimpleIoc.Default.GetInstance<ISendPostService>(); }
+            get { return IoC.Get<ISendPostService>(); }
         }
         #endregion
     }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.IO.IsolatedStorage;
-using GalaSoft.MvvmLight.Ioc;
 
 namespace S1Nyan.Model
 {

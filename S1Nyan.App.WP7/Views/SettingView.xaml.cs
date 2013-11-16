@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 using System.Reflection;
 using System.Windows;
-using GalaSoft.MvvmLight.Messaging;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Info;
 using Microsoft.Phone.Net.NetworkInformation;
@@ -63,23 +62,23 @@ namespace S1Nyan.Views
         public SettingView()
         {
             InitializeComponent();
-            Loaded += SettingView_Loaded;
-            Unloaded += SettingView_Unloaded;
+            //Loaded += SettingView_Loaded;
+            //Unloaded += SettingView_Unloaded;
             SettingPivot.Loaded += SettingLoaded;
             AboutPivot.Loaded += AboutLoaded;
             AccountPivot.Loaded += AccountLoaded;
             DataContext = this;
         }
 
-        void SettingView_Unloaded(object sender, RoutedEventArgs e)
-        {
-            Messenger.Default.Unregister(this);
-        }
+        //void SettingView_Unloaded(object sender, RoutedEventArgs e)
+        //{
+        //    Messenger.Default.Unregister(this);
+        //}
 
-        void SettingView_Loaded(object sender, RoutedEventArgs e)
-        {
-            Messenger.Default.Register<NotificationMessage<bool>>(this, OnLoginStatusChanged);
-        }
+        //void SettingView_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    Messenger.Default.Register<NotificationMessage<bool>>(this, OnLoginStatusChanged);
+        //}
 
         private void AccountLoaded(object sender, RoutedEventArgs e)
         {

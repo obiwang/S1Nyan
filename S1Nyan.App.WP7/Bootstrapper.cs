@@ -62,19 +62,7 @@ namespace S1Nyan
             ImageTools.IO.Decoders.AddDecoder<ImageTools.IO.Gif.GifDecoder>();
 
             AddCustomConventions();
-
-            DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
-
         }
-
-        static void DeviceNetworkInformation_NetworkAvailabilityChanged(object sender, NetworkNotificationEventArgs e)
-        {
-            if (e.NotificationType == NetworkNotificationType.InterfaceConnected)
-            {
-                UserViewModel.Current.ReLogin();
-            }
-        }
-
 
         static void AddCustomConventions()
         {

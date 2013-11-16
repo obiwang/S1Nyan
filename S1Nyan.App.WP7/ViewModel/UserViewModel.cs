@@ -2,10 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Caliburn.Micro;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Ioc;
-using GalaSoft.MvvmLight.Messaging;
+using Microsoft.Phone.Net.NetworkInformation;
 using S1Nyan.Resources;
 using S1Nyan.Model;
 using S1Nyan.ViewModels.Message;
@@ -42,6 +39,15 @@ namespace S1Nyan.ViewModels
             notifyTimer = new Timer(OnTimeUp, this, Timeout.Infinite, Timeout.Infinite);
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this);
+            DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
+        }
+
+        void DeviceNetworkInformation_NetworkAvailabilityChanged(object sender, NetworkNotificationEventArgs e)
+        {
+            if (e.NotificationType == NetworkNotificationType.InterfaceConnected)
+            {
+                ReLogin();
+            }
         }
 
         public async void Handle(UserMessage msg)
@@ -168,23 +174,23 @@ namespace S1Nyan.ViewModels
             });
         }
 
-        private RelayCommand _showAccount;
+        //private RelayCommand _showAccount;
 
-        /// <summary>
-        /// Gets the ShowAccount.
-        /// </summary>
-        public RelayCommand ShowAccount
-        {
-            get
-            {
-                return _showAccount
-                    ?? (_showAccount = new RelayCommand(
-                            () =>
-                            {
-                                SettingView.GotoSetting(SettingView.PivotAccount);
-                            }));
-            }
-        }
+        ///// <summary>
+        ///// Gets the ShowAccount.
+        ///// </summary>
+        //public RelayCommand ShowAccount
+        //{
+        //    get
+        //    {
+        //        return _showAccount
+        //            ?? (_showAccount = new RelayCommand(
+        //                    () =>
+        //                    {
+        //                        SettingView.GotoSetting(SettingView.PivotAccount);
+        //                    }));
+        //    }
+        //}
 
         internal async void InitLogin()
         {

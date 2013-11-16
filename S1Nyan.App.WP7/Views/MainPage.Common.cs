@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using Caliburn.Micro;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
-using Microsoft.Practices.ServiceLocation;
 using ObiWang.Controls;
 using S1Nyan.Model;
 using S1Nyan.Resources;

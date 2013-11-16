@@ -1,5 +1,4 @@
 ﻿using Caliburn.Micro;
-using GalaSoft.MvvmLight.Ioc;
 
 namespace S1Nyan.Utils
 {
@@ -19,7 +18,7 @@ namespace S1Nyan.Utils
         {
             get
             {
-                return _errorMsg ?? (_errorMsg = SimpleIoc.Default.GetInstance<IErrorMsg>());
+                return _errorMsg ?? (_errorMsg = IoC.Get<IErrorMsg>());
             }
         }
 
