@@ -44,11 +44,11 @@ namespace S1Nyan.Model
         {
             if (url == null)
             {   //TODO:
-                url = /*Views.SettingView.CurrentServerAddr ??*/ _serverList[0].Addr;
+                url = /*Views.SettingView.CurrentServerAddress ??*/ _serverList[0].Addr;
             }
             else
             {
-                Views.SettingView.CurrentServerAddr = url;
+                Views.SettingView.CurrentServerAddress = url;
             }
             S1Parser.S1Resource.SiteBase = url;
         }

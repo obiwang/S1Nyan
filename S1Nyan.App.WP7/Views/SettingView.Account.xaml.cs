@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using Microsoft.Phone.Controls;
 using S1Nyan.Resources;
+using S1Nyan.Utils;
 using S1Nyan.ViewModels;
 
 namespace S1Nyan.Views
@@ -74,8 +75,6 @@ namespace S1Nyan.Views
             UpdateErrorMsg(msg);
             if (msg == null)
             {
-                if (isFirstLoginCache)
-                    IsFirstLogin = false;
                 SavedUserName = UsernameText.Text;
                 SavedPassword = pass;
             }
@@ -108,105 +107,41 @@ namespace S1Nyan.Views
         }
 
         private const string IsFirstLoginKeyName = "IsFirstLogin";
-        private const bool IsFirstLoginDefault = true;
-        private static bool isFirstLoginCache = true;
+        private static readonly SettingProperty<bool> IsFirstLoginSetting = new SettingProperty<bool>(IsFirstLoginKeyName, true);
+
         public static bool IsFirstLogin
         {
-            get
-            {
-                return isFirstLoginCache = GetValueOrDefault<bool>(IsFirstLoginKeyName, IsFirstLoginDefault);
-            }
-            set
-            {
-                if (AddOrUpdateValue(IsFirstLoginKeyName, value))
-                {
-                    Save();
-                }
-            }
+            get { return IsFirstLoginSetting.Value; }
+            set { IsFirstLoginSetting.Value = value; }
         }
 
         private const string IsRememberPassKeyName = "IsRememberPass";
-        private const bool IsRememberPassDefault = true;
-        private static bool? _isRememberPass;
+        private static readonly SettingProperty<bool> IsRememberPassSetting = new SettingProperty<bool>(IsRememberPassKeyName, true);
         public static bool IsRememberPass
         {
-            get
-            {
-                return (bool)(_isRememberPass ?? (_isRememberPass = GetValueOrDefault<bool>(IsRememberPassKeyName, IsRememberPassDefault)));
-            }
-            set
-            {
-                if (AddOrUpdateValue(IsRememberPassKeyName, value))
-                {
-                    Save();
-                    _isRememberPass = value;
-                }
-            }
+            get { return IsRememberPassSetting.Value; }
+            set { IsRememberPassSetting.Value = value; }
         }
 
         private const string SavedUserNameKeyName = "SavedUserName";
-        private static string _savedUserName;
+        private static readonly SettingProperty<string> SavedUserNameSetting = new SettingProperty<string>(SavedUserNameKeyName, "");
         private static string SavedUserName
         {
-            get
-            {
-                return _savedUserName ?? (_savedUserName = GetValueOrDefault<string>(SavedUserNameKeyName, ""));
-            }
-            set
-            {
-                if (AddOrUpdateValue<string>(SavedUserNameKeyName, value))
-                {
-                    Save();
-                    CurrentUsername = _savedUserName = value;
-                }
-            }
+            get { return SavedUserNameSetting.Value; }
+            set { SavedUserNameSetting.Value = CurrentUsername = value; }
         }
 
         private const string FakePassword = "F…A…K…E";
         private const string SavedPasswordKeyName = "SavedPassword";
-        private static string _savedPassword;
+        private static readonly SettingProperty<string> SavedPasswordSetting = new SettingProperty<string>(SavedPasswordKeyName, "");
         private static string SavedPassword
         {
-            get
-            {
-                return _savedPassword ?? (_savedPassword = GetValueOrDefault<string>(SavedPasswordKeyName, ""));
-            }
-            set
-            {
-                if (AddOrUpdateValue<string>(SavedPasswordKeyName, value))
-                {
-                    Save();
-                    CurrentPassword = _savedPassword = value;
-                }
-            }
+            get { return SavedPasswordSetting.Value; }
+            set { SavedPasswordSetting.Value = CurrentPassword = value; }
+
         }
 
-        private const string VerifyStringKeyName = "VerifyString";
-        private static string _verifyString;
-        internal static string VerifyString
-        {
-            get
-            {
-                if (IsRememberPass)
-                    return _verifyString ?? (_verifyString = GetValueOrDefault<string>(VerifyStringKeyName, ""));
-                else
-                    return _verifyString;
-            }
-            set
-            {
-                if (value == null) value = "";
-                if (IsRememberPass)
-                {
-                    if (AddOrUpdateValue<string>(VerifyStringKeyName, value))
-                    {
-                        Save();
-                        _verifyString = value;
-                    }
-                }
-                else
-                    _verifyString = value;
-            }
-        }
+        internal static string VerifyString { get; set; }
 
         private void PasswordLostFocus(object sender, RoutedEventArgs e)
         {

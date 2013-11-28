@@ -6,12 +6,7 @@ using S1Parser;
 
 namespace S1Nyan.ViewModels
 {
-    /// <summary>
-    /// This class contains properties that a View can data bind to.
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
+
     public class ThreadListViewModel : S1NyanViewModelBase
     {
         private readonly IDataService _dataService;

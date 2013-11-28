@@ -7,12 +7,7 @@ using S1Parser;
 
 namespace S1Nyan.ViewModels
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
+
     public class MainPageViewModel : S1NyanViewModelBase
     {
         private readonly IDataService _dataService;

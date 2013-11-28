@@ -4,11 +4,11 @@ using System.IO.IsolatedStorage;
 using System.Reflection;
 using System.Windows;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Info;
 using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using S1Nyan.Resources;
+using S1Nyan.Utils;
 
 namespace S1Nyan.Views
 {
@@ -35,25 +35,14 @@ namespace S1Nyan.Views
 
     public partial class SettingView : PhoneApplicationPage
     {
-        static SettingView()
-        {
-            settings = IsolatedStorageSettings.ApplicationSettings;
-        }
-
         private static List<string> themeSource = new List<string> { AppResources.ThemeS1, AppResources.ThemeSystem };
         private static List<string> showPicSource = new List<string> { AppResources.ShowPicNone, AppResources.ShowPicOnlyWifi, AppResources.ShowPicAlways };
         private static List<string> fontSizeSource = new List<string> { AppResources.FontSizeSmall, AppResources.FontSizeMiddle, AppResources.FontSizeLarge };
-        private static IsolatedStorageSettings settings;
 
         const string IsAutoRotateSettingKeyName = "IsEnableAutoRotate";
         const string AppThemeKeyName = "AppTheme";
         const string ShowPicWhenKeyName = "ShowPicWhen";
         const string ContentFontSizeKeyName = "ContentFontSize";
-
-        const bool IsAutoRotateSettingDefault = false;
-        const SettingThemes AppThemeDefault = SettingThemes.S1;
-        const SettingShowPicsWhen ShowPicsDefault = SettingShowPicsWhen.OnlyWifi;
-        const SettingFontSizes ContentFontSizeDefault = SettingFontSizes.FontSizeMiddle;
 
         private static Theme SystemTheme;
 
@@ -113,20 +102,20 @@ namespace S1Nyan.Views
 
         private void InitSetAutoRotate()
         {
-            setAutoRotate.IsChecked = IsAutoRotateSetting;
+            setAutoRotate.IsChecked = IsAutoRotate;
             setAutoRotate.Click += (sender, args) =>
             {
-                IsAutoRotateSetting = (bool)setAutoRotate.IsChecked;
+                IsAutoRotate = (bool)setAutoRotate.IsChecked;
             };
         }
 
         private void InitSetFontSize()
         {
             setFontSize.ItemsSource = fontSizeSource;
-            setFontSize.SelectedItem = fontSizeSource[(int)SettingFontSize];
+            setFontSize.SelectedItem = fontSizeSource[(int)PostFontSize];
             setFontSize.SelectionChanged += (o, e) =>
             {
-                SettingFontSize = (SettingFontSizes)setFontSize.SelectedIndex;
+                PostFontSize = (SettingFontSizes)setFontSize.SelectedIndex;
             };
         }
 
@@ -184,100 +173,25 @@ namespace S1Nyan.Views
         }
         #endregion
 
-        #region wrappers
-
-        /// <summary>
-        /// Update a setting value for our application. If the setting does not
-        /// exist, then add the setting.
-        /// </summary>
-        /// <param name="Key"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static bool AddOrUpdateValue<T>(string Key, T value)
-            where T: IEquatable<T>
-        {
-            bool valueChanged = false;
-
-            // If the key exists
-            if (settings.Contains(Key))
-            {
-                // If the value has changed
-                if (!((T)settings[Key]).Equals(value))
-                {
-                    // Store the new value
-                    settings[Key] = value;
-                    valueChanged = true;
-                }
-            }
-            // Otherwise create the key.
-            else
-            {
-                settings.Add(Key, value);
-                valueChanged = true;
-            }
-            return valueChanged;
-        }
-
-        /// <summary>
-        /// Get the current value of the setting, or if it is not found, set the 
-        /// setting to the default setting.
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="Key"></param>
-        /// <param name="defaultValue"></param>
-        /// <returns></returns>
-        public static T GetValueOrDefault<T>(string Key, T defaultValue)
-        {
-            T value;
-
-            // If the key exists, retrieve the value.
-            if (settings.Contains(Key))
-            {
-                value = (T)settings[Key];
-            }
-            // Otherwise, use the default value.
-            else
-            {
-                value = defaultValue;
-            }
-            return value;
-        }
-
-        /// <summary>
-        /// Save the settings.
-        /// </summary>
-        public static void Save()
-        {
-            settings.Save();
-        }
-
-        #endregion
-
         #region Setting Properties
 
-        private static bool? isAutoRotate;
+        private static readonly SettingProperty<bool> IsAutoRotateSetting = new SettingProperty<bool>(IsAutoRotateSettingKeyName);
+        private static readonly SettingProperty<int> AppThemeSetting = new SettingProperty<int>(AppThemeKeyName, (int)SettingThemes.S1);
+        private static readonly SettingProperty<int> ShowPicWhenSetting = new SettingProperty<int>(ShowPicWhenKeyName, (int)SettingShowPicsWhen.OnlyWifi);
+        private static readonly SettingProperty<int> PostFontSizeSetting = new SettingProperty<int>(ContentFontSizeKeyName, (int)SettingFontSizes.FontSizeMiddle);
+
         /// <summary>
         /// Property to get and set a CheckBox Setting Key.
         /// </summary>
-        public static bool IsAutoRotateSetting
+        public static bool IsAutoRotate
         {
-            get
-            {
-                return (bool)(isAutoRotate ?? (isAutoRotate = GetValueOrDefault<bool>(IsAutoRotateSettingKeyName, IsAutoRotateSettingDefault)));
-            }
-            set
-            {
-                if (AddOrUpdateValue(IsAutoRotateSettingKeyName, value))
-                {
-                    Save();
-                    isAutoRotate = value;
-                }
-            }
+            get { return IsAutoRotateSetting.Value; }
+            set { IsAutoRotateSetting.Value = value; }
         }
 
         public static void UpdateOrientation(PhoneApplicationPage page)
         {
-            page.SupportedOrientations = IsAutoRotateSetting ? SupportedPageOrientation.PortraitOrLandscape : SupportedPageOrientation.Portrait;
+            page.SupportedOrientations = IsAutoRotate ? SupportedPageOrientation.PortraitOrLandscape : SupportedPageOrientation.Portrait;
         }
 
         /// <summary>
@@ -285,39 +199,21 @@ namespace S1Nyan.Views
         /// </summary>
         public static SettingThemes AppTheme
         {
-            get
-            {
-                return GetValueOrDefault<SettingThemes>(AppThemeKeyName, AppThemeDefault);
-            }
+            get { return (SettingThemes) AppThemeSetting.Value; }
             set
             {
-                if (AddOrUpdateValue<int>(AppThemeKeyName, (int)value))
-                {
-                    ApplyTheme();
-
-                    Save();
-                }
+                AppThemeSetting.Value = (int) value;
+                ApplyTheme();
             }
         }
 
-        private static SettingShowPicsWhen? showPicWhen;
         /// <summary>
         /// Property to get and set a ListBox Setting Key.
         /// </summary>
         public static SettingShowPicsWhen ShowPicWhen
         {
-            get
-            {
-                return (SettingShowPicsWhen)(showPicWhen ?? (showPicWhen = GetValueOrDefault<SettingShowPicsWhen>(ShowPicWhenKeyName, ShowPicsDefault)));
-            }
-            set
-            {
-                if (AddOrUpdateValue<int>(ShowPicWhenKeyName, (int)value))
-                {
-                    Save();
-                    showPicWhen = value;
-                }
-            }
+            get { return (SettingShowPicsWhen)ShowPicWhenSetting.Value; }
+            set { ShowPicWhenSetting.Value = (int)value; }
         }
 
         public static bool IsShowPic
@@ -339,35 +235,31 @@ namespace S1Nyan.Views
         /// <summary>
         /// Property to get and set a ListBox Setting Key.
         /// </summary>
-        public static SettingFontSizes SettingFontSize
+        public static SettingFontSizes PostFontSize
+        {
+            get { return (SettingFontSizes)PostFontSizeSetting.Value; }
+            set
+            {
+                PostFontSizeSetting.Value = (int)value;
+                _contentFontSize = GetFontSize(value);
+            }
+
+        }
+
+        private static double _contentFontSize = 0;
+        public static double ContentFontSize 
         {
             get
             {
-                return GetValueOrDefault<SettingFontSizes>(ContentFontSizeKeyName, ContentFontSizeDefault);
-            }
-            set
-            {
-                if (AddOrUpdateValue<int>(ContentFontSizeKeyName, (int)value))
-                {
-                    Save();
-                    contentFontSize = GetFontSize(value);
-                }
-            }
-        }
-
-        private static double contentFontSize = 0;
-        public static double ContentFontSize {
-            get
-            {
-                if (contentFontSize == 0) 
-                    contentFontSize = GetFontSize();
-                return contentFontSize;
+                if (Math.Abs(_contentFontSize) < .01) 
+                    _contentFontSize = GetFontSize();
+                return _contentFontSize;
             }
         }
 
         private static double GetFontSize(SettingFontSizes size = SettingFontSizes.FontSizeUnknow)
         {
-            if (size == SettingFontSizes.FontSizeUnknow) size = SettingFontSize;
+            if (size == SettingFontSizes.FontSizeUnknow) size = PostFontSize;
             switch (size)
             {
                 case SettingFontSizes.FontSizeLarge:
@@ -415,21 +307,12 @@ namespace S1Nyan.Views
             return postSignatureSource[(int)SignatureType];
         }
 
-        private static SignatureTypes? signatureType;
+        private static readonly SettingProperty<int> SignatureTypeSetting = new SettingProperty<int>(ShowSignatureKeyName, (int)SignatureTypes.ShowAppNameAndModel);
+
         private static SignatureTypes SignatureType
         {
-            get
-            {
-                return (SignatureTypes)(signatureType ?? (signatureType = GetValueOrDefault<SignatureTypes>(ShowSignatureKeyName, ShowSignatureDefault)));
-            }
-            set
-            {
-                if (AddOrUpdateValue<int>(ShowSignatureKeyName, (int)value))
-                {
-                    Save();
-                    signatureType = value;
-                }
-            }
+            get { return (SignatureTypes)SignatureTypeSetting.Value; }
+            set { SignatureTypeSetting.Value = (int)value; }
         }
 
         #endregion
@@ -465,22 +348,12 @@ namespace S1Nyan.Views
         #endregion
 
         #region Server Settings
-        private const string CurrentServerAddrKeyName = "CurrentServerAddr";
-        private static string _currentServerAddr;
-        internal static string CurrentServerAddr
+        private const string CurrentServerAddressKeyName = "CurrentServerAddress";
+        private static readonly SettingProperty<string> CurrentServerAddressSetting = new SettingProperty<string>(CurrentServerAddressKeyName, null);
+        internal static string CurrentServerAddress
         {
-            get
-            {
-                return _currentServerAddr ?? (_currentServerAddr = GetValueOrDefault<string>(CurrentServerAddrKeyName, null));
-            }
-            set
-            {
-                if (AddOrUpdateValue<string>(CurrentServerAddrKeyName, value))
-                {
-                    Save();
-                    _currentServerAddr = value;
-                }
-            }
+            get { return CurrentServerAddressSetting.Value; }
+            set { CurrentServerAddressSetting.Value = value; }
         }
         #endregion
 
