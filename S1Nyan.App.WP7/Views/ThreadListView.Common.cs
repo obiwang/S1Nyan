@@ -40,9 +40,6 @@ namespace S1Nyan.Views
         {
             InitializeComponent();
             BuildLocalizedApplicationBar();
-
-            SettingView.UpdateOrientation(this);
-            Loaded += (o, e) => SettingView.UpdateOrientation(this);
         }
 
         /// <summary>

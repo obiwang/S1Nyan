@@ -1,5 +1,6 @@
 ﻿using System;
 using Caliburn.Micro;
+using Microsoft.Phone.Controls;
 using S1Nyan.Utils;
 using S1Nyan.ViewModels.Message;
 using S1Parser;
@@ -81,5 +82,25 @@ namespace S1Nyan.ViewModels
                 NotifyOfPropertyChange(() => NotifyMessage);
             }
         }
+
+        protected override void OnActivate()
+        {
+            base.OnActivate();
+            UpdateOrientation();
+        }
+
+        private void UpdateOrientation()
+        {
+            IoC.Get<IOrientationHelper>().UpdateOrientation(HostedView);
+        }
+
+        protected override void OnViewLoaded(object view)
+        {
+            base.OnViewLoaded(view);
+            HostedView = view as PhoneApplicationPage;
+            UpdateOrientation();
+        }
+
+        public PhoneApplicationPage HostedView { get; set; }
     }
 }

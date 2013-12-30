@@ -21,7 +21,6 @@ namespace S1Nyan.Views
             InitializeComponent();
             BuildLocalizedApplicationBar();
 
-            SettingView.UpdateOrientation(this);
             Loaded += OnPageLoaded;
             Unloaded += OnPageUnloaed;
         }
@@ -33,7 +32,6 @@ namespace S1Nyan.Views
 
         private void OnPageLoaded(object sender, RoutedEventArgs e)
         {
-            SettingView.UpdateOrientation(this);
             //Messenger.Default.Register<NotificationMessage>(this, OnReplySucceed);
         }
 

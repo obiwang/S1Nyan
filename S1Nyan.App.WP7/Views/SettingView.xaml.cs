@@ -189,11 +189,6 @@ namespace S1Nyan.Views
             set { IsAutoRotateSetting.Value = value; }
         }
 
-        public static void UpdateOrientation(PhoneApplicationPage page)
-        {
-            page.SupportedOrientations = IsAutoRotate ? SupportedPageOrientation.PortraitOrLandscape : SupportedPageOrientation.Portrait;
-        }
-
         /// <summary>
         /// Property to get and set a ListBox Setting Key.
         /// </summary>

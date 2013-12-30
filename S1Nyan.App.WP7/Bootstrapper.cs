@@ -57,6 +57,7 @@ namespace S1Nyan
             container.Singleton<IDataService, DataService>();
             container.Singleton<IStorageHelper, IsolatedStorageHelper>();
             container.Singleton<IParserFactory, DZParserFactory>();
+            container.Singleton<IOrientationHelper, OrientationHelper>();
             
             GalaSoft.MvvmLight.Threading.DispatcherHelper.Initialize();
             ImageTools.IO.Decoders.AddDecoder<ImageTools.IO.Gif.GifDecoder>();

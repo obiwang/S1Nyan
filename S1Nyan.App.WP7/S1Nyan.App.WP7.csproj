@@ -186,6 +186,7 @@
     <Compile Include="Model\RemoteConfigModelBase.cs" />
     <Compile Include="Model\ServerItem.cs" />
     <Compile Include="Model\ServerModel.cs" />
+    <Compile Include="Utils\OrientationHelper.cs" />
     <Compile Include="Utils\PhoneDeviceModel.cs" />
     <Compile Include="Utils\ErrorMsg.cs" />
     <Compile Include="Utils\MemoryDiagnosticsHelper.cs" />

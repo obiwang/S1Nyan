@@ -20,13 +20,11 @@ namespace S1Nyan.Views
 
             BuildLocalizedApplicationBar();
 
-            SettingView.UpdateOrientation(this);
             Loaded += PageLoaded; 
         }
 
         private void PageLoaded(object sender, RoutedEventArgs e)
         {
-            SettingView.UpdateOrientation(this);
             DataLoaded();
         }
 
