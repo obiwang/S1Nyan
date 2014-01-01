@@ -1,11 +1,10 @@
 ﻿using Caliburn.Micro;
+using Caliburn.Micro.BindableAppBar;
 using Microsoft.Phone.Controls;
-using Microsoft.Phone.Net.NetworkInformation;
 using S1Nyan.Model;
 using S1Nyan.Resources;
 using S1Nyan.Utils;
 using S1Nyan.ViewModels;
-using S1Nyan.Views;
 using S1Parser;
 using S1Parser.PaserFactory;
 using System;
@@ -13,6 +12,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Markup;
 
 namespace S1Nyan
@@ -67,7 +67,11 @@ namespace S1Nyan
 
         static void AddCustomConventions()
         {
-            //ellided 
+            // App Bar Conventions
+            ConventionManager.AddElementConvention<BindableAppBarButton>(
+                Control.IsEnabledProperty, "DataContext", "Click");
+            ConventionManager.AddElementConvention<BindableAppBarMenuItem>(
+                Control.IsEnabledProperty, "DataContext", "Click");
         }
 
         protected override object GetInstance(Type service, string key)

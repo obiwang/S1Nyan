@@ -135,7 +135,7 @@
 
                 <toolkit:LongListSelector.ItemTemplate>
                     <DataTemplate>
-                        <local:ThreadItemContent Margin="12, 0"
+                        <local:PostItemContent Margin="12, 0"
                                                  HorizontalAlignment="Left"
                                                  Content="{Binding Converter={StaticResource ContentConverter}}"
                                                  FontFamily="{StaticResource PhoneFontFamilyNormal}" />

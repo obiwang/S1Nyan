@@ -20,35 +20,7 @@ namespace S1Nyan.ViewModels
         {
             _dataService = dataService;
             _navigationService = navigationService;
-
-            //isUnregisterMessageDuringCleanUp = false;
-
-            //if (IsInDesignMode) _dataService.GetThreadListViewData(null, 0, (item, error) => { ThreadListViewData = item; });
-
-            //Buttons = new ObservableCollection<ButtonViewModel>();
-
-            //Buttons.Add(new ButtonViewModel {
-            //    IconUri = new Uri("/Assets/AppBar/appbar.sync.rest.png", UriKind.Relative),
-            //    Text = "refresh",
-            //    Command = new RelayCommand(() => RefreshThreadListView())
-            //});
-            //Buttons.Add(new ButtonViewModel
-            //{
-            //    IconUri = new Uri("/Assets/AppBar/appbar.back.rest.png", UriKind.Relative),
-            //    Text = "pre",
-            //    Command = preCommand
-            //});
-            //Buttons.Add(new ButtonViewModel
-            //{
-            //    IconUri = new Uri("/Assets/AppBar/appbar.next.rest.png", UriKind.Relative),
-            //    Text = "pre",
-            //    Command = nextCommand
-            //});
         }
-
-        //RelayCommand preCommand { get { return new RelayCommand(() => CurrentPage--, () => CurrentPage > 1 && TotalPage > 1); } }
-
-        //RelayCommand nextCommand { get { return new RelayCommand(() => CurrentPage++, () => CurrentPage < TotalPage && TotalPage > 1); } }
 
         private string _title = "";
 
@@ -99,10 +71,8 @@ namespace S1Nyan.ViewModels
                 {
                     ThreadListData = temp;
                     TotalPage = ThreadListData.TotalPage;
-                    if (PageChanged != null)
-                    {
-                        PageChanged(CurrentPage, TotalPage);
-                    }
+                    NotifyOfPropertyChange(() => CanNextPage);
+                    NotifyOfPropertyChange(() => CanPrePage);
                     Util.Indicator.SetBusy(false);
                 }
             }
@@ -154,8 +124,6 @@ namespace S1Nyan.ViewModels
             }
         }
 
-        public Action<int, int> PageChanged { get; set; }
-
         //public override void Cleanup()
         //{
         //    base.Cleanup();
@@ -163,12 +131,55 @@ namespace S1Nyan.ViewModels
         //    PageChanged = null;
         //}
 
+
+        #region Bind ApplicaionBar Actions
+
+        public void RefreshThreadList()
+        {
+            RefreshData();
+        }
+
+        public void PrePage()
+        {
+            CurrentPage--;
+        }
+
+        public bool CanPrePage
+        {
+            get { return CurrentPage > 1 && TotalPage > 1; }
+        }
+
+        public void NextPage()
+        {
+            CurrentPage++;
+        }
+
+        public bool CanNextPage
+        {
+            get { return CurrentPage < TotalPage && TotalPage > 1; }
+        }
+
+        public void GoToSetting()
+        {
+            _navigationService.Navigate(new Uri("/Views/SettingView.xaml", UriKind.Relative));
+        }
+
+        #endregion
+
+        public void GoToAccount()
+        {
+            _navigationService.Navigate(new Uri("/Views/SettingView.xaml?Pivot=Account", UriKind.Relative));
+        }
+
         public void DoNavigation(S1ListItem item)
         {
+            if (item == null) return;
+
             _navigationService.UriFor<PostViewModel>()
                 .WithParam(vm => vm.Title, item.Title)
                 .WithParam(vm => vm.Tid, item.Id)
                 .Navigate();
         }
+
     }
 }

@@ -47,7 +47,7 @@ namespace S1Nyan.Views
         {
             if (value is HtmlElement)
             {
-                return ThreadItemContent.BuildParagraph((HtmlElement)value);
+                return PostItemContent.BuildParagraph((HtmlElement)value);
             }
             else return null;
         }
@@ -58,9 +58,9 @@ namespace S1Nyan.Views
         }
     }
 
-    public class ThreadItemContent : ContentControl
+    public class PostItemContent : ContentControl
     {
-        public ThreadItemContent()
+        public PostItemContent()
         {
             FontSize = SettingView.ContentFontSize;
             Loaded += ViewLoaded;

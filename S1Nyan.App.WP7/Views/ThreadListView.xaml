@@ -1,7 +1,8 @@
 ﻿<phone:PhoneApplicationPage x:Class="S1Nyan.Views.ThreadListView"
                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                            xmlns:bar="clr-namespace:BindableApplicationBar;assembly=BindableApplicationBar"
+                            xmlns:bab="clr-namespace:Caliburn.Micro.BindableAppBar;assembly=Caliburn.Micro.BindableAppBar"
+                            xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                             xmlns:ignore="http://www.ignore.com"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -53,21 +54,19 @@
                        Height="62"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Top"
-                       Command="{Binding ShowAccount}"
                        Content="{Binding LoginStatus}"
                        DataContext="{Binding User, Source={StaticResource Locator}}"
-                       FontSize="{StaticResource PhoneFontSizeNormal}" />
+                       FontSize="{StaticResource PhoneFontSizeNormal}"
+                       cal:Message.Attach="[Event Tap] = [Action GoToAccount]" />
 
         <Grid x:Name="ContentPanel"
               Grid.Row="1"
               Margin="12,0,12,0">
-            <toolkit:LongListSelector IsFlatList="True"
-                                      ItemsSource="{Binding ThreadListData.Children}"
-                                      SelectionChanged="ThreadListSelectionChanged">
+            <toolkit:LongListSelector IsFlatList="True" ItemsSource="{Binding ThreadListData.Children}">
                 <toolkit:LongListSelector.ItemTemplate>
                     <DataTemplate>
                         <Border>
-                            <Grid>
+                            <Grid cal:Message.Attach="[Event Tap] = [Action DoNavigation($dataContext)]">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
@@ -126,6 +125,19 @@
 
         </Grid>
         <!--  <Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />  -->
+        <my:ThemeableBindableAppBar x:Name="AppBar">
+            <bab:BindableAppBarButton x:Name="RefreshThreadList"
+                                      IconUri="/Assets/AppBar/appbar.sync.rest.png"
+                                      Text="{Binding LocalizedResources.AppBarButtonRefresh, Source={StaticResource LocalizedStrings}}" />
+            <bab:BindableAppBarButton x:Name="PrePage"
+                                      IconUri="/Assets/AppBar/appbar.back.rest.png"
+                                      Text="{Binding LocalizedResources.AppBarButtonPrePage, Source={StaticResource LocalizedStrings}}" />
+            <bab:BindableAppBarButton x:Name="NextPage"
+                                      IconUri="/Assets/AppBar/appbar.next.rest.png"
+                                      Text="{Binding LocalizedResources.AppBarButtonNextPage, Source={StaticResource LocalizedStrings}}" />
+
+            <bab:BindableAppBarMenuItem x:Name="GoToSetting" Text="{Binding LocalizedResources.SettingPage, Source={StaticResource LocalizedStrings}}" />
+        </my:ThemeableBindableAppBar>
     </Grid>
 
 </phone:PhoneApplicationPage>

@@ -13,6 +13,7 @@ namespace S1Nyan.ViewModels
         private static TimeSpan checkInterval = TimeSpan.FromMinutes(10);
         private static DateTime lastCheck = DateTime.Now - checkInterval;
         protected readonly IEventAggregator _eventAggregator;
+        protected PhoneApplicationPage HostedView { get; set; }
 
         public S1NyanViewModelBase(IEventAggregator eventAggregator)
         {
@@ -99,8 +100,9 @@ namespace S1Nyan.ViewModels
             base.OnViewLoaded(view);
             HostedView = view as PhoneApplicationPage;
             UpdateOrientation();
+            if (HostedView is IViewLoaded)
+                (HostedView as IViewLoaded).ViewLoaded();
         }
 
-        public PhoneApplicationPage HostedView { get; set; }
     }
 }

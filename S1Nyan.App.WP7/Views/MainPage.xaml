@@ -64,10 +64,10 @@
                        Height="62"
                        HorizontalAlignment="Right"
                        VerticalAlignment="Top"
-                       Command="{Binding ShowAccount}"
                        Content="{Binding LoginStatus}"
                        DataContext="{Binding User, Source={StaticResource Locator}}"
-                       FontSize="{StaticResource PhoneFontSizeNormal}" />
+                       FontSize="{StaticResource PhoneFontSizeNormal}"
+                       cal:Message.Attach="[Event Tap] = [Action GoToAccount]" />
 
         <!--  ContentPanel - place additional content here  -->
         <Grid x:Name="ContentPanel"

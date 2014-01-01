@@ -7,11 +7,8 @@ using System.Windows;
 
 namespace S1Nyan.Views
 {
-    public partial class MainPage : PhoneApplicationPage
+    public partial class MainPage : PhoneApplicationPage, IViewLoaded
     {
-        bool isDataLoaded = false;
-
-        // Constructor
         public MainPage()
         {
             SettingView.InitTheme();
@@ -19,19 +16,10 @@ namespace S1Nyan.Views
             InitializeComponent();
 
             BuildLocalizedApplicationBar();
-
-            Loaded += PageLoaded; 
         }
 
-        private void PageLoaded(object sender, RoutedEventArgs e)
+        public void ViewLoaded()
         {
-            DataLoaded();
-        }
-
-        private void DataLoaded()
-        {
-            if (isDataLoaded) return;
-            isDataLoaded = true;
             Popup.Visibility = Visibility.Collapsed;
             ApplicationBar.IsVisible = true;
             UserViewModel.Current.InitLogin();
@@ -66,17 +54,17 @@ namespace S1Nyan.Views
         }
 
 
+#if DEBUG
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
 
             if (e.NavigationMode == System.Windows.Navigation.NavigationMode.Back)
             {
-#if DEBUG
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
-#endif
             }
         }
+#endif
     }
 }

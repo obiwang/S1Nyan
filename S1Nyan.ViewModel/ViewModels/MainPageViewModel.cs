@@ -60,6 +60,11 @@ namespace S1Nyan.ViewModels
             }
         }
 
+        public void GoToAccount()
+        {
+            _navigationService.Navigate(new Uri("/Views/SettingView.xaml?Pivot=Account", UriKind.Relative));
+        }
+
         public void DoNavigation(S1ListItem item)
         {
             if (item != null)
