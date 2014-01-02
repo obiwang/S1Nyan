@@ -4,9 +4,10 @@ namespace S1Nyan.ViewModels
 {
     public class ViewModelLocator
     {
-        public ISendPostService User
+        private IUserService _user;
+        public IUserService User
         {
-            get { return IoC.Get<ISendPostService>(); }
+            get { return _user ?? (_user = IoC.Get<IUserService>()); }
         }
     }
 }

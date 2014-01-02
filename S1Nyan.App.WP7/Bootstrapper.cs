@@ -48,7 +48,7 @@ namespace S1Nyan
             container.Singleton<ServerViewModel>();
             container.PerRequest<ThreadListViewModel>();
             container.PerRequest<PostViewModel>();
-            container.Singleton<ISendPostService, UserViewModel>();
+            container.Singleton<IUserService, UserViewModel>();
 
             container.Singleton<IServerModel, ServerModel>();
             container.Singleton<IIndicator, Indicator>();

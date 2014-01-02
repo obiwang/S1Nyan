@@ -22,7 +22,6 @@ namespace S1Nyan.Views
         {
             Popup.Visibility = Visibility.Collapsed;
             ApplicationBar.IsVisible = true;
-            UserViewModel.Current.InitLogin();
         }
 
         // Sample code for building a localized ApplicationBar

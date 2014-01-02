@@ -287,6 +287,72 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0404.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0404.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0405.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0405.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0406.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0406.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0407.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0407.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0408.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0408.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0409.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0409.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.040B.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.040B.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.040c.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.040c.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.040E.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.040E.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0410.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0410.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0411.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0411.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0412.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0412.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0413.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0413.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0414.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0414.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0415.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0415.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0416.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0416.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0419.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0419.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.041D.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.041D.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0804.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0804.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0809.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0809.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0816.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0816.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0c0a.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0c0a.mui</Link>
+    </None>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
@@ -298,6 +364,9 @@
     </Content>
     <Content Include="..\Config\server_list.xml">
       <Link>Resources\server_list.xml</Link>
+    </Content>
+    <Content Include="..\Resources\AppResLib\AppResLib.dll">
+      <Link>Resources\AppResLib\AppResLib.dll</Link>
     </Content>
     <Content Include="ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -599,4 +668,7 @@
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
     <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.10\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>"$(SolutionDir)Resources\CopyResLib.bat" default "$(SolutionDir)Resources"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

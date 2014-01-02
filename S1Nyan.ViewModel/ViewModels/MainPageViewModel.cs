@@ -12,6 +12,7 @@ namespace S1Nyan.ViewModels
     {
         private readonly IDataService _dataService;
         private readonly INavigationService _navigationService;
+        private readonly IUserService _userService;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -19,11 +20,13 @@ namespace S1Nyan.ViewModels
         public MainPageViewModel(IDataService dataService, 
             IEventAggregator eventAggregator, 
             INavigationService navigationService, 
+            IUserService userService,
             IServerModel serverModel) //TODO: move serverModel init somewhere else
             : base(eventAggregator)
         {
             _dataService = dataService;
             _navigationService = navigationService;
+            _userService = userService;
         }
 
         private IEnumerable<S1ListItem> _data = null;
@@ -75,10 +78,10 @@ namespace S1Nyan.ViewModels
                     .Navigate();
         }
 
-        protected override void OnInitialize()
+        protected override void OnViewLoaded(object view)
         {
-            base.OnInitialize();
-            //UserViewModel.Current.InitLogin();
+            base.OnViewLoaded(view);
+            _userService.InitLogin();
         }
 
         ////public override void Cleanup()

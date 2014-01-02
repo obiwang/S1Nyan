@@ -17,13 +17,13 @@ namespace S1Nyan.ViewModels
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class UserViewModel : Screen, ISendPostService, IHandle<UserMessage>
+    public class UserViewModel : Screen, IUserService, IHandle<UserMessage>
     {
         public static UserViewModel Current
         {
             get
             {
-                return IoC.Get<ISendPostService>() as UserViewModel;
+                return IoC.Get<IUserService>() as UserViewModel;
             }
         }
 
@@ -192,7 +192,7 @@ namespace S1Nyan.ViewModels
         //    }
         //}
 
-        internal async void InitLogin()
+        public async void InitLogin()
         {
             if (Uid != null) return;
 

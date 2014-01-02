@@ -10,15 +10,19 @@ namespace S1Nyan.ViewModels
 
     public class PostViewModel : S1NyanViewModelBase
     {
-        IDataService _dataService;
+        readonly IDataService _dataService;
+        readonly IUserService _userService;
+
         /// <summary>
         /// Initializes a new instance of the PostViewModel class.
         /// </summary>
-        public PostViewModel(IDataService dataService, IEventAggregator eventAggregator)
+        public PostViewModel(IDataService dataService, 
+            IUserService userService,
+            IEventAggregator eventAggregator)
             : base(eventAggregator)
         {
             _dataService = dataService;
-            //if (IsInDesignMode) _dataService.GetThreadData(null, 0, (item, error) => { TheThread = item; Title = TheThread.Title; });
+            _userService = userService;
         }
 
         private string _title = null;
@@ -230,7 +234,7 @@ namespace S1Nyan.ViewModels
             System.Diagnostics.Debug.WriteLine("Send Reply: " + replyLink + "\r\n" + ReplyText);
 
             IsSending = true;
-            var result = await SendPostService.DoSendPost(replyLink, ReplyText.Replace("\r","\r\n"), TheThread.Hash);
+            var result = await _userService.DoSendPost(replyLink, ReplyText.Replace("\r","\r\n"), TheThread.Hash);
             IsSending = false;
             if (result == null)
             {
@@ -244,10 +248,6 @@ namespace S1Nyan.ViewModels
             }
         }
 
-        private ISendPostService SendPostService
-        {
-            get { return IoC.Get<ISendPostService>(); }
-        }
         #endregion
     }
 }
