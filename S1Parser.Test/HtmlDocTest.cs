@@ -24,7 +24,7 @@ namespace S1Parser.Test
 <li><a href='simple/?f15.html'>本垒</a></li>
 </ul>";
 
-        [TestInitialize()]
+        [TestInitialize]
         public void Setup()
         {
             stream = new MemoryStream(1024);
@@ -43,10 +43,10 @@ namespace S1Parser.Test
             Assert.IsNull(node);
 
             node = doc.Element("hello");
-            Assert.AreEqual<String>("hello", node.Name);
+            Assert.AreEqual("hello", node.Name);
 
             node = node.Element("h2");
-            Assert.AreEqual<String>("h2", node.Name);
+            Assert.AreEqual("h2", node.Name);
         }
 
         [TestMethod]
@@ -54,7 +54,7 @@ namespace S1Parser.Test
         {
             var e = HtmlDoc.Parse(test1);
             Assert.IsTrue(e.Descendants().Count() > 1);
-            Assert.AreEqual<int>(6, e.Element("ul").Descendants("li").Count());
+            Assert.AreEqual(6, e.Element("ul").Descendants("li").Count());
         }
 
         string test2 = "asdf<div><h2>f<br /></h2><b>asdf</b>daa</div>jkl";
@@ -74,15 +74,15 @@ jkl
         public void TestToString()
         {
             var e = HtmlDoc.Parse(test2);
-            Assert.AreEqual<string>(test2Formated, e.ToString());
-            Assert.AreEqual<string>(test2, e.ToString(false));
+            Assert.AreEqual(test2Formated, e.ToString());
+            Assert.AreEqual(test2, e.ToString(false));
         }
 
         [TestMethod]
         public void TestLink()
         {
             var e = HtmlDoc.Parse("<a href='./' target='_blank'>STAGE1</a>");
-            Assert.AreEqual<string>("STAGE1", e.InnerHtml);
+            Assert.AreEqual("STAGE1", e.InnerHtml);
         }
 
         string test3 = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />";
@@ -90,15 +90,15 @@ jkl
         public void TestSelfClosed()
         {
             var e = HtmlDoc.Parse(test3);
-            Assert.AreEqual<string>("meta", e.Name);
+            Assert.AreEqual("meta", e.Name);
         }
 
         [TestMethod]
         public void TestAttributes()
         {
             var e = HtmlDoc.Parse(test3);
-            Assert.AreEqual<string>("Content-Type", e.Attributes["http-equiv"]);
-            Assert.AreEqual<string>("text/html; charset=utf-8", e.Attributes["content"]);
+            Assert.AreEqual("Content-Type", e.Attributes["http-equiv"]);
+            Assert.AreEqual("text/html; charset=utf-8", e.Attributes["content"]);
         }
 
         string test4 = @"
@@ -140,9 +140,9 @@ h2{ font-size:12px; margin:0;padding:0;}
         public void TestMismatch()
         {
             var e = HtmlDoc.Parse(test4);
-            Assert.AreEqual<int>(6, e.Descendants().Count());
+            Assert.AreEqual(6, e.Descendants().Count());
             e = HtmlDoc.Parse(test44).Element().Element();
-            Assert.AreEqual<string>("ul", e.Name);
+            Assert.AreEqual("ul", e.Name);
             //Assert.AreEqual<int>(3, e.Descendants().Count()); ///TODO: look up html tags
             //Assert.AreEqual<string>("ul", e.Descendants().Last().Name);
         }
@@ -157,12 +157,12 @@ h2{ font-size:12px; margin:0;padding:0;}
                         where table.Attributes["cellpadding"] == "7"
                         select table;
 
-            Assert.AreEqual<int>(1, tables.Count());
+            Assert.AreEqual(1, tables.Count());
 
             tables = from table in doc.FindElements()
                     where table.Name == "table"
                     select table;
-            Assert.AreEqual<int>(3, tables.Count());
+            Assert.AreEqual(3, tables.Count());
         }
 
         //[TestMethod]
@@ -171,7 +171,7 @@ h2{ font-size:12px; margin:0;padding:0;}
             FileStream file = new FileStream("Data/simple.htm", FileMode.Open);
             var e = new HtmlDoc(file).RootElement;
             var s = e.ToString();
-            Assert.AreEqual<string>("", s);
+            Assert.AreEqual("", s);
         }
     }
 }

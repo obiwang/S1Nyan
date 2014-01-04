@@ -42,6 +42,7 @@ namespace S1Parser.DZParser
                 item.Author = WebUtility.HtmlDecode(post.Author);
                 item.Date = WebUtility.HtmlDecode(post.Dateline);
                 //work around
+                post.Message = post.Message.Replace("<imgwidth=", "<img width=");
                 post.Message = post.Message.Replace("\n", "");
                 var content = new HtmlDoc(string.Format("<div>{0}</div>", WebUtility.HtmlDecode(post.Message))).RootElement;
 
