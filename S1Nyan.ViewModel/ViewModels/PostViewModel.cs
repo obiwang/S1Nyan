@@ -12,17 +12,29 @@ namespace S1Nyan.ViewModels
     {
         readonly IDataService _dataService;
         readonly IUserService _userService;
+        readonly INavigationService _navigationService;
 
         /// <summary>
         /// Initializes a new instance of the PostViewModel class.
         /// </summary>
         public PostViewModel(IDataService dataService, 
             IUserService userService,
+            INavigationService navigationService,
             IEventAggregator eventAggregator)
             : base(eventAggregator)
         {
             _dataService = dataService;
             _userService = userService;
+            _navigationService = navigationService;
+        }
+
+        public override void Handle(UserMessage msg)
+        {
+            base.Handle(msg);
+            if (msg.Type == Messages.PostSuccess)
+            {
+                IsShowReplyPanel = false;
+            }
         }
 
         private string _title = null;
@@ -67,27 +79,26 @@ namespace S1Nyan.ViewModels
             }
         }
 
-        private S1ThreadPage _threadpage = null;
+        private S1ThreadPage _thePost = null;
         /// <summary>
         /// Sets and gets the TheThread property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public S1ThreadPage TheThread
+        public S1ThreadPage ThePost
         {
-            get { return _threadpage; }
+            get { return _thePost; }
             set
             {
-                if (_threadpage == value) return;
+                if (_thePost == value) return;
 
-                _threadpage = value;
-
-                NotifyOfPropertyChange(() => TheThread);
+                _thePost = value;
+                NotifyOfPropertyChange(() => ThePost);
             }
         }
 
         public override async void RefreshData()
         {
-            TheThread = null;
+            ThePost = null;
             if (null == _tid) return;
             Util.Indicator.SetLoading();
             try
@@ -95,14 +106,13 @@ namespace S1Nyan.ViewModels
                 var temp = await _dataService.GetThreadDataAsync(_tid, CurrentPage);
                 if (temp.CurrentPage == CurrentPage)
                 {
-                    TheThread = temp;
-                    TotalPage = TheThread.TotalPage;
-                    Title = TheThread.Title;
-
-                    if (PageChanged != null)
-                    {
-                        PageChanged(CurrentPage, TotalPage);
-                    }
+                    ThePost = temp;
+                    TotalPage = ThePost.TotalPage;
+                    Title = ThePost.Title;
+                    NotifyOfPropertyChange(() => CanFirstPage);
+                    NotifyOfPropertyChange(() => CanPrePage);
+                    NotifyOfPropertyChange(() => CanNextPage);
+                    NotifyOfPropertyChange(() => CanLastPage);
                     Util.Indicator.SetBusy(false);
                 }
             }
@@ -115,37 +125,157 @@ namespace S1Nyan.ViewModels
 
         public bool IsShowPage { get { return TotalPage > 1; } }
 
-        int totalPage;
+        int _totalPage;
         public int TotalPage
         {
-            get { return totalPage; }
+            get { return _totalPage; }
             set
             {
-                if (totalPage == value) return;
-                totalPage = value;
+                if (_totalPage == value) return;
+                _totalPage = value;
                 NotifyOfPropertyChange(() => TotalPage);
                 NotifyOfPropertyChange(() => IsShowPage);
             }
         }
 
         //may change during async actions, disable optimization
-        volatile int currentPage;
+        volatile int _currentPage;
         public int CurrentPage
         {
-            get { return currentPage; }
+            get { return _currentPage; }
             set
             {
                 if (value > 0 && 
-                    value != currentPage &&
-                    ((totalPage > 0 && value <= totalPage) || totalPage == 0))
+                    value != _currentPage &&
+                    ((_totalPage > 0 && value <= _totalPage) || _totalPage == 0))
                 {
-                    currentPage = value;
+                    _currentPage = value;
                     RefreshData();
                     NotifyOfPropertyChange(() => CurrentPage);
                 }
             }
         }
-        public Action<int, int> PageChanged { get; set; }
+
+        #region Bind ApplicaionBar
+
+        private bool _isShowNavigator;
+        public bool IsShowNavigator
+        {
+            get { return _isShowNavigator; }
+            set
+            {
+                _isShowNavigator = value;
+                NotifyOfPropertyChange(() => IsShowNavigator);
+                NotifyOfPropertyChange(() => NavigatorIcon);
+            }
+        }
+
+        public Uri NavigatorIcon
+        {
+            get
+            {
+                string iconPath = IsShowNavigator
+                    ? "/Assets/AppBar/appbar.stairs.up.horizontal.invert.png"
+                    : "/Assets/AppBar/appbar.stairs.up.horizontal.png";
+
+                return new Uri(iconPath, UriKind.Relative);
+            }
+        }
+
+        public void ToggleNavigator()
+        {
+            IsShowNavigator = !IsShowNavigator;
+        }
+
+        private bool _isShowReplyPanel;
+        public bool IsShowReplyPanel
+        {
+            get { return _isShowReplyPanel; }
+            set
+            {
+                _isShowReplyPanel = value;
+                NotifyOfPropertyChange(() => IsShowReplyPanel);
+                NotifyOfPropertyChange(() => ReplyIcon);
+            }
+        }
+
+        public Uri ReplyIcon
+        {
+            get
+            {
+                string iconPath = IsShowReplyPanel
+                    ? "/Assets/AppBar/appbar.reply.email.invert.png"
+                    : "/Assets/AppBar/appbar.reply.email.png";
+
+                return new Uri(iconPath, UriKind.Relative);
+            }
+        }
+
+        public void ToggleReply()
+        {
+            IsShowReplyPanel = !IsShowReplyPanel;
+        }
+
+        public void RefreshPost()
+        {
+            RefreshData();
+        }
+
+        public void FirstPage()
+        {
+            CurrentPage = 1;
+        }
+
+        public bool CanFirstPage
+        {
+            get { return CanPrePage; }
+        }
+
+        public void PrePage()
+        {
+            CurrentPage--;
+        }
+
+        public bool CanPrePage
+        {
+            get { return CurrentPage > 1 && TotalPage > 1; }
+        }
+
+        public void NextPage()
+        {
+            CurrentPage++;
+        }
+
+        public bool CanNextPage
+        {
+            get { return CurrentPage < TotalPage && TotalPage > 1; }
+        }
+
+        public void LastPage()
+        {
+            CurrentPage = TotalPage;
+        }
+
+        public bool CanLastPage
+        {
+            get { return CanNextPage; }
+        }
+
+        public void GoToSetting()
+        {
+            _navigationService.Navigate(new Uri("/Views/SettingView.xaml", UriKind.Relative));
+        }
+
+        public void OpenInBrowser()
+        {
+            var task = new Microsoft.Phone.Tasks.WebBrowserTask
+            {
+                Uri = new Uri(ThePost.FullLink, UriKind.Absolute)
+            };
+            task.Show();
+        }
+
+        #endregion
 
         //public override void Cleanup()
         //{
@@ -171,7 +301,7 @@ namespace S1Nyan.ViewModels
 
                 _replyText = value;
                 NotifyOfPropertyChange(() => ReplyText);
-                //SendCommand.RaiseCanExecuteChanged();
+                NotifyOfPropertyChange(() => CanSendReply);
             }
         }
 
@@ -181,8 +311,8 @@ namespace S1Nyan.ViewModels
             get { return isSending; }
             set
             {
-                isSending = value; 
-                //SendCommand.RaiseCanExecuteChanged();
+                isSending = value;
+                NotifyOfPropertyChange(() => CanSendReply);
             }
         }
 
@@ -200,9 +330,9 @@ namespace S1Nyan.ViewModels
             {
                 if (_replyResult == value) return;
 
-                if (isSuccess && value == null)
+                if (_isSuccess && value == null)
                 {
-                    isSuccess = false;
+                    _isSuccess = false;
                     _eventAggregator.Publish(UserMessage.PostSuccessMessage);
                 }
                 _replyResult = value;
@@ -211,35 +341,26 @@ namespace S1Nyan.ViewModels
         }
 
         //private RelayCommand _sendCommand;
-        private bool isSuccess;
+        private bool _isSuccess;
 
-        ///// <summary>
-        ///// Gets the SendCommand.
-        ///// </summary>
-        //public RelayCommand SendCommand
-        //{
-        //    get
-        //    {
-        //        return _sendCommand
-        //            ?? (_sendCommand = new RelayCommand(
-        //                () => SendReply(),
-        //                () => ReplyText.Length > 0 && !IsSending));
-        //    }
-        //}
-
-        private async void SendReply()
+        public bool CanSendReply
         {
-            var replyLink = TheThread.ReplyLink;
+            get { return ReplyText.Length > 0 && !IsSending; }
+        }
+
+        public async void SendReply()
+        {
+            var replyLink = ThePost.ReplyLink;
 
             System.Diagnostics.Debug.WriteLine("Send Reply: " + replyLink + "\r\n" + ReplyText);
 
             IsSending = true;
-            var result = await _userService.DoSendPost(replyLink, ReplyText.Replace("\r","\r\n"), TheThread.Hash);
+            var result = await _userService.DoSendPost(replyLink, ReplyText.Replace("\r","\r\n"), ThePost.Hash);
             IsSending = false;
             if (result == null)
             {
                 ReplyText = "";
-                isSuccess = true;
+                _isSuccess = true;
                 ReplyResult = Utils.Util.ErrorMsg.GetExceptionMessage(S1Parser.User.S1UserException.ReplySuccess);
             }
             else

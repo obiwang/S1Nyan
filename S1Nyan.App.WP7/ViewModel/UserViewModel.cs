@@ -174,23 +174,10 @@ namespace S1Nyan.ViewModels
             });
         }
 
-        //private RelayCommand _showAccount;
-
-        ///// <summary>
-        ///// Gets the ShowAccount.
-        ///// </summary>
-        //public RelayCommand ShowAccount
-        //{
-        //    get
-        //    {
-        //        return _showAccount
-        //            ?? (_showAccount = new RelayCommand(
-        //                    () =>
-        //                    {
-        //                        SettingView.GotoSetting(SettingView.PivotAccount);
-        //                    }));
-        //    }
-        //}
+        public void ShowAccount()
+        {
+            SettingView.GotoSetting(SettingView.PivotAccount);
+        }
 
         public async void InitLogin()
         {

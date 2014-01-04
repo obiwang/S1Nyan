@@ -9,7 +9,7 @@ namespace S1Nyan.Views
     {
         private void OnReplyButton(object sender, EventArgs e)
         {
-            ToggleReplyPanelVisible();
+            //ToggleReplyPanelVisible();
             if (savedReply != null)
             {
                 replyText.Text = savedReply;
@@ -17,29 +17,29 @@ namespace S1Nyan.Views
             }
         }
 
-        bool IsReplyPanelVisible { get { return ReplyPanel.Visibility == Visibility.Visible; } }
-        private void ToggleReplyPanelVisible()
-        {
-            if (IsNavigatorVisible) 
-                ShowHideNavi(true);
-            ShowHideReplyPanel(IsReplyPanelVisible);
-        }
+        //bool IsReplyPanelVisible { get { return ReplyPanel.Visibility == Visibility.Visible; } }
+        //private void ToggleReplyPanelVisible()
+        //{
+        //    if (IsNavigatorVisible) 
+        //        ShowHideNavi(true);
+        //    ShowHideReplyPanel(IsReplyPanelVisible);
+        //}
 
-        private void ShowHideReplyPanel(bool hide)
-        {
-            if (hide)
-            {
-                ReplyPanel.Visibility = Visibility.Collapsed;
-                replyButton.IconUri = replyIcon;
-            }
-            else
-            {
-                ApplicationBar.IsVisible = false;
-                ReplyPanel.Visibility = Visibility.Visible;
-                replyButton.IconUri = replyIconInvert;
-                replyText.Focus();
-            }
-        }
+        //private void ShowHideReplyPanel(bool hide)
+        //{
+        //    if (hide)
+        //    {
+        //        ReplyPanel.Visibility = Visibility.Collapsed;
+        //        replyButton.IconUri = replyIcon;
+        //    }
+        //    else
+        //    {
+        //        ApplicationBar.IsVisible = false;
+        //        ReplyPanel.Visibility = Visibility.Visible;
+        //        replyButton.IconUri = replyIconInvert;
+        //        replyText.Focus();
+        //    }
+        //}
 
         #region SIP margin walkaround
 

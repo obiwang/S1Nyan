@@ -28,7 +28,7 @@ namespace S1Nyan.ViewModels
         }
 #endif
 
-        public void Handle(UserMessage msg)
+        public virtual void Handle(UserMessage msg)
         {
             switch (msg.Type)
             {
