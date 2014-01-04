@@ -84,23 +84,13 @@ namespace S1Nyan.ViewModels
         }
 
         private string _fid = null;
-        public void OnChangeFID(string fid, string title)
-        {
-            Title = title;
-            if (fid != null)
-            {
-                _fid = fid;
-                TotalPage = 0;
-                CurrentPage = 1;
-            }
-        }
 
         public string Fid
         {
             get { return _fid; }
             set
             {
-                if (value == null) return;
+                if (value == null || value == _fid) return;
                 _fid = value;
                 TotalPage = 0;
                 CurrentPage = 1;
