@@ -1,4 +1,4 @@
-﻿namespace S1Nyan.ViewModels
+﻿namespace S1Nyan
 {
     public interface IViewLoaded
     {

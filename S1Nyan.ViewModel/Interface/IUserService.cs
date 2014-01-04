@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace S1Nyan.ViewModels
+namespace S1Nyan
 {
     public interface IUserService
     {

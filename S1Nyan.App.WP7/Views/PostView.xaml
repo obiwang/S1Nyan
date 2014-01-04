@@ -5,6 +5,8 @@
                             xmlns:bab="clr-namespace:Caliburn.Micro.BindableAppBar;assembly=Caliburn.Micro.BindableAppBar"
                             xmlns:c4f="clr-namespace:Coding4Fun.Toolkit.Controls;assembly=Coding4Fun.Toolkit.Controls"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:ec="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"
+                            xmlns:eim="clr-namespace:Microsoft.Expression.Interactivity.Media;assembly=Microsoft.Expression.Interactions"
                             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                             xmlns:ignore="http://www.ignore.com"
                             xmlns:local="clr-namespace:S1Nyan.Views"
@@ -193,20 +195,17 @@
                                      To="0.9"
                                      d:IsOptimized="True" />
                 </Storyboard>
-                <Storyboard x:Name="HideNavi">
-                    <DoubleAnimation Duration="0:0:0.3"
-                                     From="0.9"
-                                     Storyboard.TargetName="Navigator"
-                                     Storyboard.TargetProperty="(UIElement.Opacity)"
-                                     To="0"
-                                     d:IsOptimized="True" />
-                </Storyboard>
                 <Style TargetType="c4f:RoundButton">
                     <Setter Property="HorizontalAlignment" Value="Center" />
                     <Setter Property="Margin" Value="-3,0,0,-10" />
                     <Setter Property="VerticalAlignment" Value="Center" />
                 </Style>
             </Grid.Resources>
+            <i:Interaction.Triggers>
+                <ec:DataTrigger Binding="{Binding IsShowNavigator}" Value="True">
+                    <eim:ControlStoryboardAction Storyboard="{StaticResource ShowNavi}" />
+                </ec:DataTrigger>
+            </i:Interaction.Triggers>
             <Border x:Name="VertBorder"
                     Width="64"
                     Height="200"
@@ -228,6 +227,7 @@
                                  Grid.Row="1"
                                  HandSide="Right"
                                  IsDirectionReversed="True"
+                                 IsEnabled="False"
                                  Opacity="0"
                                  Orientation="Vertical"
                                  SelectedValueChanged="VertSliderSelectedValueChanged" />
@@ -267,13 +267,13 @@
                 Background="{StaticResource PhoneBackgroundBrush}"
                 BorderBrush="{StaticResource PhoneDisabledBrush}"
                 BorderThickness="1,1,1,0"
-                Visibility="{Binding IsShowReplyPanel, Mode=TwoWay, Converter={StaticResource BoolToVisConv}}">
+                Visibility="{Binding IsShowReplyPanel, Converter={StaticResource BoolToVisConv}, Mode=TwoWay}">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="48" />
                 </Grid.ColumnDefinitions>
-                <TextBox x:Name="replyText"
+                <TextBox x:Name="ReplyText"
                          MinHeight="72"
                          MaxHeight="172"
                          AcceptsReturn="True"
@@ -330,7 +330,4 @@
         </my:ThemeableBindableAppBar>
 
     </Grid>
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsMenuEnabled="True" IsVisible="True" />
-    </phone:PhoneApplicationPage.ApplicationBar>
 </phone:PhoneApplicationPage>

@@ -27,7 +27,7 @@
     <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <ExpressionBlendVersion>5.0.40110.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -133,6 +133,7 @@
     <Reference Include="ImageTools.Utils">
       <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.Utils.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Expression.Interactions" />
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
@@ -235,9 +236,6 @@
       <DependentUpon>ThreadListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PostView.Common.cs">
-      <DependentUpon>PostView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\PostView.Reply.cs">
       <DependentUpon>PostView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PostView.xaml.cs">

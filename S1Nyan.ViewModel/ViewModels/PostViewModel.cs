@@ -164,6 +164,10 @@ namespace S1Nyan.ViewModels
             get { return _isShowNavigator; }
             set
             {
+                if (value && IsShowReplyPanel)
+                {
+                    IsShowReplyPanel = false;
+                } 
                 _isShowNavigator = value;
                 NotifyOfPropertyChange(() => IsShowNavigator);
                 NotifyOfPropertyChange(() => NavigatorIcon);
@@ -193,7 +197,15 @@ namespace S1Nyan.ViewModels
             get { return _isShowReplyPanel; }
             set
             {
+                if (value && IsShowNavigator)
+                {
+                    IsShowNavigator = false;
+                } 
                 _isShowReplyPanel = value;
+                if (value && HostedView is IFocusable)
+                {
+                    (HostedView as IFocusable).Focus();
+                }
                 NotifyOfPropertyChange(() => IsShowReplyPanel);
                 NotifyOfPropertyChange(() => ReplyIcon);
             }

@@ -89,8 +89,9 @@
     <Compile Include="Utils\IOrientationHelper.cs" />
     <Compile Include="Utils\Util.cs" />
     <Compile Include="ViewModel.cs" />
-    <Compile Include="ViewModels\IViewLoaded.cs" />
-    <Compile Include="ViewModels\IUserService.cs" />
+    <Compile Include="Interface\IFocusable.cs" />
+    <Compile Include="Interface\IViewLoaded.cs" />
+    <Compile Include="Interface\IUserService.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\S1NyanViewModelBase.cs" />
     <Compile Include="ViewModels\ServerViewModel.cs" />

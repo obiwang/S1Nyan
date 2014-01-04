@@ -1,13 +1,15 @@
 ﻿using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Runtime.Serialization;
+using System.Windows;
 using System.Windows.Navigation;
 
 namespace S1Nyan.Views
 {
-    public partial class PostView : PhoneApplicationPage
+    public partial class PostView : PhoneApplicationPage, IFocusable
     {
         public PostView()
         {
@@ -20,7 +22,7 @@ namespace S1Nyan.Views
             System.Diagnostics.Debug.WriteLine("Finalizing " + this.GetType().FullName);
         }
 #endif
-
+        #region Tomb stone support
         [DataContract]
         public class PageInfoItem
         {
@@ -46,8 +48,6 @@ namespace S1Nyan.Views
 
         private const string PostViewPageInfoKey = "PostViewPageInfo";
         private const string PostViewReplyTextKey = "PostViewReplyText";
-
-        public ImageResourceManager ImageResourceManager = new ImageResourceManager();
 
         private string idParam = null, titleParam = null, savedReply = null;
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -106,7 +106,7 @@ namespace S1Nyan.Views
                 //item.title = Vm.Title;
                 stack.Add(item);
 
-                PhoneApplicationService.Current.State[PostViewReplyTextKey] = replyText.Text;
+                PhoneApplicationService.Current.State[PostViewReplyTextKey] = ReplyText.Text;
             }
         }
 
@@ -126,63 +126,42 @@ namespace S1Nyan.Views
             return info.Stack;
         }
 
+        #endregion
+
+        public ImageResourceManager ImageResourceManager = new ImageResourceManager();
+
         private void CleanUp()
         {
             ImageResourceManager.Reset();
         }
 
+        private void OnReplyButton(object sender, EventArgs e)
+        {
+            //ToggleReplyPanelVisible();
+            if (savedReply != null)
+            {
+                ReplyText.Text = savedReply;
+                savedReply = null;
+            }
+        }
 
-            //Vm.PageChanged = (current, total) =>
-            //{
-            //    ImageResourceManager.Reset();
+        #region SIP margin walkaround
 
-            //    if (current > 1 && total > 1)
-            //        FirstPage.IsEnabled = true;
-            //    else
-            //        FirstPage.IsEnabled = false;
-            //    if (current < total && total > 1)
-            //    {
-            //        nextBarButton.IsEnabled = true;
-            //        LastPage.IsEnabled = true;
-            //    }
-            //    else
-            //    {
-            //        nextBarButton.IsEnabled = false;
-            //        LastPage.IsEnabled = false;
-            //    }
-            //    VertSlider.Minimum = 0;
-            //    VertSlider.Value = VertSlider.Minimum;
-            //    VertSlider.Maximum = VertSlider.Minimum + Vm.TheThread.Items.Count - 1;
-            //};
+        void replyText_LostFocus(object sender, RoutedEventArgs e)
+        {
+            ApplicationBar.IsVisible = true;
+        }
 
-        //private void ToggleNavigator(object sender, EventArgs e)
-        //{
-        //    if (navBarButton == null) return;
-        //    if (IsReplyPanelVisible)
-        //        ShowHideReplyPanel(true);
-        //    ShowHideNavi(IsNavigatorVisible);
-        //}
+        void replyText_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Focus();
+        }
 
-        //private void ShowHideNavi(bool hide)
-        //{
-        //    if (hide)
-        //    {
-        //        navBarButton.IconUri = navIcon;
-        //        HideNavi.Begin();
-        //        HideNavi.Completed += OnHideNaviComplete;
-        //    }
-        //    else
-        //    {
-        //        navBarButton.IconUri = navIconInvert;
-        //        Navigator.Visibility = Visibility.Visible;
-        //        ShowNavi.Begin();
-        //    }
-        //}
-
-        //private void OnHideNaviComplete(object sender, EventArgs e)
-        //{
-        //    Navigator.Visibility = Visibility.Collapsed;
-        //}
-
+        public void Focus()
+        {
+            ApplicationBar.IsVisible = false;
+            ReplyText.Focus();
+        }
+        #endregion
     }
 }
