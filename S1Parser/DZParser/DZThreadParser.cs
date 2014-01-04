@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using S1Parser.PaserFactory;
+using S1Parser.User;
 
 namespace S1Parser.DZParser
 {
@@ -25,7 +26,11 @@ namespace S1Parser.DZParser
 
         public S1ThreadPage GetData()
         {
-            var data = DZThread.FromJson(raw).Variables;
+            var json = DZThread.FromJson(raw);
+            var data = json.Variables;
+            if (data.Postlist.Length == 0 && json.Message != null)
+                throw new S1UserException(json.Message.Messagestr);
+
             var thread = new S1ThreadPage();
             thread.Title = WebUtility.HtmlDecode(data.Thread.Subject);
             thread.TotalPage = (data.Thread.Replies + DZParserFactory.PostsPerPage)/DZParserFactory.PostsPerPage;
@@ -33,6 +38,7 @@ namespace S1Parser.DZParser
             thread.Hash = data.Formhash;
             thread.FullLink = S1Resource.SiteBase + string.Format("thread-{1}-{0}-1.html", data.Thread.Fid, data.Thread.Tid);
             thread.ReplyLink = string.Format("?module=sendreply&replysubmit=yes&fid={0}&tid={1}", data.Thread.Fid, data.Thread.Tid);
+
             foreach (var post in data.Postlist)
             {
                 var item = new S1ThreadItem();

@@ -9,17 +9,16 @@ namespace S1Nyan.ViewModels
 
     public class ThreadListViewModel : S1NyanViewModelBase
     {
-        private readonly IDataService _dataService;
-        private readonly INavigationService _navigationService;
 
         /// <summary>
         /// Initializes a new instance of the ThreadListViewViewModel class.
         /// </summary>
-        public ThreadListViewModel(IDataService dataService, IEventAggregator eventAggregator,INavigationService navigationService)
-            : base(eventAggregator)
+        public ThreadListViewModel(
+            IDataService dataService, 
+            IEventAggregator eventAggregator,
+            INavigationService navigationService)
+            : base(dataService, eventAggregator, navigationService)
         {
-            _dataService = dataService;
-            _navigationService = navigationService;
         }
 
         private string _title = "";

@@ -10,22 +10,19 @@ namespace S1Nyan.ViewModels
 
     public class PostViewModel : S1NyanViewModelBase
     {
-        readonly IDataService _dataService;
         readonly IUserService _userService;
-        readonly INavigationService _navigationService;
 
         /// <summary>
         /// Initializes a new instance of the PostViewModel class.
         /// </summary>
-        public PostViewModel(IDataService dataService, 
+        public PostViewModel(
+            IDataService dataService, 
             IUserService userService,
             INavigationService navigationService,
             IEventAggregator eventAggregator)
-            : base(eventAggregator)
+            : base(dataService, eventAggregator, navigationService)
         {
-            _dataService = dataService;
             _userService = userService;
-            _navigationService = navigationService;
         }
 
         public override void Handle(UserMessage msg)
@@ -119,7 +116,10 @@ namespace S1Nyan.ViewModels
             catch (Exception e)
             {
                 if (!HandleUserException(e))
+                {
                     Util.Indicator.SetError(e);
+                    NotifyMessage = e.Message;
+                }
             }
         }
 

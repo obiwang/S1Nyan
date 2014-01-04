@@ -10,22 +10,19 @@ namespace S1Nyan.ViewModels
 
     public class MainPageViewModel : S1NyanViewModelBase
     {
-        private readonly IDataService _dataService;
-        private readonly INavigationService _navigationService;
         private readonly IUserService _userService;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
-        public MainPageViewModel(IDataService dataService, 
+        public MainPageViewModel(
+            IDataService dataService, 
             IEventAggregator eventAggregator, 
             INavigationService navigationService, 
             IUserService userService,
             IServerModel serverModel) //TODO: move serverModel init somewhere else
-            : base(eventAggregator)
+            : base(dataService, eventAggregator, navigationService)
         {
-            _dataService = dataService;
-            _navigationService = navigationService;
             _userService = userService;
         }
 

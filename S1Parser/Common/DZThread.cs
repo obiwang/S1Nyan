@@ -14,6 +14,7 @@ namespace S1Parser
         public string Version;
         public string Charset;
         public ThreadVariables Variables;
+        public Message Message;
 
         //Empty Constructor
         public DZThread() { }

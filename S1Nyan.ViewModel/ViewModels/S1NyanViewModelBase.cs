@@ -1,10 +1,12 @@
-﻿using System;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
 using Microsoft.Phone.Controls;
+using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Nyan.ViewModels.Message;
 using S1Parser;
 using S1Parser.User;
+using System;
+using System.Windows.Navigation;
 
 namespace S1Nyan.ViewModels
 {
@@ -12,13 +14,25 @@ namespace S1Nyan.ViewModels
     {
         private static TimeSpan checkInterval = TimeSpan.FromMinutes(10);
         private static DateTime lastCheck = DateTime.Now - checkInterval;
+
         protected readonly IEventAggregator _eventAggregator;
+        protected readonly INavigationService _navigationService;
+        protected readonly IDataService _dataService;
         protected PhoneApplicationPage HostedView { get; set; }
 
-        public S1NyanViewModelBase(IEventAggregator eventAggregator)
+        public S1NyanViewModelBase(IDataService dataService, IEventAggregator eventAggregator, INavigationService navigationService)
         {
+            _dataService = dataService;
             _eventAggregator = eventAggregator;
+            _navigationService = navigationService;
             _eventAggregator.Subscribe(this);
+            _navigationService.Navigating += NavigationServiceOnNavigating;
+        }
+
+        private void NavigationServiceOnNavigating(object sender, NavigatingCancelEventArgs navigatingCancelEventArgs)
+        {
+            //clear error msg or loading state when navigate away
+            Util.Indicator.SetBusy(false);
         }
 
 #if DEBUG
