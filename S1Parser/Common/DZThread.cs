@@ -4,6 +4,7 @@
 // http://json.codeplex.com/
 // 
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace S1Parser
@@ -90,7 +91,7 @@ namespace S1Parser
 
     }
 
-    public class Postlist
+    public class PostItem
     {
 
         public string Pid;
@@ -109,10 +110,41 @@ namespace S1Parser
         public string Memberstatus;
         public int Number;
         public string Dbdateline;
+        public Dictionary<string, Attachment> Attachments { get; set; }
+        public List<string> Imagelist { get; set; }
 
         //Empty Constructor
-        public Postlist() { }
+        public PostItem() { }
 
+    }
+
+    public class Attachment
+    {
+        public string aid { get; set; }
+        public string tid { get; set; }
+        public string pid { get; set; }
+        public string uid { get; set; }
+        public string dateline { get; set; }
+        public string filename { get; set; }
+        public string filesize { get; set; }
+        public string attachment { get; set; }
+        public string remote { get; set; }
+        public string description { get; set; }
+        public string readperm { get; set; }
+        public string price { get; set; }
+        public string isimage { get; set; }
+        public string width { get; set; }
+        public string thumb { get; set; }
+        public string picid { get; set; }
+        public string ext { get; set; }
+        public string imgalt { get; set; }
+        public string attachicon { get; set; }
+        public string attachsize { get; set; }
+        public string attachimg { get; set; }
+        public string payed { get; set; }
+        public string url { get; set; }
+        public string dbdateline { get; set; }
+        public string downloads { get; set; }
     }
 
     public class Setting_rewriterule
@@ -147,7 +179,7 @@ namespace S1Parser
         public string Readaccess;
         public Thread Thread;
         public string Fid;
-        public Postlist[] Postlist;
+        public PostItem[] Postlist;
         public string[] Imagelist;
         public string Ppp;
         public Setting_rewriterule Setting_rewriterule;

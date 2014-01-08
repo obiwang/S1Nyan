@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 using S1Parser.PaserFactory;
 using S1Parser.User;
 
@@ -47,9 +48,12 @@ namespace S1Parser.DZParser
                 item.No = post.Number;
                 item.Author = WebUtility.HtmlDecode(post.Author);
                 item.Date = WebUtility.HtmlDecode(post.Dateline);
+
                 //work around
                 post.Message = post.Message.Replace("<imgwidth=", "<img width=");
                 post.Message = post.Message.Replace("\n", "");
+                FillAttachment(post);
+
                 var content = new HtmlDoc(string.Format("<div>{0}</div>", WebUtility.HtmlDecode(post.Message))).RootElement;
 
                 if (content != null)
@@ -57,6 +61,21 @@ namespace S1Parser.DZParser
                 thread.Items.Add(item);
             }
             return thread;
+        }
+
+        private static readonly Regex AttachPattern = new Regex(@"\[attach](?<tag>\d+)\[/attach]", RegexOptions.IgnoreCase);
+        private void FillAttachment(PostItem post)
+        {
+            post.Message = AttachPattern.Replace(post.Message, match =>
+            {
+                var attachNo = match.Groups["tag"].Value;
+                if (!string.IsNullOrEmpty(attachNo) && post.Attachments.ContainsKey(attachNo))
+                {
+                    var a = post.Attachments[attachNo];
+                    return string.Format("<img src=\"{0}\"></img>", a.url + a.attachment);
+                }
+                return match.Value;
+            });
         }
 
     }

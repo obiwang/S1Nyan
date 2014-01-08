@@ -36,5 +36,15 @@ namespace S1Parser.Test
             var content = data.Items[0].Content;
 
         }
+
+        [TestMethod]
+        public void TestParseAttachment()
+        {
+            FileStream file = new FileStream("Data/thread2.json", FileMode.Open);
+            var parser = new DZThreadParser(file);
+            var data = parser.GetData();
+            var p = data.Items[10].Content.ElementAt(2);
+            Assert.AreEqual("img", p.Descendants().Last().Name);
+        }
     }
 }
