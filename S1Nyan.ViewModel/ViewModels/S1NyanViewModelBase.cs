@@ -115,7 +115,7 @@ namespace S1Nyan.ViewModels
             HostedView = view as PhoneApplicationPage;
             UpdateOrientation();
             if (HostedView is IViewLoaded)
-                (HostedView as IViewLoaded).ViewLoaded();
+                (HostedView as IViewLoaded).ViewLoaded(this);
         }
 
     }

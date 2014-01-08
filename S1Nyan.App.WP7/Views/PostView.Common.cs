@@ -1,15 +1,11 @@
 ﻿using Microsoft.Phone.Controls;
-using Microsoft.Phone.Shell;
-using System;
-using System.Collections.Generic;
 using System.Net;
-using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Navigation;
 
 namespace S1Nyan.Views
 {
-    public partial class PostView : PhoneApplicationPage, IFocusable
+    public partial class PostView : PhoneApplicationPage, IFocusable, IViewLoaded
     {
         public PostView()
         {
@@ -22,127 +18,40 @@ namespace S1Nyan.Views
             System.Diagnostics.Debug.WriteLine("Finalizing " + this.GetType().FullName);
         }
 #endif
-        #region Tomb stone support
-        [DataContract]
-        public class PageInfoItem
+
+        private IPostViewModel _postViewModel;
+        public void ViewLoaded(object vm)
         {
-            [DataMember]
-            public string id;
-            [DataMember]
-            public string title;
-            [DataMember]
-            public int page;
+            _postViewModel = vm as IPostViewModel;
+            if (_postViewModel != null && _id != null)
+                _postViewModel.InitContent(_id, _page, _title);
+            _id = null;
         }
 
-        [DataContract]
-        public class PostViewPageInfo
-        {
-            [DataMember]
-            public List<PageInfoItem> Stack;
-
-            public PostViewPageInfo()
-            {
-                Stack = new List<PageInfoItem>();
-            }
-        }
-
-        private const string PostViewPageInfoKey = "PostViewPageInfo";
-        private const string PostViewReplyTextKey = "PostViewReplyText";
-
-        private string idParam = null, titleParam = null, savedReply = null;
+        private string _id, _title;
+        private int _page;
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            //ImageResourceManager.Reset();
-            if (e.NavigationMode == NavigationMode.Back)
-            {
-                if (idParam == null)
-                {   //tombstone
-                    var stack = GetInfoStack();
-                    if (stack.Count > 0)
-                    {
-                        var item = stack[stack.Count - 1];
-                        //Vm.OnChangeTID(item.id, item.title, item.page);
-                    }
 
-                    if (PhoneApplicationService.Current.State.ContainsKey(PostViewReplyTextKey))
-                    {
-                        savedReply = PhoneApplicationService.Current.State[PostViewReplyTextKey] as string;
-                        PhoneApplicationService.Current.State.Remove(PostViewReplyTextKey);
-                    }
-                }
-                return;
-            }
-            string pageParam = idParam = titleParam = null;
-            int page = 1;
-            if (NavigationContext.QueryString.TryGetValue("ID", out idParam))
+            string pageParam = _id = _title = null;
+            _page = 1;
+            if (NavigationContext.QueryString.TryGetValue("ID", out _id))
             {
-                if (NavigationContext.QueryString.TryGetValue("Title", out titleParam))
-                    titleParam = HttpUtility.HtmlDecode(titleParam);
+                if (NavigationContext.QueryString.TryGetValue("Title", out _title))
+                    _title = HttpUtility.HtmlDecode(_title);
                 if (NavigationContext.QueryString.TryGetValue("Page", out pageParam))
                 {
-                    int.TryParse(pageParam, out page);
+                    int.TryParse(pageParam, out _page);
                 }
-                //Vm.OnChangeTID(idParam, titleParam, page);
             }
         }
-
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {   //tombstone
-            base.OnNavigatedFrom(e);
-            //ImageResourceManager.Reset();
-            if (e.NavigationMode == NavigationMode.Back)
-            {
-                var stack = GetInfoStack();
-                if (stack.Count > 0) stack.RemoveAt(stack.Count - 1);
-                CleanUp();
-            }
-            else if (e.NavigationMode == NavigationMode.New)
-            {
-                var stack = GetInfoStack();
-                var item = new PageInfoItem();
-                //item.id = idParam;
-                //item.page = Vm.CurrentPage;
-                //item.title = Vm.Title;
-                stack.Add(item);
-
-                PhoneApplicationService.Current.State[PostViewReplyTextKey] = ReplyText.Text;
-            }
-        }
-
-        public static List<PageInfoItem> GetInfoStack()
-        {
-            PostViewPageInfo info = null;
-            if (PhoneApplicationService.Current.State.ContainsKey(PostViewPageInfoKey))
-            {
-                info = PhoneApplicationService.Current.State[PostViewPageInfoKey] as PostViewPageInfo;
-            }
-            if (info == null)
-            {
-                info = new PostViewPageInfo();
-                PhoneApplicationService.Current.State[PostViewPageInfoKey] = info;
-            }
-
-            return info.Stack;
-        }
-
-        #endregion
 
         public ImageResourceManager ImageResourceManager = new ImageResourceManager();
 
         private void CleanUp()
         {
             ImageResourceManager.Reset();
-        }
-
-        private void OnReplyButton(object sender, EventArgs e)
-        {
-            //ToggleReplyPanelVisible();
-            if (savedReply != null)
-            {
-                ReplyText.Text = savedReply;
-                savedReply = null;
-            }
         }
 
         #region SIP margin walkaround

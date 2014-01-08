@@ -19,8 +19,7 @@ namespace S1Nyan.ViewModels
             IDataService dataService, 
             IEventAggregator eventAggregator, 
             INavigationService navigationService, 
-            IUserService userService,
-            IServerModel serverModel) //TODO: move serverModel init somewhere else
+            IUserService userService) //TODO: move serverModel init somewhere else
             : base(dataService, eventAggregator, navigationService)
         {
             _userService = userService;

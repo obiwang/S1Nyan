@@ -50,7 +50,6 @@ namespace S1Nyan
             container.PerRequest<PostViewModel>();
             container.Singleton<IUserService, UserViewModel>();
 
-            container.Singleton<IServerModel, ServerModel>();
             container.Singleton<IIndicator, Indicator>();
             container.Singleton<IErrorMsg, ErrorMsg>();
             container.Singleton<IResourceService, NetResourceService>();
@@ -58,11 +57,18 @@ namespace S1Nyan
             container.Singleton<IStorageHelper, IsolatedStorageHelper>();
             container.Singleton<IParserFactory, DZParserFactory>();
             container.Singleton<IOrientationHelper, OrientationHelper>();
-            
+
             GalaSoft.MvvmLight.Threading.DispatcherHelper.Initialize();
             ImageTools.IO.Decoders.AddDecoder<ImageTools.IO.Gif.GifDecoder>();
 
             AddCustomConventions();
+        }
+
+        protected override void OnStartup(object sender, StartupEventArgs e)
+        {
+            base.OnStartup(sender, e);
+            container.Instance<IServerModel>(new ServerModel());
+            Views.SettingView.InitTheme();
         }
 
         static void AddCustomConventions()

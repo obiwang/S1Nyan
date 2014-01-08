@@ -10,14 +10,12 @@ namespace S1Nyan.Views
     {
         public MainPage()
         {
-            SettingView.InitTheme();
-
             InitializeComponent();
 
             BuildLocalizedApplicationBar();
         }
 
-        public void ViewLoaded()
+        public void ViewLoaded(object vm)
         {
             Popup.Visibility = Visibility.Collapsed;
             ApplicationBar.IsVisible = true;

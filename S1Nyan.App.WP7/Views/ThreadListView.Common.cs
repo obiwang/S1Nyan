@@ -35,20 +35,18 @@ namespace S1Nyan.Views
             InitializeComponent();
         }
 
+#if DEBUG
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            // TODO: add tomb stone helper
-            PostView.GetInfoStack().Clear();
 
-#if DEBUG
             if (e.NavigationMode == NavigationMode.Back)
             {
                 GC.Collect();
                 GC.WaitForPendingFinalizers();
             }
-#endif
         }
+#endif
 
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IViewLoaded
     {
-        void ViewLoaded();
+        void ViewLoaded(object vm);
     }
 }

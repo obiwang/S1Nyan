@@ -8,7 +8,7 @@ using S1Parser;
 namespace S1Nyan.ViewModels
 {
 
-    public class PostViewModel : S1NyanViewModelBase
+    public class PostViewModel : S1NyanViewModelBase, IPostViewModel
     {
         readonly IUserService _userService;
 
@@ -53,7 +53,7 @@ namespace S1Nyan.ViewModels
         }
 
         private string _tid = null;
-        public void OnChangeTID(string tid, string title, int page)
+        public void InitContent(string tid, int page = 1, string title = "")
         {
             Title = title;
             if(tid!=null && tid != _tid)
