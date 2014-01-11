@@ -2,7 +2,7 @@
 
 namespace S1Parser
 {
-    public class S1ThreadPage
+    public class S1Post
     {
         public string Title { get; set; }
 
@@ -10,7 +10,7 @@ namespace S1Parser
 
         public string ReplyLink { get; internal set; }
 
-        public List<S1ThreadItem> Items { get; set; }
+        public List<S1PostItem> Items { get; set; }
 
         public int TotalPage { get; set; }
 
@@ -19,7 +19,7 @@ namespace S1Parser
         public string Hash { get; set; }
 }
 
-    public class S1ThreadItem : IEnumerable<HtmlElement>
+    public class S1PostItem : IEnumerable<HtmlElement>
     {
         public int No { get; set; }
 

@@ -8,13 +8,13 @@ using S1Parser.DZParser;
 namespace S1Parser.Test
 {
     [TestClass]
-    public class DZThreadParserTest
+    public class DZPostParserTest
     {
         [TestMethod]
         public void TestReGroupContent()
         {
-            FileStream file = new FileStream("Data/thread.json", FileMode.Open);
-            var parser = new DZThreadParser(file);
+            FileStream file = new FileStream("Data/post.json", FileMode.Open);
+            var parser = new DZPostParser(file);
             var data = parser.GetData();
             var content = data.Items[0].Content;
             Assert.AreEqual(47, content.Count());
@@ -30,8 +30,8 @@ namespace S1Parser.Test
         [TestMethod]
         public void TestParseThread()
         {
-            FileStream file = new FileStream("Data/thread1.json", FileMode.Open);
-            var parser = new DZThreadParser(file);
+            FileStream file = new FileStream("Data/post.json", FileMode.Open);
+            var parser = new DZPostParser(file);
             var data = parser.GetData();
             var content = data.Items[0].Content;
 
@@ -40,8 +40,8 @@ namespace S1Parser.Test
         [TestMethod]
         public void TestParseAttachment()
         {
-            FileStream file = new FileStream("Data/thread2.json", FileMode.Open);
-            var parser = new DZThreadParser(file);
+            FileStream file = new FileStream("Data/post2.json", FileMode.Open);
+            var parser = new DZPostParser(file);
             var data = parser.GetData();
             var p = data.Items[10].Content.ElementAt(2);
             Assert.AreEqual("img", p.Descendants().Last().Name);

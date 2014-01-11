@@ -46,7 +46,7 @@ namespace S1Parser.PaserFactory
             return new SimpleThreadListParser(s).GetData();
         }
 
-        public async Task<S1ThreadPage> GetThreadData(string tid, int page)
+        public async Task<S1Post> GetPostData(string tid, int page)
         {
             Stream s = await ResourceService.GetResourceStream(GetThreadUri(tid, page));
             return new SimpleThreadParser(s).GetData();

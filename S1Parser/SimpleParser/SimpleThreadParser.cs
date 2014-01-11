@@ -6,7 +6,7 @@ using S1Parser.PaserFactory;
 
 namespace S1Parser.SimpleParser
 {
-    public class SimpleThreadParser : DataParser<S1ThreadPage>
+    public class SimpleThreadParser : DataParser<S1Post>
     {
         public SimpleThreadParser() { }
         public SimpleThreadParser(Stream s) : base(s) { }
@@ -24,7 +24,7 @@ namespace S1Parser.SimpleParser
 
                 GetPageCount(body.FindElements("center").ElementAt(1));
 
-                theData.Items = new List<S1ThreadItem>();
+                theData.Items = new List<S1PostItem>();
                 int i = 0;
                 foreach (var item in body.Descendants("table"))
                 {
@@ -56,7 +56,7 @@ namespace S1Parser.SimpleParser
                 theData.ReplyLink = replylink.Attributes["href"];
         }
 
-        protected virtual S1ThreadItem ParseThreadItem(HtmlElement item)
+        protected virtual S1PostItem ParseThreadItem(HtmlElement item)
         {
             if (null == (item = item.FindFirst("table"))) return null;
 
@@ -65,7 +65,7 @@ namespace S1Parser.SimpleParser
             var head = trs.First();
             if (head.Attributes["class"] != "head") return null;
 
-            var threadItem = new S1ThreadItem();
+            var threadItem = new S1PostItem();
             threadItem.Author = head.Element().PlainText();
             threadItem.Date = head.Descendants().Last().PlainText();
 

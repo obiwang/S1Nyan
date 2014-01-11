@@ -25,24 +25,24 @@ namespace S1Nyan.Design
             } ,
             new S1ListItem { Title = "测试3" } };
 
-        static S1ThreadItem threadItem = new S1ThreadItem
+        static S1PostItem threadItem = new S1PostItem
         {
             Author = "Author",
             Date = "2013-01-31 23:11",
         };
 
-        static S1ThreadItem threadItem2 = new S1ThreadItem
+        static S1PostItem threadItem2 = new S1PostItem
         {
             Author = "Author",
             Date = "2013-01-31 23:11",
         };
 
-        static S1ThreadPage thread = new S1ThreadPage
+        static S1Post thread = new S1Post
         {
             Title = "这是标题，很长的标题，this is title, a title very long 这是标题，很长的标题，this is title, a title very long",
             TotalPage = 3,
             CurrentPage = 2,
-            Items = new List<S1ThreadItem> { threadItem, threadItem2, threadItem2 }
+            Items = new List<S1PostItem> { threadItem, threadItem2, threadItem2 }
         };
 
         public void GetMainListData(Action<IList<S1ListItem>, Exception> callback)
@@ -55,7 +55,7 @@ namespace S1Nyan.Design
             callback(new S1ThreadList { Children = data}, null);
         }
 
-        public void GetThreadData(string tid, int page, Action<S1ThreadPage, Exception> callback)
+        public void GetThreadData(string tid, int page, Action<S1Post, Exception> callback)
         {
             callback(thread, null);
         }
@@ -74,9 +74,9 @@ namespace S1Nyan.Design
             return Task<S1ThreadList>.Factory.StartNew(() => new S1ThreadList { Children = data });
         }
 
-        public Task<S1ThreadPage> GetThreadDataAsync(string tid, int page)
+        public Task<S1Post> GetThreadDataAsync(string tid, int page)
         {
-            return Task<S1ThreadPage>.Factory.StartNew(() => thread);
+            return Task<S1Post>.Factory.StartNew(() => thread);
         }
 
         public void GetMainListDone(bool success = true)

@@ -58,7 +58,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="DZThreadParserTest.cs" />
+    <Compile Include="DZPostParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HtmlDocTest.cs" />
     <Compile Include="SimpleListParserTest.cs" />
@@ -77,8 +77,8 @@
     <None Include="Data\simple.htm" />
     <None Include="Data\simple_read.htm" />
     <None Include="Data\simple_thread.htm" />
-    <None Include="Data\thread.json" />
-    <None Include="Data\thread2.json" />
+    <None Include="Data\post.json" />
+    <None Include="Data\post2.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\forbidden.htm" />

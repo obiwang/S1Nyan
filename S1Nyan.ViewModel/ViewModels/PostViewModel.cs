@@ -76,12 +76,12 @@ namespace S1Nyan.ViewModels
             }
         }
 
-        private S1ThreadPage _thePost = null;
+        private S1Post _thePost = null;
         /// <summary>
         /// Sets and gets the TheThread property.
         /// Changes to that property's value raise the PropertyChanged event. 
         /// </summary>
-        public S1ThreadPage ThePost
+        public S1Post ThePost
         {
             get { return _thePost; }
             set

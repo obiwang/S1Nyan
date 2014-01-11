@@ -75,9 +75,9 @@ namespace S1Nyan.Model
             return await ParserFactory.GetThreadListData(fid, page);
         }
 
-        public async Task<S1ThreadPage> GetThreadDataAsync(string tid, int page)
+        public async Task<S1Post> GetThreadDataAsync(string tid, int page)
         {
-            return await ParserFactory.GetThreadData(tid, page);
+            return await ParserFactory.GetPostData(tid, page);
         }
     }
 }

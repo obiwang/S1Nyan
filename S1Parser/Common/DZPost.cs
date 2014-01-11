@@ -9,7 +9,7 @@ using Newtonsoft.Json;
 
 namespace S1Parser
 {
-    public class DZThread
+    public class DZPost
     {
 
         public string Version;
@@ -18,19 +18,19 @@ namespace S1Parser
         public Message Message;
 
         //Empty Constructor
-        public DZThread() { }
+        public DZPost() { }
 
         public string Serialize()
         {
             return JsonConvert.SerializeObject(this);
         }
-        public static DZThread FromJson(string json)
+        public static DZPost FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<DZThread>(json);
+            return JsonConvert.DeserializeObject<DZPost>(json);
         }
     }
 
-    public class Thread
+    public class Post
     {
 
         public string Tid;
@@ -87,7 +87,7 @@ namespace S1Parser
         public string Relay;
 
         //Empty Constructor
-        public Thread() { }
+        public Post() { }
 
     }
 
@@ -177,7 +177,7 @@ namespace S1Parser
         public string Formhash;
         public string Ismoderator;
         public string Readaccess;
-        public Thread Thread;
+        public Post Thread;
         public string Fid;
         public PostItem[] Postlist;
         public string[] Imagelist;

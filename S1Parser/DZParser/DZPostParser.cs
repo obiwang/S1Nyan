@@ -7,12 +7,12 @@ using S1Parser.User;
 
 namespace S1Parser.DZParser
 {
-    public class DZThreadParser
+    public class DZPostParser
     {
         private string raw;
 
-        public DZThreadParser() { }
-        public DZThreadParser(Stream s)
+        public DZPostParser() { }
+        public DZPostParser(Stream s)
         {
             using (var reader = new StreamReader(s))
             {
@@ -20,29 +20,29 @@ namespace S1Parser.DZParser
             }
         }
 
-        public DZThreadParser(string s)
+        public DZPostParser(string s)
         {
             raw = s;
         }
 
-        public S1ThreadPage GetData()
+        public S1Post GetData()
         {
-            var json = DZThread.FromJson(raw);
+            var json = DZPost.FromJson(raw);
             var data = json.Variables;
             if (data.Postlist.Length == 0 && json.Message != null)
                 throw new S1UserException(json.Message.Messagestr);
 
-            var thread = new S1ThreadPage();
+            var thread = new S1Post();
             thread.Title = WebUtility.HtmlDecode(data.Thread.Subject);
             thread.TotalPage = (data.Thread.Replies + DZParserFactory.PostsPerPage)/DZParserFactory.PostsPerPage;
-            thread.Items = new List<S1ThreadItem>();
+            thread.Items = new List<S1PostItem>();
             thread.Hash = data.Formhash;
             thread.FullLink = S1Resource.SiteBase + string.Format("thread-{1}-{0}-1.html", data.Thread.Fid, data.Thread.Tid);
             thread.ReplyLink = string.Format("?module=sendreply&replysubmit=yes&fid={0}&tid={1}", data.Thread.Fid, data.Thread.Tid);
 
             foreach (var post in data.Postlist)
             {
-                var item = new S1ThreadItem();
+                var item = new S1PostItem();
                 if (thread.CurrentPage == 0)
                     thread.CurrentPage = post.Number/DZParserFactory.PostsPerPage + 1;
                 item.No = post.Number;
