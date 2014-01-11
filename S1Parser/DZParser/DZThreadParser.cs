@@ -63,18 +63,20 @@ namespace S1Parser.DZParser
             return thread;
         }
 
-        private static readonly Regex AttachPattern = new Regex(@"\[attach](?<tag>\d+)\[/attach]", RegexOptions.IgnoreCase);
+        private static readonly Regex AttachPattern = new Regex(@"\[attach](?<id>\d+)\[/attach]", RegexOptions.IgnoreCase);
         private void FillAttachment(PostItem post)
         {
             post.Message = AttachPattern.Replace(post.Message, match =>
             {
-                var attachNo = match.Groups["tag"].Value;
-                if (!string.IsNullOrEmpty(attachNo) && post.Attachments.ContainsKey(attachNo))
+                var attachNo = match.Groups["id"].Value;
+                if (!string.IsNullOrEmpty(attachNo) && 
+                    post.Attachments != null && 
+                    post.Attachments.ContainsKey(attachNo))
                 {
                     var a = post.Attachments[attachNo];
                     return string.Format("<img src=\"{0}\"></img>", a.url + a.attachment);
                 }
-                return match.Value;
+                return "";
             });
         }
 
