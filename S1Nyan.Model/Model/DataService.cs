@@ -8,8 +8,8 @@ namespace S1Nyan.Model
 {
     public class DataService : IDataService
     {
-        private const int MainListCacheDays = -1;
-        private const string MainListCacheName = "simple.htm";
+        private const int MainListCacheDays = 1;
+        private const string MainListCacheName = "main.json";
 
         private IList<S1ListItem> mainListData;
         public IParserFactory ParserFactory { get; set; }
@@ -48,7 +48,7 @@ namespace S1Nyan.Model
         {
             if (mainListData == null)
             {
-                Stream s = StorageHelper.ReadFromLocalCache(MainListCacheName, -1);
+                Stream s = StorageHelper.ReadFromLocalCache(MainListCacheName, MainListCacheDays);
                 if (s == null)
                 {
                     Debug.WriteLine("Using resource main list");

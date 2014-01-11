@@ -58,6 +58,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DZMainListParserTest.cs" />
     <Compile Include="DZPostParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HtmlDocTest.cs" />
@@ -82,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\forbidden.htm" />
+    <None Include="Data\main.json" />
     <Content Include="Data\UnderConstruction.htm" />
   </ItemGroup>
   <Choose>

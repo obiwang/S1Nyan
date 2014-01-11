@@ -78,6 +78,7 @@ namespace S1Nyan.ViewModels
         {
             base.OnViewLoaded(view);
             _userService.InitLogin();
+            RefreshData();
         }
 
         ////public override void Cleanup()

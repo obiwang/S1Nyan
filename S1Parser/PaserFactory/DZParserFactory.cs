@@ -40,12 +40,12 @@ namespace S1Parser.PaserFactory
 
         public IList<S1ListItem> ParseMainListData(Stream s)
         {
-            return new SimpleListParser(s).GetData();
+            return new DZListParser(s).GetData();
         }
 
         public IList<S1ListItem> ParseMainListData(string s)
         {
-            return new SimpleListParser(s).GetData();
+            return new DZListParser(s).GetData();
         }
 
         public async Task<S1ThreadList> GetThreadListData(string fid, int page)
@@ -62,7 +62,7 @@ namespace S1Parser.PaserFactory
 
         protected virtual Uri GetMainUri()
         {
-            return new Uri(S1Resource.ForumBase);
+            return new Uri(S1Resource.ForumBase + "?module=forumnav");
         }
 
         protected virtual Uri GetThreadListUri(string fid, int page)

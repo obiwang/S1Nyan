@@ -1,5 +1,5 @@
-﻿
-using System.IO;
+﻿using System.IO;
+
 namespace S1Parser
 {
     public abstract class DataParser<T> : IDataParser<T> 

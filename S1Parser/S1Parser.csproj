@@ -55,6 +55,8 @@
     <Compile Include="Common\DZForum.cs" />
     <Compile Include="Common\DZPost.cs" />
     <Compile Include="Common\DZUser.cs" />
+    <Compile Include="Common\DZMain.cs" />
+    <Compile Include="DZParser\DZListParser.cs" />
     <Compile Include="DZParser\DZPostParser.cs" />
     <Compile Include="DZParser\DZThreadListParser.cs" />
     <Compile Include="Emotion\EmotionParser.cs" />
