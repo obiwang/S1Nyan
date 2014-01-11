@@ -20,6 +20,8 @@ namespace S1Nyan.Views
             ImageHolder.DataContext = this;
 #if S1Nyan
             var menu = new ContextMenu();
+            menu.BorderBrush = (SolidColorBrush)Application.Current.Resources["PhoneBorderBrush"];
+            menu.Background = (SolidColorBrush)Application.Current.Resources["PhoneForegroundBrush"];
             var menuItem = new MenuItem();
             menuItem.Header = AppResources.ImageShowInBrowser;
             menuItem.Click += OpenInBrowser;

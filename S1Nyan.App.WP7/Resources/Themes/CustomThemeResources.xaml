@@ -97,7 +97,7 @@ Copyright (c) Microsoft Corporation.  All rights reserved.
 <Color x:Key="PhoneInverseBackgroundColor">#FFDDDDDD</Color>
 
 <!-- 60 percent Black -->
-<Color x:Key="PhoneBorderColor">#99CCCC99</Color>
+<Color x:Key="PhoneBorderColor">#99000000</Color>
 
 
 
