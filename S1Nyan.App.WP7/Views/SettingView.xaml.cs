@@ -316,12 +316,8 @@ namespace S1Nyan.Views
 
         private void InitAbout()
         {
-            object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-            if (attributes.Length > 0)
-                CopyRightText.Text = ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
-
-            var version = new AssemblyName(Assembly.GetExecutingAssembly().FullName).Version;
-            VersionText.Text = string.Format("v {0}.{1}.{2}", version.Major, version.Minor, version.Build);
+            CopyRightText.Text = VersionHelper.CopyRight;
+            VersionText.Text = VersionHelper.Version;
         }
 
         private void OnFeedBack(object sender, RoutedEventArgs e)

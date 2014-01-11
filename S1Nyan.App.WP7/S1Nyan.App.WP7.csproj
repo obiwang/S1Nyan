@@ -199,6 +199,7 @@
     <Compile Include="SampleData\ThreadSampleData\ThreadSampleData.xaml.cs">
       <DependentUpon>ThreadSampleData.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\VersionHelper.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
     <Compile Include="Views\ImageResourceManager.cs">
       <SubType>Code</SubType>
