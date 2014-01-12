@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 using System.Reflection;
 using System.Windows;
+using Caliburn.Micro;
+using GalaSoft.MvvmLight.Threading;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Net.NetworkInformation;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using S1Nyan.Resources;
 using S1Nyan.Utils;
+using S1Nyan.ViewModels;
+using S1Nyan.ViewModels.Message;
 
 namespace S1Nyan.Views
 {
@@ -33,7 +37,7 @@ namespace S1Nyan.Views
         FontSizeLarge = 2
     }
 
-    public partial class SettingView : PhoneApplicationPage
+    public partial class SettingView : PhoneApplicationPage, IHandle<UserMessage>
     {
         private static List<string> themeSource = new List<string> { AppResources.ThemeS1, AppResources.ThemeSystem };
         private static List<string> showPicSource = new List<string> { AppResources.ShowPicNone, AppResources.ShowPicOnlyWifi, AppResources.ShowPicAlways };
@@ -45,29 +49,47 @@ namespace S1Nyan.Views
         const string ContentFontSizeKeyName = "ContentFontSize";
 
         private static Theme SystemTheme;
+        private readonly IEventAggregator _eventAggregator;
 
         #region Initializations
 
         public SettingView()
         {
             InitializeComponent();
-            //Loaded += SettingView_Loaded;
-            //Unloaded += SettingView_Unloaded;
+            Loaded += SettingView_Loaded;
+            Unloaded += SettingView_Unloaded;
             SettingPivot.Loaded += SettingLoaded;
             AboutPivot.Loaded += AboutLoaded;
             AccountPivot.Loaded += AccountLoaded;
             DataContext = this;
+            _eventAggregator = IoC.Get<IEventAggregator>();
         }
 
-        //void SettingView_Unloaded(object sender, RoutedEventArgs e)
-        //{
-        //    Messenger.Default.Unregister(this);
-        //}
+        public void Handle(UserMessage message)
+        {
+            DispatcherHelper.RunAsync(() =>
+            {
+                switch (message.Type)
+                {
+                    case Messages.LoginStatusChanged:
+                        UpdateControls(!UserViewModel.Current.IsBusy, (bool) message.Content, true);
+                        break;
+                    case Messages.DeviceNameChanged:
+                        InitSignature();
+                        break;
+                }
+            });
+        }
 
-        //void SettingView_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    Messenger.Default.Register<NotificationMessage<bool>>(this, OnLoginStatusChanged);
-        //}
+        void SettingView_Unloaded(object sender, RoutedEventArgs e)
+        {
+            _eventAggregator.Unsubscribe(this);
+        }
+
+        void SettingView_Loaded(object sender, RoutedEventArgs e)
+        {
+            _eventAggregator.Subscribe(this);
+        }
 
         private void AccountLoaded(object sender, RoutedEventArgs e)
         {
@@ -275,7 +297,26 @@ namespace S1Nyan.Views
 
         private const string AppDisplaySignature = "from S1 Nyan";
         private const string AppPostSignature = "\r\n    —— from [url=http://126.am/S1Nyan]S1 Nyan[/url]";
-        private static string ModelName = string.Format(" ({0})", S1Nyan.Utils.PhoneDeviceModel.FriendlyName);
+
+        private static string _modelName;
+
+        public static void UpdateModelName()
+        {
+            _modelName = string.Format(" ({0})", PhoneDeviceModel.FriendlyName);
+            _signatureSource = new List<string>
+            {
+                AppResources.ShowSignatureNone,
+                AppDisplaySignature,
+                AppDisplaySignature + _modelName
+            };
+            _postSignatureSource = new List<string>
+            {
+                "",
+                AppPostSignature,
+                AppPostSignature + _modelName
+
+            };
+        }
 
         private enum SignatureTypes
         {
@@ -286,20 +327,24 @@ namespace S1Nyan.Views
 
         private void InitSignature()
         {
-            setSignature.ItemsSource = signatureSource;
+            UpdateModelName();
+            setSignature.SelectionChanged -= SignatureChanged;
+            setSignature.ItemsSource = _signatureSource;
             setSignature.SelectedIndex = (int)SignatureType;
-            setSignature.SelectionChanged += (o, e) =>
-            {
-                SignatureType = (SignatureTypes)setSignature.SelectedIndex;
-            };
+            setSignature.SelectionChanged += SignatureChanged;
         }
 
-        private static List<string> signatureSource = new List<string> { AppResources.ShowSignatureNone, AppDisplaySignature, AppDisplaySignature + ModelName };
-        private static List<string> postSignatureSource = new List<string> { "", AppPostSignature, AppPostSignature + ModelName };
+        private void SignatureChanged(object sender, EventArgs e)
+        {
+            SignatureType = (SignatureTypes)setSignature.SelectedIndex;
+        }
+
+        private static List<string> _signatureSource;
+        private static List<string> _postSignatureSource;
 
         public static string GetSignature()
         {
-            return postSignatureSource[(int)SignatureType];
+            return _postSignatureSource[(int)SignatureType];
         }
 
         private static readonly SettingProperty<int> SignatureTypeSetting = new SettingProperty<int>(ShowSignatureKeyName, (int)SignatureTypes.ShowAppNameAndModel);
@@ -326,7 +371,7 @@ namespace S1Nyan.Views
 
             emailComposeTask.Subject = AppResources.FeedBackSubject;
             emailComposeTask.To = AppResources.FeedBackEmail;
-            emailComposeTask.Body = "\r\n\r\n" + signatureSource[2];
+            emailComposeTask.Body = "\r\n\r\n" + _signatureSource[2];
 
             emailComposeTask.Show();
         }

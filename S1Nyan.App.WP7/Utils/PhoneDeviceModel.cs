@@ -1,8 +1,11 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.Xml.Linq;
 using System.Linq;
+using Caliburn.Micro;
 using S1Nyan.Model;
 using Microsoft.Phone.Info;
+using S1Nyan.ViewModels.Message;
 
 namespace S1Nyan.Utils
 {
@@ -43,10 +46,12 @@ namespace S1Nyan.Utils
 
         private const string ModelListFileName = "model_name.xml";
         private const string RemoteModelListPath = RemoteResourcePath + ModelListFileName;
-
+        private bool isCacheData;
         public void UpdateDeviceFriendlyName()
         {
+            isCacheData = true;
             GetLocalList();
+            isCacheData = false;
             UpdateListFromRemote();
         }
 
@@ -77,12 +82,19 @@ namespace S1Nyan.Utils
             UpdateFriendlyName(s);
         }
 
-        private static void UpdateFriendlyName(Stream s)
+        private void UpdateFriendlyName(Stream s)
         {
             var manufacturer = DeviceStatus.DeviceManufacturer;
             var deviceName = DeviceStatus.DeviceName;
 
-            _friendlyName = string.Format("{0} {1}", manufacturer, GetFriendlyDeviceName(s, manufacturer, deviceName));
+            var newName = string.Format("{0} {1}", manufacturer, GetFriendlyDeviceName(s, manufacturer, deviceName));
+            bool updated = !isCacheData && (_friendlyName != newName);
+            _friendlyName = newName;
+            if (updated)
+            {
+                IoC.Get<IEventAggregator>().Publish(new UserMessage(Messages.DeviceNameChanged));
+                Debug.WriteLine("New Device Name: {0}", _friendlyName);
+            }
         }
 
         #endregion

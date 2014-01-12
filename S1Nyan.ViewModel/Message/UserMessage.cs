@@ -6,6 +6,7 @@
         NotifyServer,
         Refresh,
         LoginStatusChanged,
+        DeviceNameChanged,
         PostSuccess,
     }
 

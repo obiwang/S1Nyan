@@ -27,13 +27,6 @@ namespace S1Nyan.Views
             CurrentPassword = IsRememberPass ? SavedPassword : "";
         }
 
-        private void OnLoginStatusChanged(object msg)
-        {
-            //TODO:
-            //if (msg.Notification != Messages.LoginStatusChangedMessageString) return;
-            //UpdateControls(!UserViewModel.Current.IsBusy, msg.Content, true);
-        }
-
         #region LogIn
 
         public static string CurrentUsername { get; private set; } /// INIT NEEDED
