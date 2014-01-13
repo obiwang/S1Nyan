@@ -1,21 +1,17 @@
-﻿<phone:PhoneApplicationPage x:Class="S1Nyan.App.Views.MainPage"
+﻿<phone:PhoneApplicationPage x:Class="S1Nyan.Views.MainPage"
                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                            xmlns:Command="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform.WP8"
+                            xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro"
                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                            xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
                             xmlns:ignore="http://www.ignore.com"
                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                            xmlns:my="clr-namespace:MyControls;assembly=Common.WP7"
+                            xmlns:my="clr-namespace:ObiWang.Controls;assembly=Common"
                             xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
                             xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
                             xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-                            DataContext="{Binding Main, Source={StaticResource Locator}}"
                             FontFamily="{StaticResource PhoneFontFamilyNormal}"
                             FontSize="{StaticResource PhoneFontSizeNormal}"
                             Foreground="{StaticResource PhoneForegroundBrush}"
-                            Orientation="Portrait"
-                            SupportedOrientations="Portrait"
                             shell:SystemTray.IsVisible="True"
                             mc:Ignorable="d ignore">
 
@@ -47,27 +43,6 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--
-            LOCALIZATION NOTE:
-            To localize the displayed strings copy their values to appropriately named
-            keys in the app's neutral language resource file (AppResources.resx) then
-            replace the hard-coded text value between the attributes' quotation marks
-            with the binding clause whose path points to that string name.
-            
-            For example:
-            
-            Text="{Binding Path=LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}"
-            
-            This binding points to the template's string resource named "ApplicationTitle".
-            
-            Adding supported languages in the Project Properties tab will create a
-            new resx file per language that can carry the translated values of your
-            UI strings. The binding in these examples will cause the value of the
-            attributes to be drawn from the .resx file that matches the
-            CurrentUICulture of the app at run time.
-        -->
-
-
         <!--  TitlePanel contains the name of the application and page title  -->
         <StackPanel x:Name="TitlePanel"
                     Grid.Row="0"
@@ -77,40 +52,23 @@
                        Text="{Binding LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" />
             <TextBlock Margin="9,-7,0,0"
                        Style="{StaticResource PhoneTextTitle1Style}"
-                       Text="saraba 1st" />
+                       Text="stage 1st" />
         </StackPanel>
+
+        <my:FlipButton Width="220"
+                       Height="62"
+                       HorizontalAlignment="Right"
+                       VerticalAlignment="Top"
+                       Content="{Binding LoginStatus}"
+                       DataContext="{Binding User, Source={StaticResource Locator}}"
+                       FontSize="{StaticResource PhoneFontSizeNormal}"
+                       cal:Message.Attach="[Event Tap] = [Action GoToAccount]" />
 
         <!--  ContentPanel - place additional content here  -->
         <Grid x:Name="ContentPanel"
               Grid.Row="1"
-              Margin="24, 0"
-              toolkit:TiltEffect.IsTiltEnabled="True">
-            <phone:LongListSelector IsGroupingEnabled="True"
-                                    ItemsSource="{Binding MainListData}"
-                                    SelectionChanged="ListSelectionChanged">
-                <phone:LongListSelector.JumpListStyle>
-                    <Style TargetType="phone:LongListSelector">
-                        <Setter Property="ItemTemplate">
-                            <Setter.Value>
-                                <DataTemplate>
-                                    <Border Width="432"
-                                            Margin="0, 12"
-                                            Background="{StaticResource PhoneAccentBrush}"
-                                            Padding="12,0,0,6">
-                                        <TextBlock Height="60"
-                                                   VerticalAlignment="Center"
-                                                   Style="{StaticResource PhoneTextExtraLargeStyle}"
-                                                   Text="{Binding Title}" />
-                                    </Border>
-                                </DataTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="LayoutMode" Value="Grid" />
-                        <Setter Property="GridCellSize" Value="111,111" />
-                        <Setter Property="Margin" Value="12,6,0,0" />
-                    </Style>
-                </phone:LongListSelector.JumpListStyle>
-
+              Margin="24, 0">
+            <phone:LongListSelector IsGroupingEnabled="True" ItemsSource="{Binding MainListData}">
                 <phone:LongListSelector.GroupHeaderTemplate>
                     <DataTemplate>
                         <TextBlock Margin="0,12"
@@ -123,36 +81,32 @@
                     <DataTemplate>
                         <Border>
                             <my:ExpandableItem ItemsSource="{Binding Children}"
-                                               SelectionChanged="ListSelectionChanged"
-                                               TitleText="{Binding Title}">
+                                               TitleText="{Binding Title}"
+                                               cal:Message.Attach="[Event HeaderTapped] = [Action DoNavigation($dataContext)]"
+                                               toolkit:TiltEffect.IsTiltEnabled="True">
                                 <my:ExpandableItem.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Margin="36, 6"
                                                    Style="{StaticResource PhoneTextLargeStyle}"
-                                                   Text="{Binding Title}" />
+                                                   Text="{Binding Title}"
+                                                   cal:Message.Attach="[Event Tap] = [Action DoNavigation($dataContext)]" />
                                     </DataTemplate>
                                 </my:ExpandableItem.ItemTemplate>
                             </my:ExpandableItem>
                         </Border>
                     </DataTemplate>
                 </phone:LongListSelector.ItemTemplate>
-                <i:Interaction.Triggers>
-                    <i:EventTrigger>
-                        <Command:EventToCommand Command="{Binding LoadedCommand, Mode=OneWay}" />
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
             </phone:LongListSelector>
+
+            <my:NotifyTextBoard Content="{Binding NotifyMessage, Mode=TwoWay}" />
         </Grid>
 
-        <!--
-            Uncomment to see an alignment grid to help ensure your controls are
-            aligned on common boundaries.  The image has a top margin of -32px to
-            account for the System Tray. Set this to 0 (or remove the margin altogether)
-            if the System Tray is hidden.
-            
-            Before shipping remove this XAML and the image itself.
-        -->
         <!--  <Image Source="/Assets/AlignmentGrid.png" VerticalAlignment="Top" Height="800" Width="480" Margin="0,-32,0,0" Grid.Row="0" Grid.RowSpan="2" IsHitTestVisible="False" />  -->
 
+        <StackPanel x:Name="Popup"
+                    Margin="0,-32,0,0"
+                    d:IsHidden="True">
+            <Image Source="/SplashScreenImage.jpg" />
+        </StackPanel>
     </Grid>
 </phone:PhoneApplicationPage>

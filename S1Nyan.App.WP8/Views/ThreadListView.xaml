@@ -62,8 +62,8 @@
         <Grid x:Name="ContentPanel"
               Grid.Row="1"
               Margin="12,0,12,0">
-            <toolkit:LongListSelector IsFlatList="True" ItemsSource="{Binding ThreadListData.Children}">
-                <toolkit:LongListSelector.ItemTemplate>
+            <phone:LongListSelector ItemsSource="{Binding ThreadListData.Children}">
+                <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>
                         <Border>
                             <Grid cal:Message.Attach="[Event Tap] = [Action DoNavigation($dataContext)]">
@@ -118,8 +118,8 @@
                             </Grid>
                         </Border>
                     </DataTemplate>
-                </toolkit:LongListSelector.ItemTemplate>
-            </toolkit:LongListSelector>
+                </phone:LongListSelector.ItemTemplate>
+            </phone:LongListSelector>
 
             <my:NotifyTextBoard Content="{Binding NotifyMessage, Mode=TwoWay}" />
 
