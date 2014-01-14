@@ -8,6 +8,17 @@ namespace S1Parser
     {
         private const string EmotionPath = "static/image/smiley/";
 
+        private static IHttpUtility _httpUtility;
+
+        public static IHttpUtility HttpUtility
+        {
+            get
+            {
+                return _httpUtility ?? (_httpUtility = new DummyHttpUtility());
+            }
+            set { _httpUtility = value; }
+        }
+
         public static IParserFactory ParserFactory;
 
         private static string siteBase;

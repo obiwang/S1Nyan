@@ -34,7 +34,7 @@ namespace S1Parser.DZParser
                 var item = new S1ListItem
                     {
                         Id = thread.Tid,
-                        Title = WebUtility.HtmlDecode(thread.Subject),
+                        Title = S1Resource.HttpUtility.HtmlDecode(thread.Subject),
                         Subtle = thread.Replies,
                         Author = thread.Author,
                         AuthorDate = DZParserFactory.DateTimeSince1970Interval(thread.Dbdateline),

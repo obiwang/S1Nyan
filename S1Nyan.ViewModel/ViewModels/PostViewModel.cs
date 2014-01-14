@@ -110,8 +110,8 @@ namespace S1Nyan.ViewModels
                     NotifyOfPropertyChange(() => CanPrePage);
                     NotifyOfPropertyChange(() => CanNextPage);
                     NotifyOfPropertyChange(() => CanLastPage);
-                    Util.Indicator.SetBusy(false);
                 }
+                Util.Indicator.SetBusy(false);
             }
             catch (Exception e)
             {

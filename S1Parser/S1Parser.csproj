@@ -67,14 +67,8 @@
     <Compile Include="Common\IParserFactory.cs" />
     <Compile Include="Common\IResourceService.cs" />
     <Compile Include="Common\IS1Client.cs" />
-    <Compile Include="Net\Entities\HtmlEncodingServices.cs" />
-    <Compile Include="Net\Entities\HtmlEntity.cs" />
-    <Compile Include="Net\Entities\HtmlEntityDecoder.cs" />
-    <Compile Include="Net\Entities\HtmlEntityEncoder.cs" />
-    <Compile Include="Net\Entities\HtmlEntityTokenizer.cs" />
-    <Compile Include="Net\Entities\Token.cs" />
-    <Compile Include="Net\Entities\TokenType.cs" />
-    <Compile Include="Net\WebUtility.cs" />
+    <Compile Include="Html\DummyHttpUtility.cs" />
+    <Compile Include="Html\IHttpUtility.cs" />
     <Compile Include="PaserFactory\DZParserFactory.cs" />
     <Compile Include="PaserFactory\InvalidDataException.cs" />
     <Compile Include="Common\S1ListItem.cs" />

@@ -64,7 +64,7 @@ namespace S1Parser
             Name = name;
             try
             {
-                InnerHtml = WebUtility.HtmlDecode(innerHtml);
+                InnerHtml = S1Resource.HttpUtility.HtmlDecode(innerHtml);
             }
             catch (Exception)
             {

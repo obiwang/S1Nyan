@@ -33,7 +33,7 @@ namespace S1Parser.DZParser
                 throw new S1UserException(json.Message.Messagestr);
 
             var thread = new S1Post();
-            thread.Title = WebUtility.HtmlDecode(data.Thread.Subject);
+            thread.Title = S1Resource.HttpUtility.HtmlDecode(data.Thread.Subject);
             thread.TotalPage = (data.Thread.Replies + DZParserFactory.PostsPerPage)/DZParserFactory.PostsPerPage;
             thread.Items = new List<S1PostItem>();
             thread.Hash = data.Formhash;
@@ -46,15 +46,15 @@ namespace S1Parser.DZParser
                 if (thread.CurrentPage == 0)
                     thread.CurrentPage = post.Number/DZParserFactory.PostsPerPage + 1;
                 item.No = post.Number;
-                item.Author = WebUtility.HtmlDecode(post.Author);
-                item.Date = WebUtility.HtmlDecode(post.Dateline);
+                item.Author = S1Resource.HttpUtility.HtmlDecode(post.Author);
+                item.Date = S1Resource.HttpUtility.HtmlDecode(post.Dateline);
 
                 //work around
                 post.Message = post.Message.Replace("<imgwidth=", "<img width=");
                 post.Message = post.Message.Replace("\n", "");
                 FillAttachment(post);
 
-                var content = new HtmlDoc(string.Format("<div>{0}</div>", WebUtility.HtmlDecode(post.Message))).RootElement;
+                var content = new HtmlDoc(string.Format("<div>{0}</div>", S1Resource.HttpUtility.HtmlDecode(post.Message))).RootElement;
 
                 if (content != null)
                     item.Content = SimpleParser.SimpleThreadParser.ReGroupContent(content); 

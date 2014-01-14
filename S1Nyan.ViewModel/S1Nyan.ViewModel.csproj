@@ -84,6 +84,7 @@
     <Compile Include="Message\UserMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Interface\IPostViewModel.cs" />
+    <Compile Include="Utils\HttpUtility.cs" />
     <Compile Include="ViewModels\Storage\PostViewModelStorage.cs" />
     <Compile Include="Utils\DispatcherHelper.cs" />
     <Compile Include="Utils\IErrorMsg.cs" />
