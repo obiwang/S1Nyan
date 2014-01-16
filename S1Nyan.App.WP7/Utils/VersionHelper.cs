@@ -11,7 +11,7 @@ namespace S1Nyan.Utils
 
         static VersionHelper()
         {
-            IsBeta = GetManifestAttributeValue("ProductID") == "1ba57ae3-e568-43a4-b907-f4d89c539de2";
+            IsBeta = GetManifestAttributeValue("ProductID") == "{1ba57ae3-e568-43a4-b907-f4d89c539de2}";
 
             object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
             if (attributes.Length > 0)
