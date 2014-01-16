@@ -16,13 +16,13 @@ namespace S1Parser.Test
             FileStream file = new FileStream("Data/post.json", FileMode.Open);
             var parser = new DZPostParser(file);
             var data = parser.GetData();
-            var content = data.Items[0].Content;
+            var content = data.Items[0];
             Assert.AreEqual(47, content.Count());
             Assert.AreEqual(1, content.First().Descendants().Count());
             Assert.AreEqual(0, content.ElementAt(1).Descendants().Count());
             Assert.AreEqual(0, content.ElementAt(3).Descendants().Count());
 
-            var blockquote = data.Items[4].Content.First().Element();
+            var blockquote = data.Items[4].First().Element();
             Assert.AreEqual("blockquote", blockquote.Name);
             Assert.AreEqual(2, blockquote.Children.Count);
         }
@@ -33,7 +33,7 @@ namespace S1Parser.Test
             FileStream file = new FileStream("Data/post.json", FileMode.Open);
             var parser = new DZPostParser(file);
             var data = parser.GetData();
-            var content = data.Items[0].Content;
+            var content = data.Items[0];
 
         }
 
@@ -43,7 +43,7 @@ namespace S1Parser.Test
             FileStream file = new FileStream("Data/post2.json", FileMode.Open);
             var parser = new DZPostParser(file);
             var data = parser.GetData();
-            var p = data.Items[10].Content.ElementAt(2);
+            var p = data.Items[10].ElementAt(2);
             Assert.AreEqual("img", p.Descendants().Last().Name);
         }
     }

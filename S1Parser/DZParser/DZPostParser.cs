@@ -57,7 +57,7 @@ namespace S1Parser.DZParser
                 var content = new HtmlDoc(string.Format("<div>{0}</div>", WebUtility.HtmlDecode(post.Message))).RootElement;
 
                 if (content != null)
-                    item.Content = SimpleParser.SimpleThreadParser.ReGroupContent(content); 
+                    item.AddRange(SimpleParser.SimpleThreadParser.ReGroupContent(content)); 
                 thread.Items.Add(item);
             }
             return thread;

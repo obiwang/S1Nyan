@@ -45,19 +45,16 @@ namespace S1Parser.DZParser
             var forums =
                 from f in forumItem
                 where f.Fup == g.Fid && !string.IsNullOrEmpty(f.Name)
-                select new S1ListItem
-                {
-                    Title = WebUtility.HtmlDecode(f.Name),
-                    Id = f.Fid,
-                    Children = (from sub in forumItem
-                                where sub.Fup == f.Fid && !string.IsNullOrEmpty(sub.Name)
-                                select new S1ListItem
-                                {
-                                    Title = WebUtility.HtmlDecode(sub.Name),
-                                    Id = sub.Fid
-                                }).ToList()
-                };
-            group.Children.AddRange(forums);
+                select new S1ListItem(WebUtility.HtmlDecode(f.Name), f.Fid,
+                    (from sub in forumItem
+                        where sub.Fup == f.Fid && !string.IsNullOrEmpty(sub.Name)
+                        select new S1ListItem
+                        {
+                            Title = WebUtility.HtmlDecode(sub.Name),
+                            Id = sub.Fid
+                        }));
+
+            group.AddRange(forums);
             return group;
         }
 

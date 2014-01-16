@@ -19,25 +19,13 @@ namespace S1Parser
         public string Hash { get; set; }
 }
 
-    public class S1PostItem : IEnumerable<HtmlElement>
+    public class S1PostItem : List<HtmlElement>
     {
         public int No { get; set; }
 
         public string Author { get; set; }
 
         public string Date { get; set; }
-
-        public IEnumerable<HtmlElement> Content { get; set; }
-
-        public IEnumerator<HtmlElement> GetEnumerator()
-        {
-            return Content.GetEnumerator();
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
     }
 
 }

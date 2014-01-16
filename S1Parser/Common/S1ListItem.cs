@@ -4,15 +4,25 @@ using System.Text.RegularExpressions;
 
 namespace S1Parser
 {
-    public class S1ListItem : IEnumerable<S1ListItem>
+    public class S1ListItem : List<S1ListItem>
     {
+        public S1ListItem()
+        {
+            
+        }
+
+        public S1ListItem(string title, string id, IEnumerable<S1ListItem> children)
+        {
+            Title = title;
+            Id = id;
+            AddRange(children);
+        }
+
         public string Title { get; set; }
 
         public string Subtle { get; set; }
 
         public string Link { get; internal set; }
-
-        public List<S1ListItem> Children { get; set; }
 
         public string Id { get; internal set; }
 
@@ -23,21 +33,6 @@ namespace S1Parser
         public string LastPoster { get; set; }
 
         public DateTime LastPostDate { get; set; }
-
-        public S1ListItem()
-        {
-            Children = new List<S1ListItem>();
-        }
-
-        public IEnumerator<S1ListItem> GetEnumerator()
-        {
-            return Children.GetEnumerator();
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
 
         internal static S1ListItem GetItem(HtmlElement e)
         {
@@ -71,7 +66,7 @@ namespace S1Parser
                 foreach (var item in list)
                 {
                     if (item.Id == Id) return item;
-                    if (null != (find = FindItemById(item.Children, Id)))
+                    if (null != (find = FindItemById(item, Id)))
                         break;
                 }
             return find;

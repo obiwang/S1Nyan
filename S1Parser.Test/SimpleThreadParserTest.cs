@@ -23,7 +23,7 @@ namespace S1Parser.Test
             Assert.AreEqual<int>(50, thread.Items.Count);
             Assert.AreEqual<string>("睡醒的鱼", thread.Items[1].Author);
             Assert.AreEqual<string>("2013-01-06 19:20", thread.Items[1].Date);
-            Assert.AreEqual<int>(50, thread.Items[0].Content.Count());
+            Assert.AreEqual<int>(50, thread.Items[0].Count());
         }
     }
 }

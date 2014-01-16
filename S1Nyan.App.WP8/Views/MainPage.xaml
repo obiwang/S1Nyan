@@ -80,7 +80,7 @@
                 <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>
                         <Border>
-                            <my:ExpandableItem ItemsSource="{Binding Children}"
+                            <my:ExpandableItem ItemsSource="{Binding }"
                                                TitleText="{Binding Title}"
                                                cal:Message.Attach="[Event HeaderTapped] = [Action DoNavigation($dataContext)]"
                                                toolkit:TiltEffect.IsTiltEnabled="True">

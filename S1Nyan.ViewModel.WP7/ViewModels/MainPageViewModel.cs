@@ -25,14 +25,6 @@ namespace S1Nyan.ViewModels
             _userService = userService;
         }
 
-        private ListWithGroupKey<string, S1ListItem> FormatList(IEnumerable<S1ListItem> list)
-        {
-            foreach (var g in list)
-            {
-                
-            }
-        }
-
         private IEnumerable<S1ListItem> _data = null;
         /// <summary>
         /// Sets and gets the ListData property.

@@ -61,9 +61,7 @@ namespace S1Parser.SimpleParser
             var result = item;
             if (item != null && (result = S1ListItem.GetItem(e)) != null)
             {
-                if (item.Children == null)
-                    item.Children = new List<S1ListItem>();
-                item.Children.Add(result);
+                item.Add(result);
             }
             return result;
         }

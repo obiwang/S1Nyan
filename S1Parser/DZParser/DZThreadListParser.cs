@@ -42,7 +42,7 @@ namespace S1Parser.DZParser
                         LastPostDate = DZParserFactory.DateTimeSince1970Interval(thread.Dblastpost)
                     };
 
-                list.Children.Add(item);
+                list.Add(item);
             }
             return list;
         }

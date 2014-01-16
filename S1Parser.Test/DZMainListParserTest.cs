@@ -18,8 +18,8 @@ namespace S1Parser.Test
             var list = parser.GetData();
             Assert.AreEqual(4, list.Count);
             Assert.AreEqual("子论坛", list.Last().Title);
-            Assert.AreEqual("吃货", list[1].Children[8].Children[0].Title);
-            Assert.AreEqual("134", list[0].Children[0].Id);
+            Assert.AreEqual("吃货", list[1][8][0].Title);
+            Assert.AreEqual("134", list[0][0].Id);
             Assert.AreEqual("将军", list.FindItemById("122").Title);
         }
     }

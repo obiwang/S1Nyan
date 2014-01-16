@@ -5,7 +5,7 @@
     <Language code="zh-CN" />
     <Language code="zh-TW" />
   </Languages>
-  <App xmlns="" ProductID="{500de26a-dd82-4d21-9d1a-9fa43cc5383f}" Title="@Resources/AppResLib/AppResLib.dll,-100" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Obi Wang" Description="Sample description" Publisher="Obi Wang" PublisherID="{385effdd-9648-45ca-bd11-043e2651b069}">
+  <App xmlns="" ProductID="{500de26a-dd82-4d21-9d1a-9fa43cc5383f}" Title="@Resources/AppResLib/AppResLib.dll,-100" RuntimeType="Silverlight" Version="1.2.0" Genre="apps.normal" Author="Obi Wang" Description="Sample description" Publisher="Obi Wang" PublisherID="{385effdd-9648-45ca-bd11-043e2651b069}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
@@ -13,7 +13,7 @@
       <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
     </Capabilities>
     <Tasks>
-      <DefaultTask Name="_default" NavigationPage="Views/MainPage.xaml" />
+      <DefaultTask Name="_default" NavigationPage="Views/MainPage.xaml" ActivationPolicy="Resume" />
     </Tasks>
     <Tokens>
       <PrimaryToken TokenID="S1Nyan.AppToken" TaskName="_default">

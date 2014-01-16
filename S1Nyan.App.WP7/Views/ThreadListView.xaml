@@ -62,7 +62,7 @@
         <Grid x:Name="ContentPanel"
               Grid.Row="1"
               Margin="12,0,12,0">
-            <toolkit:LongListSelector IsFlatList="True" ItemsSource="{Binding ThreadListData.Children}">
+            <toolkit:LongListSelector IsFlatList="True" ItemsSource="{Binding ThreadListData}">
                 <toolkit:LongListSelector.ItemTemplate>
                     <DataTemplate>
                         <Border>
