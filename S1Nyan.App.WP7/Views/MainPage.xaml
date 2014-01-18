@@ -84,20 +84,29 @@
                 </toolkit:LongListSelector.GroupHeaderTemplate>
                 <toolkit:LongListSelector.ItemTemplate>
                     <DataTemplate>
-                        <Border>
-                            <my:ExpandableItem ItemsSource="{Binding }"
-                                               TitleText="{Binding Title}"
-                                               cal:Message.Attach="[Event HeaderTapped] = [Action DoNavigation($dataContext)]">
-                                <my:ExpandableItem.ItemTemplate>
-                                    <DataTemplate>
+                        <my:ExpandableItem Title="{Binding}"
+                                           ItemsSource="{Binding}"
+                                           cal:Message.Attach="[Event HeaderTapped] = [Action DoNavigation($dataContext)]">
+                            <my:ExpandableItem.TitleContentTemplate>
+                                <DataTemplate>
+                                    <ListBoxItem HorizontalContentAlignment="Stretch" toolkit:TiltEffect.IsTiltEnabled="True">
+                                        <TextBlock Margin="0"
+                                                   Style="{StaticResource PhoneTextExtraLargeStyle}"
+                                                   Text="{Binding Title}" />
+                                    </ListBoxItem>
+                                </DataTemplate>
+                            </my:ExpandableItem.TitleContentTemplate>
+                            <my:ExpandableItem.ItemTemplate>
+                                <DataTemplate>
+                                    <ListBoxItem HorizontalContentAlignment="Stretch" toolkit:TiltEffect.IsTiltEnabled="True">
                                         <TextBlock Margin="36, 6"
                                                    Style="{StaticResource PhoneTextLargeStyle}"
                                                    Text="{Binding Title}"
                                                    cal:Message.Attach="[Event Tap] = [Action DoNavigation($dataContext)]" />
-                                    </DataTemplate>
-                                </my:ExpandableItem.ItemTemplate>
-                            </my:ExpandableItem>
-                        </Border>
+                                    </ListBoxItem>
+                                </DataTemplate>
+                            </my:ExpandableItem.ItemTemplate>
+                        </my:ExpandableItem>
                     </DataTemplate>
                 </toolkit:LongListSelector.ItemTemplate>
             </toolkit:LongListSelector>

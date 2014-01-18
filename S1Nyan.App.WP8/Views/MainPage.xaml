@@ -67,11 +67,11 @@
         <!--  ContentPanel - place additional content here  -->
         <Grid x:Name="ContentPanel"
               Grid.Row="1"
-              Margin="24, 0">
+              Margin="24, -12, 24, 0">
             <phone:LongListSelector IsGroupingEnabled="True" ItemsSource="{Binding MainListData}">
                 <phone:LongListSelector.GroupHeaderTemplate>
                     <DataTemplate>
-                        <TextBlock Margin="0,12"
+                        <TextBlock Margin="0,6"
                                    Foreground="{StaticResource PhoneAccentBrush}"
                                    Style="{StaticResource PhoneTextLargeStyle}"
                                    Text="{Binding Title}" />
@@ -79,21 +79,29 @@
                 </phone:LongListSelector.GroupHeaderTemplate>
                 <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>
-                        <Border>
-                            <my:ExpandableItem ItemsSource="{Binding }"
-                                               TitleText="{Binding Title}"
-                                               cal:Message.Attach="[Event HeaderTapped] = [Action DoNavigation($dataContext)]"
-                                               toolkit:TiltEffect.IsTiltEnabled="True">
-                                <my:ExpandableItem.ItemTemplate>
-                                    <DataTemplate>
+                        <my:ExpandableItem Title="{Binding}"
+                                           ItemsSource="{Binding}"
+                                           cal:Message.Attach="[Event HeaderTapped] = [Action DoNavigation($dataContext)]">
+                            <my:ExpandableItem.TitleContentTemplate>
+                                <DataTemplate>
+                                    <ListBoxItem HorizontalContentAlignment="Stretch" toolkit:TiltEffect.IsTiltEnabled="True">
+                                        <TextBlock Margin="0"
+                                                   Style="{StaticResource PhoneTextExtraLargeStyle}"
+                                                   Text="{Binding Title}" />
+                                    </ListBoxItem>
+                                </DataTemplate>
+                            </my:ExpandableItem.TitleContentTemplate>
+                            <my:ExpandableItem.ItemTemplate>
+                                <DataTemplate>
+                                    <ListBoxItem HorizontalContentAlignment="Stretch" toolkit:TiltEffect.IsTiltEnabled="True">
                                         <TextBlock Margin="36, 6"
                                                    Style="{StaticResource PhoneTextLargeStyle}"
                                                    Text="{Binding Title}"
                                                    cal:Message.Attach="[Event Tap] = [Action DoNavigation($dataContext)]" />
-                                    </DataTemplate>
-                                </my:ExpandableItem.ItemTemplate>
-                            </my:ExpandableItem>
-                        </Border>
+                                    </ListBoxItem>
+                                </DataTemplate>
+                            </my:ExpandableItem.ItemTemplate>
+                        </my:ExpandableItem>
                     </DataTemplate>
                 </phone:LongListSelector.ItemTemplate>
             </phone:LongListSelector>
