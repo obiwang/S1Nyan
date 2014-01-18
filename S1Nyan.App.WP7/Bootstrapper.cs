@@ -14,12 +14,14 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
+using System.Windows.Navigation;
 
 namespace S1Nyan
 {
     public class Bootstrapper : PhoneBootstrapper
     {
         public PhoneContainer container;
+        private bool _reset;
 
         public static Bootstrapper Current
         {
@@ -61,8 +63,28 @@ namespace S1Nyan
             GalaSoft.MvvmLight.Threading.DispatcherHelper.Initialize();
             ImageTools.IO.Decoders.AddDecoder<ImageTools.IO.Gif.GifDecoder>();
 
+#if WP8
+            RootFrame.Navigating += RootFrame_Navigating;
+            RootFrame.Navigated += RootFrame_Navigated;
+#endif
             AddCustomConventions();
         }
+
+#if WP8
+        void RootFrame_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+            _reset = e.NavigationMode == NavigationMode.Reset;
+        }
+
+        void RootFrame_Navigating(object sender, System.Windows.Navigation.NavigatingCancelEventArgs e)
+        {
+            if (_reset && e.IsCancelable && e.Uri.OriginalString == "/Views/MainPage.xaml")
+            {
+                e.Cancel = true;
+                _reset = false;
+            }
+        }
+#endif
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
