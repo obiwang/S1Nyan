@@ -325,9 +325,6 @@
     <Content Include="..\S1Nyan.App.WP7\ApplicationIcon.png">
       <Link>ApplicationIcon.png</Link>
     </Content>
-    <Content Include="..\S1Nyan.App.WP7\Assets\AlignmentGrid.png">
-      <Link>Assets\AlignmentGrid.png</Link>
-    </Content>
     <Content Include="..\S1Nyan.App.WP7\Assets\AppBar\appbar.back.rest.png">
       <Link>Assets\AppBar\appbar.back.rest.png</Link>
     </Content>
@@ -998,11 +995,8 @@
       <Link>SplashScreenImage.jpg</Link>
     </Content>
     <Content Include="Assets\ApplicationIcon.png" />
-    <Content Include="Assets\Tiles\FlipCycleTileLarge.png" />
     <Content Include="Assets\Tiles\FlipCycleTileMedium.png" />
     <Content Include="Assets\Tiles\FlipCycleTileSmall.png" />
-    <Content Include="Assets\Tiles\IconicTileMediumLarge.png" />
-    <Content Include="Assets\Tiles\IconicTileSmall.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Caliburn.Micro">

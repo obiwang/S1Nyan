@@ -13,7 +13,7 @@
         <TemplateType5>
           <BackgroundImageURI IsRelative="true" IsResource="false">Background.png</BackgroundImageURI>
           <Count>0</Count>
-          <Title>S1 Nyan</Title>
+          <Title>@Resources/AppResLib/AppResLib.dll,-100</Title>
         </TemplateType5>
       </PrimaryToken>
     </Tokens>
