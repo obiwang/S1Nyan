@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("S1Nyan.App.WP7")]
-[assembly: AssemblyCopyright("Copyright ©Obi Wang 2013")]
+[assembly: AssemblyCopyright("Copyright ©Obi Wang 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

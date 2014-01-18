@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("S1Parser")]
-[assembly: AssemblyCopyright("Copyright ©Obi Wang 2013")]
+[assembly: AssemblyCopyright("Copyright ©Obi Wang 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
