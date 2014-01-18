@@ -11,18 +11,18 @@ namespace S1Nyan.Utils
 
         static VersionHelper()
         {
-            IsBeta = GetManifestAttributeValue("ProductID") == "1ba57ae3-e568-43a4-b907-f4d89c539de2";
+            IsBeta = GetManifestAttributeValue("ProductID").Contains("1ba57ae3-e568-43a4-b907-f4d89c539de2");
 
-            object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
+            object[] attributes =
+                Assembly.GetExecutingAssembly().GetCustomAttributes(typeof (AssemblyCopyrightAttribute), false);
             if (attributes.Length > 0)
-                CopyRight = ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
+                CopyRight = ((AssemblyCopyrightAttribute) attributes[0]).Copyright;
 
             var version = new AssemblyName(Assembly.GetExecutingAssembly().FullName).Version;
-            Version = string.Format("v {0}.{1}.{2}", version.Major, version.Minor, version.Build);
-            if (IsBeta)
-            {
-                Version = string.Format("{0}.{1}", version.Revision);
-            }
+
+            Version = IsBeta
+                ? "v " + version
+                : string.Format("v {0}.{1}.{2}", version.Major, version.Minor, version.Build);
         }
 
         public static string GetManifestAttributeValue(string attributeName)

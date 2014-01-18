@@ -65,8 +65,8 @@
             <toolkit:LongListSelector IsFlatList="True" ItemsSource="{Binding ThreadListData}">
                 <toolkit:LongListSelector.ItemTemplate>
                     <DataTemplate>
-                        <Border>
-                            <Grid cal:Message.Attach="[Event Tap] = [Action DoNavigation($dataContext)]">
+                        <ListBoxItem HorizontalContentAlignment="Stretch" cal:Message.Attach="[Event Tap] = [Action DoNavigation($dataContext)]">
+                            <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
@@ -116,7 +116,7 @@
                                                Text="{Binding LastPoster}" />
                                 </Grid>
                             </Grid>
-                        </Border>
+                        </ListBoxItem>
                     </DataTemplate>
                 </toolkit:LongListSelector.ItemTemplate>
             </toolkit:LongListSelector>

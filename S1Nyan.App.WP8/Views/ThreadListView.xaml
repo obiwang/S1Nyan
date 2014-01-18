@@ -65,8 +65,10 @@
             <phone:LongListSelector ItemsSource="{Binding ThreadListData}">
                 <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>
-                        <Border>
-                            <Grid cal:Message.Attach="[Event Tap] = [Action DoNavigation($dataContext)]">
+                        <ListBoxItem HorizontalContentAlignment="Stretch"
+                                     cal:Message.Attach="[Event Tap] = [Action DoNavigation($dataContext)]"
+                                     toolkit:TiltEffect.IsTiltEnabled="True">
+                            <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="Auto" />
@@ -116,7 +118,7 @@
                                                Text="{Binding LastPoster}" />
                                 </Grid>
                             </Grid>
-                        </Border>
+                        </ListBoxItem>
                     </DataTemplate>
                 </phone:LongListSelector.ItemTemplate>
             </phone:LongListSelector>

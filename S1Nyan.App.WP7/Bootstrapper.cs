@@ -67,6 +67,7 @@ namespace S1Nyan
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
             base.OnStartup(sender, e);
+            S1Resource.HttpUtility = new HttpUtility();
             container.Instance<IServerModel>(new ServerModel());
             Views.SettingView.InitTheme();
         }

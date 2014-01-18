@@ -112,6 +112,9 @@
     <Compile Include="..\S1Nyan.ViewModel.WP7\Utils\DispatcherHelper.cs">
       <Link>Utils\DispatcherHelper.cs</Link>
     </Compile>
+    <Compile Include="..\S1Nyan.ViewModel.WP7\Utils\HttpUtility.cs">
+      <Link>Utils\HttpUtility.cs</Link>
+    </Compile>
     <Compile Include="..\S1Nyan.ViewModel.WP7\Utils\IErrorMsg.cs">
       <Link>Utils\IErrorMsg.cs</Link>
     </Compile>
