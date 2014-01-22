@@ -62,10 +62,12 @@
         <Grid x:Name="ContentPanel"
               Grid.Row="1"
               Margin="12,0,12,0">
-            <toolkit:LongListSelector IsFlatList="True" ItemsSource="{Binding ThreadListData}">
-                <toolkit:LongListSelector.ItemTemplate>
+            <phone:LongListSelector ItemsSource="{Binding ThreadListData}">
+                <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>
-                        <ListBoxItem HorizontalContentAlignment="Stretch" cal:Message.Attach="[Event Tap] = [Action DoNavigation($dataContext)]">
+                        <ListBoxItem HorizontalContentAlignment="Stretch"
+                                     cal:Message.Attach="[Event Tap] = [Action DoNavigation($dataContext)]"
+                                     toolkit:TiltEffect.IsTiltEnabled="True">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -118,8 +120,8 @@
                             </Grid>
                         </ListBoxItem>
                     </DataTemplate>
-                </toolkit:LongListSelector.ItemTemplate>
-            </toolkit:LongListSelector>
+                </phone:LongListSelector.ItemTemplate>
+            </phone:LongListSelector>
 
             <my:NotifyTextBoard Content="{Binding NotifyMessage, Mode=TwoWay}" />
 

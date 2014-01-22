@@ -1,10 +1,10 @@
 ﻿
-namespace S1Nyan.App.Views
+namespace S1Nyan.Views
 {
     /// <summary>
     /// Description for ThreadList.
     /// </summary>
-    public partial class ThreadList 
+    public partial class ThreadListView 
     {
 
     }

@@ -90,23 +90,19 @@
                                            IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                            Padding="36, 20, 16, 20"
                                            Visibility="{Binding HasItems, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BoolToVisConv}}" />
-                        <!--
-                            <ItemsPresenter x:Name="ChildItems"
-                            Grid.Row="1"
-                            Grid.Column="1" />
-                        -->
+
                         <ListBox x:Name="ChildItems"
                                  Grid.Row="1"
                                  Grid.Column="1"
-                                 ItemTemplate="{Binding ItemTemplate, RelativeSource={RelativeSource TemplatedParent}}"
-                                 ItemsSource="{Binding ItemsSource, RelativeSource={RelativeSource TemplatedParent}}"
+                                 ItemTemplate="{TemplateBinding ItemTemplate}"
+                                 ItemsSource="{TemplateBinding ItemsSource}"
                                  ScrollViewer.VerticalScrollBarVisibility="Disabled" />
 
-                        <TextBlock x:Name="HeaderText"
-                                   Grid.Column="1"
-                                   Margin="0"
-                                   Style="{StaticResource PhoneTextExtraLargeStyle}"
-                                   Text="{Binding TitleText, RelativeSource={RelativeSource TemplatedParent}}" />
+                        <ContentPresenter x:Name="TitleContent"
+                                          Grid.Column="1"
+                                          HorizontalAlignment="Stretch"
+                                          Content="{TemplateBinding Title}"
+                                          ContentTemplate="{TemplateBinding TitleContentTemplate}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

@@ -87,10 +87,11 @@
                 <local:ContentConvert x:Key="ContentConverter" />
             </Grid.Resources>
 
-            <toolkit:LongListSelector x:Name="theList"
-                                      ItemsSource="{Binding ThePost.Items}"
-                                      ManipulationStarted="theList_ManipulationStarted">
-                <toolkit:LongListSelector.GroupHeaderTemplate>
+            <phone:LongListSelector x:Name="theList"
+                                    IsGroupingEnabled="True"
+                                    ItemsSource="{Binding ThePost.Items}"
+                                    ManipulationStarted="theList_ManipulationStarted">
+                <phone:LongListSelector.GroupHeaderTemplate>
                     <DataTemplate>
                         <Grid Height="50" Margin="12,18,0,18">
                             <Grid.ColumnDefinitions>
@@ -134,49 +135,18 @@
                                        TextWrapping="Wrap" />
                         </Grid>
                     </DataTemplate>
-                </toolkit:LongListSelector.GroupHeaderTemplate>
+                </phone:LongListSelector.GroupHeaderTemplate>
 
-                <toolkit:LongListSelector.ItemTemplate>
+                <phone:LongListSelector.ItemTemplate>
                     <DataTemplate>
                         <local:PostItemContent Margin="12, 0"
                                                HorizontalAlignment="Left"
                                                Content="{Binding Converter={StaticResource ContentConverter}}"
                                                FontFamily="{StaticResource PhoneFontFamilyNormal}" />
                     </DataTemplate>
-                </toolkit:LongListSelector.ItemTemplate>
+                </phone:LongListSelector.ItemTemplate>
 
-                <toolkit:LongListSelector.Template>
-                    <ControlTemplate>
-                        <primitives:TemplatedListBox x:Name="TemplatedListBox" Background="{TemplateBinding Background}">
-                            <primitives:TemplatedListBox.ItemContainerStyle>
-                                <Style TargetType="ListBoxItem">
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="ListBoxItem">
-                                                <Border x:Name="LayoutRoot"
-                                                        HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                                        VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                                                        Background="{TemplateBinding Background}"
-                                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                                        BorderThickness="{TemplateBinding BorderThickness}">
-                                                    <ContentControl x:Name="ContentContainer"
-                                                                    Margin="{TemplateBinding Padding}"
-                                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                                    Content="{TemplateBinding Content}"
-                                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                                    Foreground="{TemplateBinding Foreground}" />
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </primitives:TemplatedListBox.ItemContainerStyle>
-                        </primitives:TemplatedListBox>
-                    </ControlTemplate>
-                </toolkit:LongListSelector.Template>
-            </toolkit:LongListSelector>
+            </phone:LongListSelector>
 
             <my:NotifyTextBoard Content="{Binding NotifyMessage, Mode=TwoWay}" />
         </Grid>

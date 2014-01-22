@@ -1,21 +1,18 @@
 ﻿using System.Reflection;
 using System.Resources;
-using System.Runtime.CompilerServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("S1Parser")]
+[assembly: AssemblyTitle("S1Nyan.ViewModel")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("S1Parser")]
-[assembly: AssemblyCopyright("Copyright ©Obi Wang 2014")]
+[assembly: AssemblyProduct("S1Nyan.ViewModel")]
+[assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
-
-[assembly: InternalsVisibleTo("S1Parser.Test")]
 
 // Version information for an assembly consists of the following four values:
 //

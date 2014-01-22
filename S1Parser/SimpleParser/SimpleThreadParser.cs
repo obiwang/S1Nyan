@@ -72,7 +72,7 @@ namespace S1Parser.SimpleParser
             var content = trs.ElementAt(1).Element("td");
 
             if (content != null)
-                threadItem.Content = ReGroupContent(content);
+                threadItem.AddRange(ReGroupContent(content));
             return threadItem;
         }
 
