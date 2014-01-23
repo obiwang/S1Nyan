@@ -36,7 +36,9 @@ namespace S1Parser.DZParser
                 where g.Type == ForumTypes.Group && !string.IsNullOrEmpty(g.Name)
                 select BuildGroup(g, data.Forums);
 
-            return groups.ToList();
+            var list = new List<S1ListItem>(groups);
+            list.Insert(0, DZMyGroup.MyGroup);
+            return list;
         }
 
         private S1ListItem BuildGroup(ForumItem g, ForumItem[] forumItem)

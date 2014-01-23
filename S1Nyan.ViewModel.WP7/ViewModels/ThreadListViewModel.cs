@@ -3,6 +3,7 @@ using Caliburn.Micro;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;
+using S1Parser.DZParser;
 
 namespace S1Nyan.ViewModels
 {
@@ -54,6 +55,14 @@ namespace S1Nyan.ViewModels
                 if (_threadListData == value) return;
 
                 _threadListData = value;
+                if (DZMyGroup.IsMyFavorite(_fid))
+                {
+                    var converter = new Microsoft.Phone.Controls.RelativeTimeConverter();
+                    foreach (var item in _threadListData)
+                    {
+                        item.LastPoster = (string)converter.Convert(item.AuthorDate, typeof(string), null, System.Globalization.CultureInfo.CurrentCulture);
+                    }
+                }
                 NotifyOfPropertyChange(() => ThreadListData);
             }
         }
@@ -82,6 +91,8 @@ namespace S1Nyan.ViewModels
             }
         }
 
+        public bool IsShowNumbers { get; set; }
+
         private string _fid = null;
 
         public string Fid
@@ -93,6 +104,8 @@ namespace S1Nyan.ViewModels
                 _fid = value;
                 TotalPage = 0;
                 CurrentPage = 1;
+                IsShowNumbers = !DZMyGroup.IsMyFavorite(_fid);
+                NotifyOfPropertyChange(() => IsShowNumbers);
             }
         }
 

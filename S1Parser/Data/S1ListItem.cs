@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace S1Parser
 {
-    public class S1ListItem : List<S1ListItem>
+    public class S1ListItem : List<S1ListItem>, IThreadListItem
     {
         public S1ListItem()
         {
@@ -15,7 +15,8 @@ namespace S1Parser
         {
             Title = title;
             Id = id;
-            AddRange(children);
+            if (children != null)
+                AddRange(children);
         }
 
         public string Title { get; set; }

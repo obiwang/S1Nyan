@@ -10,6 +10,8 @@ namespace S1Nyan.Views
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             double t = 0;
+            if (value == null) return 0;
+
             // value may not be number
             Double.TryParse(value.ToString(), out t);
 

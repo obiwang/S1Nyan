@@ -166,6 +166,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Phone Toolkit\Microsoft.Phone.Controls.Toolkit.WP8\Microsoft.Phone.Controls.Toolkit.WP8.csproj">
+      <Project>{486642F0-AB94-4F28-B49C-106CA3134239}</Project>
+      <Name>Microsoft.Phone.Controls.Toolkit.WP8</Name>
+    </ProjectReference>
     <ProjectReference Include="..\S1Nyan.Model\S1Nyan.Model.csproj">
       <Project>{AA9F65DC-13D3-441A-99E2-FBAFE0C4CE9C}</Project>
       <Name>S1Nyan.Model</Name>

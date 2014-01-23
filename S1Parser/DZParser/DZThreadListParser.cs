@@ -23,23 +23,23 @@ namespace S1Parser.DZParser
             raw = s;
         }
 
-        public S1ThreadList GetData()
+        public S1ThreadList GetData(string fid, int page)
         {
-            var data = DZForum.FromJson(raw).Variables;
+            var data = DZMyGroup.ThreadListFromJson(raw, fid);
             var list = new S1ThreadList();
-            list.CurrentPage = data.Page;
-            list.TotalPage = data.Forum.Threads/DZParserFactory.ThreadsPerPage;
-            foreach (var thread in data.Forum_threadlist)
+            list.CurrentPage = data.CurrentPage != 0 ? data.CurrentPage : page;
+            list.TotalPage = data.TotalPage;
+            foreach (var thread in data.ThreadList)
             {
                 var item = new S1ListItem
                     {
-                        Id = thread.Tid,
-                        Title = S1Resource.HttpUtility.HtmlDecode(thread.Subject),
-                        Subtle = thread.Replies,
+                        Id = thread.Id,
+                        Title = S1Resource.HttpUtility.HtmlDecode(thread.Title),
+                        Subtle = thread.Subtle,
                         Author = thread.Author,
-                        AuthorDate = DZParserFactory.DateTimeSince1970Interval(thread.Dbdateline),
-                        LastPoster = thread.Lastposter,
-                        LastPostDate = DZParserFactory.DateTimeSince1970Interval(thread.Dblastpost)
+                        AuthorDate = thread.AuthorDate,
+                        LastPoster = thread.LastPoster,
+                        LastPostDate = thread.LastPostDate
                     };
 
                 list.Add(item);

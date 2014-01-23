@@ -109,6 +109,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Phone Toolkit\Microsoft.Phone.Controls.Toolkit.WP7\Microsoft.Phone.Controls.Toolkit.WP7.csproj">
+      <Project>{0754458A-7AFC-463A-B27D-2F6980522119}</Project>
+      <Name>Microsoft.Phone.Controls.Toolkit.WP7</Name>
+    </ProjectReference>
     <ProjectReference Include="..\S1Nyan.Model\S1Nyan.Model.csproj">
       <Project>{AA9F65DC-13D3-441A-99E2-FBAFE0C4CE9C}</Project>
       <Name>S1Nyan.Model</Name>

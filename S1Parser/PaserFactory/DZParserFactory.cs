@@ -51,7 +51,7 @@ namespace S1Parser.PaserFactory
         public async Task<S1ThreadList> GetThreadListData(string fid, int page)
         {
             Stream s = await ResourceService.GetResourceStream(GetThreadListUri(fid, page));
-            return new DZThreadListParser(s).GetData();
+            return new DZThreadListParser(s).GetData(fid, page);
         }
 
         public async Task<S1Post> GetPostData(string tid, int page)
@@ -70,7 +70,8 @@ namespace S1Parser.PaserFactory
 #if UseLocalhost
             return new Uri(S1Resource.ForumBase + string.Format("?module=forumdisplay&fid=2"));
 #else
-            return new Uri(S1Resource.ForumBase + String.Format("?module=forumdisplay&fid={0}&page={1}&tpp={2}", fid, page, ThreadsPerPage));
+            string url = DZMyGroup.ParseSpecialUrl(fid, page) ?? String.Format("?module=forumdisplay&fid={0}&page={1}&tpp={2}", fid, page, ThreadsPerPage);
+            return new Uri(S1Resource.ForumBase + url);
 #endif
         }
 
@@ -83,10 +84,5 @@ namespace S1Parser.PaserFactory
 #endif
         }
 
-        public static DateTime DateTimeSince1970Interval(int interval)
-        {
-            var the1970 = new DateTime(1970,1,1);
-            return the1970.AddSeconds(interval).ToLocalTime();
-        }
     }
 }

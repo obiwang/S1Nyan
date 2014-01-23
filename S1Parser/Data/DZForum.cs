@@ -3,6 +3,7 @@
 // To use this code you will need to reference Newtonsoft's Json Parser, downloadable from codeplex.
 // http://json.codeplex.com/
 // 
+
 using System;
 using Newtonsoft.Json;
 
@@ -16,12 +17,15 @@ namespace S1Parser
         public ForumVariables Variables;
 
         //Empty Constructor
-        public DZForum() { }
+        public DZForum()
+        {
+        }
 
         public string Serialize()
         {
             return JsonConvert.SerializeObject(this);
         }
+
         public static DZForum FromJson(string json)
         {
             return JsonConvert.DeserializeObject<DZForum>(json);
@@ -41,7 +45,9 @@ namespace S1Parser
         public string Password;
 
         //Empty Constructor
-        public Forum() { }
+        public Forum()
+        {
+        }
 
     }
 
@@ -52,30 +58,47 @@ namespace S1Parser
         public string Grouptitle;
 
         //Empty Constructor
-        public Group() { }
+        public Group()
+        {
+        }
 
     }
 
-    public class Forum_threadlist
+    public class ForumThreadlistItem : IThreadListItem
     {
+        [JsonProperty("tid")]
+        public string Id { get; set; }
 
-        public string Tid;
-        public string Readperm;
-        public string Author;
+        [JsonProperty("author")]
+        public string Author { get; set; }
+
+        [JsonProperty("subject")]
+        public string Title { get; set; }
+
+        [JsonProperty("lastposter")]
+        public string LastPoster { get; set; }
+
+        [JsonProperty("replies")]
+        public string Subtle { get; set; }
+
+        [JsonProperty("dbdateline"), JsonConverter(typeof (DateTimeConverter))]
+        public DateTime AuthorDate { get; set; }
+
+        [JsonProperty("dblastpost"), JsonConverter(typeof (DateTimeConverter))]
+        public DateTime LastPostDate { get; set; }
+
         public string Authorid;
-        public string Subject;
         public string Dateline;
-        public string Lastpost;
-        public string Lastposter;
-        public string Views;
-        public string Replies;
         public string Digest;
+        public string Lastpost;
+        public string Readperm;
+        public string Views;
         public string Attachment;
-        public int Dbdateline;
-        public int Dblastpost;
 
         //Empty Constructor
-        public Forum_threadlist() { }
+        public ForumThreadlistItem()
+        {
+        }
 
     }
 
@@ -89,9 +112,12 @@ namespace S1Parser
         public string Todayposts;
 
         //Empty Constructor
-        public Sublist() { }
+        public Sublist()
+        {
+        }
 
     }
+
 /*
     public class Threadtypes
     {
@@ -108,7 +134,8 @@ namespace S1Parser
 
     }
 */
-    public class ForumVariables
+
+    public class ForumVariables : IThreadList
     {
 
         public string Cookiepre;
@@ -122,17 +149,32 @@ namespace S1Parser
         public string Readaccess;
         public Forum Forum;
         public Group Group;
-        public Forum_threadlist[] Forum_threadlist;
         public Sublist[] Sublist;
-        public int Tpp;
-        public int Page;
-//        public Threadtypes Threadtypes;
+        public ForumThreadlistItem[] Forum_threadlist;
+
+        [JsonProperty("tpp")]
+        public int ItemsPerPage { get; set; }
+
+        [JsonProperty("page")]
+        public int CurrentPage { get; set; }
+
+        public int TotalPage
+        {
+            get { return Forum.Threads/ItemsPerPage; }
+        }
+
+        public IThreadListItem[] ThreadList
+        {
+            get { return Forum_threadlist; }
+        }
 
         //Empty Constructor
-        public ForumVariables() { }
-
+        public ForumVariables()
+        {
+        }
     }
 
 }
+
 //Json Mapping End
 

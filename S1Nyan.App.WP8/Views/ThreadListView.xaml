@@ -75,7 +75,7 @@
                                 </Grid.RowDefinitions>
                                 <Grid Margin="6,12">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="40" />
+                                        <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock Grid.Column="1"
@@ -89,9 +89,11 @@
                                                TextTrimming="WordEllipsis"
                                                TextWrapping="Wrap" />
                                     <Border Grid.Column="0"
+                                            Width="28"
                                             Margin="6,6,6,-30"
                                             Background="{StaticResource PhoneAccentBrush}"
-                                            Opacity="{Binding Subtle, Converter={StaticResource PopConverter}}">
+                                            Opacity="{Binding Subtle, Converter={StaticResource PopConverter}}"
+                                            Visibility="{Binding DataContext.IsShowNumbers, Converter={StaticResource BoolToVisConv}, ElementName=ContentPanel}">
                                         <TextBlock Margin="-12,0"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
