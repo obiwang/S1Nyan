@@ -6,5 +6,6 @@ namespace S1Nyan
     {
         void InitLogin();
         Task<string> DoSendPost(string replyLink, string replyText, string verify);
+        Task DoAddToFavorite(string verify, string tid);
     }
 }

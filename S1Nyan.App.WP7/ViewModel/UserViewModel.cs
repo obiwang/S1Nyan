@@ -203,6 +203,11 @@ namespace S1Nyan.ViewModels
             InitLogin();
         }
 
+        public async Task DoAddToFavorite(string verify, string tid)
+        {
+            await new S1WebClient().AddToFavorite(verify, tid);
+        }
+
         public async Task<string> DoSendPost(string replyLink, string replyText, string verify)
         {
             UserErrorTypes result = UserErrorTypes.Unknown;

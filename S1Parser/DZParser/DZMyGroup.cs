@@ -4,6 +4,7 @@ namespace S1Parser.DZParser
 {
     public enum MyGroupTypes
     {
+        MyReplys = -3,
         MyThreads = -2,
         MyFavorite = -1,
         None = 0,
@@ -22,6 +23,7 @@ namespace S1Parser.DZParser
                     {
                         MyS1ListItem(MyGroupTypes.MyFavorite),
                         MyS1ListItem(MyGroupTypes.MyThreads),
+                        MyS1ListItem(MyGroupTypes.MyReplys),
                     }));
             }
         }
@@ -37,6 +39,9 @@ namespace S1Parser.DZParser
                 case MyGroupTypes.MyThreads:
                     itemName = "我的主题";
                     break;
+                case MyGroupTypes.MyReplys:
+                    itemName = "我回复的主题";
+                    break;
             }
             return new S1ListItem(itemName, ((int) type).ToString(), null);
         }
@@ -49,6 +54,8 @@ namespace S1Parser.DZParser
                     return string.Format("?module=myfavthread&page={0}", page);
                 case MyGroupTypes.MyThreads:
                     return string.Format("?module=mythread&page={0}", page);
+                case MyGroupTypes.MyReplys:
+                    return string.Format("?module=mythread&type=reply&page={0}", page);
             }
 
             return null;
@@ -68,6 +75,7 @@ namespace S1Parser.DZParser
                 case MyGroupTypes.MyFavorite:
                     return DZMyFavorite.FromJson(json).Variables;
                 case MyGroupTypes.MyThreads:
+                case MyGroupTypes.MyReplys:
                     return DZMyThread.FromJson(json).Variables;
                 default:
                     return DZForum.FromJson(json).Variables;

@@ -290,4 +290,7 @@
   <data name="ApplicationMenuOpenThreadInBrowser" xml:space="preserve">
     <value>在浏览器中查看帖子</value>
   </data>
+  <data name="ApplicationMenuAddToFavorite" xml:space="preserve">
+    <value>添加到我的收藏</value>
+  </data>
 </root>

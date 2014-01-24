@@ -125,6 +125,24 @@ namespace S1Parser.User
             }
         }
 
+        public static async Task<UserErrorTypes> AddToFavorite(this IS1Client client, string verify, string tid)
+        {
+            client.AddPostParam("favoritesubmit", "true");
+            client.AddPostParam("formhash", verify);
+
+            var result = await client.PostDataTaskAsync(new Uri(SiteBase + string.Format("index.php?module=favthread&id={0}", tid)));
+            try
+            {
+                var data = DZUser.FromJson(result);
+                throw new S1UserException(data.Message.Messagestr);
+            }
+            catch (System.Xml.XmlException)
+            {
+                System.Diagnostics.Debug.WriteLine(result);
+                throw new NullReferenceException();
+            }
+        }
+
         private static void AddConstParam(IS1Client client)
         {
             client.AddPostParam("atc_usesign", "1");

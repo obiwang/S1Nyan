@@ -287,6 +287,25 @@ namespace S1Nyan.ViewModels
             task.Show();
         }
 
+        public async void AddToFavorite()
+        {
+            Util.Indicator.SetLoading();
+            try
+            {
+                await _userService.DoAddToFavorite(ThePost.Hash, _tid);
+                Util.Indicator.SetBusy(false);
+            }
+            catch (Exception e)
+            {
+                if (!HandleUserException(e))
+                {
+                    Util.Indicator.SetError(e);
+                    NotifyMessage = e.Message;
+                }
+            }
+
+        }
+
         #endregion
 
         //public override void Cleanup()

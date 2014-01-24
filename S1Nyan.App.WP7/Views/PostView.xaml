@@ -327,6 +327,7 @@
 
             <bab:BindableAppBarMenuItem x:Name="GoToSetting" Text="{Binding LocalizedResources.SettingPage, Source={StaticResource LocalizedStrings}}" />
             <bab:BindableAppBarMenuItem x:Name="OpenInBrowser" Text="{Binding LocalizedResources.ApplicationMenuOpenThreadInBrowser, Source={StaticResource LocalizedStrings}}" />
+            <bab:BindableAppBarMenuItem x:Name="AddToFavorite" Text="{Binding LocalizedResources.ApplicationMenuAddToFavorite, Source={StaticResource LocalizedStrings}}" />
         </my:ThemeableBindableAppBar>
 
     </Grid>
