@@ -26,10 +26,7 @@ namespace S1Parser.DZParser
 
         public S1Post GetData()
         {
-            var json = DZPost.FromJson(raw);
-            var data = json.Variables;
-            if (data.Postlist.Length == 0 && json.Message != null)
-                throw new S1UserException(json.Message.Messagestr);
+            var data = raw.Parse<ThreadVariables>();
 
             var thread = new S1Post();
             thread.Title = S1Resource.HttpUtility.HtmlDecode(data.Thread.Subject);

@@ -9,30 +9,6 @@ using Newtonsoft.Json;
 
 namespace S1Parser
 {
-
-    public class DZMyFavorite
-    {
-
-        public string Version;
-        public string Charset;
-        public MyFavoriteVariables Variables;
-
-        //Empty Constructor
-        public DZMyFavorite()
-        {
-        }
-
-        public string Serialize()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
-
-        public static DZMyFavorite FromJson(string json)
-        {
-            return JsonConvert.DeserializeObject<DZMyFavorite>(json);
-        }
-    }
-
     public class FavoriteList : IThreadListItem
     {
 
@@ -65,18 +41,8 @@ namespace S1Parser
 
     }
 
-    public class MyFavoriteVariables : IThreadList
+    public class MyFavoriteVariables : UserVariables, IThreadList
     {
-
-        public string Cookiepre;
-        public string Auth;
-        public string Saltkey;
-        public string Member_uid;
-        public string Member_username;
-        public string Groupid;
-        public string Formhash;
-        public object Ismoderator;
-        public string Readaccess;
         public int Count;
 
         public FavoriteList[] List;

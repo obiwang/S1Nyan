@@ -113,7 +113,7 @@ namespace S1Parser.User
             var result = await client.PostDataTaskAsync(new Uri(SiteBase + reletivePostUrl));
             try
             {
-                var data = DZUser.FromJson(result);
+                var data = DZHeader.FromJson(result);
                 if (data.Message.Messageval != "post_reply_succeed")
                     throw new S1UserException(data.Message.Messagestr, UserErrorTypes.Unknown);
                 return UserErrorTypes.Success;
@@ -133,7 +133,7 @@ namespace S1Parser.User
             var result = await client.PostDataTaskAsync(new Uri(SiteBase + string.Format("index.php?module=favthread&id={0}", tid)));
             try
             {
-                var data = DZUser.FromJson(result);
+                var data = DZHeader.FromJson(result);
                 throw new S1UserException(data.Message.Messagestr);
             }
             catch (System.Xml.XmlException)

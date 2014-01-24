@@ -9,29 +9,6 @@ using Newtonsoft.Json;
 
 namespace S1Parser
 {
-    public class DZForum
-    {
-
-        public string Version;
-        public string Charset;
-        public ForumVariables Variables;
-
-        //Empty Constructor
-        public DZForum()
-        {
-        }
-
-        public string Serialize()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
-
-        public static DZForum FromJson(string json)
-        {
-            return JsonConvert.DeserializeObject<DZForum>(json);
-        }
-    }
-
     public class Forum
     {
 
@@ -135,18 +112,8 @@ namespace S1Parser
     }
 */
 
-    public class ForumVariables : IThreadList
+    public class ForumVariables : UserVariables, IThreadList
     {
-
-        public string Cookiepre;
-        public object Auth;
-        public string Saltkey;
-        public string Member_uid;
-        public string Member_username;
-        public string Groupid;
-        public string Formhash;
-        public string Ismoderator;
-        public string Readaccess;
         public Forum Forum;
         public Group Group;
         public Sublist[] Sublist;
@@ -168,10 +135,6 @@ namespace S1Parser
             get { return Forum_threadlist; }
         }
 
-        //Empty Constructor
-        public ForumVariables()
-        {
-        }
     }
 
 }

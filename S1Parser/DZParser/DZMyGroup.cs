@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace S1Parser.DZParser
 {
@@ -70,16 +71,18 @@ namespace S1Parser.DZParser
 
         internal static IThreadList ThreadListFromJson(string json, string fid)
         {
+            Type type = typeof(ForumVariables);
             switch (GetMyGroupType(fid))
             {
                 case MyGroupTypes.MyFavorite:
-                    return DZMyFavorite.FromJson(json).Variables;
+                    type = typeof(MyFavoriteVariables);
+                    break;
                 case MyGroupTypes.MyThreads:
                 case MyGroupTypes.MyReplys:
-                    return DZMyThread.FromJson(json).Variables;
-                default:
-                    return DZForum.FromJson(json).Variables;
+                    type = typeof(MyThreadVariables);
+                    break;
             }
+            return (IThreadList)json.Parse(type);
         }
 
         public static bool IsMyFavorite(string fid)

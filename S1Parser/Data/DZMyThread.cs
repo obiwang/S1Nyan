@@ -9,31 +9,6 @@ using Newtonsoft.Json;
 
 namespace S1Parser
 {
-
-    public class DZMyThread
-    {
-
-        public string Version;
-        public string Charset;
-        public MyThreadVariables Variables;
-
-        //Empty Constructor
-        public DZMyThread()
-        {
-        }
-
-        public string Serialize()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
-
-        public static DZMyThread FromJson(string json)
-        {
-            return JsonConvert.DeserializeObject<DZMyThread>(json);
-        }
-    }
-
-
     public class MyThreadList : IThreadListItem
     {
         [JsonProperty("tid")]
@@ -115,18 +90,8 @@ namespace S1Parser
     }
 
 
-    public class MyThreadVariables : IThreadList
+    public class MyThreadVariables : UserVariables, IThreadList
     {
-
-        public string Cookiepre;
-        public string Auth;
-        public string Saltkey;
-        public string Member_uid;
-        public string Member_username;
-        public string Groupid;
-        public string Formhash;
-        public object Ismoderator;
-        public string Readaccess;
         public MyThreadList[] Data;
 
         [JsonProperty("perpage")]
@@ -142,11 +107,6 @@ namespace S1Parser
         public IThreadListItem[] ThreadList
         {
             get { return Data; }
-        }
-
-        //Empty Constructor
-        public MyThreadVariables()
-        {
         }
 
     }

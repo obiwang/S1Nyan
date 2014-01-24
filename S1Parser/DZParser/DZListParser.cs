@@ -28,9 +28,7 @@ namespace S1Parser.DZParser
 
         public List<S1ListItem> GetData()
         {
-            var json = DZMain.FromJson(raw);
-            var data = json.Variables;
-            if (data == null) throw new InvalidDataException();
+            var data = raw.Parse<ForumList>();
 
             var groups = from g in data.Forums
                 where g.Type == ForumTypes.Group && !string.IsNullOrEmpty(g.Name)

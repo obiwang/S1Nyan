@@ -3,36 +3,13 @@
 // To use this code you will need to reference Newtonsoft's Json Parser, downloadable from codeplex.
 // http://json.codeplex.com/
 // 
-using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace S1Parser
 {
-    public class DZPost
-    {
-
-        public string Version;
-        public string Charset;
-        public ThreadVariables Variables;
-        public Message Message;
-
-        //Empty Constructor
-        public DZPost() { }
-
-        public string Serialize()
-        {
-            return JsonConvert.SerializeObject(this);
-        }
-        public static DZPost FromJson(string json)
-        {
-            return JsonConvert.DeserializeObject<DZPost>(json);
-        }
-    }
-
     public class Post
     {
-
         public string Tid;
         public string Fid;
         public string Posttableid;
@@ -165,18 +142,8 @@ namespace S1Parser
 
     }
 
-    public class ThreadVariables
+    public class ThreadVariables : UserVariables
     {
-
-        public string Cookiepre;
-        public object Auth;
-        public string Saltkey;
-        public string Member_uid;
-        public string Member_username;
-        public string Groupid;
-        public string Formhash;
-        public string Ismoderator;
-        public string Readaccess;
         public Post Thread;
         public string Fid;
         public PostItem[] Postlist;
@@ -187,10 +154,6 @@ namespace S1Parser
         public string Forum_threadpay;
         public string[] Cache_custominfo_postno;
         public Forum Forum;
-
-        //Empty Constructor
-        public ThreadVariables() { }
-
     }
 
 }

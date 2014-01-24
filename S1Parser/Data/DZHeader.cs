@@ -3,21 +3,18 @@
 // To use this code you will need to reference Newtonsoft's Json Parser, downloadable from codeplex.
 // http://json.codeplex.com/
 // 
-using System;
+
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace S1Parser
 {
-
-    public class DZUser
+    public class DZHeader
     {
         public string Version;
         public string Charset;
-        public UserVariables Variables;
+        public JObject Variables;
         public Message Message;
-
-        //Empty Constructor
-        public DZUser() { }
 
         public string Serialize()
         {
@@ -29,26 +26,13 @@ namespace S1Parser
         }
     }
 
-    public class UserVariables
+    public class Message
     {
-        public string Cookiepre;
-        public string Auth;
-        public string Saltkey;
-        public string Member_uid;
-        public string Member_username;
-        public string Groupid;
-        public string Formhash;
-        public string Ismoderator;
-        public string Readaccess;
-        //[JsonProperty("member_uid")]
-        //public string MemberUid { get; set; }
-
-        //[JsonProperty("member_username")]
-        //public string MemberUsername { get; set; }
+        public string Messageval;
+        public string Messagestr;
 
         //Empty Constructor
-        public UserVariables() { }
-
+        public Message() { }
     }
 
 }

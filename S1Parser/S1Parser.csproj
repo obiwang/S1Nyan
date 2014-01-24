@@ -52,6 +52,7 @@
     <Compile Include="Action\ErrorParser.cs" />
     <Compile Include="Action\UserAction.cs" />
     <Compile Include="Action\S1UserException.cs" />
+    <Compile Include="Data\DZHeader.cs" />
     <Compile Include="Data\DateTimeConverter.cs" />
     <Compile Include="Data\DZForum.cs" />
     <Compile Include="Data\DZPost.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="DZParser\DZMyGroup.cs" />
     <Compile Include="DZParser\DZPostParser.cs" />
     <Compile Include="DZParser\DZThreadListParser.cs" />
+    <Compile Include="DZParser\JsonParser.cs" />
     <Compile Include="Emotion\EmotionParser.cs" />
     <Compile Include="Html\HtmlElement.cs" />
     <Compile Include="Html\HtmlDoc.cs" />
