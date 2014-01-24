@@ -119,7 +119,8 @@ namespace S1Parser.SimpleParser
                     if (item.Name == "div")
                     {
                         var quote = item.Element();
-                        if (quote.Name == "blockquote")
+                        if (quote != null &&
+                            quote.Name == "blockquote")
                         {
                             if (lastGroup.Children.Count != 0)
                             {
