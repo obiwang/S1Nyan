@@ -18,7 +18,6 @@ namespace S1Parser.SimpleParser
                 var body = HtmlPage.FindFirst("body");
                 var a = body.FindFirst("a");
                 theData.Title = a.InnerHtml;
-                theData.FullLink = a.Attributes["href"];
 
                 GetReplyLink(body.Element("table"));
 

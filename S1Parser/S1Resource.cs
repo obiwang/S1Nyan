@@ -53,8 +53,12 @@ namespace S1Parser
         }
 
         private static string emotionBase;
-        internal static string EmotionBase { get { return emotionBase ?? (emotionBase = SiteBase + EmotionPath); } } 
+        internal static string EmotionBase { get { return emotionBase ?? (emotionBase = SiteBase + EmotionPath); } }
 
+        public static string GetThreadOriginalUrl(string tid)
+        {
+            return ParserFactory.GetThreadOriginalUrl(tid);
+        }
         public static string GetRelativePath(string url)
         {
             var temp = url.ToLower();

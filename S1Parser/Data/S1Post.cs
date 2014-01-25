@@ -6,8 +6,6 @@ namespace S1Parser
     {
         public string Title { get; set; }
 
-        public string FullLink { get; internal set; }
-
         public string ReplyLink { get; internal set; }
 
         public List<S1PostItem> Items { get; set; }

@@ -16,5 +16,6 @@ namespace S1Parser
         Task<S1ThreadList> GetThreadListData(string fid, int page);
         Task<S1Post> GetPostData(string tid, int page);
         string Path { get; }
+        string GetThreadOriginalUrl(string tid);
     }
 }

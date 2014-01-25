@@ -26,6 +26,11 @@ namespace S1Parser.PaserFactory
             get { return DZMobilePath; }
         }
 
+        public string GetThreadOriginalUrl(string tid)
+        {
+            return  S1Resource.SiteBase + string.Format("thread-{0}-1-1.html", tid);
+        }
+
         public async Task<IList<S1ListItem>> GetMainListData()
         {
             Stream s = await GetMainListStream();

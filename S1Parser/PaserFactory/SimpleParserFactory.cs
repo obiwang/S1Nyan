@@ -18,6 +18,11 @@ namespace S1Parser.PaserFactory
             get { return SimplePath; }
         }
 
+        public string GetThreadOriginalUrl(string tid)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IList<S1ListItem>> GetMainListData()
         {
             Stream s = await GetMainListStream();

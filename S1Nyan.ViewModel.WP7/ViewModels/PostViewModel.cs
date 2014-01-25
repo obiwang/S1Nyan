@@ -73,6 +73,7 @@ namespace S1Nyan.ViewModels
                 _tid = value;
                 TotalPage = 0;
                 CurrentPage = 1;
+                NotifyOfPropertyChange(() => CanOpenInBrowser);
             }
         }
 
@@ -282,9 +283,14 @@ namespace S1Nyan.ViewModels
         {
             var task = new Microsoft.Phone.Tasks.WebBrowserTask
             {
-                Uri = new Uri(ThePost.FullLink, UriKind.Absolute)
+                Uri = new Uri(S1Resource.GetThreadOriginalUrl(_tid), UriKind.Absolute)
             };
             task.Show();
+        }
+
+        public bool CanOpenInBrowser
+        {
+            get { return !string.IsNullOrEmpty(_tid); }
         }
 
         public async void AddToFavorite()
