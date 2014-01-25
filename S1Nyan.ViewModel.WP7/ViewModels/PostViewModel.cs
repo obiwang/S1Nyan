@@ -292,7 +292,7 @@ namespace S1Nyan.ViewModels
             Util.Indicator.SetLoading();
             try
             {
-                await _userService.DoAddToFavorite(ThePost.Hash, _tid);
+                await _userService.DoAddToFavorite(_tid);
                 Util.Indicator.SetBusy(false);
             }
             catch (Exception e)
@@ -386,7 +386,7 @@ namespace S1Nyan.ViewModels
             System.Diagnostics.Debug.WriteLine("Send Reply: " + replyLink + "\r\n" + ReplyText);
 
             IsSending = true;
-            var result = await _userService.DoSendPost(replyLink, ReplyText.Replace("\r","\r\n"), ThePost.Hash);
+            var result = await _userService.DoSendPost(replyLink, ReplyText.Replace("\r","\r\n"));
             IsSending = false;
             if (result == null)
             {

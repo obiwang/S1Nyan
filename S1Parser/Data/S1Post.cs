@@ -15,8 +15,6 @@ namespace S1Parser
         public int TotalPage { get; set; }
 
         public int CurrentPage { get; set; }
-
-        public string Hash { get; set; }
 }
 
     public class S1PostItem : List<HtmlElement>

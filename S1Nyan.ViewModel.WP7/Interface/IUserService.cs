@@ -5,7 +5,7 @@ namespace S1Nyan
     public interface IUserService
     {
         void InitLogin();
-        Task<string> DoSendPost(string replyLink, string replyText, string verify);
-        Task DoAddToFavorite(string verify, string tid);
+        Task<string> DoSendPost(string replyLink, string replyText);
+        Task DoAddToFavorite(string tid);
     }
 }

@@ -29,14 +29,16 @@ namespace S1Nyan.ViewModels
 
         private readonly IEventAggregator _eventAggregator;
 
-        private Timer notifyTimer;
+        private readonly Timer _notifyTimer;
+
+        private string _formHash;
 
         /// <summary>
         /// Initializes a new instance of the UserViewModel class.
         /// </summary>
         public UserViewModel(IEventAggregator eventAggregator)
         {
-            notifyTimer = new Timer(OnTimeUp, this, Timeout.Infinite, Timeout.Infinite);
+            _notifyTimer = new Timer(OnTimeUp, this, Timeout.Infinite, Timeout.Infinite);
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this);
             DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
@@ -111,12 +113,12 @@ namespace S1Nyan.ViewModels
             try
             {
                 IsBusy = true;
-                if (!String.IsNullOrEmpty(Uid))
-                    await new S1WebClient().Logout(SettingView.VerifyString);
+                if (!String.IsNullOrEmpty(Uid) && !string.IsNullOrEmpty(_formHash))
+                    await new S1WebClient().Logout(_formHash);
                 S1WebClient.ResetCookie();
                 var user = await new S1WebClient().Login(name, pass);
                 uid = user.Member_uid;
-                SettingView.VerifyString = user.Formhash;
+                _formHash = user.Formhash;
                 if (uid != null)
                 {
                     Uid = uid;
@@ -155,7 +157,7 @@ namespace S1Nyan.ViewModels
             if (previousText == null)
                 previousText = LoginStatus;
             LoginStatus = msg;
-            notifyTimer.Change(5000, Timeout.Infinite);
+            _notifyTimer.Change(5000, Timeout.Infinite);
         }
 
         string previousText = null;
@@ -203,12 +205,12 @@ namespace S1Nyan.ViewModels
             InitLogin();
         }
 
-        public async Task DoAddToFavorite(string verify, string tid)
+        public async Task DoAddToFavorite(string tid)
         {
-            await new S1WebClient().AddToFavorite(verify, tid);
+            await new S1WebClient().AddToFavorite(_formHash, tid);
         }
 
-        public async Task<string> DoSendPost(string replyLink, string replyText, string verify)
+        public async Task<string> DoSendPost(string replyLink, string replyText)
         {
             UserErrorTypes result = UserErrorTypes.Unknown;
             int retryTimes = 0;
@@ -226,7 +228,7 @@ namespace S1Nyan.ViewModels
                             throw new S1UserException(error, UserErrorTypes.LoginFailed);
                     }
 
-                    result = await new S1WebClient().Reply(verify,
+                    result = await new S1WebClient().Reply(_formHash,
                         reletivePostUrl: replyLink,
                         content: replyText,
                         signature: S1Nyan.Views.SettingView.GetSignature());

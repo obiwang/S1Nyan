@@ -134,8 +134,6 @@ namespace S1Nyan.Views
 
         }
 
-        internal static string VerifyString { get; set; }
-
         private void PasswordLostFocus(object sender, RoutedEventArgs e)
         {
             CheckPasswordWatermark();
