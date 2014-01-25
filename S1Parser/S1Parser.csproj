@@ -60,6 +60,7 @@
     <Compile Include="Data\DZMain.cs" />
     <Compile Include="Data\DZMyFavorite.cs" />
     <Compile Include="Data\DZMyThread.cs" />
+    <Compile Include="Data\IFormHashUpdater.cs" />
     <Compile Include="Data\IThreadList.cs" />
     <Compile Include="Data\MyFavoriteVariables.cs" />
     <Compile Include="DZParser\DZListParser.cs" />

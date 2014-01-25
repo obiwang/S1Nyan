@@ -20,6 +20,7 @@ namespace S1Parser
         }
 
         public static IParserFactory ParserFactory;
+        public static IFormHashUpdater FormHashUpdater;
 
         private static string siteBase;
         public static string SiteBase

@@ -7,6 +7,7 @@ using S1Nyan.Resources;
 using S1Nyan.Model;
 using S1Nyan.ViewModels.Message;
 using S1Nyan.Views;
+using S1Parser;
 using S1Parser.User;
 
 namespace S1Nyan.ViewModels
@@ -33,6 +34,11 @@ namespace S1Nyan.ViewModels
 
         private string _formHash;
 
+        public void UpdateFormHash(string formHash)
+        {
+            _formHash = formHash;
+        }
+
         /// <summary>
         /// Initializes a new instance of the UserViewModel class.
         /// </summary>
@@ -42,6 +48,8 @@ namespace S1Nyan.ViewModels
             _eventAggregator = eventAggregator;
             _eventAggregator.Subscribe(this);
             DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
+
+            S1Resource.FormHashUpdater = this;
         }
 
         void DeviceNetworkInformation_NetworkAvailabilityChanged(object sender, NetworkNotificationEventArgs e)
@@ -118,7 +126,6 @@ namespace S1Nyan.ViewModels
                 S1WebClient.ResetCookie();
                 var user = await new S1WebClient().Login(name, pass);
                 uid = user.Member_uid;
-                _formHash = user.Formhash;
                 if (uid != null)
                 {
                     Uid = uid;
