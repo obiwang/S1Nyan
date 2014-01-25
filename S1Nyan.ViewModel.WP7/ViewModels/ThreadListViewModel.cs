@@ -55,7 +55,7 @@ namespace S1Nyan.ViewModels
                 if (_threadListData == value) return;
 
                 _threadListData = value;
-                if (DZMyGroup.IsMyFavorite(_fid))
+                if (DZMyGroup.IsMyFavorite(_fid) && _threadListData != null)
                 {
                     var converter = new Microsoft.Phone.Controls.RelativeTimeConverter();
                     foreach (var item in _threadListData)

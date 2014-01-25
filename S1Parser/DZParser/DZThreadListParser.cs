@@ -1,7 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Net;
-using S1Parser.PaserFactory;
+﻿using System.IO;
+using System.Linq;
 
 namespace S1Parser.DZParser
 {
@@ -26,26 +24,30 @@ namespace S1Parser.DZParser
         public S1ThreadList GetData(string fid, int page)
         {
             var data = DZMyGroup.ThreadListFromJson(raw, fid);
-            var list = new S1ThreadList();
-            list.CurrentPage = data.CurrentPage != 0 ? data.CurrentPage : page;
-            list.TotalPage = data.TotalPage;
-            foreach (var thread in data.ThreadList)
+            var list = new S1ThreadList
             {
-                var item = new S1ListItem
-                    {
-                        Id = thread.Id,
-                        Title = S1Resource.HttpUtility.HtmlDecode(thread.Title),
-                        Subtle = thread.Subtle,
-                        Author = thread.Author,
-                        AuthorDate = thread.AuthorDate,
-                        LastPoster = thread.LastPoster,
-                        LastPostDate = thread.LastPostDate
-                    };
+                CurrentPage = data.CurrentPage != 0 ? data.CurrentPage : page,
+                TotalPage = data.TotalPage
+            };
+            if (data.ThreadList != null)
+                FillList(data, list);
 
-                list.Add(item);
-            }
             return list;
         }
 
+        private static void FillList(IThreadList data, S1ThreadList list)
+        {
+            list.AddRange(
+                data.ThreadList.Select(thread => new S1ListItem
+                {
+                    Id = thread.Id,
+                    Title = S1Resource.HttpUtility.HtmlDecode(thread.Title),
+                    Subtle = S1Resource.HttpUtility.HtmlDecode(thread.Subtle),
+                    Author = S1Resource.HttpUtility.HtmlDecode(thread.Author),
+                    AuthorDate = thread.AuthorDate,
+                    LastPoster = S1Resource.HttpUtility.HtmlDecode(thread.LastPoster),
+                    LastPostDate = thread.LastPostDate
+                }));
+        }
     }
 }
