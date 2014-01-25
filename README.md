@@ -4,6 +4,15 @@ S1 Nyan is a Windows Phone App for the online forum [Stage1st](http://bbs.saraba
 
 ## Major change
 
+1.2
+
+* 添加收藏功能
+	
+	Add 'Add thread to favorite'
+
+* 添加“我的收藏，我的主题，我回复的主题”
+
+	Add 'My favorite', 'My thread', 'My replied thread'
 
 1.1
 
@@ -55,3 +64,7 @@ Most of these libraries can be found in nuget
 * [Caliburn.Micro](https://caliburnmicro.codeplex.com/) - MVVM framework
 * [Moq](https://code.google.com/p/moq/) - unit test mocks
 * [Phone toolkit](http://phone.codeplex.com/) - many useful controls
+
+## License
+
+The MIT License (MIT)
