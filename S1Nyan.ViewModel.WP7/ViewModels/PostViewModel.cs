@@ -1,9 +1,9 @@
-﻿using System;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
+using GalaSoft.MvvmLight.Threading;
 using S1Nyan.Model;
 using S1Nyan.Utils;
-using S1Nyan.ViewModels.Message;
 using S1Parser;
+using System;
 
 namespace S1Nyan.ViewModels
 {
@@ -23,15 +23,6 @@ namespace S1Nyan.ViewModels
             : base(dataService, eventAggregator, navigationService)
         {
             _userService = userService;
-        }
-
-        public override void Handle(UserMessage msg)
-        {
-            base.Handle(msg);
-            if (msg.Type == Messages.PostSuccess)
-            {
-                IsShowReplyPanel = false;
-            }
         }
 
         private string _title = null;
@@ -367,10 +358,10 @@ namespace S1Nyan.ViewModels
             {
                 if (_replyResult == value) return;
 
-                if (_isSuccess && value == null)
+                if (_hasReplySucceed && value == null)
                 {
-                    _isSuccess = false;
-                    _eventAggregator.Publish(UserMessage.PostSuccessMessage);
+                    _hasReplySucceed = false;
+                    DispatcherHelper.RunAsync(() => IsShowReplyPanel = false);
                 }
                 _replyResult = value;
                 NotifyOfPropertyChange(() => ReplyResult);
@@ -378,7 +369,7 @@ namespace S1Nyan.ViewModels
         }
 
         //private RelayCommand _sendCommand;
-        private bool _isSuccess;
+        private bool _hasReplySucceed;
 
         public bool CanSendReply
         {
@@ -397,7 +388,7 @@ namespace S1Nyan.ViewModels
             if (result == null)
             {
                 ReplyText = "";
-                _isSuccess = true;
+                _hasReplySucceed = true;
                 ReplyResult = Utils.Util.ErrorMsg.GetExceptionMessage(S1Parser.User.S1UserException.ReplySuccess);
             }
             else

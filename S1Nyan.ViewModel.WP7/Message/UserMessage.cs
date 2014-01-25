@@ -7,13 +7,10 @@
         Refresh,
         LoginStatusChanged,
         DeviceNameChanged,
-        PostSuccess,
     }
 
     public class UserMessage
     {
-        public static UserMessage PostSuccessMessage = new UserMessage(Messages.PostSuccess);
-
         public UserMessage(Messages t, object o = null)
         {
             Type = t;
