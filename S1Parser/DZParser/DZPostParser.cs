@@ -27,7 +27,8 @@ namespace S1Parser.DZParser
         public S1Post GetData()
         {
             var data = raw.Parse<ThreadVariables>();
-            S1Resource.FormHashUpdater.UpdateFormHash(data.Formhash);
+            if (S1Resource.FormHashUpdater != null)
+                S1Resource.FormHashUpdater.UpdateFormHash(data.Formhash);
 
             var thread = new S1Post();
             thread.Title = S1Resource.HttpUtility.HtmlDecode(data.Thread.Subject);

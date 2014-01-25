@@ -43,7 +43,7 @@ namespace S1Parser.Test
             FileStream file = new FileStream("Data/post2.json", FileMode.Open);
             var parser = new DZPostParser(file);
             var data = parser.GetData();
-            var p = data.Items[10].ElementAt(2);
+            var p = data.Items[10][2];
             Assert.AreEqual("img", p.Descendants().Last().Name);
         }
     }
