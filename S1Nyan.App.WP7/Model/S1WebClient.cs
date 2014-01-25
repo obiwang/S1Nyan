@@ -65,7 +65,7 @@ namespace S1Nyan.Model
         {
             if (_dataCollection == null)
                 _dataCollection = new Dictionary<string, object>();
-            _dataCollection[key] = value;
+            _dataCollection[key] = value ?? "";
         }
 
         private string BuildPostData()

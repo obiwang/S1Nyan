@@ -20,6 +20,8 @@ namespace S1Nyan.Views
             ImageHolder.DataContext = this;
 #if S1Nyan
             var menu = new ContextMenu();
+            menu.BorderBrush = (SolidColorBrush)Application.Current.Resources["PhoneBorderBrush"];
+            menu.Background = (SolidColorBrush)Application.Current.Resources["PhoneForegroundBrush"];
             var menuItem = new MenuItem();
             menuItem.Header = AppResources.ImageShowInBrowser;
             menuItem.Click += OpenInBrowser;
@@ -173,7 +175,7 @@ namespace S1Nyan.Views
             {
                 if (!Proxy.IsEmotion && Proxy.IsGif)
                 {
-                    var contextMenu = MenuHolder.GetValue(Microsoft.Phone.Controls.ContextMenuService.ContextMenuProperty) as Microsoft.Phone.Controls.ContextMenu;
+                    var contextMenu = MenuHolder.GetValue(ContextMenuService.ContextMenuProperty) as ContextMenu;
                     if (contextMenu != null)
                         contextMenu.IsOpen = true;
                 }

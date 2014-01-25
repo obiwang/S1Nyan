@@ -20,7 +20,6 @@ namespace S1Parser.SimpleParser
                     .FindFirst("td").FindFirst("ul");
                 GetPageCount(HtmlPage.FindFirst("body").FindElements("center").ElementAt(1));
 
-                theData.Children = new List<S1ListItem>();
                 S1ListItem item = null;
 
                 foreach (var e in root.Descendants("li"))
@@ -29,13 +28,13 @@ namespace S1Parser.SimpleParser
                     var replys = reply_pattern.Match(e.Element("span").InnerHtml);
                     if (replys.Success)
                         item.Subtle = replys.Value;
-                    theData.Children.Add(item);
+                    theData.Add(item);
                 }
             }
             catch (System.Exception) { }
             finally
             {
-                if (theData.Children == null || theData.Children.Count == 0)
+                if (theData.Count == 0)
                 {
                     S1Parser.User.ErrorParser.Parse(HtmlPage);
                     throw new InvalidDataException();

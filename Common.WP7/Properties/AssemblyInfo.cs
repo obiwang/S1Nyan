@@ -11,7 +11,7 @@ using System.Resources;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Common.WP7")]
-[assembly: AssemblyCopyright("Copyright ©Obi Wang 2013")]
+[assembly: AssemblyCopyright("Copyright ©Obi Wang 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

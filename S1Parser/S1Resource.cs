@@ -8,7 +8,19 @@ namespace S1Parser
     {
         private const string EmotionPath = "static/image/smiley/";
 
+        private static IHttpUtility _httpUtility;
+
+        public static IHttpUtility HttpUtility
+        {
+            get
+            {
+                return _httpUtility ?? (_httpUtility = new DummyHttpUtility());
+            }
+            set { _httpUtility = value; }
+        }
+
         public static IParserFactory ParserFactory;
+        public static IFormHashUpdater FormHashUpdater;
 
         private static string siteBase;
         public static string SiteBase
@@ -42,8 +54,12 @@ namespace S1Parser
         }
 
         private static string emotionBase;
-        internal static string EmotionBase { get { return emotionBase ?? (emotionBase = SiteBase + EmotionPath); } } 
+        internal static string EmotionBase { get { return emotionBase ?? (emotionBase = SiteBase + EmotionPath); } }
 
+        public static string GetThreadOriginalUrl(string tid)
+        {
+            return ParserFactory.GetThreadOriginalUrl(tid);
+        }
         public static string GetRelativePath(string url)
         {
             var temp = url.ToLower();

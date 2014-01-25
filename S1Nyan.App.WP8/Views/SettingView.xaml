@@ -1,0 +1,253 @@
+﻿<phone:PhoneApplicationPage x:Class="S1Nyan.Views.SettingView"
+                            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                            xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+                            xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+                            xmlns:sys="clr-namespace:System;assembly=mscorlib"
+                            xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+                            FontFamily="{StaticResource PhoneFontFamilyNormal}"
+                            FontSize="{StaticResource PhoneFontSizeNormal}"
+                            Foreground="{StaticResource PhoneForegroundBrush}"
+                            d:DesignHeight="768"
+                            d:DesignWidth="480"
+                            shell:SystemTray.IsVisible="True"
+                            mc:Ignorable="d">
+    <phone:PhoneApplicationPage.Resources>
+        <Style x:Key="BGTextBlockStyle"
+               BasedOn="{StaticResource PhoneTextBlockBase}"
+               TargetType="TextBlock">
+            <Setter Property="Width" Value="100" />
+            <Setter Property="Opacity" Value="0.10" />
+            <Setter Property="Height" Value="480" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="TextAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="85.333" />
+        </Style>
+        <Style x:Key="LinkButtonStyle" TargetType="HyperlinkButton">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="12, 12" />
+            <Setter Property="FontSize" Value="42.667" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="HyperlinkButton">
+                        <ContentPresenter />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Storyboard x:Name="LoginTransition">
+            <DoubleAnimation Duration="0:0:0.7" Storyboard.TargetName="stackPanel" Storyboard.TargetProperty="(Canvas.Top)" To="-400" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+
+        <Storyboard x:Name="LogoutTransition">
+            <DoubleAnimation Duration="0:0:0.7" Storyboard.TargetName="stackPanel" Storyboard.TargetProperty="(Canvas.Top)" To="0" d:IsOptimized="True">
+                <DoubleAnimation.EasingFunction>
+                    <CircleEase EasingMode="EaseOut" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="ShowError">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetName="ErrorMsg" Storyboard.TargetProperty="(UIElement.Opacity)">
+                <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:5" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:5.5" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </phone:PhoneApplicationPage.Resources>
+
+
+    <toolkit:TransitionService.NavigationInTransition>
+        <toolkit:NavigationInTransition>
+            <toolkit:NavigationInTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardIn" />
+            </toolkit:NavigationInTransition.Backward>
+            <toolkit:NavigationInTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardIn" />
+            </toolkit:NavigationInTransition.Forward>
+        </toolkit:NavigationInTransition>
+    </toolkit:TransitionService.NavigationInTransition>
+    <toolkit:TransitionService.NavigationOutTransition>
+        <toolkit:NavigationOutTransition>
+            <toolkit:NavigationOutTransition.Backward>
+                <toolkit:TurnstileTransition Mode="BackwardOut" />
+            </toolkit:NavigationOutTransition.Backward>
+            <toolkit:NavigationOutTransition.Forward>
+                <toolkit:TurnstileTransition Mode="ForwardOut" />
+            </toolkit:NavigationOutTransition.Forward>
+        </toolkit:NavigationOutTransition>
+    </toolkit:TransitionService.NavigationOutTransition>
+
+    <!--  LayoutRoot is the root grid where all page content is placed  -->
+    <Grid Background="Transparent" toolkit:TiltEffect.IsTiltEnabled="True">
+        <!--  Pivot Control  -->
+        <phone:Pivot x:Name="Pivot" Title="{Binding LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}">
+            <!--  Pivot item Setting  -->
+            <phone:PivotItem x:Name="SettingPivot" Header="{Binding LocalizedResources.SettingPage, Source={StaticResource LocalizedStrings}}">
+                <StackPanel Margin="12,0,12,0">
+                    <toolkit:ListPicker x:Name="setTheme" Header="{Binding LocalizedResources.SettingPageThemes, Source={StaticResource LocalizedStrings}}" />
+
+                    <toolkit:ListPicker x:Name="setShowPic" Header="{Binding LocalizedResources.SettingPageShowPics, Source={StaticResource LocalizedStrings}}" />
+
+                    <toolkit:ListPicker x:Name="setFontSize" Header="{Binding LocalizedResources.SettingPageFontsize, Source={StaticResource LocalizedStrings}}" />
+
+                    <toolkit:ListPicker x:Name="setSignature" Header="{Binding LocalizedResources.AccountPageShowSignature, Source={StaticResource LocalizedStrings}}" />
+
+                    <toolkit:ToggleSwitch x:Name="setAutoRotate" Header="{Binding LocalizedResources.SettingPageAutoRotate, Source={StaticResource LocalizedStrings}}" />
+
+                </StackPanel>
+            </phone:PivotItem>
+
+            <!--  Pivot item Account  -->
+            <phone:PivotItem x:Name="AccountPivot" Header="{Binding LocalizedResources.AccountPage, Source={StaticResource LocalizedStrings}}">
+                <Canvas Margin="12">
+                    <Canvas.Clip>
+                        <RectangleGeometry Rect="0,0, 432, 350" />
+                    </Canvas.Clip>
+                    <StackPanel x:Name="stackPanel"
+                                Width="432"
+                                VerticalAlignment="Top">
+                        <StackPanel x:Name="LogOnPanel">
+                            <TextBlock x:Name="ErrorMsg"
+                                       Height="26.6"
+                                       Opacity="0"
+                                       Style="{StaticResource PhoneTextAccentStyle}"
+                                       Text="asdf"
+                                       TextTrimming="WordEllipsis" />
+                            <toolkit:PhoneTextBox x:Name="UsernameText"
+                                                  ActionIcon="/Assets/input.clear.png"
+                                                  HidesActionItemWhenEmpty="True"
+                                                  Hint="{Binding LocalizedResources.AccountPageUsername, Source={StaticResource LocalizedStrings}}"
+                                                  InputScope="LogOnName" />
+                            <Grid>
+                                <TextBox x:Name="PasswordWatermark"
+                                         Foreground="{StaticResource PhoneTextBoxReadOnlyBrush}"
+                                         IsHitTestVisible="False"
+                                         Text="{Binding LocalizedResources.AccountPagePassword, Source={StaticResource LocalizedStrings}}" />
+                                <PasswordBox x:Name="PasswordText"
+                                             GotFocus="PasswordGotFocus"
+                                             LostFocus="PasswordLostFocus"
+                                             Opacity="0" />
+                            </Grid>
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox x:Name="RememberPass" Content="{Binding LocalizedResources.AccountPageRememberPass, Source={StaticResource LocalizedStrings}}" />
+                                <Button x:Name="LoginButton"
+                                        Grid.Column="2"
+                                        Content="{Binding LocalizedResources.AccountPageLogin, Source={StaticResource LocalizedStrings}}" />
+                            </Grid>
+                            <HyperlinkButton x:Name="RegisterLink"
+                                             Margin="0, 24"
+                                             Style="{StaticResource LinkButtonStyle}"
+                                             TargetName="_blank">
+                                <TextBlock HorizontalAlignment="Center" Text="{Binding LocalizedResources.AccountPageSignup, Source={StaticResource LocalizedStrings}}" />
+                            </HyperlinkButton>
+                        </StackPanel>
+
+                        <StackPanel x:Name="InfoPanel"
+                                    Margin="0,50,0,0"
+                                    DataContext="{Binding User, Source={StaticResource Locator}}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Width="100"
+                                           Style="{StaticResource PhoneTextLargeStyle}"
+                                           Text="{Binding LocalizedResources.AccountPageUsername, Source={StaticResource LocalizedStrings}}"
+                                           TextAlignment="Right" />
+                                <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="{Binding LoginStatus}" />
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Width="100"
+                                           Style="{StaticResource PhoneTextLargeStyle}"
+                                           Text="UID"
+                                           TextAlignment="Right" />
+                                <TextBlock Style="{StaticResource PhoneTextLargeStyle}" Text="{Binding Uid}" />
+                            </StackPanel>
+                            <Button x:Name="ChangeAccount" Content="{Binding LocalizedResources.AccountPageChangeAccount, Source={StaticResource LocalizedStrings}}" />
+                        </StackPanel>
+
+                    </StackPanel>
+                </Canvas>
+            </phone:PivotItem>
+
+            <!--  Pivot item About  -->
+            <phone:PivotItem x:Name="AboutPivot" Header="{Binding LocalizedResources.AboutPage, Source={StaticResource LocalizedStrings}}">
+                <Grid>
+                    <Grid RenderTransformOrigin="0.5,0.5">
+                        <Grid.RenderTransform>
+                            <CompositeTransform Rotation="15"
+                                                SkewX="-14"
+                                                TranslateX="-110" />
+                        </Grid.RenderTransform>
+                        <TextBlock Margin="0"
+                                   IsHitTestVisible="False"
+                                   Style="{StaticResource BGTextBlockStyle}"
+                                   Text="S1在手"
+                                   TextWrapping="Wrap" />
+                        <TextBlock Margin="0,112,108,0"
+                                   IsHitTestVisible="False"
+                                   Style="{StaticResource BGTextBlockStyle}"
+                                   Text="天下我有"
+                                   TextWrapping="Wrap" />
+                    </Grid>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Width="173"
+                                    Margin="12"
+                                    Background="{StaticResource PhoneAccentBrush}">
+                                <Image Width="176"
+                                       Height="176"
+                                       Source="/Background.png" />
+                            </Border>
+                            <Grid Margin="0,12">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="40" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0"
+                                           Style="{StaticResource PhoneTextTitle1Style}"
+                                           Text="{Binding LocalizedResources.ApplicationTitle, Source={StaticResource LocalizedStrings}}" />
+                                <TextBlock x:Name="CopyRightText"
+                                           Grid.Row="1"
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource PhoneTextNormalStyle}" />
+                                <TextBlock x:Name="VersionText"
+                                           Grid.Row="2"
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource PhoneTextGroupHeaderStyle}" />
+                            </Grid>
+                        </StackPanel>
+                        <HyperlinkButton NavigateUri="http://weibo.com/obiwang"
+                                         Style="{StaticResource LinkButtonStyle}"
+                                         TargetName="_blank">
+                            <TextBlock Text="@obiwang" />
+                        </HyperlinkButton>
+                        <HyperlinkButton NavigateUri="http://e.weibo.com/u/1696934507"
+                                         Style="{StaticResource LinkButtonStyle}"
+                                         TargetName="_blank">
+                            <TextBlock Text="@stage-1st" />
+                        </HyperlinkButton>
+                        <HyperlinkButton Click="OnFeedBack" Style="{StaticResource LinkButtonStyle}">
+                            <TextBlock Text="{Binding LocalizedResources.FeedBack, Source={StaticResource LocalizedStrings}}" />
+                        </HyperlinkButton>
+                        <HyperlinkButton Click="OnRate" Style="{StaticResource LinkButtonStyle}">
+                            <TextBlock Text="{Binding LocalizedResources.RateAndComment, Source={StaticResource LocalizedStrings}}" />
+                        </HyperlinkButton>
+                    </StackPanel>
+                </Grid>
+            </phone:PivotItem>
+        </phone:Pivot>
+    </Grid>
+
+</phone:PhoneApplicationPage>

@@ -8,12 +8,18 @@ namespace S1Nyan.Model
 {
     public class DataService : IDataService
     {
-        private const int MainListCacheDays = -1;
-        private const string MainListCacheName = "simple.htm";
+        private const double MainListCacheDays = .5;
+        private const string MainListCacheName = "main.json";
 
         private IList<S1ListItem> mainListData;
         public IParserFactory ParserFactory { get; set; }
         public IStorageHelper StorageHelper { get; set; }
+
+        public DataService(IStorageHelper storageHelper, IParserFactory parserFactory)
+        {
+            ParserFactory = parserFactory;
+            StorageHelper = storageHelper;
+        }
 
         string mainListHtml;
         public async Task<IList<S1ListItem>> UpdateMainListAsync()
@@ -42,7 +48,7 @@ namespace S1Nyan.Model
         {
             if (mainListData == null)
             {
-                Stream s = StorageHelper.ReadFromLocalCache(MainListCacheName, -1);
+                Stream s = StorageHelper.ReadFromLocalCache(MainListCacheName, MainListCacheDays);
                 if (s == null)
                 {
                     Debug.WriteLine("Using resource main list");
@@ -69,9 +75,9 @@ namespace S1Nyan.Model
             return await ParserFactory.GetThreadListData(fid, page);
         }
 
-        public async Task<S1ThreadPage> GetThreadDataAsync(string tid, int page)
+        public async Task<S1Post> GetThreadDataAsync(string tid, int page)
         {
-            return await ParserFactory.GetThreadData(tid, page);
+            return await ParserFactory.GetPostData(tid, page);
         }
     }
 }

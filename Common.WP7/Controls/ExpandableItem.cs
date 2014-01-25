@@ -5,14 +5,20 @@ using System.Windows.Controls;
 namespace ObiWang.Controls
 {
     [TemplatePart(Name = Expander, Type = typeof(ExpanderButton))]
+    [TemplatePart(Name = TitleContent, Type = typeof(ContentPresenter))]
     [TemplatePart(Name = ChildItems, Type = typeof(ListBox))]
     public class ExpandableItem : ItemsControl
     {
         private const string Expander = "Expander";
         private ExpanderButton _expander;
 
+        private const string TitleContent = "TitleContent";
+        private ContentPresenter _titleContent;
+
         private const string ChildItems = "ChildItems";
         private ListBox _childItems;
+
+        public event RoutedEventHandler HeaderTapped;
 
         public ExpandableItem()
         {
@@ -24,6 +30,12 @@ namespace ObiWang.Controls
             base.OnApplyTemplate();
 
             _expander = GetTemplateChild(Expander) as ExpanderButton;
+            _titleContent = GetTemplateChild(TitleContent) as ContentPresenter;
+            if (_titleContent != null)
+            {
+                _titleContent.Tap -= OnHeaderTapped;
+                _titleContent.Tap += OnHeaderTapped;
+            }
 
             _childItems = GetTemplateChild(ChildItems) as ListBox;
             if (_childItems != null)
@@ -37,6 +49,11 @@ namespace ObiWang.Controls
                 };
             }
             OnExpandChanged();
+        }
+
+        private void OnHeaderTapped(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            if (HeaderTapped != null) HeaderTapped(sender, e);
         }
 
         // Summary:
@@ -63,25 +80,35 @@ namespace ObiWang.Controls
         public static readonly DependencyProperty HasItemsProperty =
             DependencyProperty.Register("HasItems", typeof(bool), typeof(ExpandableItem), new PropertyMetadata(false));
 
-        public string TitleText
+        public object Title
         {
-            get { return (string)GetValue(TitleTextProperty); }
-            set { SetValue(TitleTextProperty, value); }
+            get { return (string)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
         }
 
-        // Using a DependencyProperty as the backing store for TitleText.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty TitleTextProperty =
-            DependencyProperty.Register("TitleText", typeof(string), typeof(ExpandableItem), new PropertyMetadata(null));
+        // Using a DependencyProperty as the backing store for TitleContent.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register("Title", typeof(object), typeof(ExpandableItem), new PropertyMetadata(null));
 
         public static void OnExpandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             (d as ExpandableItem).OnExpandChanged();
         }
 
+        public static readonly DependencyProperty TitleContentTemplateProperty =
+            DependencyProperty.Register("TitleContentTemplate", typeof (DataTemplate), typeof (ExpandableItem), new PropertyMetadata(default(DataTemplate)));
+
+        public DataTemplate TitleContentTemplate
+        {
+            get { return (DataTemplate) GetValue(TitleContentTemplateProperty); }
+            set { SetValue(TitleContentTemplateProperty, value); }
+        }
+
         private void OnExpandChanged()
         {
             if (_childItems == null) return;
             _childItems.Visibility = IsExpanded ? Visibility.Visible : Visibility.Collapsed;
+            UpdateLayout();
         }
 
         #region ItemsControl overriden methods

@@ -15,9 +15,20 @@ namespace S1Parser.PaserFactory
         public IResourceService ResourceService { get; set; }
         internal const string DZMobilePath = "api/mobile/";
 
+        public DZParserFactory(IResourceService resourceService)
+        {
+            ResourceService = resourceService;
+            S1Resource.ParserFactory = this;
+        }
+
         public string Path
         {
             get { return DZMobilePath; }
+        }
+
+        public string GetThreadOriginalUrl(string tid)
+        {
+            return  S1Resource.SiteBase + string.Format("thread-{0}-1-1.html", tid);
         }
 
         public async Task<IList<S1ListItem>> GetMainListData()
@@ -34,29 +45,29 @@ namespace S1Parser.PaserFactory
 
         public IList<S1ListItem> ParseMainListData(Stream s)
         {
-            return new SimpleListParser(s).GetData();
+            return new DZListParser(s).GetData();
         }
 
         public IList<S1ListItem> ParseMainListData(string s)
         {
-            return new SimpleListParser(s).GetData();
+            return new DZListParser(s).GetData();
         }
 
         public async Task<S1ThreadList> GetThreadListData(string fid, int page)
         {
             Stream s = await ResourceService.GetResourceStream(GetThreadListUri(fid, page));
-            return new DZThreadListParser(s).GetData();
+            return new DZThreadListParser(s).GetData(fid, page);
         }
 
-        public async Task<S1ThreadPage> GetThreadData(string tid, int page)
+        public async Task<S1Post> GetPostData(string tid, int page)
         {
             Stream s = await ResourceService.GetResourceStream(GetThreadUri(tid, page));
-            return new DZThreadParser(s).GetData();
+            return new DZPostParser(s).GetData();
         }
 
         protected virtual Uri GetMainUri()
         {
-            return new Uri(S1Resource.ForumBase);
+            return new Uri(S1Resource.ForumBase + "?module=forumnav");
         }
 
         protected virtual Uri GetThreadListUri(string fid, int page)
@@ -64,7 +75,8 @@ namespace S1Parser.PaserFactory
 #if UseLocalhost
             return new Uri(S1Resource.ForumBase + string.Format("?module=forumdisplay&fid=2"));
 #else
-            return new Uri(S1Resource.ForumBase + String.Format("?module=forumdisplay&fid={0}&page={1}&tpp={2}", fid, page, ThreadsPerPage));
+            string url = DZMyGroup.ParseSpecialUrl(fid, page) ?? String.Format("?module=forumdisplay&fid={0}&page={1}&tpp={2}", fid, page, ThreadsPerPage);
+            return new Uri(S1Resource.ForumBase + url);
 #endif
         }
 
@@ -76,5 +88,6 @@ namespace S1Parser.PaserFactory
             return new Uri(S1Resource.ForumBase + string.Format("?module=viewthread&tid={0}&page={1}&ppp={2}", tid, page, PostsPerPage));
 #endif
         }
+
     }
 }

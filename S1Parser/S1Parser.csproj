@@ -52,61 +52,73 @@
     <Compile Include="Action\ErrorParser.cs" />
     <Compile Include="Action\UserAction.cs" />
     <Compile Include="Action\S1UserException.cs" />
-    <Compile Include="Common\DZForum.cs" />
-    <Compile Include="Common\DZThread.cs" />
-    <Compile Include="Common\DZUser.cs" />
-    <Compile Include="DZParser\DZThreadParser.cs" />
+    <Compile Include="Data\DZHeader.cs" />
+    <Compile Include="Data\DateTimeConverter.cs" />
+    <Compile Include="Data\DZForum.cs" />
+    <Compile Include="Data\DZPost.cs" />
+    <Compile Include="Data\DZUser.cs" />
+    <Compile Include="Data\DZMain.cs" />
+    <Compile Include="Data\DZMyFavorite.cs" />
+    <Compile Include="Data\DZMyThread.cs" />
+    <Compile Include="Data\IFormHashUpdater.cs" />
+    <Compile Include="Data\IThreadList.cs" />
+    <Compile Include="Data\MyFavoriteVariables.cs" />
+    <Compile Include="DZParser\DZListParser.cs" />
+    <Compile Include="DZParser\DZMyGroup.cs" />
+    <Compile Include="DZParser\DZPostParser.cs" />
     <Compile Include="DZParser\DZThreadListParser.cs" />
+    <Compile Include="DZParser\JsonParser.cs" />
     <Compile Include="Emotion\EmotionParser.cs" />
     <Compile Include="Html\HtmlElement.cs" />
     <Compile Include="Html\HtmlDoc.cs" />
-    <Compile Include="Common\DataParser.cs" />
-    <Compile Include="Common\IDataParser.cs" />
-    <Compile Include="Common\IParserFactory.cs" />
-    <Compile Include="Common\IResourceService.cs" />
-    <Compile Include="Common\IS1Client.cs" />
-    <Compile Include="Net\Entities\HtmlEncodingServices.cs" />
-    <Compile Include="Net\Entities\HtmlEntity.cs" />
-    <Compile Include="Net\Entities\HtmlEntityDecoder.cs" />
-    <Compile Include="Net\Entities\HtmlEntityEncoder.cs" />
-    <Compile Include="Net\Entities\HtmlEntityTokenizer.cs" />
-    <Compile Include="Net\Entities\Token.cs" />
-    <Compile Include="Net\Entities\TokenType.cs" />
-    <Compile Include="Net\WebUtility.cs" />
+    <Compile Include="Data\DataParser.cs" />
+    <Compile Include="Data\IDataParser.cs" />
+    <Compile Include="Data\IParserFactory.cs" />
+    <Compile Include="Data\IResourceService.cs" />
+    <Compile Include="Data\IS1Client.cs" />
+    <Compile Include="Html\DummyHttpUtility.cs" />
+    <Compile Include="Html\IHttpUtility.cs" />
     <Compile Include="PaserFactory\DZParserFactory.cs" />
     <Compile Include="PaserFactory\InvalidDataException.cs" />
-    <Compile Include="Common\S1ListItem.cs" />
+    <Compile Include="Data\S1ListItem.cs" />
     <Compile Include="PaserFactory\SimpleParserFactory.cs" />
     <Compile Include="S1Resource.cs" />
-    <Compile Include="Common\S1ThreadList.cs" />
+    <Compile Include="Data\S1ThreadList.cs" />
     <Compile Include="PaserFactory\FakeSimpleParserFactory.cs" />
     <Compile Include="SimpleParser\SimpleListParser.cs" />
     <Compile Include="SimpleParser\SimpleThreadListParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Common\S1ThreadPage.cs" />
+    <Compile Include="Data\S1Post.cs" />
     <Compile Include="SimpleParser\SimpleThreadParser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Threading.Tasks">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.14-rc\lib\portable-net40+sl4+win8+wp71\Microsoft.Threading.Tasks.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\portable-net40+sl4+win8+wp71\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.14-rc\lib\portable-net40+sl4+win8+wp71\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\portable-net40+sl4+win8+wp71\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.6\lib\portable-net40+sl4+win8+wp71\System.IO.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime">
-      <HintPath>..\packages\Microsoft.Bcl.1.0.16-rc\lib\portable-net40+sl4+win8+wp71\System.Runtime.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.1.1.6\lib\portable-net40+sl4+win8+wp71\System.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks">
-      <HintPath>..\packages\Microsoft.Bcl.1.0.16-rc\lib\portable-net40+sl4+win8+wp71\System.Threading.Tasks.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.1.1.6\lib\portable-net40+sl4+win8+wp71\System.Threading.Tasks.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.0-rc\tools\Microsoft.Bcl.Build.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

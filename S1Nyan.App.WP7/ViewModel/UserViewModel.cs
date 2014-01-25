@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Ioc;
-using GalaSoft.MvvmLight.Messaging;
+using Caliburn.Micro;
+using Microsoft.Phone.Net.NetworkInformation;
 using S1Nyan.Resources;
 using S1Nyan.Model;
+using S1Nyan.ViewModels.Message;
 using S1Nyan.Views;
+using S1Parser;
 using S1Parser.User;
 
-namespace S1Nyan.ViewModel
+namespace S1Nyan.ViewModels
 {
     /// <summary>
     /// This class contains properties that the main View can data bind to.
@@ -18,37 +18,58 @@ namespace S1Nyan.ViewModel
     /// See http://www.galasoft.ch/mvvm
     /// </para>
     /// </summary>
-    public class UserViewModel : ViewModelBase, ISendPostService
+    public class UserViewModel : Screen, IUserService, IHandle<UserMessage>
     {
         public static UserViewModel Current
         {
             get
             {
-                return SimpleIoc.Default.GetInstance<ISendPostService>() as UserViewModel;
+                return IoC.Get<IUserService>() as UserViewModel;
             }
         }
 
-        private Timer notifyTimer;
+        private readonly IEventAggregator _eventAggregator;
+
+        private readonly Timer _notifyTimer;
+
+        private string _formHash;
+
+        public void UpdateFormHash(string formHash)
+        {
+            _formHash = formHash;
+        }
 
         /// <summary>
         /// Initializes a new instance of the UserViewModel class.
         /// </summary>
-        public UserViewModel()
+        public UserViewModel(IEventAggregator eventAggregator)
         {
-            notifyTimer = new Timer(OnTimeUp, this, Timeout.Infinite, Timeout.Infinite);
-            MessengerInstance.Register<NotificationMessage<S1NyanViewModelBase>>(this, OnReLoginMsg);
+            _notifyTimer = new Timer(OnTimeUp, this, Timeout.Infinite, Timeout.Infinite);
+            _eventAggregator = eventAggregator;
+            _eventAggregator.Subscribe(this);
+            DeviceNetworkInformation.NetworkAvailabilityChanged += DeviceNetworkInformation_NetworkAvailabilityChanged;
+
+            S1Resource.FormHashUpdater = this;
         }
 
-        private async void OnReLoginMsg(NotificationMessage<S1NyanViewModelBase> msg)
+        void DeviceNetworkInformation_NetworkAvailabilityChanged(object sender, NetworkNotificationEventArgs e)
         {
-            if (msg.Notification != Messages.ReLoginMessageString) return;
+            if (e.NotificationType == NetworkNotificationType.InterfaceConnected)
+            {
+                ReLogin();
+            }
+        }
+
+        public async void Handle(UserMessage msg)
+        {
+            if (msg.Type != Messages.ReLogin) return;
 
             Uid = null;
             if (SettingView.IsRememberPass && SettingView.CurrentUsername.Length > 0)
                 await BackgroundLogin(SettingView.CurrentUsername, SettingView.CurrentPassword);
 
             if (Uid != null)
-                MessengerInstance.Send(new NotificationMessage<S1NyanViewModelBase>(msg.Content, Messages.RefreshMessageString));
+                _eventAggregator.Publish(new UserMessage(Messages.Refresh, msg.Content));
         }
 
         private string _loginStatus = AppResources.AccountPageGuest;
@@ -66,7 +87,7 @@ namespace S1Nyan.ViewModel
                 if (_loginStatus == value) return;
 
                 _loginStatus = value;
-                RaisePropertyChanged(() => LoginStatus);
+                NotifyOfPropertyChange(() => LoginStatus);
             }
         }
 
@@ -85,7 +106,7 @@ namespace S1Nyan.ViewModel
                 if (_uid == value) return;
 
                 _uid = value;
-                RaisePropertyChanged(() => Uid);
+                NotifyOfPropertyChange(() => Uid);
             }
         }
 
@@ -100,12 +121,11 @@ namespace S1Nyan.ViewModel
             try
             {
                 IsBusy = true;
-                if (!String.IsNullOrEmpty(Uid))
-                    await new S1WebClient().Logout(SettingView.VerifyString);
+                if (!String.IsNullOrEmpty(Uid) && !string.IsNullOrEmpty(_formHash))
+                    await new S1WebClient().Logout(_formHash);
                 S1WebClient.ResetCookie();
                 var user = await new S1WebClient().Login(name, pass);
                 uid = user.Member_uid;
-                SettingView.VerifyString = user.Formhash;
                 if (uid != null)
                 {
                     Uid = uid;
@@ -122,7 +142,7 @@ namespace S1Nyan.ViewModel
             finally
             {
                 IsBusy = false;
-                MessengerInstance.Send<NotificationMessage<bool>>(new NotificationMessage<bool>(isSuccess, Messages.LoginStatusChangedMessageString));
+                _eventAggregator.Publish(new UserMessage(Messages.LoginStatusChanged, isSuccess));
             }
         }
 
@@ -144,7 +164,7 @@ namespace S1Nyan.ViewModel
             if (previousText == null)
                 previousText = LoginStatus;
             LoginStatus = msg;
-            notifyTimer.Change(5000, Timeout.Infinite);
+            _notifyTimer.Change(5000, Timeout.Infinite);
         }
 
         string previousText = null;
@@ -163,25 +183,12 @@ namespace S1Nyan.ViewModel
             });
         }
 
-        private RelayCommand _showAccount;
-
-        /// <summary>
-        /// Gets the ShowAccount.
-        /// </summary>
-        public RelayCommand ShowAccount
+        public void ShowAccount()
         {
-            get
-            {
-                return _showAccount
-                    ?? (_showAccount = new RelayCommand(
-                            () =>
-                            {
-                                SettingView.GotoSetting(SettingView.PivotAccount);
-                            }));
-            }
+            SettingView.GotoSetting(SettingView.PivotAccount);
         }
 
-        internal async void InitLogin()
+        public async void InitLogin()
         {
             if (Uid != null) return;
 
@@ -205,7 +212,12 @@ namespace S1Nyan.ViewModel
             InitLogin();
         }
 
-        public async Task<string> DoSendPost(string replyLink, string replyText, string verify)
+        public async Task DoAddToFavorite(string tid)
+        {
+            await new S1WebClient().AddToFavorite(_formHash, tid);
+        }
+
+        public async Task<string> DoSendPost(string replyLink, string replyText)
         {
             UserErrorTypes result = UserErrorTypes.Unknown;
             int retryTimes = 0;
@@ -223,7 +235,7 @@ namespace S1Nyan.ViewModel
                             throw new S1UserException(error, UserErrorTypes.LoginFailed);
                     }
 
-                    result = await new S1WebClient().Reply(verify,
+                    result = await new S1WebClient().Reply(_formHash,
                         reletivePostUrl: replyLink,
                         content: replyText,
                         signature: S1Nyan.Views.SettingView.GetSignature());

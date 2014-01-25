@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>S1Nyan</RootNamespace>
-    <AssemblyName>S1Nyan.App.WP7</AssemblyName>
+    <AssemblyName>S1Nyan</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
     <TargetFrameworkProfile>WindowsPhone71</TargetFrameworkProfile>
@@ -27,14 +27,14 @@
     <CodeContractsAssemblyMode>0</CodeContractsAssemblyMode>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
-    <ExpressionBlendVersion>5.0.40110.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>5.0.40218.0</ExpressionBlendVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Bin\Debug</OutputPath>
-    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;S1Nyan</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;S1Nyan;WP7</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -76,7 +76,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>Bin\Release</OutputPath>
-    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;S1Nyan</DefineConstants>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;S1Nyan;WP7</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <NoConfig>true</NoConfig>
     <ErrorReport>prompt</ErrorReport>
@@ -85,7 +85,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LocalDebug|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\LocalDebug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;S1Nyan;UseLocalhost</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;SILVERLIGHT;WINDOWS_PHONE;S1Nyan;WP7</DefineConstants>
     <NoStdLib>true</NoStdLib>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -93,30 +93,21 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BindableApplicationBar">
-      <HintPath>..\packages\BindableApplicationBar.1.0.0\lib\sl4-windowsphone71\BindableApplicationBar.dll</HintPath>
-    </Reference>
-    <Reference Include="Caliburn.Micro">
+    <Reference Include="Caliburn.Micro, Version=1.5.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\wp71\Caliburn.Micro.dll</HintPath>
     </Reference>
-    <Reference Include="Caliburn.Micro.Extensions">
+    <Reference Include="Caliburn.Micro.BindableAppBar, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Caliburn.Micro.BindableAppBar.1.0.5.0\lib\wp71\Caliburn.Micro.BindableAppBar.dll</HintPath>
+    </Reference>
+    <Reference Include="Caliburn.Micro.Extensions, Version=1.5.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Caliburn.Micro.1.5.2\lib\wp71\Caliburn.Micro.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Coding4Fun.Toolkit.Controls, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Coding4Fun.Toolkit.Controls, Version=2.0.7.0, Culture=neutral, PublicKeyToken=c5fd7b72b1a17ce4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.2\lib\wp71\Coding4Fun.Toolkit.Controls.dll</HintPath>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight, Version=4.1.26.28028, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Portable.MvvmLightLibs.4.1.27.1\lib\sl4-wp71\GalaSoft.MvvmLight.dll</HintPath>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Extras, Version=4.1.26.28028, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Portable.MvvmLightLibs.4.1.27.1\lib\sl4-wp71\GalaSoft.MvvmLight.Extras.dll</HintPath>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Platform.WP75, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Portable.MvvmLightLibs.4.1.27.1\lib\sl4-wp71\GalaSoft.MvvmLight.Platform.WP75.dll</HintPath>
+      <HintPath>..\packages\Coding4Fun.Toolkit.Controls.2.0.7\lib\wp71\Coding4Fun.Toolkit.Controls.dll</HintPath>
     </Reference>
     <Reference Include="ICSharpCode.SharpZLib.Phone">
       <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ICSharpCode.SharpZLib.Phone.dll</HintPath>
@@ -142,34 +133,37 @@
     <Reference Include="ImageTools.Utils">
       <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\ImageTools.Utils.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Expression.Interactions, Version=3.8.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Unofficial.Blend.Interactivity.1.0.0\lib\sl4-wp71\Microsoft.Expression.Interactions.dll</HintPath>
-    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions" />
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
-    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Portable.CommonServiceLocator.1.2.2\lib\portable-net4+sl4+wp7+win8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Threading.Tasks">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.14-rc\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.dll</HintPath>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Threading.Tasks.Extensions">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.14-rc\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Threading.Tasks.Extensions.Phone">
-      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.14-rc\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Phone, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\sl4-windowsphone71\Microsoft.Threading.Tasks.Extensions.Phone.dll</HintPath>
     </Reference>
     <Reference Include="PhoneCodeContractsAssemblies">
       <HintPath>..\packages\ImageTools.0.3.1\lib\sl3-wp\PhoneCodeContractsAssemblies.dll</HintPath>
     </Reference>
-    <Reference Include="System.Runtime">
-      <HintPath>..\packages\Microsoft.Bcl.1.0.16-rc\lib\sl4-windowsphone71\System.Runtime.dll</HintPath>
+    <Reference Include="System.IO, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Bcl.1.1.6\lib\sl4-windowsphone71\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Bcl.1.1.6\lib\sl4-windowsphone71\System.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Threading.Tasks">
-      <HintPath>..\packages\Microsoft.Bcl.1.0.16-rc\lib\sl4-windowsphone71\System.Threading.Tasks.dll</HintPath>
+    <Reference Include="System.Threading.Tasks, Version=1.5.11.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Bcl.1.1.6\lib\sl4-windowsphone71\System.Threading.Tasks.dll</HintPath>
     </Reference>
     <Reference Include="System.Windows" />
     <Reference Include="system" />
@@ -186,13 +180,16 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="AppConfig.cs" />
-    <Compile Include="Design\DesignDataService.cs" />
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Caliburn.Micro\ContainerExtensions.cs" />
+    <Compile Include="Caliburn.Micro\ExtensionMethods.cs" />
+    <Compile Include="Caliburn.Micro\SimpleContainer.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="Model\IsolatedStorageHelper.cs" />
     <Compile Include="Model\RemoteConfigModelBase.cs" />
     <Compile Include="Model\ServerItem.cs" />
     <Compile Include="Model\ServerModel.cs" />
+    <Compile Include="Utils\OrientationHelper.cs" />
     <Compile Include="Utils\PhoneDeviceModel.cs" />
     <Compile Include="Utils\ErrorMsg.cs" />
     <Compile Include="Utils\MemoryDiagnosticsHelper.cs" />
@@ -202,8 +199,8 @@
     <Compile Include="SampleData\ThreadSampleData\ThreadSampleData.xaml.cs">
       <DependentUpon>ThreadSampleData.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\VersionHelper.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Views\ImageResourceManager.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -214,7 +211,6 @@
     <Compile Include="Views\SettingView.xaml.cs">
       <DependentUpon>SettingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utils\ThemeManager.cs" />
     <Compile Include="Utils\DataContextChangedHelper.cs" />
     <Compile Include="Utils\VisualTree.cs" />
     <Compile Include="Utils\Indicator.cs" />
@@ -233,21 +229,18 @@
     <Compile Include="Views\SmartImage.xaml.cs">
       <DependentUpon>SmartImage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ThreadItemContent.cs" />
-    <Compile Include="Views\ThreadList.Common.cs">
-      <DependentUpon>ThreadList.xaml</DependentUpon>
+    <Compile Include="Views\PostItemContent.cs" />
+    <Compile Include="Views\ThreadListView.Common.cs">
+      <DependentUpon>ThreadListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ThreadList.xaml.cs">
-      <DependentUpon>ThreadList.xaml</DependentUpon>
+    <Compile Include="Views\ThreadListView.xaml.cs">
+      <DependentUpon>ThreadListView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ThreadView.Common.cs">
-      <DependentUpon>ThreadView.xaml</DependentUpon>
+    <Compile Include="Views\PostView.Common.cs">
+      <DependentUpon>PostView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ThreadView.Reply.cs">
-      <DependentUpon>ThreadView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ThreadView.xaml.cs">
-      <DependentUpon>ThreadView.xaml</DependentUpon>
+    <Compile Include="Views\PostView.xaml.cs">
+      <DependentUpon>PostView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -283,20 +276,87 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ThreadList.xaml">
-      <SubType>Form</SubType>
+    <Page Include="Views\ThreadListView.xaml">
+      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ThreadView.xaml">
+    <Page Include="Views\PostView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0404.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0404.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0405.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0405.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0406.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0406.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0407.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0407.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0408.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0408.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0409.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0409.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.040B.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.040B.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.040c.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.040c.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.040E.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.040E.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0410.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0410.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0411.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0411.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0412.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0412.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0413.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0413.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0414.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0414.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0415.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0415.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0416.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0416.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0419.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0419.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.041D.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.041D.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0804.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0804.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0809.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0809.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0816.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0816.mui</Link>
+    </None>
+    <None Include="..\Resources\AppResLib\AppResLib.dll.0c0a.mui">
+      <Link>Resources\AppResLib\AppResLib.dll.0c0a.mui</Link>
+    </None>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml" />
+    <Content Include="Resources\main.json" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Config\model_name.xml">
@@ -305,10 +365,12 @@
     <Content Include="..\Config\server_list.xml">
       <Link>Resources\server_list.xml</Link>
     </Content>
+    <Content Include="..\Resources\AppResLib\AppResLib.dll">
+      <Link>Resources\AppResLib\AppResLib.dll</Link>
+    </Content>
     <Content Include="ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\AlignmentGrid.png" />
     <Content Include="Assets\AppBar\appbar.column.one.png" />
     <Content Include="Assets\AppBar\appbar.information.png" />
     <Content Include="Assets\AppBar\appbar.message.send.png" />
@@ -321,7 +383,6 @@
     <Content Include="Assets\AppBar\appbar.back.rest.png" />
     <Content Include="Assets\AppBar\appbar.next.rest.png" />
     <Content Include="Assets\AppBar\appbar.sync.rest.png" />
-    <Content Include="Assets\ApplicationIcon.png" />
     <Content Include="Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -534,9 +595,6 @@
     <Content Include="Resources\face\97.gif" />
     <Content Include="Resources\face\98.gif" />
     <Content Include="Resources\face\99.gif" />
-    <Content Include="Resources\simple.htm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\zdl\156.gif" />
     <Content Include="Resources\zdl\157.gif" />
     <Content Include="Resources\zdl\158.gif" />
@@ -573,9 +631,9 @@
       <Project>{AA9F65DC-13D3-441A-99E2-FBAFE0C4CE9C}</Project>
       <Name>S1Nyan.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\S1Nyan.ViewModel\S1Nyan.ViewModel.csproj">
-      <Project>{29CC73B9-D0C1-410C-9084-6D754807BBA2}</Project>
-      <Name>S1Nyan.ViewModel</Name>
+    <ProjectReference Include="..\S1Nyan.ViewModel.WP7\S1Nyan.ViewModel.WP7.csproj">
+      <Project>{5B98D3C8-D5CC-4844-A2EE-E9953F24D680}</Project>
+      <Name>S1Nyan.ViewModel.WP7</Name>
     </ProjectReference>
     <ProjectReference Include="..\S1Parser\S1Parser.csproj">
       <Project>{8DD0F6E8-5387-407F-B5EF-992C408342B0}</Project>
@@ -584,6 +642,9 @@
   </ItemGroup>
   <ItemGroup>
     <DesignTimeOnly Include="SampleData\ThreadSampleData\ThreadSampleData.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Design\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
@@ -596,5 +657,12 @@
   -->
   <ProjectExtensions />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.0-rc\tools\Microsoft.Bcl.Build.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>"$(SolutionDir)Resources\CopyResLib.bat" default "$(SolutionDir)Resources"</PreBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
 </Project>

@@ -27,10 +27,7 @@ namespace S1Nyan.Model.Test
             stubPaserFactory.Setup(x => x.ParseMainListData(It.IsAny<Stream>()))
                 .Returns(new List<S1ListItem>());
 
-            DataService service = new DataService { 
-                ParserFactory = stubPaserFactory.Object,
-                StorageHelper = stubStorageHelper.Object
-            };
+            DataService service = new DataService(stubStorageHelper.Object, stubPaserFactory.Object);
             var result = await service.UpdateMainListAsync();
 
             Assert.IsTrue(result is List<S1ListItem>);
@@ -52,11 +49,8 @@ namespace S1Nyan.Model.Test
             stubPaserFactory.Setup(x => x.ParseMainListData(It.IsAny<string>()))
                 .Returns(new List<S1ListItem>());
 
-            DataService service = new DataService
-            {
-                ParserFactory = stubPaserFactory.Object,
-                StorageHelper = stubStorageHelper.Object
-            };
+            DataService service = new DataService(stubStorageHelper.Object, stubPaserFactory.Object);
+
             var result = await service.UpdateMainListAsync();
 
             Assert.IsTrue(result is List<S1ListItem>);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
@@ -13,9 +14,11 @@ namespace S1Nyan.Model
         protected abstract double CacheDays { get; }
         protected abstract string RemoteFilePath { get; }
 
-        public IStorageHelper StorageHelper
+        private static IStorageHelper _helper;
+
+        public static IStorageHelper StorageHelper
         {
-            get { return IsolatedStorageHelper.Current; }
+            get { return _helper ?? (_helper = IoC.Get<IStorageHelper>()); }
         }
 
         protected abstract void RefreshList();

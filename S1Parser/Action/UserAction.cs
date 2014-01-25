@@ -113,10 +113,28 @@ namespace S1Parser.User
             var result = await client.PostDataTaskAsync(new Uri(SiteBase + reletivePostUrl));
             try
             {
-                var data = DZUser.FromJson(result);
+                var data = DZHeader.FromJson(result);
                 if (data.Message.Messageval != "post_reply_succeed")
                     throw new S1UserException(data.Message.Messagestr, UserErrorTypes.Unknown);
                 return UserErrorTypes.Success;
+            }
+            catch (System.Xml.XmlException)
+            {
+                System.Diagnostics.Debug.WriteLine(result);
+                throw new NullReferenceException();
+            }
+        }
+
+        public static async Task<UserErrorTypes> AddToFavorite(this IS1Client client, string verify, string tid)
+        {
+            client.AddPostParam("favoritesubmit", "true");
+            client.AddPostParam("formhash", verify);
+
+            var result = await client.PostDataTaskAsync(new Uri(SiteBase + string.Format("index.php?module=favthread&id={0}", tid)));
+            try
+            {
+                var data = DZHeader.FromJson(result);
+                throw new S1UserException(data.Message.Messagestr);
             }
             catch (System.Xml.XmlException)
             {

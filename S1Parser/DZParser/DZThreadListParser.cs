@@ -1,6 +1,5 @@
 ﻿using System.IO;
-using System.Net;
-using S1Parser.PaserFactory;
+using System.Linq;
 
 namespace S1Parser.DZParser
 {
@@ -22,22 +21,33 @@ namespace S1Parser.DZParser
             raw = s;
         }
 
-        public S1ThreadList GetData()
+        public S1ThreadList GetData(string fid, int page)
         {
-            var data = DZForum.FromJson(raw).Variables;
-            var list = new S1ThreadList();
-            list.CurrentPage = data.Page;
-            list.TotalPage = data.Forum.Threads/DZParserFactory.ThreadsPerPage;
-            foreach (var thread in data.Forum_threadlist)
+            var data = DZMyGroup.ThreadListFromJson(raw, fid);
+            var list = new S1ThreadList
             {
-                var item = new S1ListItem();
-                item.Id = thread.Tid;
-                item.Title = WebUtility.HtmlDecode(thread.Subject);
-                item.Subtle = thread.Replies;
-                list.Children.Add(item);
-            }
+                CurrentPage = data.CurrentPage != 0 ? data.CurrentPage : page,
+                TotalPage = data.TotalPage
+            };
+            if (data.ThreadList != null)
+                FillList(data, list);
+
             return list;
         }
 
+        private static void FillList(IThreadList data, S1ThreadList list)
+        {
+            list.AddRange(
+                data.ThreadList.Select(thread => new S1ListItem
+                {
+                    Id = thread.Id,
+                    Title = S1Resource.HttpUtility.HtmlDecode(thread.Title),
+                    Subtle = S1Resource.HttpUtility.HtmlDecode(thread.Subtle),
+                    Author = S1Resource.HttpUtility.HtmlDecode(thread.Author),
+                    AuthorDate = thread.AuthorDate,
+                    LastPoster = S1Resource.HttpUtility.HtmlDecode(thread.LastPoster),
+                    LastPostDate = thread.LastPostDate
+                }));
+        }
     }
 }

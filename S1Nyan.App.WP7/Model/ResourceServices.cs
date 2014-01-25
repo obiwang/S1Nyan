@@ -4,20 +4,27 @@ using System.IO.IsolatedStorage;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
+using Caliburn.Micro;
 using S1Parser;
 
 namespace S1Nyan.Model
 {
     public class NetResourceService : IResourceService
     {
-        public static IStorageHelper helper = IsolatedStorageHelper.Current;
+        private static IStorageHelper _helper;
+
+        public static IStorageHelper StorageHelper
+        {
+            get { return _helper ?? (_helper = IoC.Get<IStorageHelper>()); }
+        }
+
         public static async Task<Stream> GetResourceStreamStatic(Uri uri, string path = null, int expireDays = 3, bool isS1 = true)
         {
             Stream s = null;
 
             if (path != null)
             {
-                s = helper.ReadFromLocalCache(path, expireDays);
+                s = StorageHelper.ReadFromLocalCache(path, expireDays);
                 if (s != null) return s;
             }
 
@@ -28,7 +35,7 @@ namespace S1Nyan.Model
 
             if (path != null && s != null)
             {
-                helper.WriteBinaryToLocalCache(path, s);
+                StorageHelper.WriteBinaryToLocalCache(path, s);
                 s.Seek(0, SeekOrigin.Begin);
             }
             return s;

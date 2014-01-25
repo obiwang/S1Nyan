@@ -16,7 +16,7 @@ namespace S1Nyan.Views
             get
             {
 #if S1Nyan
-                var view = (Application.Current.RootVisual as PhoneApplicationFrame).Content as ThreadView;
+                var view = (Application.Current.RootVisual as PhoneApplicationFrame).Content as PostView;
                 if (view != null)
                     return view.ImageResourceManager;
                 else
