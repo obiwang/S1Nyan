@@ -47,10 +47,13 @@
   <HTC>
     <Model DeviceName="C620" FriendlyName="8X" />
     <Model DeviceName="A620" FriendlyName="8S" />
+    <Model DeviceName="8X" FriendlyName="8X" />
+    <Model DeviceName="8S" FriendlyName="8S" />
   </HTC>
   <HUAWEI>
     <Model DeviceName="W1" FriendlyName="Ascend W1" />
     <Model DeviceName="W2" FriendlyName="Ascend W2" />
+    <Model DeviceName="W3" FriendlyName="Ascend W3" />
   </HUAWEI>
   <SAMSUNG>
     <Model DeviceName="917" FriendlyName="Focus" />
