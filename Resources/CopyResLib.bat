@@ -4,9 +4,10 @@ echo S1 Nyan Title Localization configuration
 SET cmd=%1
 
 IF NOT DEFINED cmd goto :Select
-IF %1==release goto :Release
-IF %1==beta goto :Beta 
-IF %1==default goto :Default 
+IF %1==Release goto :Release
+IF %1==Beta goto :Beta 
+IF %1==Debug goto :Beta
+IF %1==Default goto :Default 
 
 :Select
 SETLOCAL
@@ -18,8 +19,6 @@ IF %errorlevel%==2 goto :Beta
 goto Exit
 
 :Default
-	IF EXIST %2 cd %2
-	IF NOT EXIST AppResLib md AppResLib
 	IF EXIST AppResLib/AppResLib.dll goto:Exit ELSE goto :Release
 
 :Release
@@ -31,6 +30,8 @@ goto Exit
     goto Copy
 
 :Copy
+IF EXIST %2 cd %2
+IF NOT EXIST AppResLib md AppResLib
 copy AppResLibFiles\%V%\*.* AppResLib\"
 
 :Exit

@@ -51,6 +51,9 @@ S1 Nyan is a Windows Phone App for the online forum [Stage1st](http://bbs.saraba
 
     Custom Theme
 
+## Build Notice
+
+Build in VS 2012 will break with "'S1Nyan.Model.dll' could not be found" for the first time. A walk around is build 'S1Nyan.Model' first.
 
 ## Third party libraries in use
 
