@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using S1Parser.PaserFactory;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using S1Parser.PaserFactory;
-using S1Parser.User;
 
 namespace S1Parser.DZParser
 {
@@ -45,18 +44,27 @@ namespace S1Parser.DZParser
                 item.Author = S1Resource.HttpUtility.HtmlDecode(post.Author);
                 item.Date = S1Resource.HttpUtility.HtmlDecode(post.Dateline);
 
-                //work around
-                post.Message = post.Message.Replace("<imgwidth=", "<img width=");
-                post.Message = post.Message.Replace("\n", "");
-                FillAttachment(post);
-
-                var content = new HtmlDoc(string.Format("<div>{0}</div>", S1Resource.HttpUtility.HtmlDecode(post.Message))).RootElement;
-
-                if (content != null)
-                    item.AddRange(SimpleParser.SimpleThreadParser.ReGroupContent(content)); 
+                BuildContent(post, item);
                 thread.Items.Add(item);
             }
             return thread;
+        }
+
+        private void BuildContent(PostItem post, S1PostItem item)
+        {
+            post.Message = post.Message ?? "";
+
+            //work around
+            post.Message = post.Message.Replace("<imgwidth=", "<img width=").Replace("\n", "");
+
+            FillAttachment(post);
+
+            var content =
+                new HtmlDoc(string.Format("<div>{0}</div>", S1Resource.HttpUtility.HtmlDecode(post.Message)))
+                    .RootElement;
+
+            if (content != null)
+                item.AddRange(SimpleParser.SimpleThreadParser.ReGroupContent(content));
         }
 
         private static readonly Regex AttachPattern = new Regex(@"\[attach](?<id>\d+)\[/attach]", RegexOptions.IgnoreCase);
