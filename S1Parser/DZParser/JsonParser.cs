@@ -27,7 +27,7 @@ namespace S1Parser.DZParser
             }
             catch (Exception)
             {
-                throw new S1UserException(UserErrorTypes.Unknown);
+                throw new S1UserException(UserErrorTypes.InvalidData);
             }
 
             if (response.Message != null)
@@ -36,7 +36,7 @@ namespace S1Parser.DZParser
             }
             if (response.Variables == null)
             {
-                throw new S1UserException(UserErrorTypes.Unknown);
+                throw new S1UserException(UserErrorTypes.InvalidData);
             }
 
             return response.Variables;

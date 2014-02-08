@@ -19,6 +19,7 @@ namespace S1Parser.User
         TryCheckingOtherServers,
         MaxRetryTime,
         ReplySuccess,
+        InvalidData,
     }    
 
     public static class ErrorParser

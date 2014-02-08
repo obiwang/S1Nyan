@@ -36,6 +36,9 @@ namespace S1Nyan.Utils
                     case UserErrorTypes.ReplySuccess:
                         msg = AppResources.ErrorMsgReplySuccess;
                         break;
+                    case UserErrorTypes.InvalidData:
+                        msg = AppResources.ErrorMsgGetDataFailed;
+                        break;
                     default:
                         if (e.Message != null)
                             msg = e.Message;

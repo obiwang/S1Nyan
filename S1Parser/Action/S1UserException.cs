@@ -25,6 +25,7 @@ namespace S1Parser.User
         public static S1UserException CheckServerStatus = new S1UserException(UserErrorTypes.TryCheckingOtherServers);
         public static S1UserException SiteClosed = new S1UserException(UserErrorTypes.SiteClosed);
         public static S1UserException ReplySuccess = new S1UserException(UserErrorTypes.ReplySuccess);
+        public static S1UserException InvalidData = new S1UserException(UserErrorTypes.InvalidData);
 
         public UserErrorTypes ErrorType { get; protected set; }
 

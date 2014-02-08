@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace S1Nyan.ViewModels
 {
@@ -19,7 +20,7 @@ namespace S1Nyan.ViewModels
             IDataService dataService, 
             IEventAggregator eventAggregator, 
             INavigationService navigationService, 
-            IUserService userService) //TODO: move serverModel init somewhere else
+            IUserService userService)
             : base(dataService, eventAggregator, navigationService)
         {
             _userService = userService;
@@ -42,7 +43,7 @@ namespace S1Nyan.ViewModels
             }
         }
 
-        public override async void RefreshData()
+        public override async Task RefreshData()
         {
             Util.Indicator.SetLoading();
             try

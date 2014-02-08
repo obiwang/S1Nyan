@@ -1,61 +1,80 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Moq;
 using S1Parser;
+using S1Parser.User;
 
 namespace S1Nyan.Model.Test
 {
     [TestClass]
     public class DataServiceTest
     {
+        private Mock<IParserFactory> _stubParserFactory;
+        private Mock<IStorageHelper> _stubStorageHelper;
+        private TaskCompletionSource<Stream> _tcs;
+
         [TestInitialize]
         public void Setup()
         {
-
+            _stubParserFactory = new Mock<IParserFactory>();
+            _stubStorageHelper = new Mock<IStorageHelper>();
+            _tcs = new TaskCompletionSource<Stream>();
+            _tcs.SetResult(new MemoryStream());
         }
 
         [TestMethod]
         public async Task TestUpdateMainListAsync_FromCache()
         {
-            Mock<IParserFactory> stubPaserFactory = new Mock<IParserFactory>();
-            Mock<IStorageHelper> stubStorageHelper = new Mock<IStorageHelper>();
-
-            stubStorageHelper.Setup(x => x.ReadFromLocalCache(It.IsAny<string>(), It.IsAny<double>()))
+            _stubStorageHelper.Setup(x => x.ReadFromLocalCache(It.IsAny<string>(), It.IsAny<double>()))
                 .Returns(new MemoryStream());
-            stubPaserFactory.Setup(x => x.ParseMainListData(It.IsAny<Stream>()))
+            _stubParserFactory.Setup(x => x.ParseMainListData(It.IsAny<Stream>()))
                 .Returns(new List<S1ListItem>());
 
-            DataService service = new DataService(stubStorageHelper.Object, stubPaserFactory.Object);
+            var service = new DataService(_stubStorageHelper.Object, _stubParserFactory.Object);
             var result = await service.UpdateMainListAsync();
 
             Assert.IsTrue(result is List<S1ListItem>);
         }
 
         [TestMethod]
-        public async Task TestUpdateMainListAsync_FromRemote()
+        public async Task TestUpdateMainListAsyncFromRemote()
         {
-            TaskCompletionSource<Stream> tcs = new TaskCompletionSource<Stream>();
-            tcs.SetResult(new MemoryStream());
-
-            Mock<IParserFactory> stubPaserFactory = new Mock<IParserFactory>();
-            Mock<IStorageHelper> stubStorageHelper = new Mock<IStorageHelper>();
-
-            stubStorageHelper.Setup(x => x.ReadFromLocalCache(It.IsAny<string>(), It.IsAny<double>()))
+            _stubStorageHelper.Setup(x => x.ReadFromLocalCache(It.IsAny<string>(), It.IsAny<double>()))
                 .Returns<Stream>(null);
-            stubPaserFactory.Setup(x => x.GetMainListStream())
-                .Returns(tcs.Task);
-            stubPaserFactory.Setup(x => x.ParseMainListData(It.IsAny<string>()))
+            _stubParserFactory.Setup(x => x.GetMainListStream())
+                .Returns(_tcs.Task);
+            _stubParserFactory.Setup(x => x.ParseMainListData(It.IsAny<string>()))
                 .Returns(new List<S1ListItem>());
 
-            DataService service = new DataService(stubStorageHelper.Object, stubPaserFactory.Object);
-
+            var service = new DataService(_stubStorageHelper.Object, _stubParserFactory.Object);
             var result = await service.UpdateMainListAsync();
 
             Assert.IsTrue(result is List<S1ListItem>);
         }
 
+        [TestMethod]
+        public async Task TestUpdateMainListAsyncWithInvalidData()
+        {
+            _stubStorageHelper.Setup(x => x.ReadFromLocalCache(It.IsAny<string>(), It.IsAny<double>()))
+                .Returns<Stream>(null);
+            _stubParserFactory.Setup(x => x.GetMainListStream())
+                .Returns(_tcs.Task);
+            _stubParserFactory.Setup(x => x.ParseMainListData(It.IsAny<string>()))
+                .Throws(new S1UserException(""));
+
+            var service = new DataService(_stubStorageHelper.Object, _stubParserFactory.Object);
+            try
+            {
+                await service.UpdateMainListAsync();
+            }
+            catch (Exception e)
+            {
+                Assert.IsInstanceOfType(e, typeof (S1UserException));
+            }
+        }
 
         [TestMethod]
         public void TestGetThreadListData()
@@ -66,7 +85,7 @@ namespace S1Nyan.Model.Test
         [TestMethod]
         public void TestThreadData()
         {
-            
+
         }
     }
 }
