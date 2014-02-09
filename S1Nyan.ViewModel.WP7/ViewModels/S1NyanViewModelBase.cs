@@ -36,6 +36,13 @@ namespace S1Nyan.ViewModels
         {
             //clear error msg or loading state when navigate away
             Util.Indicator.SetBusy(false);
+
+            if (navigatingCancelEventArgs.NavigationMode == NavigationMode.Back)
+            {
+                _eventAggregator.Unsubscribe(this);
+                if (_navigationService != null)
+                    _navigationService.Navigating -= NavigationServiceOnNavigating;
+            }
         }
 
 #if DEBUG
