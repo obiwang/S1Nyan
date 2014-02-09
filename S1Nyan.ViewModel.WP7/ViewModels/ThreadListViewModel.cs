@@ -90,7 +90,7 @@ namespace S1Nyan.ViewModels
                 if (!HandleUserException(e))
                 {
                     Util.Indicator.SetError(e);
-                    NotifyMessage = e.Message;
+                    NotifyMessage = Util.ErrorMsg.GetExceptionMessage(e);
                 }
             }
         }
