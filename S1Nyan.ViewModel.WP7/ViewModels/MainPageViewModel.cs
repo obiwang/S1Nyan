@@ -33,7 +33,7 @@ namespace S1Nyan.ViewModels
         /// </summary>
         public IEnumerable<S1ListItem> MainListData
         {
-            get { return _data ?? (_data = _dataService.GetMainListCache()); }
+            get { return _data; }
             set
             {
                 if (_data == value) return;
@@ -49,15 +49,9 @@ namespace S1Nyan.ViewModels
             try
             {
                 MainListData = await _dataService.UpdateMainListAsync();
-                Util.Indicator.SetBusy(false);
-                _dataService.GetMainListDone();
             }
-            catch (Exception e)
-            {
-                _dataService.GetMainListDone(false);
-                if (!HandleUserException(e))
-                    Util.Indicator.SetError(e);
-            }
+            catch (Exception) { }
+            Util.Indicator.SetBusy(false);
         }
 
         public void GoToAccount()
@@ -79,6 +73,7 @@ namespace S1Nyan.ViewModels
         {
             base.OnViewLoaded(view);
             _userService.InitLogin();
+            MainListData = _dataService.GetMainListCache();
             RefreshData();
         }
 

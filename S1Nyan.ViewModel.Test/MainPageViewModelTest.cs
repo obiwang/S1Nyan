@@ -44,7 +44,6 @@ namespace S1Nyan.ViewModel.Test
             await mainPageViewModel.RefreshData();
 
             _stubIndicator.Verify(x => x.SetLoading());
-            _stubDataService.Verify(x => x.GetMainListDone(true));
             _stubIndicator.Verify(x => x.SetBusy(false));
         }
 
@@ -59,8 +58,7 @@ namespace S1Nyan.ViewModel.Test
             await mainPageViewModel.RefreshData();
 
             _stubIndicator.Verify(x => x.SetLoading());
-            _stubDataService.Verify(x => x.GetMainListDone(false));
-            _stubIndicator.Verify(x => x.SetError(It.IsAny<string>()));
+            _stubIndicator.Verify(x => x.SetBusy(false));
         }
     }
 }

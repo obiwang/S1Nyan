@@ -331,6 +331,9 @@
     <Content Include="..\S1Nyan.App.WP7\Resources\main.json">
       <Link>Resources\main.json</Link>
     </Content>
+    <None Include="..\S1Nyan.App.WP7\FakeData\main.json">
+      <Link>FakeData\main.json</Link>
+    </None>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
@@ -396,15 +399,6 @@
     </Content>
     <Content Include="..\S1Nyan.App.WP7\Background.png">
       <Link>Background.png</Link>
-    </Content>
-    <Content Include="..\S1Nyan.App.WP7\FakeData\simple.htm">
-      <Link>FakeData\simple.htm</Link>
-    </Content>
-    <Content Include="..\S1Nyan.App.WP7\FakeData\simple_read.htm">
-      <Link>FakeData\simple_read.htm</Link>
-    </Content>
-    <Content Include="..\S1Nyan.App.WP7\FakeData\simple_thread.htm">
-      <Link>FakeData\simple_thread.htm</Link>
     </Content>
     <Content Include="..\S1Nyan.App.WP7\Resources\dym\147.gif">
       <Link>Resources\dym\147.gif</Link>

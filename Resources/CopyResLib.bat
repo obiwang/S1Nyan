@@ -7,7 +7,7 @@ IF NOT DEFINED cmd goto :Select
 IF %1==Release goto :Release
 IF %1==Beta goto :Beta 
 IF %1==Debug goto :Beta
-IF %1==Default goto :Default 
+goto :Default 
 
 :Select
 SETLOCAL
