@@ -7,6 +7,7 @@ namespace S1Nyan.Utils
         private static IIndicator _indicator;
         public static IIndicator Indicator
         {
+            set { _indicator = value; }
             get
             {
                 return _indicator ?? (_indicator = IoC.Get<IIndicator>());
@@ -16,6 +17,7 @@ namespace S1Nyan.Utils
         private static IErrorMsg _errorMsg;
         public static IErrorMsg ErrorMsg
         {
+            set { _errorMsg = value; }
             get
             {
                 return _errorMsg ?? (_errorMsg = IoC.Get<IErrorMsg>());

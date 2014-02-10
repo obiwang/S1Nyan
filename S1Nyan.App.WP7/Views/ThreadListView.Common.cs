@@ -48,6 +48,11 @@ namespace S1Nyan.Views
                 GC.WaitForPendingFinalizers();
             }
         }
+
+        ~ThreadListView()
+        {
+            System.Diagnostics.Debug.WriteLine("Finalizing " + this.GetType().FullName);
+        }
 #endif
 
     }

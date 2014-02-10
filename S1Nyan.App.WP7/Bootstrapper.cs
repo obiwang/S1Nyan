@@ -54,6 +54,7 @@ namespace S1Nyan
 
             container.Singleton<IIndicator, Indicator>();
             container.Singleton<IErrorMsg, ErrorMsg>();
+            //container.Singleton<IResourceService, ApplicationResourceService>();
             container.Singleton<IResourceService, NetResourceService>();
             container.Singleton<IDataService, DataService>();
             container.Singleton<IStorageHelper, IsolatedStorageHelper>();

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace S1Nyan.Model
         private const double MainListCacheDays = .5;
         private const string MainListCacheName = "main.json";
 
-        private IList<S1ListItem> mainListData;
+        private IList<S1ListItem> _mainList;
         public IParserFactory ParserFactory { get; set; }
         public IStorageHelper StorageHelper { get; set; }
 
@@ -21,53 +22,63 @@ namespace S1Nyan.Model
             StorageHelper = storageHelper;
         }
 
-        string mainListHtml;
         public async Task<IList<S1ListItem>> UpdateMainListAsync()
         {
             Stream s = StorageHelper.ReadFromLocalCache(MainListCacheName, MainListCacheDays);
-            if (s == null)
+
+            if (s != null)
             {
-                s = await ParserFactory.GetMainListStream();
-                using (s) {
+                UpdateMainListFromStream(s);
+                Debug.WriteLine("Using cached main list");
+            }
+            else
+            {
+                string mainListRaw;
+                using (s = await ParserFactory.GetMainListStream())
+                {
                     using (var reader = new StreamReader(s))
                     {
-                        mainListHtml = reader.ReadToEnd();
+                        mainListRaw = reader.ReadToEnd();
                     }
                 }
+                var data = ParserFactory.ParseMainListData(mainListRaw);
                 Debug.WriteLine("Using updated main list");
-                return mainListData = ParserFactory.ParseMainListData(mainListHtml);
+                StorageHelper.WriteToLocalCache(MainListCacheName, mainListRaw);
+                Debug.WriteLine("Save updated main list");
+                _mainList = data;
             }
-            if (mainListData == null)
-                mainListData = ParserFactory.ParseMainListData(s);
-            s.Dispose();
-            Debug.WriteLine("Using cached main list");
-            return mainListData;
+
+            return _mainList;
         }
 
         public IEnumerable<S1ListItem> GetMainListCache()
         {
-            if (mainListData == null)
+            if (_mainList == null)
             {
-                Stream s = StorageHelper.ReadFromLocalCache(MainListCacheName, MainListCacheDays);
-                if (s == null)
+                try
                 {
-                    Debug.WriteLine("Using resource main list");
-                    s = StorageHelper.ReadFromAppResource(MainListCacheName);
+                    UpdateMainListFromStream(
+                        StorageHelper.ReadFromLocalCache(MainListCacheName, -1)); // force read from cache
                 }
-                mainListData = ParserFactory.ParseMainListData(s);
+                catch (Exception) { }
+
+                if (_mainList == null)
+                {
+                    Debug.WriteLine("Fall back to the data in app resource");
+                    UpdateMainListFromStream(
+                        StorageHelper.ReadFromAppResource(MainListCacheName));
+                }
             }
-            return mainListData;
+
+            return _mainList;
         }
 
-        public void GetMainListDone(bool success = true)
+        private void UpdateMainListFromStream(Stream s)
         {
-            if (success && mainListHtml != null)
+            using (s)
             {
-                Debug.WriteLine("save updated main list");
-
-                StorageHelper.WriteToLocalCache(MainListCacheName, mainListHtml);
+                _mainList = ParserFactory.ParseMainListData(s);
             }
-            mainListHtml = null;
         }
 
         public async Task<S1ThreadList> GetThreadListAsync(string fid, int page)

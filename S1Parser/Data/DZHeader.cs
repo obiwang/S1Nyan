@@ -35,5 +35,9 @@ namespace S1Parser
         public Message() { }
     }
 
+    public class DZError
+    {
+        public string Error { get; set; }
+    }
 }
 //Json Mapping End

@@ -51,7 +51,6 @@ S1 Nyan is a Windows Phone App for the online forum [Stage1st](http://bbs.saraba
 
     Custom Theme
 
-
 ## Third party libraries in use
 
 Most of these libraries can be found in nuget

@@ -4,6 +4,7 @@ using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;
 using System;
+using System.Threading.Tasks;
 
 namespace S1Nyan.ViewModels
 {
@@ -85,7 +86,7 @@ namespace S1Nyan.ViewModels
             }
         }
 
-        public override async void RefreshData()
+        public override async Task RefreshData()
         {
             ThePost = null;
             if (null == _tid) return;
@@ -110,7 +111,7 @@ namespace S1Nyan.ViewModels
                 if (!HandleUserException(e))
                 {
                     Util.Indicator.SetError(e);
-                    NotifyMessage = e.Message;
+                    NotifyMessage = Util.ErrorMsg.GetExceptionMessage(e);
                 }
             }
         }

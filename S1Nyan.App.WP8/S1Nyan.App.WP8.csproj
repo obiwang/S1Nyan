@@ -123,6 +123,36 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta|AnyCPU'">
+    <OutputPath>bin\Beta\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;WP8</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta|x86'">
+    <OutputPath>bin\x86\Beta\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE;S1Nyan;WP8</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta|ARM'">
+    <OutputPath>bin\ARM\Beta\</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoStdLib>true</NoStdLib>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\S1Nyan.App.WP7\App.xaml.cs">
       <Link>App.xaml.cs</Link>
@@ -301,6 +331,9 @@
     <Content Include="..\S1Nyan.App.WP7\Resources\main.json">
       <Link>Resources\main.json</Link>
     </Content>
+    <None Include="..\S1Nyan.App.WP7\FakeData\main.json">
+      <Link>FakeData\main.json</Link>
+    </None>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
@@ -366,15 +399,6 @@
     </Content>
     <Content Include="..\S1Nyan.App.WP7\Background.png">
       <Link>Background.png</Link>
-    </Content>
-    <Content Include="..\S1Nyan.App.WP7\FakeData\simple.htm">
-      <Link>FakeData\simple.htm</Link>
-    </Content>
-    <Content Include="..\S1Nyan.App.WP7\FakeData\simple_read.htm">
-      <Link>FakeData\simple_read.htm</Link>
-    </Content>
-    <Content Include="..\S1Nyan.App.WP7\FakeData\simple_thread.htm">
-      <Link>FakeData\simple_thread.htm</Link>
     </Content>
     <Content Include="..\S1Nyan.App.WP7\Resources\dym\147.gif">
       <Link>Resources\dym\147.gif</Link>
@@ -1146,6 +1170,6 @@
     <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>"$(SolutionDir)Resources\CopyResLib.bat" default "$(SolutionDir)Resources"</PreBuildEvent>
+    <PreBuildEvent>"$(SolutionDir)Resources\CopyResLib.bat" $(ConfigurationName) "$(SolutionDir)Resources"</PreBuildEvent>
   </PropertyGroup>
 </Project>

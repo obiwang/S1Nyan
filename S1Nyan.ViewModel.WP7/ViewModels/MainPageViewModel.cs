@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace S1Nyan.ViewModels
 {
@@ -19,7 +20,7 @@ namespace S1Nyan.ViewModels
             IDataService dataService, 
             IEventAggregator eventAggregator, 
             INavigationService navigationService, 
-            IUserService userService) //TODO: move serverModel init somewhere else
+            IUserService userService)
             : base(dataService, eventAggregator, navigationService)
         {
             _userService = userService;
@@ -32,7 +33,7 @@ namespace S1Nyan.ViewModels
         /// </summary>
         public IEnumerable<S1ListItem> MainListData
         {
-            get { return _data ?? (_data = _dataService.GetMainListCache()); }
+            get { return _data; }
             set
             {
                 if (_data == value) return;
@@ -42,21 +43,15 @@ namespace S1Nyan.ViewModels
             }
         }
 
-        public override async void RefreshData()
+        public override async Task RefreshData()
         {
             Util.Indicator.SetLoading();
             try
             {
                 MainListData = await _dataService.UpdateMainListAsync();
-                Util.Indicator.SetBusy(false);
-                _dataService.GetMainListDone();
             }
-            catch (Exception e)
-            {
-                _dataService.GetMainListDone(false);
-                if (!HandleUserException(e))
-                    Util.Indicator.SetError(e);
-            }
+            catch (Exception) { }
+            Util.Indicator.SetBusy(false);
         }
 
         public void GoToAccount()
@@ -78,6 +73,7 @@ namespace S1Nyan.ViewModels
         {
             base.OnViewLoaded(view);
             _userService.InitLogin();
+            MainListData = _dataService.GetMainListCache();
             RefreshData();
         }
 

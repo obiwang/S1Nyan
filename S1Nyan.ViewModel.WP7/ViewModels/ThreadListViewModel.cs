@@ -1,9 +1,10 @@
-﻿using System;
-using Caliburn.Micro;
+﻿using Caliburn.Micro;
 using S1Nyan.Model;
 using S1Nyan.Utils;
 using S1Parser;
 using S1Parser.DZParser;
+using System;
+using System.Threading.Tasks;
 
 namespace S1Nyan.ViewModels
 {
@@ -67,7 +68,7 @@ namespace S1Nyan.ViewModels
             }
         }
 
-        public override async void RefreshData()
+        public override async Task RefreshData()
         {
             ThreadListData = null;
             if (null == _fid) return;
@@ -89,7 +90,7 @@ namespace S1Nyan.ViewModels
                 if (!HandleUserException(e))
                 {
                     Util.Indicator.SetError(e);
-                    NotifyMessage = e.Message;
+                    NotifyMessage = Util.ErrorMsg.GetExceptionMessage(e);
                 }
             }
         }

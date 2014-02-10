@@ -47,6 +47,13 @@ namespace S1Nyan.Views
             }
         }
 
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            if (e.NavigationMode == NavigationMode.Back)
+                CleanUp();
+        }
+
         public ImageResourceManager ImageResourceManager = new ImageResourceManager();
 
         private void CleanUp()

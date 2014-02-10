@@ -1,9 +1,7 @@
-﻿using System;
-using System.IO;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using S1Parser.SimpleParser;
-using System.Linq;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using S1Parser.DZParser;
+using System.IO;
+using System.Linq;
 
 namespace S1Parser.Test
 {
@@ -45,6 +43,16 @@ namespace S1Parser.Test
             var data = parser.GetData();
             var p = data.Items[10][2];
             Assert.AreEqual("img", p.Descendants().Last().Name);
+        }
+        
+        [TestMethod]
+        public void TestNullPost()
+        {
+            FileStream file = new FileStream("Data/post2.json", FileMode.Open);
+            var parser = new DZPostParser(file);
+            var data = parser.GetData();
+            var p = data.Items[3][0];
+            Assert.IsNull(p);
         }
     }
 }

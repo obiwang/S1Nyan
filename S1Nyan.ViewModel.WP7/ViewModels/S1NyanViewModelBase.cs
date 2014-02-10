@@ -6,6 +6,7 @@ using S1Nyan.ViewModels.Message;
 using S1Parser;
 using S1Parser.User;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Navigation;
 
 namespace S1Nyan.ViewModels
@@ -25,14 +26,23 @@ namespace S1Nyan.ViewModels
             _dataService = dataService;
             _eventAggregator = eventAggregator;
             _navigationService = navigationService;
-            _eventAggregator.Subscribe(this);
-            _navigationService.Navigating += NavigationServiceOnNavigating;
+            if (_eventAggregator != null)
+                _eventAggregator.Subscribe(this);
+            if (_navigationService != null)
+                _navigationService.Navigating += NavigationServiceOnNavigating;
         }
 
         private void NavigationServiceOnNavigating(object sender, NavigatingCancelEventArgs navigatingCancelEventArgs)
         {
             //clear error msg or loading state when navigate away
             Util.Indicator.SetBusy(false);
+
+            if (navigatingCancelEventArgs.NavigationMode == NavigationMode.Back)
+            {
+                _eventAggregator.Unsubscribe(this);
+                if (_navigationService != null)
+                    _navigationService.Navigating -= NavigationServiceOnNavigating;
+            }
         }
 
 #if DEBUG
@@ -58,7 +68,7 @@ namespace S1Nyan.ViewModels
             }
         }
 
-        abstract public void RefreshData();
+        abstract public Task RefreshData();
 
         protected bool HandleUserException(Exception e)
         {

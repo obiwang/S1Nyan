@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using S1Parser.User;
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 
 namespace S1Parser.DZParser
 {
@@ -29,13 +30,20 @@ namespace S1Parser.DZParser
         public List<S1ListItem> GetData()
         {
             var data = raw.Parse<ForumList>();
+            List<S1ListItem> list;
+            try
+            {
+                var groups = from g in data.Forums
+                             where g.Type == ForumTypes.Group && !string.IsNullOrEmpty(g.Name)
+                             select BuildGroup(g, data.Forums);
+                list = new List<S1ListItem>(groups);
+                list.Insert(0, DZMyGroup.MyGroup);
+            }
+            catch (Exception)
+            {
+                throw S1UserException.InvalidData;
+            }
 
-            var groups = from g in data.Forums
-                where g.Type == ForumTypes.Group && !string.IsNullOrEmpty(g.Name)
-                select BuildGroup(g, data.Forums);
-
-            var list = new List<S1ListItem>(groups);
-            list.Insert(0, DZMyGroup.MyGroup);
             return list;
         }
 
