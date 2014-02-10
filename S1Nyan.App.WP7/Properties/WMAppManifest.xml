@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2009/deployment" AppPlatformVersion="7.1">
-  <App xmlns="" ProductID="{6bce3e09-bc72-4625-bfd2-b29e5d2d3538}" Title="@Resources/AppResLib/AppResLib.dll,-100" RuntimeType="Silverlight" Version="1.2.0.18" Genre="apps.normal" Author="Obi Wang" Description="Sample description" Publisher="Obi Wang" BitsPerPixel="32">
+  <App xmlns="" ProductID="{6bce3e09-bc72-4625-bfd2-b29e5d2d3538}" Title="@Resources/AppResLib/AppResLib.dll,-100" RuntimeType="Silverlight" Version="1.2.1.19" Genre="apps.normal" Author="Obi Wang" Description="Sample description" Publisher="Obi Wang" BitsPerPixel="32">
     <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />

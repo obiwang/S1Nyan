@@ -23,7 +23,15 @@ namespace S1Parser.DZParser
             try
             {
                 var jsonObject = JsonConvert.DeserializeObject<JObject>(json);
+                var error = jsonObject.ToObject<DZError>().Error;
+                if (!string.IsNullOrEmpty(error))
+                    throw new S1UserException(error);
+
                 response = jsonObject.ToObject<DZHeader>();
+            }
+            catch (S1UserException)
+            {
+                throw;
             }
             catch (Exception)
             {

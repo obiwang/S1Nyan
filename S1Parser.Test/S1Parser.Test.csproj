@@ -75,6 +75,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DZJsonParserTest.cs" />
     <Compile Include="DZMainListParserTest.cs" />
     <Compile Include="DZPostParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -91,6 +92,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\error.json" />
     <None Include="Data\forum.json" />
     <None Include="Data\simple.htm" />
     <None Include="Data\simple_read.htm" />
