@@ -244,7 +244,7 @@ namespace S1Nyan.Views
                     case SettingShowPicsWhen.None:
                         return false;
                     default:
-                        return DeviceNetworkInformation.IsWiFiEnabled;
+                        return (NetworkInterface.NetworkInterfaceType == NetworkInterfaceType.Wireless80211);
                 }
             }
         }
