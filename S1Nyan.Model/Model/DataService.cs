@@ -9,7 +9,7 @@ namespace S1Nyan.Model
 {
     public class DataService : IDataService
     {
-        private const double MainListCacheDays = .5;
+        private const double MainListCacheDays = 0.5;
         private const string MainListCacheName = "main.json";
 
         private IList<S1ListItem> _mainList;
@@ -26,29 +26,30 @@ namespace S1Nyan.Model
         {
             Stream s = StorageHelper.ReadFromLocalCache(MainListCacheName, MainListCacheDays);
 
-            if (s != null)
+            try
             {
                 UpdateMainListFromStream(s);
                 Debug.WriteLine("Using cached main list");
+                return _mainList;
             }
-            else
+            catch (Exception)
             {
-                string mainListRaw;
-                using (s = await ParserFactory.GetMainListStream())
-                {
-                    using (var reader = new StreamReader(s))
-                    {
-                        mainListRaw = reader.ReadToEnd();
-                    }
-                }
-                var data = ParserFactory.ParseMainListData(mainListRaw);
-                Debug.WriteLine("Using updated main list");
-                StorageHelper.WriteToLocalCache(MainListCacheName, mainListRaw);
-                Debug.WriteLine("Save updated main list");
-                _mainList = data;
             }
 
-            return _mainList;
+            string mainListRaw;
+            using (s = await ParserFactory.GetMainListStream())
+            {
+                using (var reader = new StreamReader(s))
+                {
+                    mainListRaw = reader.ReadToEnd();
+                }
+            }
+            var data = ParserFactory.ParseMainListData(mainListRaw);
+            Debug.WriteLine("Using updated main list");
+            StorageHelper.WriteToLocalCache(MainListCacheName, mainListRaw);
+            Debug.WriteLine("Save updated main list");
+
+            return _mainList = data;
         }
 
         public IEnumerable<S1ListItem> GetMainListCache()
