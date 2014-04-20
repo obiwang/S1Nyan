@@ -35,7 +35,7 @@ namespace S1Nyan.Model
         {
             var path = GetFilePath(relativePath);
 
-            using (var fileStream = local.OpenFile(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read))
+            using (var fileStream = local.OpenFile(path, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
             {
                 using (var isoFileWriter = new StreamWriter(fileStream))
                 {
@@ -49,7 +49,7 @@ namespace S1Nyan.Model
         {
             var path = GetFilePath(relativePath);
 
-            using (var fileStream = local.OpenFile(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.Read))
+            using (var fileStream = local.OpenFile(path, FileMode.Create, FileAccess.ReadWrite, FileShare.Read))
             {
                 using (var isoFileWriter = new BinaryWriter(fileStream))
                 {
