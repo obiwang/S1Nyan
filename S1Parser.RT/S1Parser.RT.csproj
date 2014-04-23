@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AF224003-D742-4419-AA82-BBF2BC13A54E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>S1Parser</RootNamespace>
+    <AssemblyName>S1Parser</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile158</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LocalDebug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\LocalDebug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;UseLocalhost</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Beta|AnyCPU'">
+    <OutputPath>bin\Beta\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\S1Parser\Action\ErrorParser.cs">
+      <Link>Action\ErrorParser.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Action\S1UserException.cs">
+      <Link>Action\S1UserException.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Action\UserAction.cs">
+      <Link>Action\UserAction.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\DataParser.cs">
+      <Link>Data\DataParser.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\DateTimeConverter.cs">
+      <Link>Data\DateTimeConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\DZForum.cs">
+      <Link>Data\DZForum.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\DZHeader.cs">
+      <Link>Data\DZHeader.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\DZMain.cs">
+      <Link>Data\DZMain.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\DZMyFavorite.cs">
+      <Link>Data\DZMyFavorite.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\DZMyThread.cs">
+      <Link>Data\DZMyThread.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\DZPost.cs">
+      <Link>Data\DZPost.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\DZUser.cs">
+      <Link>Data\DZUser.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\IDataParser.cs">
+      <Link>Data\IDataParser.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\IFormHashUpdater.cs">
+      <Link>Data\IFormHashUpdater.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\IParserFactory.cs">
+      <Link>Data\IParserFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\IResourceService.cs">
+      <Link>Data\IResourceService.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\IS1Client.cs">
+      <Link>Data\IS1Client.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\IThreadList.cs">
+      <Link>Data\IThreadList.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\MyFavoriteVariables.cs">
+      <Link>Data\MyFavoriteVariables.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\S1ListItem.cs">
+      <Link>Data\S1ListItem.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\S1Post.cs">
+      <Link>Data\S1Post.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Data\S1ThreadList.cs">
+      <Link>Data\S1ThreadList.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\DZParser\DZListParser.cs">
+      <Link>DZParser\DZListParser.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\DZParser\DZMyGroup.cs">
+      <Link>DZParser\DZMyGroup.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\DZParser\DZPostParser.cs">
+      <Link>DZParser\DZPostParser.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\DZParser\DZThreadListParser.cs">
+      <Link>DZParser\DZThreadListParser.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\DZParser\JsonParser.cs">
+      <Link>DZParser\JsonParser.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Emotion\EmotionParser.cs">
+      <Link>Emotion\EmotionParser.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Html\DummyHttpUtility.cs">
+      <Link>Html\DummyHttpUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Html\HtmlDoc.cs">
+      <Link>Html\HtmlDoc.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Html\HtmlElement.cs">
+      <Link>Html\HtmlElement.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\Html\IHttpUtility.cs">
+      <Link>Html\IHttpUtility.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\PaserFactory\DZParserFactory.cs">
+      <Link>PaserFactory\DZParserFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\PaserFactory\FakeSimpleParserFactory.cs">
+      <Link>PaserFactory\FakeSimpleParserFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\PaserFactory\InvalidDataException.cs">
+      <Link>PaserFactory\InvalidDataException.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\PaserFactory\SimpleParserFactory.cs">
+      <Link>PaserFactory\SimpleParserFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\S1Resource.cs">
+      <Link>S1Resource.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\SimpleParser\SimpleListParser.cs">
+      <Link>SimpleParser\SimpleListParser.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\SimpleParser\SimpleThreadListParser.cs">
+      <Link>SimpleParser\SimpleThreadListParser.cs</Link>
+    </Compile>
+    <Compile Include="..\S1Parser\SimpleParser\SimpleThreadParser.cs">
+      <Link>SimpleParser\SimpleThreadParser.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="AdvancedREI.Net.Http.Compression">
+      <HintPath>..\packages\HttpClient.Compression.1.1.0\lib\portable-net4+sl4+wp7+win8\AdvancedREI.Net.Http.Compression.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\portable-net40+sl4+win8+wp71\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.165\lib\portable-net40+sl4+win8+wp71\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.2\lib\portable-net40+sl5+wp80+win8+monotouch+monoandroid\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\portable-net40+sl5+win8+wp8+wpa81\System.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.20\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.20\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.20\lib\portable-net40+sl4+win8+wp71+wpa81\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\portable-net40+sl5+win8+wp8+wpa81\System.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.1.1.8\lib\portable-net40+sl5+win8+wp8+wpa81\System.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Zlib.Portable">
+      <HintPath>..\packages\Zlib.Portable.1.9.2\lib\portable-net4+sl4+wp71+win8\Zlib.Portable.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
