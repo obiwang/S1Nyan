@@ -28,6 +28,10 @@
     <Model DeviceName="RM-878" FriendlyName="Lumia 810" />
     <Model DeviceName="RM-885" FriendlyName="Lumia 720" />
     <Model DeviceName="RM-887" FriendlyName="Lumia 720" />
+    <Model DeviceName="RM-976" FriendlyName="Lumia 630" />
+    <Model DeviceName="RM-977" FriendlyName="Lumia 630" />
+    <Model DeviceName="RM-978" FriendlyName="Lumia 630" />
+    <Model DeviceName="RM-979" FriendlyName="Lumia 635" />
     <Model DeviceName="RM-941" FriendlyName="Lumia 625" />
     <Model DeviceName="RM-942" FriendlyName="Lumia 625" />
     <Model DeviceName="RM-943" FriendlyName="Lumia 625" />
@@ -43,6 +47,10 @@
     <Model DeviceName=" 710" FriendlyName="Lumia 710" />
     <Model DeviceName=" 610" FriendlyName="Lumia 610" />
     <Model DeviceName="610C" FriendlyName="Lumia 610C" />
+    <Model DeviceName="RM-1010" FriendlyName="Lumia XXX" />
+    <Model DeviceName="RM-1027" FriendlyName="Lumia XXX" />
+    <Model DeviceName="RM-974" FriendlyName="Lumia XXX" />
+    <Model DeviceName="RM-975" FriendlyName="Lumia XXX" />
   </NOKIA>
   <HTC>
     <Model DeviceName="C620" FriendlyName="8X" />
