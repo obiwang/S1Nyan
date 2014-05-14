@@ -74,7 +74,18 @@ namespace S1Nyan.ViewModels
             base.OnViewLoaded(view);
             _userService.InitLogin();
             MainListData = _dataService.GetMainListCache();
-            RefreshData();
+        }
+
+        public override void Handle(Message.UserMessage msg)
+        {
+            base.Handle(msg);
+
+            if (msg.Type == Message.Messages.LoginStatusChanged)
+            {
+                bool? hasLogin = msg.Content as bool?;
+                if (hasLogin == true)
+                    RefreshData();
+            }
         }
 
         ////public override void Cleanup()
