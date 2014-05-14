@@ -10,6 +10,7 @@ using S1Parser.PaserFactory;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO.IsolatedStorage;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -93,6 +94,7 @@ namespace S1Nyan
             S1Resource.HttpUtility = new HttpUtility();
             container.Instance<IServerModel>(new ServerModel());
             Views.SettingView.InitTheme();
+            InitApp();
         }
 
         static void AddCustomConventions()
@@ -172,6 +174,21 @@ namespace S1Nyan
                 throw;
             }
         }
+
+        private static readonly SettingProperty<string> LastVersionSetting = new SettingProperty<string>("AppLastVersion", "");
+
+        private void InitApp()
+        {
+            if (LastVersionSetting.Value != VersionHelper.Version)
+            {
+                var path = "temp\\main.json";
+                var local = IsolatedStorageFile.GetUserStoreForApplication();
+                if (local.FileExists(path))
+                    local.DeleteFile(path);
+                LastVersionSetting.Value = VersionHelper.Version;
+            }
+        }
+
 
     }
 }

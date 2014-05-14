@@ -9,7 +9,7 @@ namespace S1Nyan.Model
 {
     public class DataService : IDataService
     {
-        private const double MainListCacheDays = 0.5;
+        private const double MainListCacheDays = 0.2;
         private const string MainListCacheName = "main.json";
 
         private IList<S1ListItem> _mainList;
