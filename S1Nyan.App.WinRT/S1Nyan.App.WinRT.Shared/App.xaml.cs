@@ -1,6 +1,11 @@
 ﻿using Caliburn.Micro;
+using S1Nyan.Model;
+using S1Nyan.Utils;
 using S1Nyan.ViewModels;
 using S1Nyan.Views;
+using S1Parser;
+using S1Parser.Net;
+using S1Parser.PaserFactory;
 using System;
 using System.Collections.Generic;
 using Windows.ApplicationModel;
@@ -8,8 +13,6 @@ using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
 namespace S1Nyan
 {
@@ -33,7 +36,15 @@ namespace S1Nyan
 
             container.RegisterWinRTServices();
 
-            container.PerRequest<MainViewModel>();
+            container.PerRequest<MainPageViewModel>();
+
+            container.Singleton<IDataService, DataService>();
+            container.Singleton<IParserFactory, DZParserFactory>();
+            container.Singleton<IStorageHelper, StorageHelper>();
+            container.Singleton<IResourceService, NetResourceService>();
+            container.Singleton<IIndicator, Indicator>();
+
+            S1Resource.SiteBase = "http://bbs.saraba1st.com/2b/";
         }
 
         protected override void PrepareViewFirst(Frame rootFrame)
@@ -65,7 +76,7 @@ namespace S1Nyan
                 this.DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
-            DisplayRootView<MainView>();
+            DisplayRootView<MainPage>();
         }
 
         protected override object GetInstance(Type service, string key)
@@ -82,6 +93,7 @@ namespace S1Nyan
         {
             container.BuildUp(instance);
         }
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used when the application is launched to open a specific file, to display

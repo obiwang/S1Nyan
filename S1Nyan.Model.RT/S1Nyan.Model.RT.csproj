@@ -64,21 +64,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\S1Nyan.Model\Model\DataService.cs">
-      <Link>Model\DataService.cs</Link>
-    </Compile>
-    <Compile Include="..\S1Nyan.Model\Model\IDataService.cs">
-      <Link>Model\IDataService.cs</Link>
-    </Compile>
     <Compile Include="..\S1Nyan.Model\Model\IServerItem.cs">
       <Link>Model\IServerItem.cs</Link>
     </Compile>
     <Compile Include="..\S1Nyan.Model\Model\IServerModel.cs">
       <Link>Model\IServerModel.cs</Link>
     </Compile>
-    <Compile Include="..\S1Nyan.Model\Model\IStorageHelper.cs">
-      <Link>Model\IStorageHelper.cs</Link>
-    </Compile>
+    <Compile Include="Model\DataService.cs" />
+    <Compile Include="Model\IDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

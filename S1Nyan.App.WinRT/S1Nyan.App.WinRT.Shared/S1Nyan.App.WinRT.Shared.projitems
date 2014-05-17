@@ -20,6 +20,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interface\IUserService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interface\IViewLoaded.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Message\UserMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\StorageHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\RemoteConfigModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\ServerItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\ServerModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\UserExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\DispatcherHelper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\IErrorMsg.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\IIndicator.cs" />
@@ -27,7 +32,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utils\SettingProperty.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utils\Util.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PostViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\S1NyanViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ServerViewModel.cs" />
@@ -35,5 +39,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Storage\PostViewModelStorage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ThreadListViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelLocator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Resources\main.json" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\model_name.xml" />
+    <Content Include="$(MSBuildThisFileDirectory)Resources\server_list.xml" />
   </ItemGroup>
 </Project>

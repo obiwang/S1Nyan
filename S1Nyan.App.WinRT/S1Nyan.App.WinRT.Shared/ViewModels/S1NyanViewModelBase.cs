@@ -116,7 +116,8 @@ namespace S1Nyan.ViewModels
 
         private void UpdateOrientation()
         {
-            IoC.Get<IOrientationHelper>().UpdateOrientation(HostedView);
+            //if (HostedView != null)
+            //    IoC.Get<IOrientationHelper>().UpdateOrientation(HostedView);
         }
 
         protected override void OnViewLoaded(object view)

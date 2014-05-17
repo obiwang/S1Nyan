@@ -42,7 +42,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;S1NyanRT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -198,6 +198,8 @@
     <Compile Include="..\S1Parser\SimpleParser\SimpleThreadParser.cs">
       <Link>SimpleParser\SimpleThreadParser.cs</Link>
     </Compile>
+    <Compile Include="Net\IStorageHelper.cs" />
+    <Compile Include="Net\NetResourceServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
