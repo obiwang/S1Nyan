@@ -219,7 +219,10 @@ namespace S1Nyan.Views
             get { return (SettingThemes) AppThemeSetting.Value; }
             set
             {
-                AppThemeSetting.Value = (int) value;
+                if (AppThemeSetting.Value == (int) value)
+                    return;
+
+                AppThemeSetting.Value = (int)value;
                 ApplyTheme();
             }
         }
