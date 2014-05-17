@@ -1,7 +1,4 @@
-﻿<Application
-    x:Class="S1Nyan.App.WinRT.App"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:S1Nyan.App.WinRT">
-
-</Application>
+﻿<cm:CaliburnApplication x:Class="S1Nyan.App"
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns:cm="using:Caliburn.Micro" />

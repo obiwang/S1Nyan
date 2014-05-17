@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -15,5 +15,25 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IFocusable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IPostViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IUserService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interface\IViewLoaded.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Message\UserMessage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\DispatcherHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\IErrorMsg.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\IIndicator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\IOrientationHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\SettingProperty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utils\Util.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PostViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\S1NyanViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ServerViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Storage\PostViewModelStorage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ThreadListViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelLocator.cs" />
   </ItemGroup>
 </Project>
