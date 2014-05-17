@@ -10,7 +10,7 @@ namespace S1Nyan.Utils
 
         public Indicator()
         {
-            _timer = new Timer(TimeUp, this, TimeSpan.MaxValue, TimeSpan.MaxValue);
+            _timer = new Timer(TimeUp, this, -1, -1);
         }
 
         private static void TimeUp(object state)

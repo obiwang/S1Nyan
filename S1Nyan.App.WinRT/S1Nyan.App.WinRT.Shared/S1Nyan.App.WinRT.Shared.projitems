@@ -6,7 +6,7 @@
     <SharedGUID>6658c202-a8cb-464f-95d2-ec2b8d3e6154</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>S1Nyan.App.WinRT</Import_RootNamespace>
+    <Import_RootNamespace>S1Nyan</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">

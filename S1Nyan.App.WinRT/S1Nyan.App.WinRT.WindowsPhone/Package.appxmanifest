@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="2ce21bb1-a063-4412-9d12-a38df8fe53d3" Publisher="CN=Obi" Version="2.0.0.0" />
-  <mp:PhoneIdentity PhoneProductId="2ce21bb1-a063-4412-9d12-a38df8fe53d3" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="41417ObiWang.S1Nyan" Publisher="CN=F03B6515-62CA-41CC-85B4-E4291EDEDC8E" Version="2.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="ca5d8edd-ba2d-4b2e-aa83-377e1dcc28e3" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>S1Nyan.App.WinRT.WindowsPhone</DisplayName>
+    <DisplayName>S1 Nyan</DisplayName>
     <PublisherDisplayName>Obi Wang</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>

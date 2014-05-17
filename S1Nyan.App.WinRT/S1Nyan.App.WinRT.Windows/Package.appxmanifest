@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="0e25126d-9034-4136-a520-d37d0401149d" Publisher="CN=Obi" Version="2.0.0.0" />
+  <Identity Name="41417ObiWang.S1Nyan" Publisher="CN=F03B6515-62CA-41CC-85B4-E4291EDEDC8E" Version="2.0.0.0" />
   <Properties>
-    <DisplayName>S1Nyan.App.WinRT.Windows</DisplayName>
+    <DisplayName>S1 Nyan</DisplayName>
     <PublisherDisplayName>Obi Wang</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -14,8 +14,8 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="S1Nyan.App.WinRT.Windows.App">
-      <m2:VisualElements DisplayName="S1Nyan.App.WinRT.Windows" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="S1Nyan.App.WinRT.Windows" ForegroundText="light" BackgroundColor="#464646">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="S1Nyan.App">
+      <m2:VisualElements DisplayName="S1 Nyan" Square150x150Logo="Assets\Logo.png" Square30x30Logo="Assets\SmallLogo.png" Description="S1Nyan.App.WinRT.Windows" ForegroundText="light" BackgroundColor="#464646">
         <m2:SplashScreen Image="Assets\SplashScreen.png" />
       </m2:VisualElements>
     </Application>
