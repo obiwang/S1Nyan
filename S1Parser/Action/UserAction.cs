@@ -36,6 +36,10 @@ namespace S1Parser.User
             var result = await client.PostDataTaskAsync(new Uri(loginUrl));
 
             var user = DZUser.FromJson(result);
+            if (user.Message == null)
+            {
+                throw new S1UserException(UserErrorTypes.InvalidData);
+            }
 
             if (user.Message.Messageval != loginSucceed &&
                 user.Message.Messageval != loginSucceedMobile)

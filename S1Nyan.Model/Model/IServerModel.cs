@@ -9,5 +9,6 @@ namespace S1Nyan.Model
         string Msg { get; set; }
         void UpdateServerAddr(string url = null);
         Task UpdateListFromRemote();
+        void UpdateServerWithSuccessItem(IServerItem item);
     }
 }

@@ -32,6 +32,11 @@ namespace S1Nyan.Utils
 
         public void SetText(string text)
         {
+            if (null == _progressIndicator)
+            {
+                _progressIndicator = new ProgressIndicator();
+                _progressIndicator.IsVisible = true;
+            }
             _progressIndicator.Text = text;
         }
 

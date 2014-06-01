@@ -300,9 +300,10 @@ namespace S1Nyan.Views
 
         private static string _modelName;
 
-        public static void UpdateModelName()
+        public static async void UpdateModelName()
         {
-            _modelName = string.Format(" ({0})", PhoneDeviceModel.FriendlyName);
+            var _friendlyName = await PhoneDeviceModel.FriendlyName();
+            _modelName = string.Format(" ({0})", _friendlyName);
             _signatureSource = new List<string>
             {
                 AppResources.ShowSignatureNone,

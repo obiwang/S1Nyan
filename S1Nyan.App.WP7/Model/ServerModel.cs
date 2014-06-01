@@ -16,7 +16,6 @@ namespace S1Nyan.Model
 #endif
 
         private readonly List<IServerItem> _serverList = new List<IServerItem>();
-        private readonly List<string> _obsoleteServerList = new List<string>();
 
         public List<IServerItem> List
         {
@@ -46,10 +45,7 @@ namespace S1Nyan.Model
             {   //TODO:
                 url = /*Views.SettingView.CurrentServerAddress ??*/ _serverList[0].Addr;
             }
-            else
-            {
-                Views.SettingView.CurrentServerAddress = url;
-            }
+
             S1Parser.S1Resource.SiteBase = url;
         }
 
@@ -76,10 +72,6 @@ namespace S1Nyan.Model
             {
                 list.Add(server.Addr);
             }
-            foreach (var addr in _obsoleteServerList)
-            {
-                list.Add(addr);
-            }
             S1Parser.S1Resource.HostList = list;
         }
 
@@ -93,18 +85,32 @@ namespace S1Nyan.Model
             {
                 _serverList.Add(new ServerItem { Addr = server.Attribute("addr").Value });
             }
-
-            _obsoleteServerList.Clear();
-            temp = root.Element("ObsoleteServerList");
-            foreach (var server in temp.Descendants())
+            var msg = root.Element("Message");
+            if (msg != null)
             {
-                _obsoleteServerList.Add(server.Attribute("addr").Value);
+                Msg = msg.Value;
             }
-
-            Msg = root.Element("Message").Value;
         } 
         #endregion
 
         public string Msg { get; set; }
+
+
+        public void UpdateServerWithSuccessItem(IServerItem item)
+        {
+            //Root/ServerList/Server addr=
+            //var doc = XDocument.;
+            var msg = this.Msg ?? "";
+
+            var newItem = new XElement("Server");
+            newItem.SetAttributeValue("addr", item.Addr);
+            var doc = new XDocument(
+                new XElement("Root",
+                    new XElement("ServerList", newItem),
+                    new XElement("Message", msg)));
+
+            StorageHelper.WriteToLocalCache(ConfigFileName, doc.ToString());
+            UpdateServerAddr(item.Addr);
+        }
     }
 }

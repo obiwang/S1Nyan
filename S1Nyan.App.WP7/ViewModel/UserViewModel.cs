@@ -137,6 +137,13 @@ namespace S1Nyan.ViewModels
             }
             catch (Exception ex)
             {
+                var mainpage = IoC.Get<MainPageViewModel>();
+                var userEx = (ex as S1UserException);
+                if ((ex is System.Net.WebException && DeviceNetworkInformation.IsNetworkAvailable)
+                    || (userEx != null && userEx.ErrorType == UserErrorTypes.InvalidData))
+                {
+                    ServerViewModel.Current.CheckServerStatus(mainpage);
+                }
                 return S1Nyan.Utils.Util.ErrorMsg.GetExceptionMessage(ex);
             }
             finally
@@ -192,13 +199,17 @@ namespace S1Nyan.ViewModels
         {
             if (Uid != null) return;
 
+            var mainpage = IoC.Get<MainPageViewModel>();
             try
             {
                 SettingView.InitAccountData();
                 if (SettingView.IsRememberPass && SettingView.CurrentUsername.Length > 0)
                     await BackgroundLogin(SettingView.CurrentUsername, SettingView.CurrentPassword);
                 else if (SettingView.IsFirstLogin)
+                {
+                    ServerViewModel.Current.CheckServerStatus(mainpage);
                     SetNotifyMsg(AppResources.ErrorMsgClickToLogin);
+                }
             }
             catch (Exception ex)
             {

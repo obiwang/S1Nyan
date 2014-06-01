@@ -6,6 +6,7 @@ using Caliburn.Micro;
 using S1Nyan.Model;
 using Microsoft.Phone.Info;
 using S1Nyan.ViewModels.Message;
+using System.Threading.Tasks;
 
 namespace S1Nyan.Utils
 {
@@ -13,16 +14,13 @@ namespace S1Nyan.Utils
     {
         private static string _friendlyName;
 
-        public static string FriendlyName
+        public static async Task<string> FriendlyName()
         {
-            get
+            if (_friendlyName == null)
             {
-                if (_friendlyName == null)
-                {
-                    new PhoneDeviceModel().UpdateDeviceFriendlyName();
-                }
-                return _friendlyName;
+                await new PhoneDeviceModel().UpdateDeviceFriendlyName();
             }
+            return _friendlyName;
         }
 
         private static string GetFriendlyDeviceName(Stream s, string manufacturer, string deviceName)
@@ -47,12 +45,12 @@ namespace S1Nyan.Utils
         private const string ModelListFileName = "model_name.xml";
         private const string RemoteModelListPath = RemoteResourcePath + ModelListFileName;
         private bool isCacheData;
-        public void UpdateDeviceFriendlyName()
+        public async Task UpdateDeviceFriendlyName()
         {
             isCacheData = true;
             GetLocalList();
             isCacheData = false;
-            UpdateListFromRemote();
+            await UpdateListFromRemote();
         }
 
         #region RemoteConfigModelBase member
@@ -64,7 +62,7 @@ namespace S1Nyan.Utils
 
         protected override double CacheDays
         {
-            get { return 10; }
+            get { return 0; }
         }
 
         protected override string RemoteFilePath

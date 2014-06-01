@@ -77,7 +77,6 @@ namespace S1Nyan.ViewModels
             }
             if (!string.IsNullOrEmpty(_serverModel.Msg))
                 msg = msg + "\r\n" + _serverModel.Msg;
-            _eventAggregator.Publish(new UserMessage(Messages.ReLogin, msg));
         }
 
         private void OnNotifySuccess(IServerItem item)
@@ -90,7 +89,7 @@ namespace S1Nyan.ViewModels
                 server.NotifySuccess = null;
                 server.Cancel();
             }
-            _serverModel.UpdateServerAddr(item.Addr);
+            _serverModel.UpdateServerWithSuccessItem(item);
             _eventAggregator.Publish(new UserMessage(Messages.ReLogin, lastViewModel));
             serverList = null;
             ServersToCheck = -1;
@@ -114,7 +113,7 @@ namespace S1Nyan.ViewModels
         Exception lastException = null;
         S1NyanViewModelBase lastViewModel;
         private List<IServerItem> serverList = null;
-        internal async void CheckServerStatus(S1NyanViewModelBase viewModel)
+        public async void CheckServerStatus(S1NyanViewModelBase viewModel)
         {
             if (isCheckingStatus) return;
             lastViewModel = viewModel;

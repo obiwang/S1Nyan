@@ -23,7 +23,7 @@ namespace S1Nyan.Model
             try
             {
                 client = new S1WebClient();
-                var result = await client.DownloadStringTaskAsync(Addr + ParserFactory.Path);
+                var result = await client.DownloadStringTaskAsync(Addr + ParserFactory.Path + "?module=forumnav");
                 if (result.Length > 0)
                 {
                     var data = ParserFactory.ParseMainListData(result);

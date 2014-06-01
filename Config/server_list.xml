@@ -1,11 +1,14 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <Root>
   <Message></Message>
   <ServerList>
-    <Server addr="http://bbs.saraba1st.com/2b/"/>
-    <Server addr="http://bbs.sarabalst.com/2b/"/>
+    <Server addr="https://bbs.saraba1st.com/2b/"/>
+    <Server addr="https://www.saraba1st.com/2b/"/>
+    <Server addr="https://www.stage1st.com/2b/"/>
   </ServerList>
   <ObsoleteServerList>
+    <Server addr="http://119.23.22.79/2b/"/>
+    <Server addr="http://bbs.stage1.cc/"/>
     <Server addr="http://220.196.42.167/2b/"/>
     <Server addr="http://220.196.42.172/2b/"/>
     <Server addr="http://bbs.stage1st.com/2b/"/>
