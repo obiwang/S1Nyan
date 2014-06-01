@@ -70,11 +70,12 @@ namespace S1Nyan.ViewModels
                     .Navigate();
         }
 
-        protected async override void OnViewLoaded(object view)
+        protected override async void OnViewLoaded(object view)
         {
             base.OnViewLoaded(view);
             if (_userService != null)
                 _userService.InitLogin();
+            if (_dataService == null) return;
             MainListData = await _dataService.GetMainListCache();
             await RefreshData();
         }

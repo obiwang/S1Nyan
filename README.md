@@ -64,6 +64,10 @@ Most of these libraries can be found in nuget
 * [Moq](https://code.google.com/p/moq/) - unit test mocks
 * [Phone toolkit](http://phone.codeplex.com/) - many useful controls
 
+## Known Issue
+
+* [Getting Device Status in Windows Phone 8.1](http://social.msdn.microsoft.com/forums/wpapps/zh-cn/431a1c1b-1281-47ac-a593-4e897b242153/getting-device-status-in-windows-phone-81?forum=wpdevelop)
+
 ## License
 
 The MIT License (MIT)

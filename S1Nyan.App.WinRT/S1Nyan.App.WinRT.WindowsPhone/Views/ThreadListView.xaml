@@ -3,9 +3,14 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:cm="using:Caliburn.Micro"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:dd="using:S1Nyan.DesignData"
       xmlns:local="using:S1Nyan.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      cm:Bind.AtDesignTime="True"
+      d:DataContext="{Binding Source={d:DesignInstance dd:DesignViewModelLocator,
+                                                       IsDesignTimeCreatable=True},
+                              Path=ThreadList}"
       mc:Ignorable="d">
 
     <Grid>
@@ -13,14 +18,38 @@
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{Binding Title}" />
+        <TextBlock Margin="12,6,12,0"
+                   Style="{StaticResource BodyTextBlockStyle}"
+                   Text="{Binding Title}" />
         <ListView Grid.Row="1" ItemsSource="{Binding ThreadListData}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Margin="12"
-                               Style="{StaticResource ListViewItemTextBlockStyle}"
-                               Text="{Binding Title}"
-                               cm:Message.Attach="[Event Tapped] = [Action DoNavigation($dataContext)]" />
+                    <Grid Height="50" Margin="6, 3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border Margin="6"
+                                Background="{ThemeResource PhoneAccentBrush}"
+                                Padding="0" />
+                        <TextBlock Width="60"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="White"
+                                   RenderTransformOrigin="0.5,0.5"
+                                   Text="{Binding Subtle}"
+                                   TextAlignment="Center"
+                                   UseLayoutRounding="False"
+                                   d:LayoutRounding="Auto">
+                            <TextBlock.RenderTransform>
+                                <CompositeTransform Rotation="90" />
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
+                        <TextBlock Grid.Column="1"
+                                   Style="{StaticResource BodyTextBlockStyle}"
+                                   Text="{Binding Title}"
+                                   cm:Message.Attach="[Event Tapped] = [Action DoNavigation($dataContext)]" />
+                    </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

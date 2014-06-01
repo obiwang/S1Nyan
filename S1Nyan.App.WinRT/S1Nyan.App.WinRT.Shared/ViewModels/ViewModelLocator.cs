@@ -9,5 +9,6 @@ namespace S1Nyan.ViewModels
         {
             get { return _user ?? (_user = IoC.Get<IUserService>()); }
         }
+
     }
 }
