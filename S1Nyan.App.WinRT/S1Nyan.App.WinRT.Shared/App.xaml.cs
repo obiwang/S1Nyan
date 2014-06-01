@@ -36,13 +36,17 @@ namespace S1Nyan
 
             container.RegisterWinRTServices();
 
-            container.PerRequest<MainPageViewModel>();
+            container
+                .PerRequest<MainPageViewModel>()
+                .PerRequest<ThreadListViewModel>()
+                .PerRequest<PostViewModel>();
 
-            container.Singleton<IDataService, DataService>();
-            container.Singleton<IParserFactory, DZParserFactory>();
-            container.Singleton<IStorageHelper, StorageHelper>();
-            container.Singleton<IResourceService, NetResourceService>();
-            container.Singleton<IIndicator, Indicator>();
+            container
+                .Singleton<IDataService, DataService>()
+                .Singleton<IParserFactory, DZParserFactory>()
+                .Singleton<IStorageHelper, StorageHelper>()
+                .Singleton<IResourceService, NetResourceService>()
+                .Singleton<IIndicator, Indicator>();
 
             S1Resource.SiteBase = "http://bbs.saraba1st.com/2b/";
         }
@@ -77,6 +81,7 @@ namespace S1Nyan
             }
 #endif
             DisplayRootView<MainPage>();
+            GalaSoft.MvvmLight.Threading.DispatcherHelper.Initialize();
         }
 
         protected override object GetInstance(Type service, string key)

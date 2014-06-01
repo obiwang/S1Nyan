@@ -1,6 +1,7 @@
 ﻿<Page x:Class="S1Nyan.Views.MainPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:cm="using:Caliburn.Micro"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:S1Nyan.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -71,7 +72,7 @@
                         </GroupStyle.ContainerStyle>
                         <GroupStyle.HeaderTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Title}" Style="{StaticResource ListViewItemSubheaderTextBlockStyle}" />
+                                <TextBlock Style="{StaticResource ListViewItemSubheaderTextBlockStyle}" Text="{Binding Title}" />
                             </DataTemplate>
                         </GroupStyle.HeaderTemplate>
                         <GroupStyle.Panel>
@@ -83,7 +84,9 @@
                 </ListView.GroupStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Style="{StaticResource ListViewItemTextBlockStyle}" Text="{Binding Title}" />
+                        <ListViewItem cm:Message.Attach="[Event Tapped] = [Action DoNavigation($dataContext)]">
+                            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" Text="{Binding Title}" />
+                        </ListViewItem>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

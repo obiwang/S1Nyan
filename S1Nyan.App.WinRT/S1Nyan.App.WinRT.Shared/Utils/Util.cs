@@ -26,7 +26,10 @@ namespace S1Nyan.Utils
 
         public static void SetError(this IIndicator indicator, System.Exception e)
         {
-            indicator.SetError(ErrorMsg.GetExceptionMessage(e));
+            indicator.SetError(
+                ErrorMsg != null 
+                ? ErrorMsg.GetExceptionMessage(e) 
+                : e.Message);
         }
 
         public static void SetText(this IIndicator indicator, System.Exception e)
